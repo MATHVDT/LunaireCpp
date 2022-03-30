@@ -1,6 +1,6 @@
 /**
- * @file tu_carte.cpp
- * @brief Fichier contenant les tests unitaires sur la carte.
+ * @file tests_catch.cpp
+ * @brief 
  */
 #include "catch.hpp"
 
