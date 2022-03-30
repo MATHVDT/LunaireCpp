@@ -17,6 +17,8 @@
 
 using namespace sf;
 
+// Vector2i = (x , y)
+
 extern const Vector2i Nord;          // ↑ ( 0, -2)
 extern const Vector2i NordOuest;     // ↖ (-1, -1)
 extern const Vector2i SudOuest;      // ↙ (-1, +1)
