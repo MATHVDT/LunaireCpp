@@ -1,35 +1,42 @@
 SRCBASE=$(wildcard src/*.cpp)
 
+
 SRC=$(SRCBASE) main.cpp
-TEST=$(SRCBASE) $(wildcard test/*.cpp)
+TEST=$(SRCBASE) $(wildcard tests/*.cpp) 
 
 EXE=prog.exe
-# EXETEST=test.exe
+EXETEST=test.exe
 
-DOSSIER=build
+DOSSIER_SRC=src/
+DOSSIER_TESTS=tests/
+
+DOSSIER_BUILD=build
 DOSSIER_INCLUDE=./include
 DOSSIER_LIB=./lib
 
 WARNING+=-Wall -Wextra
-CXXFLAGS+= -MMD -g -O2 -fdiagnostics-color=auto -I $(DOSSIER_INCLUDE)
+OPTIMISATION=
+CXXFLAGS+= -MMD -g $(OPTIMISATION) -fdiagnostics-color=auto -I $(DOSSIER_INCLUDE)
 
 LDSFML= -L $(DOSSIER_LIB) -lsfml-graphics -lsfml-window -lsfml-system
 LDFLAGS=  $(LDSFML) #-lSDL
 
-OBJ=$(addprefix $(DOSSIER)/, $(SRC:.cpp=.o) )
-DEP=$(addprefix $(DOSSIER)/, $(SRC:.cpp=.d) )
+
+OBJ=$(addprefix $(DOSSIER_BUILD)/, $(SRC:%.cpp=%.o) )
+DEP=$(addprefix $(DOSSIER_BUILD)/, $(SRC:%.cpp=%.d) )
 
 # Test
-OBJTEST=$(addprefix $(DOSSIER)/, $(TEST:.cpp=.o) )
-DEPTEST=$(addprefix $(DOSSIER)/, $(TEST:.cpp=.d) )
+OBJTEST=$(addprefix $(DOSSIER_BUILD)/, $(TEST:%.cpp=%.o) )
+DEPTEST=$(addprefix $(DOSSIER_BUILD)/, $(TEST:%.cpp=%.d) )
 
 
 all: $(OBJ)
 	$(CXX) -o $(EXE) $^ $(LDFLAGS)
 
-
-$(DOSSIER)/%.o: %.cpp
-	@mkdir -p $(DOSSIER)
+# Generation des fichier objet .o et .d
+$(DOSSIER_BUILD)/%.o: %.cpp
+	@mkdir -p $(DOSSIER_BUILD)/src/
+	@mkdir -p $(DOSSIER_BUILD)/tests/
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 
@@ -38,11 +45,10 @@ test : $(OBJTEST)
 
 
 clean:
-	rm -rf *.o
+	rm -rf build/*
 
 mrproper: clean
 	rm $(EXE)
 
 -include $(DEP) 
 -include $(DEPTEST)
-# -include $(DOSSIER_INCLUDE)
