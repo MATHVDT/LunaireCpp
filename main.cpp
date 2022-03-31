@@ -4,16 +4,15 @@
 
 void testSFML()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
     // sf::CircleShape shape(100.f);
     // shape.setFillColor(sf::Color::Green);
     // sf::Vector2i v{0, 0};
 
     int nbCase = 4;
-
-    Carte* carte= Carte::getInstance();
+    Case::setTailleCase(window, nbCase);
+    Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbCase);
-
 
     while (window.isOpen())
     {

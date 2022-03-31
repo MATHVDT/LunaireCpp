@@ -27,17 +27,16 @@ public:
 
 public:
     // Case(float x = 0.f, float y = 0.f);
-    Case(Vector2f pos = Vector2f{0.f, 0.f});
+    Case(Vector2f pos = Vector2f{0, 0});
     ~Case();
 
     void afficherConsole(ostream &flux = cout);
-    void afficher(RenderWindow &window, Vector2f posEcran);
+    void afficher(RenderWindow &window);
 
 public:
     // Getter
     void setPosition(float x, float y);
-    void setPosition(Vector2f position);
-    int getEtat() { return _etat; }
+    void setPosition(Vector2f pos);
 
     static float getTailleCase();
 
@@ -69,12 +68,14 @@ inline void Case::setPosition(float x, float y)
     _position.x = x;
     _position.y = y;
     _hexagone.setPosition(_position);
+    _hexagone.setRadius(_coteHexagoneRayon);
 }
 
-inline void Case::setPosition(Vector2f position)
+inline void Case::setPosition(Vector2f pos)
 {
-    _position = position;
+    _position = pos;
     _hexagone.setPosition(_position);
+    _hexagone.setRadius(_coteHexagoneRayon);
 }
 
 #endif

@@ -1,6 +1,6 @@
 #include "Case.hpp"
 
-float Case::_coteHexagoneRayon = 500.f;
+float Case::_coteHexagoneRayon = 10.f;
 int Case::_nb = 0;
 
 Case::Case(Vector2f pos) : _position{pos}, _etat(0), _hexagone{_coteHexagoneRayon, 6}
@@ -36,20 +36,7 @@ void Case::afficherConsole(ostream &flux)
     flux << _etat;
 }
 
-void Case::afficher(RenderWindow &window, Vector2f positionEcran)
+void Case::afficher(RenderWindow &window)
 {
-    // CircleShape circle{_coteHexagoneRayon};
-    // circle.setPosition(positionEcran);
-    // circle.setFillColor(sf::Color::White);
-    // // window.draw(circle);
-
-    // CircleShape shape{_coteHexagoneRayon, 6};
-    // // shape.setOrigin(_coteHexagoneRayon, _coteHexagoneRayon);
-    // shape.setPosition(positionEcran);
-    // shape.setRotation(90.f);
-    // // shape.setFillColor(sf::Color{((int)_position.x / (int)_coteHexagoneRayon) % 255, ((int)_position.y / (int)_coteHexagoneRayon) % 255, 255});
-    // shape.setFillColor(sf::Color{rand() % 255, rand() % 255, rand() % 255});
-    // window.draw(shape);
-
     window.draw(_hexagone);
 }
