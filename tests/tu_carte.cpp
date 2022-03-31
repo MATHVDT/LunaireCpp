@@ -1,5 +1,5 @@
 /**
- * @file tu_carte.cpp
+ * @file tu_carte->cpp
  * @brief
  */
 #include "catch.hpp"
@@ -15,11 +15,11 @@ TEST_CASE("Initialisation de la carte")
 {
     stringstream ss;
 
-    Carte carte{};
+    Carte *carte = Carte::getInstance();
 
     SECTION("Test création objet")
     {
-        REQUIRE(carte.getDimensionGrille() == 0);
+        REQUIRE(carte->getDimensionGrille() == 0);
     }
 
     SECTION("Initialisation grille")
@@ -31,7 +31,7 @@ TEST_CASE("Initialisation de la carte")
 
         for (int i = 0; i < N; ++i)
         {
-            if (i % 2 == 1)
+            if (i % 2 == 0)
             { // Décalage hexagonale
                 ssCoordRef << " ";
                 ssCaseRef << " ";
@@ -46,13 +46,13 @@ TEST_CASE("Initialisation de la carte")
             ssCaseRef << endl;
         }
 
-        carte.initCarte(N); // Initialisation
+        carte->initCarte(N); // Initialisation
 
         stringstream ssCase;
         stringstream ssCoord;
 
-        carte.afficherConsole(ssCase);
-        carte.afficherConsole(ssCoord, true);
+        carte->afficherConsole(ssCase);
+        carte->afficherConsole(ssCoord, true);
 
         REQUIRE(ssCase.str() == ssCaseRef.str());
         REQUIRE(ssCoord.str() == ssCoordRef.str());
@@ -61,8 +61,8 @@ TEST_CASE("Initialisation de la carte")
     // SECTION("Plusieurs init de la grille")
     // {
     //     // Initialisation quelconque
-    //     carte.initCarte(5);
-    //     carte.initCarte(25);
+    //     carte->initCarte(5);
+    //     carte->initCarte(25);
 
     //     int N = 10;
     //     // Pour la comparaison
@@ -71,7 +71,7 @@ TEST_CASE("Initialisation de la carte")
 
     //     for (int i = 0; i < N; ++i)
     //     {
-    //         if (i % 2 == 1)
+    //         if (i % 2 == 0)
     //             cout << " "; // Décalage hexagonale
 
     //         for (int j = 0; j < N; ++j)
@@ -84,13 +84,13 @@ TEST_CASE("Initialisation de la carte")
     //     }
 
     //     // Vérifiaction de la bonne Initialisation
-    //     carte.initCarte(N);
+    //     carte->initCarte(N);
 
     //     stringstream ssCase;
-    //     carte.afficherConsole(ssCase);
+    //     carte->afficherConsole(ssCase);
 
     //     stringstream ssCoord;
-    //     carte.afficherConsole(ssCoord, true);
+    //     carte->afficherConsole(ssCoord, true);
 
     //     REQUIRE(ssCase.str() == ssCaseRef.str());
     //     REQUIRE(ssCoord.str() == ssCoordRef.str());

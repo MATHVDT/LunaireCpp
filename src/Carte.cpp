@@ -10,6 +10,21 @@
  */
 #include "Carte.hpp"
 
+Carte *Carte::_singleton = nullptr;
+
+/**
+ * @brief Récupère ou crée un instance de manager *(patron de singleton)*
+ *
+ * @return Carte* - *_singleton*
+ */
+Carte *Carte::getInstance()
+{
+    // Pas d'instance créée => alors création
+    if (Carte::_singleton == nullptr)
+        _singleton = new Carte{};
+    return _singleton;
+}
+
 /**
  * @brief Constructeur d'une carte, ne crée pas de grille
  *
@@ -73,7 +88,7 @@ void Carte::afficherConsole(ostream &flux, bool coord)
 {
     for (int i = 0; i < _dimensionGrille; ++i)
     {
-        if (i % 2 == 1)
+        if (i % 2 == 0)
             flux << " "; // Décalage hexagonale
 
         for (int j = 0; j < _dimensionGrille; ++j)

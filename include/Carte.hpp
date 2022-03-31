@@ -12,8 +12,12 @@ private:
     int _dimensionGrille;
     int **_grille; // Matrice [i][j] => i=y et j=x
 
+    static Carte *_singleton;
+
 public:
-    Carte();
+    static Carte *getInstance();
+
+public:
     ~Carte();
 
     void initCarte(int taille = 20);
@@ -25,6 +29,7 @@ public:
     int getDimensionGrille() const;
 
 private:
+    Carte();
     void deleteGrille();
 };
 

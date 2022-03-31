@@ -27,10 +27,10 @@ int main()
 {
     // testSFML();
 
-    Carte carte{};
-    carte.initCarte(10);
+    Carte::getInstance()->initCarte(10);
 
-    carte.afficherConsole();
+    Carte::getInstance()->afficherConsole();
+
 
     return 0;
 }
