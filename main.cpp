@@ -31,6 +31,6 @@ int main()
 
     Carte::getInstance()->afficherConsole();
 
-
+    delete Carte::getInstance();
     return 0;
 }

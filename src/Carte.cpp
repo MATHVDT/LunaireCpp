@@ -14,7 +14,7 @@ Carte *Carte::_singleton = nullptr;
 
 /**
  * @brief Récupère ou crée un instance de manager *(patron de singleton)*
- *
+ * @warning Penser à delete le singleton
  * @return Carte* - *_singleton*
  */
 Carte *Carte::getInstance()
@@ -34,7 +34,11 @@ Carte::Carte() : _dimensionGrille(0), _grille(nullptr) {}
 /**
  * @brief Destructeur de la carte *(Libère la mémoire associée à la grille)*
  */
-Carte::~Carte() { deleteGrille(); }
+Carte::~Carte()
+{
+    deleteGrille();
+    _singleton = nullptr;
+}
 
 /**
  * @brief Libère la mémoire associée à la grille

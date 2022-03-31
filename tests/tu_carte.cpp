@@ -58,41 +58,45 @@ TEST_CASE("Initialisation de la carte")
         REQUIRE(ssCoord.str() == ssCoordRef.str());
     }
 
-    // SECTION("Plusieurs init de la grille")
-    // {
-    //     // Initialisation quelconque
-    //     carte->initCarte(5);
-    //     carte->initCarte(25);
+    SECTION("Plusieurs init de la grille")
+    {
+        // Initialisation quelconque
+        carte->initCarte(5);
+        carte->initCarte(25);
 
-    //     int N = 10;
-    //     // Pour la comparaison
-    //     stringstream ssCaseRef;
-    //     stringstream ssCoordRef;
+        int N = 10;
+        // Pour la comparaison
+        stringstream ssCaseRef;
+        stringstream ssCoordRef;
 
-    //     for (int i = 0; i < N; ++i)
-    //     {
-    //         if (i % 2 == 0)
-    //             cout << " "; // Décalage hexagonale
+        for (int i = 0; i < N; ++i)
+        {
+            if (i % 2 == 0)
+            { // Décalage hexagonale
+                ssCoordRef << " ";
+                ssCaseRef << " ";
+            }
+            for (int j = 0; j < N; ++j)
+            {
+                ssCoordRef << "(" << j << "," << i << ") ";
+                ssCaseRef << 0 << " ";
+            }
+            ssCoordRef << endl;
+            ssCaseRef << endl;
+        }
 
-    //         for (int j = 0; j < N; ++j)
-    //         {
-    //             ssCoordRef << "(" << j << "," << i << ") ";
-    //             ssCaseRef << 0 << " ";
-    //         }
-    //         ssCoordRef << endl;
-    //         ssCaseRef << endl;
-    //     }
+        // Vérifiaction de la bonne Initialisation
+        carte->initCarte(N);
 
-    //     // Vérifiaction de la bonne Initialisation
-    //     carte->initCarte(N);
+        stringstream ssCase;
+        carte->afficherConsole(ssCase);
 
-    //     stringstream ssCase;
-    //     carte->afficherConsole(ssCase);
+        stringstream ssCoord;
+        carte->afficherConsole(ssCoord, true);
 
-    //     stringstream ssCoord;
-    //     carte->afficherConsole(ssCoord, true);
-
-    //     REQUIRE(ssCase.str() == ssCaseRef.str());
-    //     REQUIRE(ssCoord.str() == ssCoordRef.str());
-    // }
+        REQUIRE(ssCase.str() == ssCaseRef.str());
+        REQUIRE(ssCoord.str() == ssCoordRef.str());
+    }
+    // delete Carte::getInstance();
+    delete carte;
 }
