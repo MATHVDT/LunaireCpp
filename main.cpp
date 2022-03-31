@@ -1,12 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include "Carte.hpp"
+#include "Case.hpp"
 
 void testSFML()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    sf::Vector2i v{0, 0};
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+    // sf::CircleShape shape(100.f);
+    // shape.setFillColor(sf::Color::Green);
+    // sf::Vector2i v{0, 0};
+
+    int nbCase = 4;
+    Case::setTailleCase(window.getSize().x, nbCase);
+
+    Carte* carte= Carte::getInstance();
+    carte->initCarte(nbCase);
+
 
     while (window.isOpen())
     {
@@ -18,19 +26,18 @@ void testSFML()
         }
 
         window.clear();
-        window.draw(shape);
+        carte->afficher(window);
+        // window.draw(shape);
         window.display();
     }
 }
 
 int main()
 {
-    // testSFML();
+    testSFML();
 
-    Carte::getInstance()->initCarte(10);
-
-    Carte::getInstance()->afficherConsole();
-
-    delete Carte::getInstance();
+    // Carte::getInstance()->initCarte(10);
+    // Carte::getInstance()->afficherConsole();
+    // delete Carte::getInstance();
     return 0;
 }

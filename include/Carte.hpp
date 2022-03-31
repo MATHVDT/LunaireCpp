@@ -3,15 +3,21 @@
 
 #include <iostream>
 #include <exception>
+#include <math.h>
+
+#include "Case.hpp"
 
 using namespace std;
+
+// class RenderWindow;
 
 class Carte
 {
 private:
     int _dimensionGrille;
-    int **_grille; // Matrice [i][j] => i=y et j=x
+    Case **_grille; // Matrice [i][j] => i=y et j=x
 
+    static int _test;
     static Carte *_singleton;
 
 public:
@@ -24,6 +30,7 @@ public:
 
     // Affichage
     void afficherConsole(ostream &flux = cout, bool coord = false);
+    void afficher(RenderWindow &window);
 
     // Getter
     int getDimensionGrille() const;

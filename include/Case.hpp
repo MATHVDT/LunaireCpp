@@ -1,0 +1,65 @@
+#ifndef __CASE_HPP__
+#define __CASE_HPP__
+
+#include <iostream>
+#include <exception>
+
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
+
+using namespace std;
+using namespace sf;
+
+// class RenderWindow;
+
+class Case
+{
+
+private:
+    Vector2f _position;
+    int _etat;
+
+    static float _coteHexagoneRayon;
+
+public:
+    Case(float x = 0.f, float y = 0.f);
+    ~Case();
+
+    void afficherConsole(ostream &flux = cout);
+    void afficher(RenderWindow &window, Vector2f posEcran);
+
+public:
+    // Getter
+    void setPosition(float x, float y);
+
+    static float getTailleCase();
+
+    // Setter
+    static void setTailleCase(uint tailleEcran, int nbCase);
+};
+
+/**
+ * @brief Défini la taille d'une case => cotés de l'hexagone
+ * @warning Semble ne pas être utile car les dimensions sont ajustées en fonction de la taille de la fenêtre
+ * @param unit - *tailleEcran*
+ * @param int - *nbCase*
+ */
+inline void Case::setTailleCase(uint tailleEcran, int nbCase)
+{
+    // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
+    _coteHexagoneRayon = (float)tailleEcran / (1.5 * (float)nbCase + 1.5f);
+    // cout << "cote : " << _coteHexagoneRayon << endl;
+}
+
+inline float Case::getTailleCase()
+{
+    return _coteHexagoneRayon;
+}
+
+inline void Case::setPosition(float x, float y)
+{
+    _position.x = x;
+    _position.y = y;
+}
+
+#endif

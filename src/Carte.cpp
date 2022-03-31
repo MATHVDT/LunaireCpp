@@ -69,13 +69,13 @@ void Carte::initCarte(int taille)
     deleteGrille();
 
     _dimensionGrille = taille;
-    _grille = new int *[_dimensionGrille];
+    _grille = new Case *[_dimensionGrille];
     for (int i = 0; i < _dimensionGrille; ++i)
     {
-        _grille[i] = new int[_dimensionGrille];
+        _grille[i] = new Case[_dimensionGrille];
         for (int j = 0; j < _dimensionGrille; ++j)
         {
-            _grille[i][j] = 0; // Valeur par défaut de la case
+            _grille[i][j].setPosition(j, i); // Valeur par défaut de la case
         }
     }
 }
@@ -98,10 +98,36 @@ void Carte::afficherConsole(ostream &flux, bool coord)
         for (int j = 0; j < _dimensionGrille; ++j)
         {
             if (coord)
+            {
                 flux << "(" << j << "," << i << ") ";
+            }
             else
-                flux << _grille[i][j] << " ";
+            {
+                _grille[i][j].afficherConsole(flux);
+                flux << " ";
+            }
         }
         flux << endl;
+    }
+}
+
+void Carte::afficher(RenderWindow &window)
+{
+    float tailleCase = Case::getTailleCase();
+    Vector2f positionEcran{0, 0};
+    for (int y = 0; y < _dimensionGrille; ++y)
+    {
+        if (y % 2 == 0) // Décalage hexagonale
+            positionEcran.x += 1.5f * tailleCase;
+
+        for (int x = 0; x < _dimensionGrille; ++x)
+        {
+            cout << positionEcran.x << ", " << positionEcran.y << endl;
+            _grille[y][x].afficher(window, positionEcran);
+            positionEcran.x += 1.5f * tailleCase;
+        }
+        // (sqrt(3) / 2) *
+        positionEcran.y += tailleCase;
+        positionEcran.x = 0;
     }
 }
