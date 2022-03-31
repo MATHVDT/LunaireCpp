@@ -26,7 +26,7 @@ public:
 public:
     ~Carte();
 
-    void initCarte(int taille = 20);
+    void initCarte( RenderWindow &window,int taille = 20);
 
     // Affichage
     void afficherConsole(ostream &flux = cout, bool coord = false);
@@ -37,6 +37,7 @@ public:
 
 private:
     Carte();
+    void ajustageCaseHexagone(RenderWindow &window);
     void deleteGrille();
 };
 

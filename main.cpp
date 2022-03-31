@@ -10,10 +10,9 @@ void testSFML()
     // sf::Vector2i v{0, 0};
 
     int nbCase = 4;
-    Case::setTailleCase(window.getSize().x, nbCase);
 
     Carte* carte= Carte::getInstance();
-    carte->initCarte(nbCase);
+    carte->initCarte(window, nbCase);
 
 
     while (window.isOpen())
