@@ -1,6 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include "Carte.hpp"
 
+using namespace std;
+
+#include <iostream>
+#include <queue>
+
 void testSFML()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
@@ -23,14 +28,37 @@ void testSFML()
     }
 }
 
+void printQueue(priority_queue<int *> gq)
+{
+    priority_queue<int *> g = gq;
+    while (!g.empty())
+    {
+        cout << *g.top() << ", ";
+        g.pop();
+    }
+    cout << '\n';
+}
+
 int main()
 {
     // testSFML();
+    priority_queue<int *> q{};
 
-    Carte::getInstance()->initCarte(10);
+    int *un = new int{1};
+    int *deux = new int{2};
+    int *trois = new int{3};
+    int *quatre = new int{4};
 
-    Carte::getInstance()->afficherConsole();
+    q.push(un);
+    q.push(deux);
+    q.push(trois);
+    q.push(quatre);
 
-    delete Carte::getInstance();
+    printQueue(q);
+    printQueue(q);
+
+    cout << (un < deux) << endl;
+    cout << (un > deux) << endl;
+    cout << (trois < deux) << endl;
     return 0;
 }
