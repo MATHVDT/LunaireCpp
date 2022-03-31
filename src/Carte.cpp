@@ -73,10 +73,25 @@ void Carte::initCarte(int taille)
     for (int i = 0; i < _dimensionGrille; ++i)
     {
         _grille[i] = new Case[_dimensionGrille];
+    }
+
+    float tailleCase = Case::getTailleCase();
+    Vector2f positionEcran{0.f, 0.f};
+
+    for (int i = 0; i < _dimensionGrille; i++)
+    {
+        // Décalage hexagonale une ligne sur deux
+        if (i % 2 == 0) 
+            positionEcran.x += 1.5f * tailleCase;
         for (int j = 0; j < _dimensionGrille; ++j)
         {
-            _grille[i][j].setPosition(j, i); // Valeur par défaut de la case
+            // Position de la forme hexagone
+            _grille[i][j].setPosition(positionEcran); 
+            positionEcran.x += 3.f * tailleCase;
         }
+        // Décalage une demi hauteur d'hexagone
+        positionEcran.y += (sqrt(3) / 2) * tailleCase;
+        positionEcran.x = 0;
     }
 }
 
@@ -115,19 +130,19 @@ void Carte::afficher(RenderWindow &window)
 {
     float tailleCase = Case::getTailleCase();
     Vector2f positionEcran{0, 0};
+
+    RectangleShape rect{Vector2f(2 * tailleCase, 2 * tailleCase)};
+    rect.setPosition(positionEcran);
+    rect.setFillColor(sf::Color::White);
+    window.draw(rect);
+
     for (int y = 0; y < _dimensionGrille; ++y)
     {
-        if (y % 2 == 0) // Décalage hexagonale
-            positionEcran.x += 1.5f * tailleCase;
 
         for (int x = 0; x < _dimensionGrille; ++x)
         {
-            cout << positionEcran.x << ", " << positionEcran.y << endl;
+            // cout << positionEcran.x << ", " << positionEcran.y << endl;
             _grille[y][x].afficher(window, positionEcran);
-            positionEcran.x += 1.5f * tailleCase;
         }
-        // (sqrt(3) / 2) *
-        positionEcran.y += tailleCase;
-        positionEcran.x = 0;
     }
 }

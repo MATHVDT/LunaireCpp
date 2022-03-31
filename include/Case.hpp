@@ -18,11 +18,16 @@ class Case
 private:
     Vector2f _position;
     int _etat;
+    CircleShape _hexagone;
 
     static float _coteHexagoneRayon;
 
 public:
-    Case(float x = 0.f, float y = 0.f);
+    static int _nb;
+
+public:
+    // Case(float x = 0.f, float y = 0.f);
+    Case(Vector2f pos = Vector2f{0.f, 0.f});
     ~Case();
 
     void afficherConsole(ostream &flux = cout);
@@ -31,6 +36,8 @@ public:
 public:
     // Getter
     void setPosition(float x, float y);
+    void setPosition(Vector2f position);
+    int getEtat() { return _etat; }
 
     static float getTailleCase();
 
@@ -60,6 +67,13 @@ inline void Case::setPosition(float x, float y)
 {
     _position.x = x;
     _position.y = y;
+    _hexagone.setPosition(_position);
+}
+
+inline void Case::setPosition(Vector2f position)
+{
+    _position = position;
+    _hexagone.setPosition(_position);
 }
 
 #endif
