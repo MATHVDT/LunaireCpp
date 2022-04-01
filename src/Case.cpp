@@ -5,10 +5,10 @@ int Case::_nb = 0;
 
 Case::Case(Vector2f pos) : _position{pos}, _etat(0), _hexagone{_coteHexagoneRayon, 6}
 {
-    _hexagone.setOrigin(0, 2*_coteHexagoneRayon);
+    _hexagone.setOrigin(0, 1.5f*_coteHexagoneRayon);
     _hexagone.setPosition(_position);
     _hexagone.setRotation(90.f);
-    switch (_nb / 4)
+    switch (_nb / 6)
     {
     case 0:
         _hexagone.setFillColor(Color::Blue);

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <exception>
+#include <math.h>
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
@@ -57,8 +58,9 @@ inline void Case::setTailleCase(RenderWindow &window,
     // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
     uint minEcran = min(window.getSize().x, window.getSize().y);
     uint maxCases = max(nbLignes, nbCcolonnes);
-    _coteHexagoneRayon = (float)minEcran / (1.5 * (float)maxCases + 1.5f);
+    // _coteHexagoneRayon = (float)minEcran / ((float)maxCases + 1.5f);
     // cout << "cote : " << _coteHexagoneRayon << endl;
+    _coteHexagoneRayon = (float)window.getSize().y / ( (float)nbLignes + 2.f) / (float)(sqrt(3) / 2.f);
 }
 
 inline float Case::getTailleCase()

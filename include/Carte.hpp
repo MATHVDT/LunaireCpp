@@ -30,7 +30,8 @@ public:
     ~Carte();
 
     void initCarte(RenderWindow &window,
-                   uint nbLignes = 4, uint nbCcolonnes = 4);
+                   uint nbLignes = 4,
+                   uint nbCcolonnes = 4);
 
     // Affichage
     void afficherConsole(ostream &flux = cout, bool coord = false);
