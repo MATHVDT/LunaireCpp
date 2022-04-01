@@ -20,13 +20,18 @@ class Case
 
 private:
     Vector2f _position;
-    int _etat;
+    SOL _typeSol;
     CircleShape _hexagone; // A remplacer par texture
 
     static float _coteHexagoneRayon;
 
+    // Static
 public:
     static int _nb;
+
+    static float getTailleCase();
+    static void setTailleCase(RenderWindow &window,
+                              uint nbLignes, uint nbCcolonnes);
 
 public:
     // Case(float x = 0.f, float y = 0.f);
@@ -38,14 +43,17 @@ public:
 
 public:
     // Getter
-    void setPosition(float x, float y);
-    void setPosition(Vector2f pos);
-
-    static float getTailleCase();
+    Vector2f getPosition();
+    SOL getTypeSol();
 
     // Setter
-    static void setTailleCase(RenderWindow &window,
-                              uint nbLignes, uint nbCcolonnes);
+    void setCase(Vector2f position,
+                 SOL typeSol = SOL::Vierge);
+
+private:
+    void setPosition(float x, float y);
+    void setPosition(Vector2f pos);
+    void setTypeSol(SOL typeSol);
 };
 
 /**
@@ -62,7 +70,7 @@ inline void Case::setTailleCase(RenderWindow &window,
     uint maxCases = max(nbLignes, nbCcolonnes);
     // _coteHexagoneRayon = (float)minEcran / ((float)maxCases + 1.5f);
     // cout << "cote : " << _coteHexagoneRayon << endl;
-    _coteHexagoneRayon = (float)window.getSize().y / ( (float)nbLignes + 2.f) / (float)(sqrt(3) / 2.f);
+    _coteHexagoneRayon = (float)window.getSize().y / ((float)nbLignes + 2.f) / (float)(sqrt(3) / 2.f);
 }
 
 inline float Case::getTailleCase()
@@ -84,5 +92,14 @@ inline void Case::setPosition(Vector2f pos)
     _hexagone.setPosition(_position);
     _hexagone.setRadius(_coteHexagoneRayon);
 }
+
+inline void Case::setTypeSol(SOL typeSol)
+{
+    _typeSol = typeSol;
+}
+
+inline Vector2f Case::getPosition() { return _position; }
+
+inline SOL Case::getTypeSol() { return _typeSol; }
 
 #endif

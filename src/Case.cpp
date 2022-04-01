@@ -3,9 +3,9 @@
 float Case::_coteHexagoneRayon = 10.f;
 int Case::_nb = 0;
 
-Case::Case(Vector2f pos) : _position{pos}, _etat(0), _hexagone{_coteHexagoneRayon, 6}
+Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}
 {
-    _hexagone.setOrigin(0, 1.5f*_coteHexagoneRayon);
+    _hexagone.setOrigin(0, 1.5f * _coteHexagoneRayon);
     _hexagone.setPosition(_position);
     _hexagone.setRotation(90.f);
     switch (_nb / 6)
@@ -34,10 +34,23 @@ Case::~Case() {}
 
 void Case::afficherConsole(ostream &flux)
 {
-    flux << _etat;
+    flux << (int)_typeSol;
 }
 
 void Case::afficher(RenderWindow &window)
 {
     window.draw(_hexagone);
+}
+
+/**
+ * @brief Init une case
+ *
+ * @param Vector2f - *position*
+ * @param SOL - *typeSol*
+ */
+void Case::setCase(Vector2f position,
+                   SOL typeSol)
+{
+    this->setPosition(position);
+    this->setTypeSol(typeSol);
 }

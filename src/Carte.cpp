@@ -105,7 +105,7 @@ void Carte::ajustageCaseHexagone(RenderWindow &window)
         {
 
             // Position de la forme hexagone
-            _grille[i][j].setPosition(positionEcran);
+            _grille[i][j].setCase(positionEcran, SOL::Vierge);
             positionEcran.x += 3.f * tailleCase;
         }
         positionEcran.y += (sqrt(3) / 2) * tailleCase;
