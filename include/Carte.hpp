@@ -17,7 +17,7 @@ private:
     uint _nbColonnesGrille;
     // Dimension Carte
     uint _nbLignesCarte;   // 1 l_carte = 2 l_grille
-    uint _nbColonnesCarte; // 1 c_carte = 1 c_grille
+    uint _nbColonnesCarte; // 2 c_carte = 1 c_grille
     Case **_grille;        // Matrice [i][j] => i=y et j=x
 
     static int _test;

@@ -44,7 +44,7 @@ TEST_CASE("Initialisation de la carte")
                 ssCaseRef << " ";
             }
 
-            for (uint j = 0; j < Ncolonnes; ++j)
+            for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
                 coordCase = carte->getCoordCase(i, j);
                 ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
@@ -85,7 +85,7 @@ TEST_CASE("Initialisation de la carte")
                 ssCoordRef << " ";
                 ssCaseRef << " ";
             }
-            for (uint j = 0; j < Ncolonnes; ++j)
+            for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
                 coordCase = carte->getCoordCase(i, j);
                 ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
@@ -97,9 +97,8 @@ TEST_CASE("Initialisation de la carte")
 
         // Vérifiaction de la bonne Initialisation
         carte->initCarte(window, Nlignes, Ncolonnes);
-        REQUIRE(carte->getDimensionGrille() == Vector2u(Ncolonnes, 2 * Nlignes));
-        REQUIRE(carte->getDimensionGrille().x == Vector2u(Ncolonnes, 2 * Nlignes).x);
-        REQUIRE(carte->getDimensionGrille().y == Vector2u(Ncolonnes, 2 * Nlignes).y);
+        REQUIRE(carte->getDimensionGrille() == Vector2u(Ncolonnes / 2, 2 * Nlignes));
+        REQUIRE(carte->getDimensionCarte() == Vector2u(Ncolonnes, Nlignes));
 
         stringstream ssCase;
         carte->afficherConsole(ssCase);
