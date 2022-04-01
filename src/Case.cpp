@@ -5,9 +5,9 @@ int Case::_nb = 0;
 
 Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb)
 {
-    _hexagone.setOrigin((float)(sqrt(3) / 2) * _coteHexagoneRayon, _coteHexagoneRayon / 2);
-    _hexagone.setOrigin(0.f,_coteHexagoneRayon);
     _hexagone.setPosition(_position);
+    _hexagone.setOrigin(0, 2 * _coteHexagoneRayon);
+    _hexagone.setOrigin(0.f, _coteHexagoneRayon);
 
     _hexagone.setRotation(90.f);
     switch (_nb / 6)

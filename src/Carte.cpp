@@ -151,15 +151,16 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
         // Décalage hexagonale une ligne sur deux
         if (i % 2 == 0)
         { // Décalage une demi hauteur d'hexagone
-            positionEcran.x += 1.5f * tailleCase;
+            positionEcran.x = (3.5f * tailleCase / 2) ;
         }
         for (uint j = 0; j < _nbColonnesGrille; ++j)
         {
             // Position de la forme hexagone
             _grille[i][j].setPosition(positionEcran);
-            positionEcran.x += 3.f * tailleCase;
+            positionEcran.x += 2.f * tailleCase + (tailleCase * 2 / sqrt(3.f));
         }
         positionEcran.y += (sqrt(3) / 2) * tailleCase;
+        // positionEcran.y +=  tailleCase;
         positionEcran.x = 0;
     }
 }
