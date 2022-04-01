@@ -22,6 +22,7 @@ private:
     Vector2f _position;
     SOL _typeSol;
     CircleShape _hexagone; // A remplacer par texture
+    int _id;
 
     static float _coteHexagoneRayon;
 
@@ -96,7 +97,7 @@ inline void Case::setPosition(Vector2f pos)
 inline void Case::setTypeSol(SOL typeSol)
 {
     _typeSol = typeSol;
-        switch (_typeSol)
+    switch (_typeSol)
     {
     case SOL::Vierge:
         _hexagone.setFillColor(Color::Blue);

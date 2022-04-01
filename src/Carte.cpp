@@ -109,6 +109,7 @@ void Carte::initCarte(RenderWindow &window,
                 _grille[i][j].setTypeSol(static_cast<SOL>(typeSol));
             }
         }
+        ajustageCasesHexagone(window);
 
         monFlux.close(); // Fermeture du fichier
     }

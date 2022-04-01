@@ -5,15 +5,28 @@
 void testSFML()
 {
     float ratio = 16.f / 9.f;
-    uint hauteur_fenetre = 600;
+    uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
-    int nbLignes = 4;
-    int nbColonnes = 6;
+    int nbLignes = 1;
+    int nbColonnes = 2;
     Case::setTailleCase(window, nbLignes, nbColonnes);
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
-    carte->initCarte(window, "./ressource/map.txt");
+    // carte->initCarte(window, "./ressource/map.txt");
+
+    float r = 100.f;
+    float lambda = sqrt(3.f) / 2.f;
+    CircleShape f{r, 6};
+    f.setFillColor(Color::Blue);
+    f.setOrigin(r, r);
+    f.rotate(90);
+    f.setPosition(3*r/2, r*lambda);
+    cout << "lambda     : " << lambda << endl;
+    cout << "lambda * r : " << lambda * r << endl;
+
+    CircleShape point{1};
+    point.setPosition(r, r);
 
     while (window.isOpen())
     {
@@ -25,8 +38,10 @@ void testSFML()
         }
 
         window.clear();
-        carte->afficher(window);
+        // carte->afficher(window);
         // carte->afficherConsole(cout, true);
+        window.draw(f);
+        window.draw(point);
         window.display();
     }
 }
@@ -35,8 +50,5 @@ int main()
 {
     testSFML();
 
-    // Carte::getInstance()->initCarte(10);
-    // Carte::getInstance()->afficherConsole();
-    // delete Carte::getInstance();
     return 0;
 }
