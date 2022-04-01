@@ -13,6 +13,7 @@ void testSFML()
     Case::setTailleCase(window, nbLignes, nbColonnes);
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
+    carte->initCarte(window, "./ressource/map.txt");
 
     while (window.isOpen())
     {
@@ -21,7 +22,6 @@ void testSFML()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-          
         }
 
         window.clear();

@@ -34,7 +34,7 @@ Case::~Case() {}
 
 void Case::afficherConsole(ostream &flux)
 {
-    flux << (int)_typeSol;
+    flux << static_cast<int>(_typeSol);
 }
 
 void Case::afficher(RenderWindow &window)

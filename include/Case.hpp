@@ -47,13 +47,13 @@ public:
     SOL getTypeSol();
 
     // Setter
+    void setPosition(float x, float y);
+    void setPosition(Vector2f pos);
+    void setTypeSol(SOL typeSol);
     void setCase(Vector2f position,
                  SOL typeSol = SOL::Vierge);
 
 private:
-    void setPosition(float x, float y);
-    void setPosition(Vector2f pos);
-    void setTypeSol(SOL typeSol);
 };
 
 /**
@@ -96,6 +96,24 @@ inline void Case::setPosition(Vector2f pos)
 inline void Case::setTypeSol(SOL typeSol)
 {
     _typeSol = typeSol;
+        switch (_typeSol)
+    {
+    case SOL::Vierge:
+        _hexagone.setFillColor(Color::Blue);
+        break;
+    case SOL::Montage:
+        _hexagone.setFillColor(Color::Red);
+        break;
+    case SOL::Trou:
+        _hexagone.setFillColor(Color::Yellow);
+        break;
+    case SOL::GisementFer:
+        _hexagone.setFillColor(Color::Green);
+        break;
+    default:
+        _hexagone.setFillColor(Color::White);
+        break;
+    }
 }
 
 inline Vector2f Case::getPosition() { return _position; }

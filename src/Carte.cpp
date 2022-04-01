@@ -29,7 +29,7 @@ Carte *Carte::getInstance()
  * @brief Constructeur d'une carte, ne crée pas de grille
  *
  */
-Carte::Carte() : _nbColonnesGrille(0), _nbLigneGrille(0), _grille(nullptr) {}
+Carte::Carte() : _nbColonnesGrille(0), _nbLignesGrille(0), _grille(nullptr) {}
 
 /**
  * @brief Destructeur de la carte *(Libère la mémoire associée à la grille)*
@@ -47,16 +47,74 @@ void Carte::deleteGrille()
 {
     try
     {
-        for (uint y = 0; y < _nbLigneGrille; ++y)
+        for (uint y = 0; y < _nbLignesGrille; ++y)
         {
             delete[] _grille[y];
         }
         delete[] _grille;
         _grille = nullptr;
+        _nbLignesGrille = _nbColonnesGrille = 0;
+        _nbLignesCarte = _nbColonnesCarte = 0;
     }
     catch (const exception &e)
     {
         std::cerr << e.what() << '\n';
+    }
+}
+
+/**
+ * @brief Alloue les tableaux pour la grille, et set les attributs dimensions
+ *
+ * @warning L'attribut *_grille* doit être *nullptr*
+ *
+ * @param uint - *nbLignes*
+ * @param uint - *nbColonnes*
+ */
+void Carte::creerGrille(uint nbLignes, uint nbColonnes)
+{
+    _nbLignesCarte = nbLignes;
+    _nbColonnesCarte = nbColonnes;
+    _nbLignesGrille = 2 * _nbLignesCarte;
+    _nbColonnesGrille = _nbColonnesCarte / 2;
+
+    _grille = new Case *[_nbLignesGrille];
+
+    for (uint i = 0; i < _nbLignesGrille; ++i)
+    {
+        _grille[i] = new Case[_nbColonnesGrille];
+    }
+}
+
+void Carte::initCarte(RenderWindow &window,
+                      const string nomFichierMap)
+{
+    // Supprime la grille si elle est déjà existante
+    deleteGrille();
+    uint nbLignes, nbColonnes;
+    int typeSol;
+    ifstream monFlux;
+    monFlux.open(nomFichierMap);
+
+    if (monFlux)
+    {
+        monFlux >> nbLignes;
+        monFlux >> nbColonnes;
+        creerGrille(nbLignes, nbColonnes);
+
+        for (int i = 0; i < _nbLignesGrille; ++i)
+        {
+            for (int j = 0; j < _nbColonnesGrille; ++j)
+            {
+                monFlux >> typeSol;
+                _grille[i][j].setTypeSol(static_cast<SOL>(typeSol));
+            }
+        }
+
+        monFlux.close(); // Fermeture du fichier
+    }
+    else
+    {
+        std::cerr << "/!\\ Erreur d'ouverture du fichier : " << nomFichierMap << " /!\\" << endl;
     }
 }
 
@@ -70,31 +128,24 @@ void Carte::initCarte(RenderWindow &window,
 {
     // Supprime la grille si elle est déjà existante
     deleteGrille();
-
-    _nbLignesCarte = nbLignes;
-    _nbColonnesCarte = nbColonnes;
-    _nbLigneGrille = 2 * _nbLignesCarte;
-    _nbColonnesGrille = _nbColonnesCarte / 2;
-
-    _grille = new Case *[_nbLigneGrille];
-
-    for (uint i = 0; i < _nbLigneGrille; ++i)
-    {
-        _grille[i] = new Case[_nbColonnesGrille];
-    }
-
-    ajustageCaseHexagone(window);
+    creerGrille(nbLignes, nbColonnes);
+    ajustageCasesHexagone(window);
 }
 
-void Carte::ajustageCaseHexagone(RenderWindow &window)
+/**
+ * @brief Ajuste la taille des cases en focntion de la taille de la fenêtre
+ *
+ * @param RenderWindow & - *window*
+ */
+void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
     Case::setTailleCase(window,
-                        _nbLigneGrille, _nbColonnesGrille);
+                        _nbLignesGrille, _nbColonnesGrille);
     float tailleCase = Case::getTailleCase();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
 
-    for (uint i = 0; i < _nbLigneGrille; i++)
+    for (uint i = 0; i < _nbLignesGrille; i++)
     {
         // Décalage hexagonale une ligne sur deux
         if (i % 2 == 0)
@@ -103,9 +154,8 @@ void Carte::ajustageCaseHexagone(RenderWindow &window)
         }
         for (uint j = 0; j < _nbColonnesGrille; ++j)
         {
-
             // Position de la forme hexagone
-            _grille[i][j].setCase(positionEcran, SOL::Vierge);
+            _grille[i][j].setPosition(positionEcran);
             positionEcran.x += 3.f * tailleCase;
         }
         positionEcran.y += (sqrt(3) / 2) * tailleCase;
@@ -125,7 +175,7 @@ void Carte::afficherConsole(ostream &flux, bool coord)
 {
     bool cran = false;
     Vector2u vectCoord;
-    for (uint i = 0; i < _nbLigneGrille; ++i)
+    for (uint i = 0; i < _nbLignesGrille; ++i)
     {
         if (i % 2 == 0)
         {
@@ -159,7 +209,7 @@ void Carte::afficher(RenderWindow &window)
     rect.setFillColor(sf::Color::White);
     window.draw(rect);
 
-    for (uint y = 0; y < _nbLigneGrille; ++y)
+    for (uint y = 0; y < _nbLignesGrille; ++y)
     {
         for (uint x = 0; x < _nbColonnesGrille; ++x)
         {

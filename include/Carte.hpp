@@ -2,6 +2,11 @@
 #define __CARTE_HPP__
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <sstream>
+#include <string>
+
 #include <exception>
 #include <math.h>
 
@@ -13,7 +18,7 @@ class Carte
 {
 private:
     // Dimension Grille
-    uint _nbLigneGrille;
+    uint _nbLignesGrille;
     uint _nbColonnesGrille;
     // Dimension Carte
     uint _nbLignesCarte;   // 1 l_carte = 2 l_grille
@@ -29,6 +34,8 @@ public:
 public:
     ~Carte();
 
+    void initCarte(RenderWindow &window,
+                   const string nomFichierMap);
     void initCarte(RenderWindow &window,
                    uint nbLignes = 4,
                    uint nbCcolonnes = 4);
@@ -49,14 +56,15 @@ public:
 
 private:
     Carte();
-    void ajustageCaseHexagone(RenderWindow &window);
+    void ajustageCasesHexagone(RenderWindow &window);
     void deleteGrille();
+    void creerGrille(uint nbLignes, uint nbColonnes);
 };
 
 // Methode inline
-inline Vector2u Carte::getDimensionGrille() const { return Vector2u{_nbColonnesGrille, _nbLigneGrille}; }
+inline Vector2u Carte::getDimensionGrille() const { return Vector2u{_nbColonnesGrille, _nbLignesGrille}; }
 
-inline uint Carte::getDimensionGrilleLigne() const { return _nbLigneGrille; }
+inline uint Carte::getDimensionGrilleLigne() const { return _nbLignesGrille; }
 
 inline uint Carte::getDimensionGrilleColonne() const { return _nbColonnesGrille; }
 
