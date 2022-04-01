@@ -5,14 +5,12 @@
 void testSFML()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
-    // sf::CircleShape shape(100.f);
-    // shape.setFillColor(sf::Color::Green);
-    // sf::Vector2i v{0, 0};
 
-    int nbCase = 4;
-    Case::setTailleCase(window, nbCase);
+    int nbLignes = 4;
+    int nbColonnes = 4;
+    Case::setTailleCase(window, nbLignes, nbColonnes);
     Carte *carte = Carte::getInstance();
-    carte->initCarte(window, nbCase);
+    carte->initCarte(window, nbLignes, nbColonnes);
 
     while (window.isOpen())
     {
@@ -25,7 +23,8 @@ void testSFML()
 
         window.clear();
         carte->afficher(window);
-        // window.draw(shape);
+        cout << endl;
+        carte->afficherConsole(cout, true);
         window.display();
     }
 }

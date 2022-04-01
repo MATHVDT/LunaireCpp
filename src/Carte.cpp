@@ -29,7 +29,7 @@ Carte *Carte::getInstance()
  * @brief Constructeur d'une carte, ne crée pas de grille
  *
  */
-Carte::Carte() : _dimensionGrille(0), _grille(nullptr) {}
+Carte::Carte() : _nbColonnesGrille(0), _nbLigneGrille(0), _grille(nullptr) {}
 
 /**
  * @brief Destructeur de la carte *(Libère la mémoire associée à la grille)*
@@ -47,8 +47,10 @@ void Carte::deleteGrille()
 {
     try
     {
-        for (int k = 0; k < _dimensionGrille; ++k)
-            delete[] _grille[k];
+        for (uint y = 0; y < _nbLigneGrille; ++y)
+        {
+            delete[] _grille[y];
+        }
         delete[] _grille;
         _grille = nullptr;
     }
@@ -63,16 +65,22 @@ void Carte::deleteGrille()
  *
  * @param int - *taille*
  */
-void Carte::initCarte(RenderWindow &window, int taille)
+void Carte::initCarte(RenderWindow &window,
+                      uint nbLignes, uint nbColonnes)
 {
     // Supprime la grille si elle est déjà existante
     deleteGrille();
 
-    _dimensionGrille = taille;
-    _grille = new Case *[_dimensionGrille];
-    for (int i = 0; i < _dimensionGrille; ++i)
+    _nbLignesCarte = nbLignes;
+    _nbColonnesCarte = nbColonnes;
+    _nbLigneGrille = 2 * _nbLignesCarte;
+    _nbColonnesGrille = _nbColonnesCarte;
+
+    _grille = new Case *[_nbLigneGrille];
+
+    for (uint i = 0; i < _nbLigneGrille; ++i)
     {
-        _grille[i] = new Case[_dimensionGrille];
+        _grille[i] = new Case[_nbColonnesGrille];
     }
 
     ajustageCaseHexagone(window);
@@ -80,26 +88,26 @@ void Carte::initCarte(RenderWindow &window, int taille)
 
 void Carte::ajustageCaseHexagone(RenderWindow &window)
 {
-    Case::setTailleCase(window, 4);
+    Case::setTailleCase(window,
+                        _nbLigneGrille, _nbColonnesGrille);
     float tailleCase = Case::getTailleCase();
     Vector2f positionEcran{0.f, 0.f};
 
-    for (int i = 0; i < _dimensionGrille; i++)
+    for (uint i = 0; i < _nbLigneGrille; i++)
     {
         // Décalage hexagonale une ligne sur deux
         if (i % 2 == 0)
+        { // Décalage une demi hauteur d'hexagone
+            positionEcran.y += (sqrt(3) / 2) * tailleCase;
+            positionEcran.x = 0;
             positionEcran.x += 1.5f * tailleCase;
-        for (int j = 0; j < _dimensionGrille; ++j)
+        }
+        for (uint j = 0; j < _nbColonnesGrille; ++j)
         {
             // Position de la forme hexagone
             _grille[i][j].setPosition(positionEcran);
             positionEcran.x += 3.f * tailleCase;
-            cout << "uuu"<<endl;
         }
-            cout << "xx"<<endl;
-        // Décalage une demi hauteur d'hexagone
-        positionEcran.y += (sqrt(3) / 2) * tailleCase;
-        positionEcran.x = 0;
     }
 }
 
@@ -113,16 +121,21 @@ void Carte::ajustageCaseHexagone(RenderWindow &window)
  */
 void Carte::afficherConsole(ostream &flux, bool coord)
 {
-    for (int i = 0; i < _dimensionGrille; ++i)
+    bool cran = false;
+    Vector2u vectCoord;
+    for (uint i = 0; i < _nbLigneGrille; ++i)
     {
         if (i % 2 == 0)
+        {
             flux << " "; // Décalage hexagonale
+        }
 
-        for (int j = 0; j < _dimensionGrille; ++j)
+        for (uint j = 0; j < _nbColonnesGrille; ++j)
         {
             if (coord)
             {
-                flux << "(" << j << "," << i << ") ";
+                vectCoord = getCoordCase(i, j);
+                flux << "(" << vectCoord.x << "," << vectCoord.y << ") ";
             }
             else
             {
@@ -144,9 +157,9 @@ void Carte::afficher(RenderWindow &window)
     rect.setFillColor(sf::Color::White);
     window.draw(rect);
 
-    for (int y = 0; y < _dimensionGrille; ++y)
+    for (uint y = 0; y < _nbLigneGrille; ++y)
     {
-        for (int x = 0; x < _dimensionGrille; ++x)
+        for (uint x = 0; x < _nbColonnesGrille; ++x)
         {
             _grille[y][x].afficher(window);
         }

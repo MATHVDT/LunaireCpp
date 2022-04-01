@@ -26,7 +26,7 @@ Case::Case(Vector2f pos) : _position{pos}, _etat(0), _hexagone{_coteHexagoneRayo
         _hexagone.setFillColor(Color::White);
         break;
     }
-    cout << Case::_nb++ << endl; // temp pour compter les lignes
+    // cout << Case::_nb++ << endl; // temp pour compter les lignes
 }
 
 Case::~Case() {}

@@ -41,7 +41,8 @@ public:
     static float getTailleCase();
 
     // Setter
-    static void setTailleCase(RenderWindow &window, int nbCase);
+    static void setTailleCase(RenderWindow &window,
+                              uint nbLignes, uint nbCcolonnes);
 };
 
 /**
@@ -50,11 +51,13 @@ public:
  * @param unit - *tailleEcran*
  * @param int - *nbCase*
  */
-inline void Case::setTailleCase(RenderWindow &window, int nbCase)
+inline void Case::setTailleCase(RenderWindow &window,
+                                uint nbLignes, uint nbCcolonnes)
 {
     // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
-    int minEcran = min(window.getSize().x, window.getSize().y);
-    _coteHexagoneRayon = (float)minEcran / (1.5 * (float)nbCase + 1.5f);
+    uint minEcran = min(window.getSize().x, window.getSize().y);
+    uint maxCases = max(nbLignes, nbCcolonnes);
+    _coteHexagoneRayon = (float)minEcran / (1.5 * (float)maxCases + 1.5f);
     // cout << "cote : " << _coteHexagoneRayon << endl;
 }
 

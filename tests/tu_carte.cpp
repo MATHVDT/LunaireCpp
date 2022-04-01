@@ -2,34 +2,41 @@
  * @file tu_carte->cpp
  * @brief
  */
-#include "catch.hpp"
-#include "Carte.hpp"
+#include "../include/catch.hpp"
+#include "../include/Carte.hpp"
+
+#include <../include/SFML/System/Vector2.hpp>
+#include <../include/SFML/Graphics.hpp>
 
 #include <iostream>
 #include <sstream>
 #include <cstring>
 
 using namespace std;
+using namespace sf;
 
 TEST_CASE("Initialisation de la carte")
 {
+    RenderWindow window;
     stringstream ss;
+    Vector2u coordCase;
 
     Carte *carte = Carte::getInstance();
 
     SECTION("Test création objet")
     {
-        REQUIRE(carte->getDimensionGrille() == 0);
+        REQUIRE(carte->getDimensionGrille() == Vector2u(0, 0));
     }
 
     SECTION("Initialisation grille")
     {
-        int N = 10;
+        uint Nlignes = 10;
+        uint Ncolonnes = 10;
         // Pour la comparaison
         stringstream ssCaseRef;
         stringstream ssCoordRef;
 
-        for (int i = 0; i < N; ++i)
+        for (uint i = 0; i < 2 * Nlignes; ++i)
         {
             if (i % 2 == 0)
             { // Décalage hexagonale
@@ -37,16 +44,17 @@ TEST_CASE("Initialisation de la carte")
                 ssCaseRef << " ";
             }
 
-            for (int j = 0; j < N; ++j)
+            for (uint j = 0; j < Ncolonnes; ++j)
             {
-                ssCoordRef << "(" << j << "," << i << ") ";
+                coordCase = carte->getCoordCase(i, j);
+                ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }
             ssCoordRef << endl;
             ssCaseRef << endl;
         }
 
-        carte->initCarte(N); // Initialisation
+        carte->initCarte(window, Nlignes, Ncolonnes); // Initialisation
 
         stringstream ssCase;
         stringstream ssCoord;
@@ -61,24 +69,26 @@ TEST_CASE("Initialisation de la carte")
     SECTION("Plusieurs init de la grille")
     {
         // Initialisation quelconque
-        carte->initCarte(5);
-        carte->initCarte(25);
+        carte->initCarte(window, 10, 8);
+        carte->initCarte(window, 5, 48);
 
-        int N = 10;
+        uint Nlignes = 10;
+        uint Ncolonnes = 10;
         // Pour la comparaison
         stringstream ssCaseRef;
         stringstream ssCoordRef;
 
-        for (int i = 0; i < N; ++i)
+        for (uint i = 0; i < 2 * Nlignes; ++i)
         {
             if (i % 2 == 0)
             { // Décalage hexagonale
                 ssCoordRef << " ";
                 ssCaseRef << " ";
             }
-            for (int j = 0; j < N; ++j)
+            for (uint j = 0; j < Ncolonnes; ++j)
             {
-                ssCoordRef << "(" << j << "," << i << ") ";
+                coordCase = carte->getCoordCase(i, j);
+                ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }
             ssCoordRef << endl;
@@ -86,7 +96,10 @@ TEST_CASE("Initialisation de la carte")
         }
 
         // Vérifiaction de la bonne Initialisation
-        carte->initCarte(N);
+        carte->initCarte(window, Nlignes, Ncolonnes);
+        REQUIRE(carte->getDimensionGrille() == Vector2u(Ncolonnes, 2 * Nlignes));
+        REQUIRE(carte->getDimensionGrille().x == Vector2u(Ncolonnes, 2 * Nlignes).x);
+        REQUIRE(carte->getDimensionGrille().y == Vector2u(Ncolonnes, 2 * Nlignes).y);
 
         stringstream ssCase;
         carte->afficherConsole(ssCase);
@@ -97,6 +110,5 @@ TEST_CASE("Initialisation de la carte")
         REQUIRE(ssCase.str() == ssCaseRef.str());
         REQUIRE(ssCoord.str() == ssCoordRef.str());
     }
-    // delete Carte::getInstance();
     delete carte;
 }
