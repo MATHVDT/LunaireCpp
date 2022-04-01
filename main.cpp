@@ -21,7 +21,7 @@ void testSFML()
     f.setFillColor(Color::Blue);
     f.setOrigin(r, r);
     f.rotate(90);
-    f.setPosition(3*r/2, r*lambda);
+    f.setPosition(3 * r / 2, r * lambda);
     cout << "lambda     : " << lambda << endl;
     cout << "lambda * r : " << lambda * r << endl;
 
