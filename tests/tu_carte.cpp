@@ -2,15 +2,17 @@
  * @file tu_carte->cpp
  * @brief
  */
-#include "../include/catch.hpp"
-#include "../include/Carte.hpp"
-
-#include <../include/SFML/System/Vector2.hpp>
-#include <../include/SFML/Graphics.hpp>
-
 #include <iostream>
 #include <sstream>
 #include <cstring>
+
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
+
+#include "catch.hpp"
+#include "Carte.hpp"
+
+
 
 using namespace std;
 using namespace sf;

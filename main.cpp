@@ -26,7 +26,6 @@ void testSFML()
 
         window.clear();
         carte->afficher(window);
-        cout << endl;
         // carte->afficherConsole(cout, true);
         window.display();
     }

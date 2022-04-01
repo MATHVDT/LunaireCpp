@@ -8,6 +8,8 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "enum_sol.hpp"
+
 using namespace std;
 using namespace sf;
 
@@ -19,7 +21,7 @@ class Case
 private:
     Vector2f _position;
     int _etat;
-    CircleShape _hexagone;
+    CircleShape _hexagone; // A remplacer par texture
 
     static float _coteHexagoneRayon;
 
