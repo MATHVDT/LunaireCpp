@@ -77,11 +77,11 @@ void Carte::creerGrille(uint nbLignes, uint nbColonnes)
     _nbLignesGrille = 2 * _nbLignesCarte;
     _nbColonnesGrille = _nbColonnesCarte / 2;
 
-    _grille = new Case *[_nbLignesGrille];
+    _grille = new CaseMap *[_nbLignesGrille];
 
     for (uint i = 0; i < _nbLignesGrille; ++i)
     {
-        _grille[i] = new Case[_nbColonnesGrille];
+        _grille[i] = new CaseMap[_nbColonnesGrille];
     }
 }
 
@@ -140,9 +140,9 @@ void Carte::initCarte(RenderWindow &window,
  */
 void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
-    Case::setTailleCase(window,
+    CaseMap::setTailleCase(window,
                         _nbLignesGrille, _nbColonnesGrille);
-    float tailleCase = Case::getTailleCase();
+    float tailleCase = CaseMap::getTailleCase();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
 
@@ -202,7 +202,7 @@ void Carte::afficherConsole(ostream &flux, bool coord)
 
 void Carte::afficher(RenderWindow &window)
 {
-    float tailleCase = Case::getTailleCase();
+    float tailleCase = CaseMap::getTailleCase();
     Vector2f positionEcran{0, 0};
 
     // RectangleShape rect{Vector2f(2 * tailleCase, 2 * tailleCase)};

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Carte.hpp"
-#include "Case.hpp"
+#include "CaseMap.hpp"
 
 void testSFML()
 {
@@ -8,11 +8,11 @@ void testSFML()
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
-    Case::chargerSprites("ressource/cheminTexturesCases.txt");
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
     int nbLignes = 1;
     int nbColonnes = 2;
-    Case::setTailleCase(window, nbLignes, nbColonnes);
+    CaseMap::setTailleCase(window, nbLignes, nbColonnes);
 
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
@@ -57,13 +57,15 @@ void testSFML()
 
 void testSFML2()
 {
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
+
     float ratio = 16.f / 9.f;
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
-    int nbLignes = 1;
+    int nbLignes = 2;
     int nbColonnes = 2;
-    Case::setTailleCase(window, nbLignes, nbColonnes);
+    CaseMap::setTailleCase(window, nbLignes, nbColonnes);
 
     // Declare and load a texture
     sf::Texture texture;
@@ -74,11 +76,11 @@ void testSFML2()
     sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
     sprite.setColor(sf::Color(255, 255, 255, 200));
 
-    float scale = 1 / Case::getTailleCase();
+    float scale =  CaseMap::getTailleCase();
     cout << scale << endl;
     //  scale = 0.5;
     cout << scale << endl;
-    cout << sprite.getTextureRect().height<<endl;
+    cout << sprite.getTextureRect().height << endl;
     sprite.setScale(scale, scale);
 
     while (window.isOpen())

@@ -9,7 +9,7 @@
 #include <exception>
 #include <math.h>
 
-#include "Case.hpp"
+#include "CaseMap.hpp"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ private:
     // Dimension Carte
     uint _nbLignesCarte;   // 1 l_carte = 2 l_grille
     uint _nbColonnesCarte; // 2 c_carte = 1 c_grille
-    Case **_grille;        // Matrice [i][j] => i=y et j=x
+    CaseMap **_grille;        // Matrice [i][j] => i=y et j=x
 
     static int _test;
     static Carte *_singleton;

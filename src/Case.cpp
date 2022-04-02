@@ -1,10 +1,12 @@
-#include "Case.hpp"
+#include "CaseMap.hpp"
 
-float Case::_coteHexagoneRayon = 10.f;
-int Case::_nb = 0;
-Texture *Case::_texturesSol[5];
+float CaseMap::_coteHexagoneRayon = 10.f;
+float CaseMap::_coteCaseMap = 5.f;
 
-Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(new Sprite)
+int CaseMap::_nb = 0;
+Texture *CaseMap::_texturesSol[5];
+
+CaseMap::CaseMap(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(new Sprite)
 {
     // set du sol et donc du sprite aussi
     setTypeSol(SOL::Vierge);
@@ -47,14 +49,14 @@ Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_cot
     // cout << Case::_nb++ << endl; // temp pour compter les lignes
 }
 
-Case::~Case() { _sprite = nullptr; }
+CaseMap::~CaseMap() { delete _sprite; }
 
-void Case::afficherConsole(ostream &flux)
+void CaseMap::afficherConsole(ostream &flux)
 {
     flux << static_cast<int>(_typeSol);
 }
 
-void Case::afficher(RenderWindow &window)
+void CaseMap::afficher(RenderWindow &window)
 {
     window.draw(*_sprite);
 }
@@ -65,7 +67,7 @@ void Case::afficher(RenderWindow &window)
  * @param Vector2f - *position*
  * @param SOL - *typeSol*
  */
-void Case::setCase(Vector2f position,
+void CaseMap::setCase(Vector2f position,
                    SOL typeSol)
 {
     this->setPosition(position);
@@ -79,16 +81,17 @@ void Case::setCase(Vector2f position,
  * @param uint - *nbLignesGrille*
  * @param uint - *nbColonnesGrille*
  */
-void Case::setTailleCase(RenderWindow &window,
+void CaseMap::setTailleCase(RenderWindow &window,
                          uint nbLignesGrille,
                          uint nbCcolonnesGrille)
 {
-    // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
     uint minEcran = min(window.getSize().x, window.getSize().y);
     uint maxCases = max(nbLignesGrille, nbCcolonnesGrille);
-    // _coteHexagoneRayon = (float)minEcran / ((float)maxCases + 1.5f);
-    // cout << "cote : " << _coteHexagoneRayon << endl;
-    _coteHexagoneRayon = 2.f * (float)window.getSize().y / (2.f * (float)nbLignesGrille + 1.f);
+
+    float largeurTexture = (float)_texturesSol[0]->getSize().x;
+    cout << "taille texture : " << largeurTexture << endl;
+
+    _coteHexagoneRayon = (float)window.getSize().y / ((float)nbLignesGrille + 0.5f) / largeurTexture;
 }
 
 /**
@@ -97,7 +100,7 @@ void Case::setTailleCase(RenderWindow &window,
  * Charge depuis le fichier les différents chemins de différentes textures des cases, et charge ensuite les textures dans des sprites associés au tableau contenant les différents sprites des cases
  * @param string - *fichierCheminsTexture*
  */
-void Case::chargerSprites(string fichierCheminsTexture)
+void CaseMap::chargerSprites(string fichierCheminsTexture)
 {
     string nomFichierTexture[5];
     string cheminTexture;
@@ -134,7 +137,7 @@ void Case::chargerSprites(string fichierCheminsTexture)
  * @brief Libère la mémoire des sprites de cases chargées
  * @warning Les cases ne doivent plus être utilisées après
  */
-void Case::dechargerSprites()
+void CaseMap::dechargerSprites()
 {
     for (int k = 0; k < 5; ++k) // 5 defini en dur !
     {

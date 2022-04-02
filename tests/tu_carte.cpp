@@ -11,7 +11,7 @@
 
 #include "catch.hpp"
 #include "Carte.hpp"
-#include "Case.hpp"
+#include "CaseMap.hpp"
 
 using namespace std;
 using namespace sf;
@@ -21,7 +21,7 @@ TEST_CASE("Initialisation de la carte")
     RenderWindow window;
     stringstream ss;
     Vector2u coordCase;
-    Case::chargerSprites("ressource/cheminTexturesCases.txt");
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
     Carte *carte = Carte::getInstance();
 
@@ -112,6 +112,6 @@ TEST_CASE("Initialisation de la carte")
         REQUIRE(ssCoord.str() == ssCoordRef.str());
     }
     delete carte;
-    Case::dechargerSprites();
+    CaseMap::dechargerSprites();
     window.close();
 }
