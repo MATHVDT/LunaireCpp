@@ -8,12 +8,12 @@ void testSFML()
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
-Case::chargerSprites("ressource/cheminTexturesCases.txt");
-
+    Case::chargerSprites("ressource/cheminTexturesCases.txt");
 
     int nbLignes = 1;
     int nbColonnes = 2;
     Case::setTailleCase(window, nbLignes, nbColonnes);
+
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
     // carte->initCarte(window, "./ressource/map.txt");
@@ -55,9 +55,57 @@ Case::chargerSprites("ressource/cheminTexturesCases.txt");
     }
 }
 
+void testSFML2()
+{
+    float ratio = 16.f / 9.f;
+    uint hauteur_fenetre = 800;
+    sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
+
+    int nbLignes = 1;
+    int nbColonnes = 2;
+    Case::setTailleCase(window, nbLignes, nbColonnes);
+
+    // Declare and load a texture
+    sf::Texture texture;
+    texture.loadFromFile("ressource/hexagone_regulier_gris.png");
+    // Create a sprite
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
+    sprite.setColor(sf::Color(255, 255, 255, 200));
+
+    float scale = 1 / Case::getTailleCase();
+    cout << scale << endl;
+    //  scale = 0.5;
+    cout << scale << endl;
+    cout << sprite.getTextureRect().height<<endl;
+    sprite.setScale(scale, scale);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+
+            if (event.type == sf::Event::KeyPressed)
+                window.close();
+        }
+
+        window.clear();
+
+        window.draw(sprite);
+
+        window.display();
+    }
+}
+
 int main()
 {
-    testSFML();
+    // testSFML();
+
+    testSFML2();
 
     return 0;
 }

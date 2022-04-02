@@ -30,7 +30,7 @@ private:
 private:
     static int _nb;
     static float _coteHexagoneRayon;
-    static Sprite *_spritesSol[5];
+    static Texture *_texturesSol[5];
 
 public:
     static float getTailleCase();
@@ -92,24 +92,6 @@ inline void Case::setTypeSol(SOL typeSol)
 {
     _typeSol = typeSol;
     setSprite();
-    switch (_typeSol)
-    {
-    case SOL::Vierge:
-        _hexagone.setFillColor(Color::Blue);
-        break;
-    case SOL::Montage:
-        _hexagone.setFillColor(Color::Red);
-        break;
-    case SOL::Trou:
-        _hexagone.setFillColor(Color::Yellow);
-        break;
-    case SOL::GisementFer:
-        _hexagone.setFillColor(Color::Green);
-        break;
-    default:
-        _hexagone.setFillColor(Color::White);
-        break;
-    }
 }
 
 inline Vector2f Case::getPosition() { return _position; }
@@ -118,7 +100,7 @@ inline SOL Case::getTypeSol() { return _typeSol; }
 
 inline void Case::setSprite()
 {
-    _sprite = _spritesSol[static_cast<int>(_typeSol)];
+    _sprite->setTexture(*_texturesSol[static_cast<int>(_typeSol)]);
 }
 
 #endif

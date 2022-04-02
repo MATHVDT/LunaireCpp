@@ -2,12 +2,13 @@
 
 float Case::_coteHexagoneRayon = 10.f;
 int Case::_nb = 0;
-Sprite *Case::_spritesSol[5];
+Texture *Case::_texturesSol[5];
 
-Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(nullptr)
+Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(new Sprite)
 {
     // set du sol et donc du sprite aussi
     setTypeSol(SOL::Vierge);
+    setSprite();
 
     _hexagone.setPosition(_position);
     _hexagone.setOrigin(0, 2 * _coteHexagoneRayon);
@@ -74,18 +75,20 @@ void Case::setCase(Vector2f position,
 /**
  * @brief Défini la taille d'une case => cotés de l'hexagone
  * @warning Semble ne pas être utile car les dimensions sont ajustées en fonction de la taille de la fenêtre
- * @param unit - *tailleEcran*
- * @param int - *nbCase*
+ * @param RenderWindow & - *window*
+ * @param uint - *nbLignesGrille*
+ * @param uint - *nbColonnesGrille*
  */
 void Case::setTailleCase(RenderWindow &window,
-                         uint nbLignes, uint nbCcolonnes)
+                         uint nbLignesGrille,
+                         uint nbCcolonnesGrille)
 {
     // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
     uint minEcran = min(window.getSize().x, window.getSize().y);
-    uint maxCases = max(nbLignes, nbCcolonnes);
+    uint maxCases = max(nbLignesGrille, nbCcolonnesGrille);
     // _coteHexagoneRayon = (float)minEcran / ((float)maxCases + 1.5f);
     // cout << "cote : " << _coteHexagoneRayon << endl;
-    _coteHexagoneRayon = (float)window.getSize().y / ((float)nbLignes + 2.f) / (float)(sqrt(3) / 2.f);
+    _coteHexagoneRayon = 2.f * (float)window.getSize().y / (2.f * (float)nbLignesGrille + 1.f);
 }
 
 /**
@@ -98,9 +101,7 @@ void Case::chargerSprites(string fichierCheminsTexture)
 {
     string nomFichierTexture[5];
     string cheminTexture;
-    sf::Texture texture;
-
-    Sprite *sprite;
+    sf::Texture *texture;
 
     std::ifstream monFlux;
     monFlux.open(fichierCheminsTexture);
@@ -113,13 +114,12 @@ void Case::chargerSprites(string fichierCheminsTexture)
             monFlux >> cheminTexture;
 
             // Declare and load a texture
-            texture.loadFromFile(cheminTexture);
 
             // Create a new sprite
-            sprite = new Sprite();
-            sprite->setTexture(texture);
+            texture = new Texture();
+            texture->loadFromFile(cheminTexture);
 
-            _spritesSol[k] = sprite;
+            _texturesSol[k] = texture;
         }
 
         monFlux.close();
@@ -138,6 +138,6 @@ void Case::dechargerSprites()
 {
     for (int k = 0; k < 5; ++k) // 5 defini en dur !
     {
-        delete _spritesSol[k];
+        delete _texturesSol[k];
     }
 }
