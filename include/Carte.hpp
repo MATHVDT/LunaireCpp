@@ -22,7 +22,7 @@ private:
     // Dimension Carte
     uint _nbLignesCarte;   // 1 l_carte = 2 l_grille
     uint _nbColonnesCarte; // 2 c_carte = 1 c_grille
-    CaseMap **_grille;        // Matrice [i][j] => i=y et j=x
+    CaseMap **_grille;     // Matrice [i][j] => i=y et j=x
 
     static int _test;
     static Carte *_singleton;
@@ -53,6 +53,16 @@ public:
 
     Vector2u getCoordCase(uint i, uint j) const;
 
+    // Convertisseur coordonnées
+    static Vector2u matriceToCarte(Vector2u cMat);
+    static Vector2u carteToMatrice(Vector2u cCarte);
+
+    static Vector2u matriceToPositionEcran(Vector2u);
+    static Vector2u positionEcranToMatrice(Vector2u);
+
+    static Vector2u carteToPositionEcran(Vector2u);
+    static Vector2u positionEcranToCarte(Vector2u);
+
 private:
     Carte();
     void ajustageCasesHexagone(RenderWindow &window);
@@ -60,20 +70,6 @@ private:
     void creerGrille(uint nbLignes, uint nbColonnes);
 };
 
-// Methode inline
-inline Vector2u Carte::getDimensionGrille() const { return Vector2u{_nbColonnesGrille, _nbLignesGrille}; }
-
-inline uint Carte::getDimensionGrilleLigne() const { return _nbLignesGrille; }
-
-inline uint Carte::getDimensionGrilleColonne() const { return _nbColonnesGrille; }
-
-inline Vector2u Carte::getDimensionCarte() const { return Vector2u(_nbColonnesCarte, _nbLignesCarte); }
-inline uint Carte::getNbLignes() const { return _nbLignesCarte; }
-inline uint Carte::getNbColonnes() const { return _nbLignesCarte; }
-
-inline Vector2u Carte::getCoordCase(uint i, uint j) const
-{
-    return Vector2u(2 * j + (1 - (i % 2)), i / 2);
-}
+#include "CarteInline.hpp"
 
 #endif

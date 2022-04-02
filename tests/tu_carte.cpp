@@ -115,3 +115,25 @@ TEST_CASE("Initialisation de la carte")
     CaseMap::dechargerSprites();
     window.close();
 }
+
+TEST_CASE("Convertisseur coordonnées")
+{
+
+    SECTION("matriceToCarte")
+    {
+        REQUIRE(Carte::matriceToCarte(Vector2u(0, 0)) == Vector2u(1, 0));
+        REQUIRE(Carte::matriceToCarte(Vector2u(2, 2)) == Vector2u(5, 1));
+        REQUIRE(Carte::matriceToCarte(Vector2u(3, 4)) == Vector2u(7, 2));
+        REQUIRE(Carte::matriceToCarte(Vector2u(4, 3)) == Vector2u(8, 1));
+        REQUIRE(Carte::matriceToCarte(Vector2u(5, 5)) == Vector2u(10, 2));
+    }
+
+    SECTION("carteToMatrice")
+    {
+        REQUIRE(Carte::carteToMatrice(Vector2u(0, 0)) == Vector2u(0, 1));
+        REQUIRE(Carte::carteToMatrice(Vector2u(2, 2)) == Vector2u(1, 5));
+        REQUIRE(Carte::carteToMatrice(Vector2u(3, 4)) == Vector2u(1, 8));
+        REQUIRE(Carte::carteToMatrice(Vector2u(4, 3)) == Vector2u(2, 7));
+        REQUIRE(Carte::carteToMatrice(Vector2u(5, 5)) == Vector2u(2, 10));
+    }
+}

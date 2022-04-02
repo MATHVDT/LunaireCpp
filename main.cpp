@@ -10,9 +10,9 @@ void testSFML()
 
     CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
-    int nbLignes = 1;
-    int nbColonnes = 2;
-    CaseMap::setTailleCase(window, nbLignes, nbColonnes);
+    int nbLignes = 6;
+    int nbColonnes = 12;
+    CaseMap::setTailleCaseMap(window, nbLignes, nbColonnes);
 
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
@@ -50,9 +50,9 @@ void testSFML()
         // window.draw(f);
         // window.draw(p1);
         // window.draw(p2);
-        // carte->afficherConsole(cout, true);
         window.display();
     }
+    carte->afficherConsole(cout, true);
 }
 
 void testSFML2()
@@ -63,9 +63,9 @@ void testSFML2()
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
-    int nbLignes = 2;
+    int nbLignes = 10;
     int nbColonnes = 2;
-    CaseMap::setTailleCase(window, nbLignes, nbColonnes);
+    CaseMap::setTailleCaseMap(window, nbLignes, nbColonnes);
 
     // Declare and load a texture
     sf::Texture texture;
@@ -76,7 +76,7 @@ void testSFML2()
     sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
     sprite.setColor(sf::Color(255, 255, 255, 200));
 
-    float scale =  CaseMap::getTailleCase();
+    float scale = CaseMap::getTailleCaseMap();
     cout << scale << endl;
     //  scale = 0.5;
     cout << scale << endl;
@@ -107,7 +107,15 @@ int main()
 {
     // testSFML();
 
-    testSFML2();
+    // testSFML2();
+    Vector2u v(4, 3);
+    cout << "v_x  : " << v.x << ", v_y  : " << v.y << endl;
+
+    // Vector2u vt = Carte::matriceToCarte(v);
+    Vector2u vt = Carte::carteToMatrice(v);
+    cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
     return 0;
 }
+
+

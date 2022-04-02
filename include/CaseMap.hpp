@@ -20,23 +20,25 @@ class CaseMap
 {
 
 private:
+    int _id;
     Vector2f _position;
     SOL _typeSol;
-    CircleShape _hexagone; // A remplacer par texture
-    int _id;
     Sprite *_sprite;
 
     // Static
 private:
     static int _nb;
-    static float _coteCaseMap;
+    static float _tailleCaseMap;
     static Texture *_texturesSol[5];
     static float _coteHexagoneRayon;
 
 public:
-    static float getTailleCase();
-    static void setTailleCase(RenderWindow &window,
-                              uint nbLignes, uint nbCcolonnes);
+    static float getTailleCaseMap();
+    static void setTailleCaseMap(
+        RenderWindow &window,
+        uint nbLignes,
+        uint nbCcolonnes);
+
     static void chargerSprites(string fichierCheminsTexture);
     static void dechargerSprites();
 
@@ -57,12 +59,14 @@ public:
     void setPosition(float x, float y);
     void setPosition(Vector2f pos);
     void setTypeSol(SOL typeSol);
-    void setSprite();
+    void setSpriteTexture();
+    void setSpriteTexture(SOL typeSol);
+
     void setCase(Vector2f position,
                  SOL typeSol = SOL::Vierge);
 };
 
-inline float CaseMap::getTailleCase()
+inline float CaseMap::getTailleCaseMap()
 {
     return _coteHexagoneRayon;
 }
@@ -71,37 +75,32 @@ inline void CaseMap::setPosition(float x, float y)
 {
     _position.x = x;
     _position.y = y;
-    _hexagone.setPosition(_position);
-    _hexagone.setRadius(_coteHexagoneRayon);
     _sprite->setPosition(_position);
-    _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
 }
 
 inline void CaseMap::setPosition(Vector2f pos)
 {
     _position = pos;
-    _hexagone.setPosition(_position);
-    _hexagone.setRadius(_coteHexagoneRayon);
-    if (_sprite != nullptr)
-    {
-        _sprite->setPosition(_position);
-        _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
-    }
+    _sprite->setPosition(_position);
 }
 
 inline void CaseMap::setTypeSol(SOL typeSol)
 {
     _typeSol = typeSol;
-    setSprite();
 }
 
 inline Vector2f CaseMap::getPosition() { return _position; }
 
 inline SOL CaseMap::getTypeSol() { return _typeSol; }
 
-inline void CaseMap::setSprite()
+inline void CaseMap::setSpriteTexture()
 {
     _sprite->setTexture(*_texturesSol[static_cast<int>(_typeSol)]);
+}
+
+inline void CaseMap::setSpriteTexture(SOL typeSol)
+{
+    _sprite->setTexture(*_texturesSol[static_cast<int>(typeSol)]);
 }
 
 #endif

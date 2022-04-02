@@ -1,52 +1,15 @@
 #include "CaseMap.hpp"
 
 float CaseMap::_coteHexagoneRayon = 10.f;
-float CaseMap::_coteCaseMap = 5.f;
+float CaseMap::_tailleCaseMap = 5.f;
 
 int CaseMap::_nb = 0;
 Texture *CaseMap::_texturesSol[5];
 
-CaseMap::CaseMap(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(new Sprite)
+CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierge), _sprite(new Sprite)
 {
     // set du sol et donc du sprite aussi
-    setTypeSol(SOL::Vierge);
-    setSprite();
-
-    _hexagone.setPosition(_position);
-    _hexagone.setOrigin(0, 2 * _coteHexagoneRayon);
-    _hexagone.setOrigin(0.f, _coteHexagoneRayon);
-    if (_id == 1)
-    {
-        _hexagone.setOutlineColor(Color::Yellow);
-        _hexagone.setOutlineThickness(1.f);
-    }
-    if (_id == 0)
-    {
-        _hexagone.setOutlineColor(Color::Red);
-        _hexagone.setOutlineThickness(1.f);
-    }
-
-    _hexagone.setRotation(90.f);
-    switch (_nb / 6)
-    {
-    case 0:
-        _hexagone.setFillColor(Color::Blue);
-        break;
-    case 1:
-        _hexagone.setFillColor(Color::Red);
-        break;
-    case 2:
-        _hexagone.setFillColor(Color::Yellow);
-        break;
-    case 3:
-        _hexagone.setFillColor(Color::Green);
-        break;
-    default:
-        _hexagone.setFillColor(Color::White);
-        break;
-    }
-    _nb++;
-    // cout << Case::_nb++ << endl; // temp pour compter les lignes
+    setCase(_position, _typeSol);
 }
 
 CaseMap::~CaseMap() { delete _sprite; }
@@ -58,6 +21,7 @@ void CaseMap::afficherConsole(ostream &flux)
 
 void CaseMap::afficher(RenderWindow &window)
 {
+    _sprite->setScale(_tailleCaseMap, _tailleCaseMap);
     window.draw(*_sprite);
 }
 
@@ -68,10 +32,11 @@ void CaseMap::afficher(RenderWindow &window)
  * @param SOL - *typeSol*
  */
 void CaseMap::setCase(Vector2f position,
-                   SOL typeSol)
+                      SOL typeSol)
 {
     this->setPosition(position);
     this->setTypeSol(typeSol);
+    this->setSpriteTexture(typeSol);
 }
 
 /**
@@ -81,9 +46,9 @@ void CaseMap::setCase(Vector2f position,
  * @param uint - *nbLignesGrille*
  * @param uint - *nbColonnesGrille*
  */
-void CaseMap::setTailleCase(RenderWindow &window,
-                         uint nbLignesGrille,
-                         uint nbCcolonnesGrille)
+void CaseMap::setTailleCaseMap(RenderWindow &window,
+                               uint nbLignesGrille,
+                               uint nbCcolonnesGrille)
 {
     uint minEcran = min(window.getSize().x, window.getSize().y);
     uint maxCases = max(nbLignesGrille, nbCcolonnesGrille);

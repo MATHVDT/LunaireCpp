@@ -140,9 +140,11 @@ void Carte::initCarte(RenderWindow &window,
  */
 void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
-    CaseMap::setTailleCase(window,
-                        _nbLignesGrille, _nbColonnesGrille);
-    float tailleCase = CaseMap::getTailleCase();
+    // Recalcule de la taille d'une case
+    CaseMap::setTailleCaseMap(window,
+                              _nbLignesGrille,
+                              _nbColonnesGrille);
+    float tailleCase = CaseMap::getTailleCaseMap();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
 
@@ -202,7 +204,7 @@ void Carte::afficherConsole(ostream &flux, bool coord)
 
 void Carte::afficher(RenderWindow &window)
 {
-    float tailleCase = CaseMap::getTailleCase();
+    float tailleCase = CaseMap::getTailleCaseMap();
     Vector2f positionEcran{0, 0};
 
     // RectangleShape rect{Vector2f(2 * tailleCase, 2 * tailleCase)};
