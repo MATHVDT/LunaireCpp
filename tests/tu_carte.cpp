@@ -2,34 +2,43 @@
  * @file tu_carte->cpp
  * @brief
  */
-#include "catch.hpp"
-#include "Carte.hpp"
-
 #include <iostream>
 #include <sstream>
 #include <cstring>
 
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
+
+#include "catch.hpp"
+#include "Carte.hpp"
+#include "CaseMap.hpp"
+
 using namespace std;
+using namespace sf;
 
 TEST_CASE("Initialisation de la carte")
 {
+    RenderWindow window;
     stringstream ss;
+    Vector2u coordCase;
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
     Carte *carte = Carte::getInstance();
 
     SECTION("Test création objet")
     {
-        REQUIRE(carte->getDimensionGrille() == 0);
+        REQUIRE(carte->getDimensionGrille() == Vector2u(0, 0));
     }
 
     SECTION("Initialisation grille")
     {
-        int N = 10;
+        uint Nlignes = 10;
+        uint Ncolonnes = 10;
         // Pour la comparaison
         stringstream ssCaseRef;
         stringstream ssCoordRef;
 
-        for (int i = 0; i < N; ++i)
+        for (uint i = 0; i < 2 * Nlignes; ++i)
         {
             if (i % 2 == 0)
             { // Décalage hexagonale
@@ -37,16 +46,17 @@ TEST_CASE("Initialisation de la carte")
                 ssCaseRef << " ";
             }
 
-            for (int j = 0; j < N; ++j)
+            for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
-                ssCoordRef << "(" << j << "," << i << ") ";
+                coordCase = carte->getCoordCase(i, j);
+                ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }
             ssCoordRef << endl;
             ssCaseRef << endl;
         }
 
-        carte->initCarte(N); // Initialisation
+        carte->initCarte(window, Nlignes, Ncolonnes); // Initialisation
 
         stringstream ssCase;
         stringstream ssCoord;
@@ -61,24 +71,26 @@ TEST_CASE("Initialisation de la carte")
     SECTION("Plusieurs init de la grille")
     {
         // Initialisation quelconque
-        carte->initCarte(5);
-        carte->initCarte(25);
+        carte->initCarte(window, 10, 8);
+        carte->initCarte(window, 5, 48);
 
-        int N = 10;
+        uint Nlignes = 10;
+        uint Ncolonnes = 10;
         // Pour la comparaison
         stringstream ssCaseRef;
         stringstream ssCoordRef;
 
-        for (int i = 0; i < N; ++i)
+        for (uint i = 0; i < 2 * Nlignes; ++i)
         {
             if (i % 2 == 0)
             { // Décalage hexagonale
                 ssCoordRef << " ";
                 ssCaseRef << " ";
             }
-            for (int j = 0; j < N; ++j)
+            for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
-                ssCoordRef << "(" << j << "," << i << ") ";
+                coordCase = carte->getCoordCase(i, j);
+                ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }
             ssCoordRef << endl;
@@ -86,7 +98,9 @@ TEST_CASE("Initialisation de la carte")
         }
 
         // Vérifiaction de la bonne Initialisation
-        carte->initCarte(N);
+        carte->initCarte(window, Nlignes, Ncolonnes);
+        REQUIRE(carte->getDimensionGrille() == Vector2u(Ncolonnes / 2, 2 * Nlignes));
+        REQUIRE(carte->getDimensionCarte() == Vector2u(Ncolonnes, Nlignes));
 
         stringstream ssCase;
         carte->afficherConsole(ssCase);
@@ -97,6 +111,29 @@ TEST_CASE("Initialisation de la carte")
         REQUIRE(ssCase.str() == ssCaseRef.str());
         REQUIRE(ssCoord.str() == ssCoordRef.str());
     }
-    // delete Carte::getInstance();
     delete carte;
+    CaseMap::dechargerSprites();
+    window.close();
+}
+
+TEST_CASE("Convertisseur coordonnées")
+{
+
+    SECTION("matriceToCarte")
+    {
+        REQUIRE(Carte::matriceToCarte(Vector2u(0, 0)) == Vector2u(1, 0));
+        REQUIRE(Carte::matriceToCarte(Vector2u(2, 2)) == Vector2u(5, 1));
+        REQUIRE(Carte::matriceToCarte(Vector2u(3, 4)) == Vector2u(7, 2));
+        REQUIRE(Carte::matriceToCarte(Vector2u(4, 3)) == Vector2u(8, 1));
+        REQUIRE(Carte::matriceToCarte(Vector2u(5, 5)) == Vector2u(10, 2));
+    }
+
+    SECTION("carteToMatrice")
+    {
+        REQUIRE(Carte::carteToMatrice(Vector2u(0, 0)) == Vector2u(0, 1));
+        REQUIRE(Carte::carteToMatrice(Vector2u(2, 2)) == Vector2u(1, 5));
+        REQUIRE(Carte::carteToMatrice(Vector2u(3, 4)) == Vector2u(1, 8));
+        REQUIRE(Carte::carteToMatrice(Vector2u(4, 3)) == Vector2u(2, 7));
+        REQUIRE(Carte::carteToMatrice(Vector2u(5, 5)) == Vector2u(2, 10));
+    }
 }
