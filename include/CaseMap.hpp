@@ -40,8 +40,8 @@ public:
     static float getTailleTexture();
     static void setScaleCaseMap(
         RenderWindow &window,
-        uint nbLignes,
-        uint nbCcolonnes);
+        uint nbLignesCarte,
+        uint nbCcolonnesCarte);
 
     static void chargerSprites(string fichierCheminsTexture);
     static void dechargerSprites();

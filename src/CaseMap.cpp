@@ -53,15 +53,13 @@ void CaseMap::setCase(Vector2f position,
  * @param uint - *nbColonnesGrille*
  */
 void CaseMap::setScaleCaseMap(RenderWindow &window,
-                              uint nbLignesGrille,
-                              uint nbCcolonnesGrille)
+                              uint nbLignesCarte,
+                              uint nbCcolonnesCarte)
 {
     uint minEcran = min(window.getSize().x, window.getSize().y);
-    uint maxCases = max(nbLignesGrille, nbCcolonnesGrille);
+    uint maxCases = max(nbLignesCarte, nbCcolonnesCarte);
 
-    // cout << "taille texture : " << largeurTexture << endl;
-
-    _scaleCaseMape = (float)window.getSize().y / ((float)nbLignesGrille + 0.5f) / _tailleTexture;
+    _scaleCaseMape = (float)window.getSize().y / ((float)nbLignesCarte + 0.5f) / _tailleTexture;
     _tailleCaseMap = (float)_tailleTexture * _scaleCaseMape;
 }
 

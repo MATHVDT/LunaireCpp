@@ -12,7 +12,7 @@ void testSFML()
 
     int nbLignes = 1;
     int nbColonnes = 1;
-    CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
+    // CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
 
     Carte *carte = Carte::getInstance();
     // carte->initCarte(window, nbLignes, nbColonnes);
@@ -26,7 +26,10 @@ void testSFML()
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed)
-                window.close();
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    window.close();
+            }
         }
 
         window.clear();

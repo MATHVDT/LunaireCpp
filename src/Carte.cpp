@@ -142,8 +142,8 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
     // Recalcule de la taille d'une case
     CaseMap::setScaleCaseMap(window,
-                             _nbLignesGrille,
-                             _nbColonnesGrille);
+                             _nbLignesCarte,
+                             _nbColonnesCarte);
     float tailleCase = CaseMap::getScaleCaseMap();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
@@ -173,7 +173,7 @@ void Carte::setCaseEcran(RenderWindow &window)
     Vector2u coordCarte;
     Vector2f coordEcran;
 
-    CaseMap::setScaleCaseMap(window, _nbLignesGrille, _nbColonnesGrille);
+    CaseMap::setScaleCaseMap(window, _nbLignesCarte, _nbColonnesCarte);
 
     for (int i = 0; i < _nbLignesGrille; ++i)
     {
