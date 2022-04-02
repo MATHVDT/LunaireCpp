@@ -6,6 +6,23 @@ using namespace std;
 #include <iostream>
 #include <queue>
 
+void testSFML();
+void testQueue();
+
+void printQueue(priority_queue<int *> gq);
+
+
+
+int main()
+{
+    // testSFML();
+    // testQueue();
+
+
+
+    return 0;
+}
+
 void testSFML()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
@@ -27,7 +44,6 @@ void testSFML()
         window.display();
     }
 }
-
 void printQueue(priority_queue<int *> gq)
 {
     priority_queue<int *> g = gq;
@@ -38,10 +54,8 @@ void printQueue(priority_queue<int *> gq)
     }
     cout << '\n';
 }
-
-int main()
+void testQueue()
 {
-    // testSFML();
     priority_queue<int *> q{};
 
     int *un = new int{1};
@@ -60,5 +74,4 @@ int main()
     cout << (un < deux) << endl;
     cout << (un > deux) << endl;
     cout << (trois < deux) << endl;
-    return 0;
 }
