@@ -13,8 +13,6 @@
 #include "Carte.hpp"
 #include "Case.hpp"
 
-
-
 using namespace std;
 using namespace sf;
 
@@ -115,4 +113,5 @@ TEST_CASE("Initialisation de la carte")
     }
     delete carte;
     Case::dechargerSprites();
+    window.close();
 }
