@@ -16,7 +16,7 @@ void testSFML()
 
     Carte *carte = Carte::getInstance();
     // carte->initCarte(window, nbLignes, nbColonnes);
-    carte->initCarte(window, "./ressource/map0.txt");
+    carte->initCarte(window, "./ressource/map.txt");
 
     while (window.isOpen())
     {
