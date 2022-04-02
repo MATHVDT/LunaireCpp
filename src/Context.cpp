@@ -10,3 +10,5 @@ Context &Context::getInstance()
 {
     return _singleton;
 }
+
+void Context::init() {}
