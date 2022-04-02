@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Carte.hpp"
 #include "CaseMap.hpp"
+#include "Context.hpp"
 
 using namespace std;
 
@@ -109,9 +110,9 @@ void testSFML2()
         window.display();
     }
 }
+
 void printQueue(priority_queue<int *> gq)
 {
-<<<<<<< HEAD
     priority_queue<int *> g = gq;
     while (!g.empty())
     {
@@ -141,18 +142,3 @@ void testQueue()
     cout << (un > deux) << endl;
     cout << (trois < deux) << endl;
 }
-=======
-    testSFML();
-
-    // testSFML2();
-
-    // Vector2u v(4, 3);
-    // cout << "v_x  : " << v.x << ", v_y  : " << v.y << endl;
-
-    // // Vector2u vt = Carte::matriceToCarte(v);
-    // Vector2u vt = Carte::carteToMatrice(v);
-    // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
-
-    return 0;
-}
->>>>>>> context
