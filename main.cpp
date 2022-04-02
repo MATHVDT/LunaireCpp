@@ -12,29 +12,11 @@ void testSFML()
 
     int nbLignes = 6;
     int nbColonnes = 12;
-    CaseMap::setTailleCaseMap(window, nbLignes, nbColonnes);
+    CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
 
     Carte *carte = Carte::getInstance();
-    carte->initCarte(window, nbLignes, nbColonnes);
-    // carte->initCarte(window, "./ressource/map.txt");
-
-    // float r = 100.f;
-    // float lambda = sqrt(3.f) / 2.f;
-    // CircleShape f{r, 6};
-    // f.setFillColor(Color::Blue);
-    // f.setOrigin(r, r);
-    // f.rotate(90);
-    // f.setOrigin(0,2*r);
-    // f.setPosition(0.f, 0.f);
-    // cout << "lambda     : " << lambda << endl;
-    // cout << "lambda * r : " << lambda * r << endl;
-
-    // CircleShape p1{3};
-    // CircleShape p2{3};
-
-    // p1.setPosition(r, r);
-    // // p2.setPosition(2 * lambda * r, 2 * r);
-    // // p1.setPosition(lambda*r, r);
+    // carte->initCarte(window, nbLignes, nbColonnes);
+    carte->initCarte(window, "./ressource/map.txt");
 
     while (window.isOpen())
     {
@@ -43,16 +25,16 @@ void testSFML()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyPressed)
+                window.close();
         }
 
         window.clear();
         carte->afficher(window);
-        // window.draw(f);
-        // window.draw(p1);
-        // window.draw(p2);
+
         window.display();
     }
-    carte->afficherConsole(cout, true);
+    // carte->afficherConsole(cout, true);
 }
 
 void testSFML2()
@@ -65,7 +47,7 @@ void testSFML2()
 
     int nbLignes = 10;
     int nbColonnes = 2;
-    CaseMap::setTailleCaseMap(window, nbLignes, nbColonnes);
+    CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
 
     // Declare and load a texture
     sf::Texture texture;
@@ -105,17 +87,16 @@ void testSFML2()
 
 int main()
 {
-    // testSFML();
+    testSFML();
 
     // testSFML2();
-    Vector2u v(4, 3);
-    cout << "v_x  : " << v.x << ", v_y  : " << v.y << endl;
 
-    // Vector2u vt = Carte::matriceToCarte(v);
-    Vector2u vt = Carte::carteToMatrice(v);
-    cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
+    // Vector2u v(4, 3);
+    // cout << "v_x  : " << v.x << ", v_y  : " << v.y << endl;
+
+    // // Vector2u vt = Carte::matriceToCarte(v);
+    // Vector2u vt = Carte::carteToMatrice(v);
+    // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
     return 0;
 }
-
-

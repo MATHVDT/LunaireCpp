@@ -54,17 +54,18 @@ public:
     Vector2u getCoordCase(uint i, uint j) const;
 
     // Convertisseur coordonnées
-    static Vector2u matriceToCarte(Vector2u cMat);
-    static Vector2u carteToMatrice(Vector2u cCarte);
+    static Vector2u matriceToCarte(const Vector2u &cMat);
+    static Vector2u carteToMatrice(const Vector2u &cCarte);
 
-    static Vector2u matriceToPositionEcran(Vector2u);
-    static Vector2u positionEcranToMatrice(Vector2u);
+    static Vector2f carteToPositionEcran(const Vector2u &cCarte);
+    static Vector2u positionEcranToCarte(const Vector2f &cEcran);
 
-    static Vector2u carteToPositionEcran(Vector2u);
-    static Vector2u positionEcranToCarte(Vector2u);
+    static Vector2u matriceToPositionEcran(const Vector2u &);
+    static Vector2u positionEcranToMatrice(const Vector2u &);
 
 private:
     Carte();
+    void setCaseEcran(RenderWindow &window);
     void ajustageCasesHexagone(RenderWindow &window);
     void deleteGrille();
     void creerGrille(uint nbLignes, uint nbColonnes);

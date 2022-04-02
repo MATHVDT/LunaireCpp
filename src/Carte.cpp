@@ -107,10 +107,10 @@ void Carte::initCarte(RenderWindow &window,
             {
                 monFlux >> typeSol;
                 _grille[i][j].setTypeSol(static_cast<SOL>(typeSol));
+                _grille[i][j].setSpriteTexture(static_cast<SOL>(typeSol));
             }
         }
-        ajustageCasesHexagone(window);
-
+        setCaseEcran(window);
         monFlux.close(); // Fermeture du fichier
     }
     else
@@ -135,16 +135,16 @@ void Carte::initCarte(RenderWindow &window,
 
 /**
  * @brief Ajuste la taille des cases en focntion de la taille de la fenêtre
- *
+ * @deprecated Plus utilisé car plus de forme dans les cases
  * @param RenderWindow & - *window*
  */
 void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
     // Recalcule de la taille d'une case
-    CaseMap::setTailleCaseMap(window,
-                              _nbLignesGrille,
-                              _nbColonnesGrille);
-    float tailleCase = CaseMap::getTailleCaseMap();
+    CaseMap::setScaleCaseMap(window,
+                             _nbLignesGrille,
+                             _nbColonnesGrille);
+    float tailleCase = CaseMap::getScaleCaseMap();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
 
@@ -164,6 +164,27 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
         positionEcran.y += (sqrt(3) / 2) * tailleCase;
         // positionEcran.y +=  tailleCase;
         positionEcran.x = 0;
+    }
+}
+
+void Carte::setCaseEcran(RenderWindow &window)
+{
+    Vector2u coordMatrice;
+    Vector2u coordCarte;
+    Vector2f coordEcran;
+
+    CaseMap::setScaleCaseMap(window, _nbLignesGrille, _nbColonnesGrille);
+
+    for (int i = 0; i < _nbLignesGrille; ++i)
+    {
+        coordMatrice.y = i;
+        for (int j = 0; j < _nbColonnesGrille; ++j)
+        {
+            coordMatrice.x = j;
+            coordCarte = matriceToCarte(coordMatrice);
+            coordEcran = carteToPositionEcran(coordCarte);
+            _grille[i][j].setPosition(coordEcran);
+        }
     }
 }
 
@@ -204,14 +225,6 @@ void Carte::afficherConsole(ostream &flux, bool coord)
 
 void Carte::afficher(RenderWindow &window)
 {
-    float tailleCase = CaseMap::getTailleCaseMap();
-    Vector2f positionEcran{0, 0};
-
-    // RectangleShape rect{Vector2f(2 * tailleCase, 2 * tailleCase)};
-    // rect.setPosition(positionEcran);
-    // rect.setFillColor(sf::Color::White);
-    // window.draw(rect);
-
     for (uint y = 0; y < _nbLignesGrille; ++y)
     {
         for (uint x = 0; x < _nbColonnesGrille; ++x)

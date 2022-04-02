@@ -29,12 +29,14 @@ private:
 private:
     static int _nb;
     static float _tailleCaseMap;
+    static float _scaleCaseMape;
     static Texture *_texturesSol[5];
     static float _coteHexagoneRayon;
 
 public:
     static float getTailleCaseMap();
-    static void setTailleCaseMap(
+    static float getScaleCaseMap();
+    static void setScaleCaseMap(
         RenderWindow &window,
         uint nbLignes,
         uint nbCcolonnes);
@@ -52,8 +54,8 @@ public:
 
 public:
     // Getter
-    Vector2f getPosition();
-    SOL getTypeSol();
+    Vector2f getPosition() const;
+    SOL getTypeSol() const;
 
     // Setter
     void setPosition(float x, float y);
@@ -66,16 +68,12 @@ public:
                  SOL typeSol = SOL::Vierge);
 };
 
-inline float CaseMap::getTailleCaseMap()
-{
-    return _coteHexagoneRayon;
-}
+inline float CaseMap::getTailleCaseMap() { return _tailleCaseMap; }
+inline float CaseMap::getScaleCaseMap() { return _scaleCaseMape; }
 
 inline void CaseMap::setPosition(float x, float y)
 {
-    _position.x = x;
-    _position.y = y;
-    _sprite->setPosition(_position);
+    setPosition(Vector2f(x, y));
 }
 
 inline void CaseMap::setPosition(Vector2f pos)
@@ -84,14 +82,11 @@ inline void CaseMap::setPosition(Vector2f pos)
     _sprite->setPosition(_position);
 }
 
-inline void CaseMap::setTypeSol(SOL typeSol)
-{
-    _typeSol = typeSol;
-}
+inline void CaseMap::setTypeSol(SOL typeSol) { _typeSol = typeSol; }
 
-inline Vector2f CaseMap::getPosition() { return _position; }
+inline Vector2f CaseMap::getPosition() const { return _position; }
 
-inline SOL CaseMap::getTypeSol() { return _typeSol; }
+inline SOL CaseMap::getTypeSol() const { return _typeSol; }
 
 inline void CaseMap::setSpriteTexture()
 {
@@ -100,6 +95,8 @@ inline void CaseMap::setSpriteTexture()
 
 inline void CaseMap::setSpriteTexture(SOL typeSol)
 {
+    if (typeSol != _typeSol)
+        cerr << "/!\\ Petit pb demande de prendre la texture du sol " << static_cast<int>(typeSol) << " au lieu de celle du sol " << static_cast<int>(_typeSol) << " défini en attribut" << endl;
     _sprite->setTexture(*_texturesSol[static_cast<int>(typeSol)]);
 }
 
