@@ -2,6 +2,7 @@
 #define __CASE_HPP__
 
 #include <iostream>
+#include <fstream>
 #include <exception>
 #include <math.h>
 
@@ -23,16 +24,20 @@ private:
     SOL _typeSol;
     CircleShape _hexagone; // A remplacer par texture
     int _id;
-
-    static float _coteHexagoneRayon;
+    Sprite *_sprite;
 
     // Static
-public:
+private:
     static int _nb;
+    static float _coteHexagoneRayon;
+    static Sprite *_spritesSol[5];
 
+public:
     static float getTailleCase();
     static void setTailleCase(RenderWindow &window,
                               uint nbLignes, uint nbCcolonnes);
+    static void chargerSprites(string fichierCheminsTexture);
+    static void dechargerSprites();
 
 public:
     // Case(float x = 0.f, float y = 0.f);
@@ -51,28 +56,10 @@ public:
     void setPosition(float x, float y);
     void setPosition(Vector2f pos);
     void setTypeSol(SOL typeSol);
+    void setSprite();
     void setCase(Vector2f position,
                  SOL typeSol = SOL::Vierge);
-
-private:
 };
-
-/**
- * @brief Défini la taille d'une case => cotés de l'hexagone
- * @warning Semble ne pas être utile car les dimensions sont ajustées en fonction de la taille de la fenêtre
- * @param unit - *tailleEcran*
- * @param int - *nbCase*
- */
-inline void Case::setTailleCase(RenderWindow &window,
-                                uint nbLignes, uint nbCcolonnes)
-{
-    // cout << "ecran : " << tailleEcran << ", nb cases : " << nbCase << endl;
-    uint minEcran = min(window.getSize().x, window.getSize().y);
-    uint maxCases = max(nbLignes, nbCcolonnes);
-    // _coteHexagoneRayon = (float)minEcran / ((float)maxCases + 1.5f);
-    // cout << "cote : " << _coteHexagoneRayon << endl;
-    _coteHexagoneRayon = (float)window.getSize().y / ((float)nbLignes + 2.f) / (float)(sqrt(3) / 2.f);
-}
 
 inline float Case::getTailleCase()
 {
@@ -85,6 +72,8 @@ inline void Case::setPosition(float x, float y)
     _position.y = y;
     _hexagone.setPosition(_position);
     _hexagone.setRadius(_coteHexagoneRayon);
+    _sprite->setPosition(_position);
+    _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
 }
 
 inline void Case::setPosition(Vector2f pos)
@@ -92,11 +81,14 @@ inline void Case::setPosition(Vector2f pos)
     _position = pos;
     _hexagone.setPosition(_position);
     _hexagone.setRadius(_coteHexagoneRayon);
+    _sprite->setPosition(_position);
+    _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
 }
 
 inline void Case::setTypeSol(SOL typeSol)
 {
     _typeSol = typeSol;
+    setSprite();
     switch (_typeSol)
     {
     case SOL::Vierge:
@@ -120,5 +112,10 @@ inline void Case::setTypeSol(SOL typeSol)
 inline Vector2f Case::getPosition() { return _position; }
 
 inline SOL Case::getTypeSol() { return _typeSol; }
+
+inline void Case::setSprite()
+{
+    _sprite = _spritesSol[static_cast<int>(_typeSol)];
+}
 
 #endif

@@ -8,12 +8,15 @@ void testSFML()
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
 
+Case::chargerSprites("ressource/cheminTexturesCases.txt");
+
+
     int nbLignes = 1;
     int nbColonnes = 2;
     Case::setTailleCase(window, nbLignes, nbColonnes);
     Carte *carte = Carte::getInstance();
     carte->initCarte(window, nbLignes, nbColonnes);
-    carte->initCarte(window, "./ressource/map.txt");
+    // carte->initCarte(window, "./ressource/map.txt");
 
     // float r = 100.f;
     // float lambda = sqrt(3.f) / 2.f;
