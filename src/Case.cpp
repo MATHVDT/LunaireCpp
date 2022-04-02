@@ -6,6 +6,8 @@ Sprite *Case::_spritesSol[5];
 
 Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(nullptr)
 {
+    setTypeSol(SOL::Vierge);
+
     _hexagone.setPosition(_position);
     _hexagone.setOrigin(0, 2 * _coteHexagoneRayon);
     _hexagone.setOrigin(0.f, _coteHexagoneRayon);
@@ -110,7 +112,7 @@ void Case::chargerSprites(string fichierCheminsTexture)
             monFlux >> cheminTexture;
 
             // Declare and load a texture
-            texture.loadFromFile("texture.png");
+            texture.loadFromFile(cheminTexture);
 
             // Create a new sprite
             sprite = new Sprite();
