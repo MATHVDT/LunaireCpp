@@ -3,6 +3,7 @@
 float CaseMap::_coteHexagoneRayon = 10.f;
 float CaseMap::_tailleCaseMap = 0.f;
 float CaseMap::_scaleCaseMape = 0.f;
+uint CaseMap::_tailleTexture = 0;
 
 int CaseMap::_nb = 0;
 Texture *CaseMap::_texturesSol[5];
@@ -22,10 +23,10 @@ void CaseMap::afficherConsole(ostream &flux)
 
 void CaseMap::afficher(RenderWindow &window)
 {
-    cout << _sprite->getTexture()->getSize().y
-         << " y: " << _position.y;
-    cout << " tailleCaseMap : " << _tailleCaseMap;
-    cout << " scaleCaseMap : " << _scaleCaseMape << endl;
+    // cout << _sprite->getTexture()->getSize().y
+    //      << " (" << _position.x << "," << _position.y << ")";
+    // cout << " tailleCaseMap : " << _tailleCaseMap;
+    // cout << " scaleCaseMap : " << _scaleCaseMape << endl;
     _sprite->setScale(_scaleCaseMape, _scaleCaseMape);
     window.draw(*_sprite);
 }
@@ -60,7 +61,8 @@ void CaseMap::setScaleCaseMap(RenderWindow &window,
 
     // cout << "taille texture : " << largeurTexture << endl;
 
-    _scaleCaseMape = (float)window.getSize().y / ((float)nbLignesGrille + 0.5f) / _tailleCaseMap;
+    _scaleCaseMape = (float)window.getSize().y / ((float)nbLignesGrille + 0.5f) / _tailleTexture;
+    _tailleCaseMap = (float)_tailleTexture * _scaleCaseMape;
 }
 
 /**
@@ -93,7 +95,7 @@ void CaseMap::chargerSprites(string fichierCheminsTexture)
 
             _texturesSol[k] = texture;
         }
-        _tailleCaseMap = texture->getSize().y;
+        _tailleTexture = texture->getSize().y;
         monFlux.close();
     }
     else

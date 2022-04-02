@@ -30,12 +30,14 @@ private:
     static int _nb;
     static float _tailleCaseMap;
     static float _scaleCaseMape;
+    static uint _tailleTexture;
     static Texture *_texturesSol[5];
     static float _coteHexagoneRayon;
 
 public:
     static float getTailleCaseMap();
     static float getScaleCaseMap();
+    static float getTailleTexture();
     static void setScaleCaseMap(
         RenderWindow &window,
         uint nbLignes,
@@ -68,9 +70,12 @@ public:
                  SOL typeSol = SOL::Vierge);
 };
 
+// Static
 inline float CaseMap::getTailleCaseMap() { return _tailleCaseMap; }
 inline float CaseMap::getScaleCaseMap() { return _scaleCaseMape; }
+inline float CaseMap::getTailleTexture() { return _tailleTexture; }
 
+// Non static
 inline void CaseMap::setPosition(float x, float y)
 {
     setPosition(Vector2f(x, y));

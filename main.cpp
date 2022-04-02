@@ -10,13 +10,13 @@ void testSFML()
 
     CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
-    int nbLignes = 6;
-    int nbColonnes = 12;
+    int nbLignes = 1;
+    int nbColonnes = 1;
     CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
 
     Carte *carte = Carte::getInstance();
     // carte->initCarte(window, nbLignes, nbColonnes);
-    carte->initCarte(window, "./ressource/map.txt");
+    carte->initCarte(window, "./ressource/map0.txt");
 
     while (window.isOpen())
     {
