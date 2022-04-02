@@ -8,12 +8,21 @@ uint CaseMap::_tailleTexture = 0;
 int CaseMap::_nb = 0;
 Texture *CaseMap::_texturesSol[5];
 
+/**
+ * @brief Constructeur de case
+ * @warning CaseMap vierge il faut faire setCase après pour définir ses paramètres
+ * @param Vector2f - *posistion = défaut Vector2f{0, 0}*
+ */
 CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierge), _sprite(new Sprite)
 {
     // set du sol et donc du sprite aussi
     setCase(_position, _typeSol);
 }
 
+/**
+ * @brief Destructeur CaseMap
+ *
+ */
 CaseMap::~CaseMap() { delete _sprite; }
 
 void CaseMap::afficherConsole(ostream &flux)
@@ -21,14 +30,38 @@ void CaseMap::afficherConsole(ostream &flux)
     flux << static_cast<int>(_typeSol);
 }
 
+/**
+ * @brief Affiche une case et ce qui la compose à l'écran
+ *
+ * @param RenderWindow & - *window*
+ */
 void CaseMap::afficher(RenderWindow &window)
 {
     // cout << _sprite->getTexture()->getSize().y
     //      << " (" << _position.x << "," << _position.y << ")";
     // cout << " tailleCaseMap : " << _tailleCaseMap;
     // cout << " scaleCaseMap : " << _scaleCaseMape << endl;
+
     _sprite->setScale(_scaleCaseMape, _scaleCaseMape);
     window.draw(*_sprite);
+
+    // Font font;
+    // Text text;
+
+    // font.loadFromFile("ressource/fonts/arial.ttf");
+    // text.setFont(font);
+    // // text.setString(L"Hé_à_i_ù");
+    // text.setString(to_string(_id));
+    // Vector2f positionTexte;
+    // positionTexte.x = _position.x + _tailleCaseMap / 2.f - text.getCharacterSize() / 2.f;
+    // positionTexte.y = _position.y + (_tailleCaseMap - text.getCharacterSize()) / 2.f;
+    // text.setOutlineColor(Color::Blue);
+    // text.setOutlineThickness(2.f);
+
+    // text.setCharacterSize(20);
+    // text.setPosition(positionTexte);
+
+    // window.draw(text);
 }
 
 /**
