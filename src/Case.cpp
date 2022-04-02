@@ -6,6 +6,7 @@ Sprite *Case::_spritesSol[5];
 
 Case::Case(Vector2f pos) : _position{pos}, _typeSol(SOL::Vierge), _hexagone{_coteHexagoneRayon, 6}, _id(_nb), _sprite(nullptr)
 {
+    // set du sol et donc du sprite aussi
     setTypeSol(SOL::Vierge);
 
     _hexagone.setPosition(_position);

@@ -145,12 +145,13 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
     float tailleCase = Case::getTailleCase();
     Vector2f positionEcran{0.f, 0.f};
     Vector2f coordCase{0.f, 0.f};
+
     for (uint i = 0; i < _nbLignesGrille; i++)
     {
         // Décalage hexagonale une ligne sur deux
         if (i % 2 == 0)
         { // Décalage une demi hauteur d'hexagone
-            positionEcran.x = (3.f * tailleCase / 2.05f) ;
+            positionEcran.x = (3.f * tailleCase / 2.05f);
         }
         for (uint j = 0; j < _nbColonnesGrille; ++j)
         {
@@ -174,7 +175,6 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
  */
 void Carte::afficherConsole(ostream &flux, bool coord)
 {
-    bool cran = false;
     Vector2u vectCoord;
     for (uint i = 0; i < _nbLignesGrille; ++i)
     {

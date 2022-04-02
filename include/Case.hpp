@@ -81,8 +81,11 @@ inline void Case::setPosition(Vector2f pos)
     _position = pos;
     _hexagone.setPosition(_position);
     _hexagone.setRadius(_coteHexagoneRayon);
-    _sprite->setPosition(_position);
-    _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
+    if (_sprite != nullptr)
+    {
+        _sprite->setPosition(_position);
+        _sprite->setScale(_coteHexagoneRayon, _coteHexagoneRayon);
+    }
 }
 
 inline void Case::setTypeSol(SOL typeSol)
