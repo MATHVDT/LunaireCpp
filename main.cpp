@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Carte.hpp"
 #include "CaseMap.hpp"
+#include "ContextGlobal.hpp"
 
 void testSFML()
 {
@@ -32,10 +33,10 @@ void testSFML()
             }
         }
 
-        window.clear();
         carte->afficher(window);
 
         window.display();
+        window.clear();
     }
     // carte->afficherConsole(cout, true);
 }
@@ -88,9 +89,11 @@ void testSFML2()
     }
 }
 
+ContextGlobal &contextGlobal = ContextGlobal::getInstance();
+
 int main()
 {
-    testSFML();
+    // testSFML();
 
     // testSFML2();
 
@@ -101,5 +104,16 @@ int main()
     // Vector2u vt = Carte::carteToMatrice(v);
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
+    contextGlobal.init(Vector2u(800, 1000));
+    while (contextGlobal.getIsRun())
+    {
+        while (contextGlobal.getPollEvent())
+        {
+            
+        // contextGlobal.update();
+        }
+        contextGlobal.update();
+        // cout << "run" << endl;
+    }
     return 0;
 }
