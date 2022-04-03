@@ -14,7 +14,6 @@
 #include "catch.hpp"
 #include "direction.hpp"
 
-
 /**
  * @test Test des variables globale constante des principales directions
  */
@@ -75,4 +74,16 @@ TEST_CASE("Deplacement dans les directions principales")
         REQUIRE(pos.x == 4);
         REQUIRE(pos.y == 1);
     }
+}
+
+TEST_CASE("Directions opposées")
+{
+    REQUIRE(directionOpposee(Nord) == Sud);
+    REQUIRE(directionOpposee(NordOuest) == SudEst);
+    REQUIRE(directionOpposee(SudOuest) == NordEst);
+    REQUIRE(directionOpposee(Sud) ==Nord);
+    REQUIRE(directionOpposee(SudEst) == NordOuest);
+    REQUIRE(directionOpposee(NordEst) == SudOuest);
+    REQUIRE(directionOpposee(NullDirection) == NullDirection);
+    REQUIRE(directionOpposee(Vector2i(2,1)) == NullDirection);
 }
