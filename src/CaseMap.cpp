@@ -35,7 +35,7 @@ void CaseMap::afficherConsole(ostream &flux)
  *
  * @param RenderWindow & - *window*
  */
-void CaseMap::afficher(RenderWindow &window)
+void CaseMap::dessiner()
 {
     // cout << _sprite->getTexture()->getSize().y
     //      << " (" << _position.x << "," << _position.y << ")";
@@ -43,25 +43,28 @@ void CaseMap::afficher(RenderWindow &window)
     // cout << " scaleCaseMap : " << _scaleCaseMape << endl;
 
     _sprite->setScale(_scaleCaseMape, _scaleCaseMape);
-    window.draw(*_sprite);
+    contextGlobal.dessinerFenetre(_sprite);
 
-    // Font font;
-    // Text text;
+    // Texte a afficher
+    /*
+        // Font font;
+        // Text text;
 
-    // font.loadFromFile("ressource/fonts/arial.ttf");
-    // text.setFont(font);
-    // // text.setString(L"Hé_à_i_ù");
-    // text.setString(to_string(_id));
-    // Vector2f positionTexte;
-    // positionTexte.x = _position.x + _tailleCaseMap / 2.f - text.getCharacterSize() / 2.f;
-    // positionTexte.y = _position.y + (_tailleCaseMap - text.getCharacterSize()) / 2.f;
-    // text.setOutlineColor(Color::Blue);
-    // text.setOutlineThickness(2.f);
+        // font.loadFromFile("ressource/fonts/arial.ttf");
+        // text.setFont(font);
+        // // text.setString(L"Hé_à_i_ù");
+        // text.setString(to_string(_id));
+        // Vector2f positionTexte;
+        // positionTexte.x = _position.x + _tailleCaseMap / 2.f - text.getCharacterSize() / 2.f;
+        // positionTexte.y = _position.y + (_tailleCaseMap - text.getCharacterSize()) / 2.f;
+        // text.setOutlineColor(Color::Blue);
+        // text.setOutlineThickness(2.f);
 
-    // text.setCharacterSize(20);
-    // text.setPosition(positionTexte);
+        // text.setCharacterSize(20);
+        // text.setPosition(positionTexte);
 
-    // window.draw(text);
+        // window.draw(text);
+    */
 }
 
 /**
@@ -81,18 +84,22 @@ void CaseMap::setCase(Vector2f position,
 /**
  * @brief Défini la taille d'une case => cotés de l'hexagone
  * @warning Semble ne pas être utile car les dimensions sont ajustées en fonction de la taille de la fenêtre
- * @param RenderWindow & - *window*
  * @param uint - *nbLignesGrille*
  * @param uint - *nbColonnesGrille*
  */
-void CaseMap::setScaleCaseMap(RenderWindow &window,
-                              uint nbLignesCarte,
+void CaseMap::setScaleCaseMap(uint nbLignesCarte,
                               uint nbCcolonnesCarte)
 {
-    uint minEcran = min(window.getSize().x, window.getSize().y);
-    uint maxCases = max(nbLignesCarte, nbCcolonnesCarte);
+    const Vector2u dimFenetre = contextGlobal.getDimensionFenetre();
+    // uint minEcran = min(dimFenetre.x, dimFenetre.y);
+    // uint maxCases = max(nbLignesCarte, nbCcolonnesCarte);
 
-    _scaleCaseMape = (float)window.getSize().y / ((float)nbLignesCarte + 0.5f) / _tailleTexture;
+    float scaleX =
+        (float)dimFenetre.x / ((float)nbCcolonnesCarte + 1.f) / _tailleTexture;
+    float scaleY =
+        (float)dimFenetre.y / ((float)nbLignesCarte + 0.5f) / _tailleTexture;
+
+    _scaleCaseMape = min(scaleX, scaleY);
     _tailleCaseMap = (float)_tailleTexture * _scaleCaseMape;
 }
 

@@ -12,13 +12,16 @@
 #include "catch.hpp"
 #include "Carte.hpp"
 #include "CaseMap.hpp"
+#include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
 
+ContextGlobal &contextGlobal = ContextGlobal::getInstance();
+
+
 TEST_CASE("Initialisation de la carte")
 {
-    RenderWindow window;
     stringstream ss;
     Vector2u coordCase;
     CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
@@ -56,7 +59,7 @@ TEST_CASE("Initialisation de la carte")
             ssCaseRef << endl;
         }
 
-        carte->initCarte(window, Nlignes, Ncolonnes); // Initialisation
+        carte->initCarte(Nlignes, Ncolonnes); // Initialisation
 
         stringstream ssCase;
         stringstream ssCoord;
@@ -71,8 +74,8 @@ TEST_CASE("Initialisation de la carte")
     SECTION("Plusieurs init de la grille")
     {
         // Initialisation quelconque
-        carte->initCarte(window, 10, 8);
-        carte->initCarte(window, 5, 48);
+        carte->initCarte(10, 8);
+        carte->initCarte(5, 48);
 
         uint Nlignes = 10;
         uint Ncolonnes = 10;
@@ -98,7 +101,7 @@ TEST_CASE("Initialisation de la carte")
         }
 
         // Vérifiaction de la bonne Initialisation
-        carte->initCarte(window, Nlignes, Ncolonnes);
+        carte->initCarte(Nlignes, Ncolonnes);
         REQUIRE(carte->getDimensionGrille() == Vector2u(Ncolonnes / 2, 2 * Nlignes));
         REQUIRE(carte->getDimensionCarte() == Vector2u(Ncolonnes, Nlignes));
 
@@ -113,7 +116,6 @@ TEST_CASE("Initialisation de la carte")
     }
     delete carte;
     CaseMap::dechargerSprites();
-    window.close();
 }
 
 TEST_CASE("Convertisseur coordonnées")

@@ -5,14 +5,15 @@
  * @details Voir image *carte_hexagonale_direction.png* pour plus d'information sur la gestion de la carte
  * @version 0.1
  * @date 2022-03-31
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 #include <iostream>
 
 #include "catch.hpp"
 #include "direction.hpp"
+
 
 /**
  * @test Test des variables globale constante des principales directions
@@ -30,7 +31,7 @@ TEST_CASE("Test directions principales")
 
 /**
  * @test Addictions des directions principales sur un veteur position *(cf. carte_hexagonale_direction.png)*
- * 
+ *
  */
 TEST_CASE("Deplacement dans les directions principales")
 {

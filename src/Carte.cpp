@@ -85,8 +85,7 @@ void Carte::creerGrille(uint nbLignes, uint nbColonnes)
     }
 }
 
-void Carte::initCarte(RenderWindow &window,
-                      const string nomFichierMap)
+void Carte::initCarte(const string nomFichierMap)
 {
     // Supprime la grille si elle est déjà existante
     deleteGrille();
@@ -110,7 +109,7 @@ void Carte::initCarte(RenderWindow &window,
                 _grille[i][j].setSpriteTexture(static_cast<SOL>(typeSol));
             }
         }
-        setCaseEcran(window);
+        setCaseEcran();
         monFlux.close(); // Fermeture du fichier
     }
     else
@@ -121,16 +120,16 @@ void Carte::initCarte(RenderWindow &window,
 
 /**
  * @brief Initialise la grille de la Carte suivant une certaine taille
- *
- * @param int - *taille*
+ * @deprecated Ne pas utiliser, il n'y a pas la boucle de setCase
+ * @param uint - *nbLignes*
+ * @param uint - *nbColonnes*
  */
-void Carte::initCarte(RenderWindow &window,
-                      uint nbLignes, uint nbColonnes)
+void Carte::initCarte(uint nbLignes, uint nbColonnes)
 {
     // Supprime la grille si elle est déjà existante
     deleteGrille();
     creerGrille(nbLignes, nbColonnes);
-    ajustageCasesHexagone(window);
+        // ajustageCasesHexagone(window);
 }
 
 /**
@@ -138,6 +137,7 @@ void Carte::initCarte(RenderWindow &window,
  * @deprecated Plus utilisé car plus de forme dans les cases
  * @param RenderWindow & - *window*
  */
+/*
 void Carte::ajustageCasesHexagone(RenderWindow &window)
 {
     // Recalcule de la taille d'une case
@@ -166,14 +166,16 @@ void Carte::ajustageCasesHexagone(RenderWindow &window)
         positionEcran.x = 0;
     }
 }
+*/
 
-void Carte::setCaseEcran(RenderWindow &window)
+void Carte::setCaseEcran()
 {
     Vector2u coordMatrice;
     Vector2u coordCarte;
     Vector2f coordEcran;
 
-    CaseMap::setScaleCaseMap(window, _nbLignesCarte, _nbColonnesCarte);
+    CaseMap::setScaleCaseMap(_nbLignesCarte,
+                             _nbColonnesCarte);
 
     for (int i = 0; i < _nbLignesGrille; ++i)
     {
@@ -223,13 +225,13 @@ void Carte::afficherConsole(ostream &flux, bool coord)
     }
 }
 
-void Carte::afficher(RenderWindow &window)
+void Carte::dessiner()
 {
     for (uint y = 0; y < _nbLignesGrille; ++y)
     {
         for (uint x = 0; x < _nbColonnesGrille; ++x)
         {
-            _grille[y][x].afficher(window);
+            _grille[y][x].dessiner();
         }
     }
 }

@@ -1,23 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include "Carte.hpp"
-#include "CaseMap.hpp"
-#include "ContextGlobal.hpp"
+#include "main.hpp"
 
+/*
 void testSFML()
 {
     float ratio = 16.f / 9.f;
     uint hauteur_fenetre = 800;
     sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
-
-    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
-
-    int nbLignes = 1;
-    int nbColonnes = 1;
-    // CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
-
-    Carte *carte = Carte::getInstance();
-    // carte->initCarte(window, nbLignes, nbColonnes);
-    carte->initCarte(window, "./ressource/map.txt");
 
     while (window.isOpen())
     {
@@ -88,8 +76,10 @@ void testSFML2()
         window.display();
     }
 }
-
+*/
 ContextGlobal &contextGlobal = ContextGlobal::getInstance();
+
+void testCarte();
 
 int main()
 {
@@ -104,16 +94,42 @@ int main()
     // Vector2u vt = Carte::carteToMatrice(v);
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
-    contextGlobal.init(Vector2u(800, 1000));
+    contextGlobal.init(Vector2u(1500, 800));
+
+    testCarte();
+
+    // Structure de boucle principale avec contextGlobal
+    // while (contextGlobal.getIsRun())
+    // {
+    //     while (contextGlobal.getPollEvent())
+    //     {
+
+    //     }
+    //     contextGlobal.update();
+    // }
+
+    return 0;
+}
+
+void testCarte()
+{
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
+
+    int nbLignes = 1;
+    int nbColonnes = 1;
+    CaseMap::setScaleCaseMap(nbLignes,
+                             nbColonnes);
+
+    Carte *carte = Carte::getInstance();
+    carte->initCarte("./ressource/map.txt");
+
     while (contextGlobal.getIsRun())
     {
         while (contextGlobal.getPollEvent())
         {
-            
-        // contextGlobal.update();
         }
         contextGlobal.update();
-        // cout << "run" << endl;
+        carte->dessiner();
+        contextGlobal.afficherFenetre();
     }
-    return 0;
 }

@@ -33,15 +33,13 @@ public:
 public:
     ~Carte();
 
-    void initCarte(RenderWindow &window,
-                   const string nomFichierMap);
-    void initCarte(RenderWindow &window,
-                   uint nbLignes = 4,
+    void initCarte(const string nomFichierMap);
+    void initCarte(uint nbLignes = 4,
                    uint nbCcolonnes = 4);
 
     // Affichage
     void afficherConsole(ostream &flux = cout, bool coord = false);
-    void afficher(RenderWindow &window);
+    void dessiner();
 
     // Getter
     Vector2u getDimensionGrille() const;
@@ -65,8 +63,7 @@ public:
 
 private:
     Carte();
-    void setCaseEcran(RenderWindow &window);
-    void ajustageCasesHexagone(RenderWindow &window);
+    void setCaseEcran();
     void deleteGrille();
     void creerGrille(uint nbLignes, uint nbColonnes);
 };

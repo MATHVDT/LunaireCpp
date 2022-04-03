@@ -10,11 +10,14 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
+#include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
 
-// class RenderWindow;
+// Initialisation dans main.cpp
+extern ContextGlobal &contextGlobal ;
+
 
 class CaseMap
 {
@@ -39,7 +42,6 @@ public:
     static float getScaleCaseMap();
     static float getTailleTexture();
     static void setScaleCaseMap(
-        RenderWindow &window,
         uint nbLignesCarte,
         uint nbCcolonnesCarte);
 
@@ -52,7 +54,7 @@ public:
     ~CaseMap();
 
     void afficherConsole(ostream &flux = cout);
-    void afficher(RenderWindow &window);
+    void dessiner();
 
 public:
     // Getter
@@ -70,12 +72,20 @@ public:
                  SOL typeSol = SOL::Vierge);
 };
 
-// Static
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+/***************************************************/
+/*              Méthodes inline static             */
+/***************************************************/
 inline float CaseMap::getTailleCaseMap() { return _tailleCaseMap; }
 inline float CaseMap::getScaleCaseMap() { return _scaleCaseMape; }
 inline float CaseMap::getTailleTexture() { return _tailleTexture; }
 
-// Non static
+/***************************************************/
+/*           Méthodes inline non static            */
+/***************************************************/
 inline void CaseMap::setPosition(float x, float y)
 {
     setPosition(Vector2f(x, y));
