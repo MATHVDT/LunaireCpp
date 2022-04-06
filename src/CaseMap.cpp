@@ -2,7 +2,7 @@
 
 float CaseMap::_coteHexagoneRayon = 10.f;
 float CaseMap::_tailleCaseMap = 0.f;
-float CaseMap::_scaleCaseMape = 0.f;
+float CaseMap::_scaleCaseMap = 0.f;
 uint CaseMap::_tailleTexture = 0;
 
 int CaseMap::_nb = 0;
@@ -42,7 +42,7 @@ void CaseMap::dessiner()
     // cout << " tailleCaseMap : " << _tailleCaseMap;
     // cout << " scaleCaseMap : " << _scaleCaseMape << endl;
 
-    _sprite->setScale(_scaleCaseMape, _scaleCaseMape);
+    _sprite->setScale(_scaleCaseMap, _scaleCaseMap);
     contextGlobal.dessinerFenetre(_sprite);
 
     // Texte a afficher
@@ -99,8 +99,9 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
     float scaleY =
         (float)dimFenetre.y / ((float)nbLignesCarte + 0.5f) / _tailleTexture;
 
-    _scaleCaseMape = min(scaleX, scaleY);
-    _tailleCaseMap = (float)_tailleTexture * _scaleCaseMape;
+    _scaleCaseMap = min(scaleX, scaleY);
+    _tailleCaseMap = (float)_tailleTexture * _scaleCaseMap;
+    contextGlobal.setTailleReference(_tailleCaseMap);
 }
 
 /**

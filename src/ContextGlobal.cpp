@@ -48,7 +48,6 @@ void ContextGlobal::afficherFenetre()
  */
 void ContextGlobal::update()
 {
-    _tailleReference = CaseMap::getScaleCaseMap();
     // Vérification des l'events "system" => fermer fenetre
     if (_event.type == sf::Event::Closed)
         setIsRun(false);

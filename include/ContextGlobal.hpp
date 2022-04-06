@@ -7,10 +7,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
- #include "CaseMap.hpp"
+//  #include "CaseMap.hpp"
 
 using namespace std;
 using namespace sf;
+
+class CaseMap;
+// static float CaseMap::getScaleCaseMap();
 
 class ContextGlobal
 {
@@ -53,6 +56,7 @@ public:
 
     // Setter
     void setIsRun(bool run);
+    void setTailleReference(float caseMap);
 
 private:
     ContextGlobal();
@@ -83,5 +87,6 @@ inline const float ContextGlobal::getTailleReference() const { return _tailleRef
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
+inline void ContextGlobal::setTailleReference(float scaleCaseMap) { _tailleReference = scaleCaseMap; }
 
 #endif

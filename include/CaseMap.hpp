@@ -31,7 +31,7 @@ private:
 private:
     static int _nb;
     static float _tailleCaseMap;
-    static float _scaleCaseMape;
+    static float _scaleCaseMap;
     static uint _tailleTexture;
     static Texture *_texturesSol[5];
     static float _coteHexagoneRayon;
@@ -79,7 +79,7 @@ public:
 /*              Méthodes inline static             */
 /***************************************************/
 inline float CaseMap::getTailleCaseMap() { return _tailleCaseMap; }
-inline float CaseMap::getScaleCaseMap() { return _scaleCaseMape; }
+inline float CaseMap::getScaleCaseMap() { return _scaleCaseMap; }
 inline float CaseMap::getTailleTexture() { return _tailleTexture; }
 
 /***************************************************/

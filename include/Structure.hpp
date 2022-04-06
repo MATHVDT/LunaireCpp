@@ -6,7 +6,6 @@
 
 #include "ContextGlobal.hpp"
 
-
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;
 
@@ -15,7 +14,7 @@ class Structure
 private:
     // Static
 protected:
-    uint _id;
+    uint _idStructure;
     Vector2f _position;
     Sprite *_sprite;
 
@@ -28,10 +27,13 @@ public:
     Structure(Vector2f pos);
     virtual ~Structure();
 
-    // virtual void update();
-    virtual void dessiner() = 0;
+    virtual void init();
+
+    virtual void dessiner(float scaleSprite) = 0;
+    virtual void update() = 0;
 
     // Getter
+    uint getIdStructure() const;
     const Vector2f &getPosition() const;
 
     // Setter
@@ -54,5 +56,6 @@ inline void Structure::setPosition(const Vector2f &pos) { _position = pos; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline uint Structure::getIdStructure() const { return _idStructure; }
 
 #endif
