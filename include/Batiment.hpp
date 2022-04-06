@@ -10,8 +10,8 @@ class Batiment : public Structure
 {
 protected:
     uint _idBatiment;
-    Structure *_voisinage[6];
-    Structure *_sortie;
+    Structure *_voisinage[6]; // Ne pas delete
+    Structure *_sortie; // Ne pas delete
 
 private: // Static
     static uint _nbBatiments;
@@ -22,6 +22,8 @@ public: // Static
 public:
     Batiment(Vector2f pos);
     virtual ~Batiment();
+
+    void deconnecterStructure(Structure *structure);
 
     // Getter
     uint getIdBatiment() const;

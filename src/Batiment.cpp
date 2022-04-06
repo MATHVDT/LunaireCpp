@@ -23,3 +23,23 @@ void Batiment::setSortie(Structure *structure)
 {
     _sortie = structure;
 }
+
+/**
+ * @brief Déconnecte une structure du batiment
+ *
+ * @param Structure * - *structure*
+ */
+void Batiment::deconnecterStructure(Structure *structure)
+{
+    for (int i = 0; i < 6; ++i)
+    {
+        if (_voisinage[i] == structure)
+        {
+            _voisinage[i] = nullptr;
+            if (_sortie == structure)
+            {
+                setSortie(nullptr);
+            }
+        }
+    }
+}
