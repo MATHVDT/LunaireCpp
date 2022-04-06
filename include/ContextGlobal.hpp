@@ -7,11 +7,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
+ #include "CaseMap.hpp"
 
 using namespace std;
 using namespace sf;
-
-
 
 class ContextGlobal
 {
@@ -20,6 +19,7 @@ private:
     Vector2u _dimensionFenetre;
     float _ratioFenetre;
     RenderWindow _window;
+    float _tailleReference;
     bool _eventPresent;
     Event _event;
     bool _isRun;
@@ -35,8 +35,8 @@ public:
     ~ContextGlobal();
 
     void init(const Vector2u &dimFenetre);
-    void dessinerFenetre(const Drawable& obj);
-    void dessinerFenetre(const Drawable* obj);
+    void dessinerFenetre(const Drawable &obj);
+    void dessinerFenetre(const Drawable *obj);
     void afficherFenetre();
     void update();
 
@@ -49,6 +49,7 @@ public:
     bool getPollEvent();
     const Event &getEvent() const;
     Event::EventType getEventType() const;
+    const float getTailleReference() const;
 
     // Setter
     void setIsRun(bool run);
@@ -56,8 +57,6 @@ public:
 private:
     ContextGlobal();
 };
-
-
 
 /***************************************************/
 /*                 Méthodes inline                 */
@@ -80,9 +79,9 @@ inline bool ContextGlobal::getPollEvent()
 inline const Event &ContextGlobal::getEvent() const { return _event; }
 inline Event::EventType ContextGlobal::getEventType() const { return _event.type; }
 
+inline const float ContextGlobal::getTailleReference() const { return _tailleReference; }
+
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
-
-
 
 #endif

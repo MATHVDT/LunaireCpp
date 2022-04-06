@@ -16,8 +16,7 @@ using namespace std;
 using namespace sf;
 
 // Initialisation dans main.cpp
-extern ContextGlobal &contextGlobal ;
-
+extern ContextGlobal &contextGlobal;
 
 class CaseMap
 {
@@ -58,12 +57,12 @@ public:
 
 public:
     // Getter
-    Vector2f getPosition() const;
+    const Vector2f &getPosition() const;
     SOL getTypeSol() const;
 
     // Setter
     void setPosition(float x, float y);
-    void setPosition(Vector2f pos);
+    void setPosition(const Vector2f &pos);
     void setTypeSol(SOL typeSol);
     void setSpriteTexture();
     void setSpriteTexture(SOL typeSol);
@@ -91,7 +90,7 @@ inline void CaseMap::setPosition(float x, float y)
     setPosition(Vector2f(x, y));
 }
 
-inline void CaseMap::setPosition(Vector2f pos)
+inline void CaseMap::setPosition(const Vector2f& pos)
 {
     _position = pos;
     _sprite->setPosition(_position);
@@ -99,7 +98,7 @@ inline void CaseMap::setPosition(Vector2f pos)
 
 inline void CaseMap::setTypeSol(SOL typeSol) { _typeSol = typeSol; }
 
-inline Vector2f CaseMap::getPosition() const { return _position; }
+inline const Vector2f &CaseMap::getPosition() const { return _position; }
 
 inline SOL CaseMap::getTypeSol() const { return _typeSol; }
 
@@ -111,7 +110,7 @@ inline void CaseMap::setSpriteTexture()
 inline void CaseMap::setSpriteTexture(SOL typeSol)
 {
     if (typeSol != _typeSol)
-        cerr << "/!\\ Petit pb demande de prendre la texture du sol " << static_cast<int>(typeSol) << " au lieu de celle du sol " << static_cast<int>(_typeSol) << " défini en attribut" << endl;
+        cerr << "/!\\ Petit pb, demande de prendre la texture du sol " << static_cast<int>(typeSol) << " au lieu de celle du sol " << static_cast<int>(_typeSol) << " défini en attribut" << endl;
     _sprite->setTexture(*_texturesSol[static_cast<int>(typeSol)]);
 }
 
