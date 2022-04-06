@@ -23,6 +23,12 @@ void Batiment::setSortie(Structure *structure)
 {
     _sortie = structure;
 }
+void Batiment::init() {}
+
+void Batiment::dessiner(float scaleSprite) {}
+
+void Batiment::update() {}
+
 
 /**
  * @brief Déconnecte une structure du batiment

@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "catch.hpp"
+
 #include "direction.hpp"
 
 /**

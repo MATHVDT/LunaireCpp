@@ -1,24 +1,22 @@
 /**
- * @file tu_carte->cpp
+ * @file tu_carte.cpp
  * @brief
  */
 #include <iostream>
 #include <sstream>
 #include <cstring>
 
+#include "catch.hpp"
+
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "catch.hpp"
 #include "Carte.hpp"
 #include "CaseMap.hpp"
 #include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
-
-ContextGlobal &contextGlobal = ContextGlobal::getInstance();
-
 
 TEST_CASE("Initialisation de la carte")
 {

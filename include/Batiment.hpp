@@ -23,6 +23,11 @@ public:
     Batiment(Vector2f pos);
     virtual ~Batiment();
 
+    virtual void init();
+
+    virtual void dessiner(float scaleSprite) ;
+    virtual void update() ;
+
     void deconnecterStructure(Structure *structure);
 
     // Getter
