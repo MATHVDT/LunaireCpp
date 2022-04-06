@@ -1,6 +1,9 @@
 #ifndef __STRUCTURE_HPP__
 #define __STRUCTURE_HPP__
 
+#include <iostream>
+#include <sys/types.h>
+
 class Structure
 {
 private:
@@ -9,7 +12,7 @@ private:
     static uint _nbStructures;
 
 public:
-    static uint getNbStructures() const;
+    static uint getNbStructures();
 
 public:
     Structure();
@@ -25,7 +28,7 @@ public:
 /***************************************************/
 /*              Méthodes inline static             */
 /***************************************************/
-inline uint Structure::getNbStructures() const { return _nbStructures; }
+inline uint Structure::getNbStructures() { return _nbStructures; }
 
 /***************************************************/
 /*           Méthodes inline non static            */
