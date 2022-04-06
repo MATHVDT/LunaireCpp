@@ -10,6 +10,7 @@ class Batiment : public Structure
 {
 protected:
     uint _idBatiment;
+    Structure * _voisinage[6];
 
 private: // Static
     static uint _nbBatiments;

@@ -26,6 +26,21 @@ extern const Vector2i SudEst;        // ↘ ( 1, 0)
 extern const Vector2i NordEst;       // ↗ ( 1,-1)
 extern const Vector2i NullDirection; // X ( 0, 0)
 
-Vector2i directionOpposee(const Vector2i& dir);
+ Vector2i directionOpposee(const Vector2i &dir);
+ Vector2i directionIntToVecteur(int dirInt);
+int directionVecteurToInt(const Vector2i &dirVecteur);
+
+enum DIRECTION
+{
+    NORD = 0,      // ↑
+    NORDOUEST = 1, // ↖
+    // OUEST,         // ←
+    SUDOUEST = 2, // ↙
+    SUD = 3,      // ↓
+    SUDEST = 4,   // ↘
+    // EST,           // →
+    NORDEST = 5,       // ↗
+    NULLDIRECTION = -1 // X
+};
 
 #endif

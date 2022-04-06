@@ -18,6 +18,12 @@ const Vector2i SudEst{1, 0};        // Dir. principale ↘ (1, 0)
 const Vector2i NordEst{1, -1};      // Dir. principale ↗ ( 1, -1)
 const Vector2i NullDirection{0, 0}; // Dir. principale X ( 0,  0)
 
+/**
+ * @brief Donne le vecteur de sens opposé
+ *
+ * @param const Vector2i & - *dir*
+ * @return const Vector2i& - *direction opposée*
+ */
 Vector2i directionOpposee(const Vector2i &dir)
 {
     Vector2i dirOpposee;
@@ -39,4 +45,67 @@ Vector2i directionOpposee(const Vector2i &dir)
         dirOpposee = NullDirection;
 
     return dirOpposee;
+}
+
+/**
+ * @brief Transforme un entier (qui représente un direction dans une tab[6]) en vecteur direction
+ *
+ * @param int - *dirInt* (indice dans un tab[6])
+ * @return const Vector2i& - *dirVector*
+ */
+Vector2i directionIntToVecteur(int dirInt)
+{
+    Vector2i dirVector;
+    switch (dirInt)
+    {
+    case NORD:
+        dirVector = Nord;
+        break;
+    case NORDOUEST:
+        dirVector = NordOuest;
+        break;
+    case SUDOUEST:
+        dirVector = SudOuest;
+        break;
+    case SUD:
+        dirVector = Sud;
+        break;
+    case SUDEST:
+        dirVector = SudEst;
+        break;
+    case NORDEST:
+        dirVector = NordEst;
+        break;
+    default:
+        dirVector = NullDirection;
+        break;
+    }
+    return dirVector;
+}
+
+/**
+ * @brief Transforme une direction en un entier qui correspond à l'indice de la direction dans un tab[6]
+ *
+ * @param const Vector2i & - *dirVecteur*
+ * @return int - *indice d'une direction dans un tab[6]*
+ */
+int directionVecteurToInt(const Vector2i &dirVecteur)
+{
+    int dirInt;
+    if (dirVecteur == Nord)
+        dirInt = NORD;
+    else if (dirVecteur == NordOuest)
+        dirInt = NORDOUEST;
+    else if (dirVecteur == SudOuest)
+        dirInt = SUDEST;
+    else if (dirVecteur == Sud)
+        dirInt = SUD;
+    else if (dirVecteur == SudEst)
+        dirInt = SUDEST;
+    else if (dirVecteur == NordEst)
+        dirInt = NORDEST;
+    else
+        dirInt = NULLDIRECTION;
+
+    return dirInt;
 }
