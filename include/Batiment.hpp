@@ -10,7 +10,8 @@ class Batiment : public Structure
 {
 protected:
     uint _idBatiment;
-    Structure * _voisinage[6];
+    Structure *_voisinage[6];
+    Structure *_sortie;
 
 private: // Static
     static uint _nbBatiments;
@@ -24,8 +25,10 @@ public:
 
     // Getter
     uint getIdBatiment() const;
+    Structure *getSortie() const;
 
     // Setter
+    void setSortie(Structure *structure);
 };
 
 /***************************************************/
@@ -40,6 +43,8 @@ inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline uint Batiment::getIdBatiment()const { return _idBatiment; }
+inline uint Batiment::getIdBatiment() const { return _idBatiment; }
+
+inline Structure *Batiment::getSortie() const { return _sortie; }
 
 #endif
