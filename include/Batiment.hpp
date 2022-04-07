@@ -5,13 +5,14 @@
 #include <sys/types.h>
 
 #include "Structure.hpp"
+#include "direction.hpp"
 
 class Batiment : public Structure
 {
 protected:
     uint _idBatiment;
-    Structure *_voisinage[6]; // Ne pas delete
-    Structure *_sortie; // Ne pas delete
+    Structure *_connexion[6]; // Ne pas delete
+    Structure *_sortie;       // Ne pas delete
 
 private: // Static
     static uint _nbBatiments;
@@ -25,14 +26,16 @@ public:
 
     virtual void init();
 
-    virtual void dessiner(float scaleSprite) ;
-    virtual void update() ;
+    virtual void dessiner(float scaleSprite);
+    virtual void update();
 
     void deconnecterStructure(Structure *structure);
 
     // Getter
     uint getIdBatiment() const;
     Structure *getSortie() const;
+    Structure *getConnexion(const Vector2i &dir) const;
+    Structure *getConnexion(int DIRECTION) const;
 
     // Setter
     void setSortie(Structure *structure);
@@ -53,5 +56,18 @@ inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 inline uint Batiment::getIdBatiment() const { return _idBatiment; }
 
 inline Structure *Batiment::getSortie() const { return _sortie; }
+
+inline Structure *Batiment::getConnexion(const Vector2i &dir) const 
+{
+    int dirInt = directionVecteurToInt(dir);
+    return Batiment::getConnexion(dirInt);
+}
+inline Structure *Batiment::getConnexion(int DIRECTION) const
+{
+    if (DIRECTION >= 0 && DIRECTION < 6)
+        return _connexion[DIRECTION];
+    else
+        return nullptr;
+}
 
 #endif

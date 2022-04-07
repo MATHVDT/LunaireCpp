@@ -2,11 +2,11 @@
 
 uint Batiment::_nbBatiments = 0;
 
-Batiment::Batiment(Vector2f pos) : Structure(pos), _idBatiment(_nbBatiments++), _voisinage(), _sortie(nullptr)
+Batiment::Batiment(Vector2f pos) : Structure(pos), _idBatiment(_nbBatiments++), _connexion(), _sortie(nullptr)
 { // Correspond aux Structures connecté au batiment
     for (int i = 0; i < 6; ++i)
     { // Aucune à la création
-        _voisinage[i] == nullptr;
+        _connexion[i] == nullptr;
     }
 }
 
@@ -39,9 +39,9 @@ void Batiment::deconnecterStructure(Structure *structure)
 {
     for (int i = 0; i < 6; ++i)
     {
-        if (_voisinage[i] == structure)
+        if (_connexion[i] == structure)
         {
-            _voisinage[i] = nullptr;
+            _connexion[i] = nullptr;
             if (_sortie == structure)
             {
                 setSortie(nullptr);
