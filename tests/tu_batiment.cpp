@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <list>
 
 #include "catch.hpp"
 
@@ -49,33 +50,32 @@ TEST_CASE("Connexion batiment")
     Vector2f vectPos{0.f, 0.f};
     Batiment bat{Vector2f(vectPos)};
 
-    // REQUIRE(bat.getNbStructures() == 1);
-    // REQUIRE(bat.getNbBatiments() == 1);
-
-    // REQUIRE(bat.getIdStructure() == 0);
-    // REQUIRE(bat.getIdBatiment() == 0);
-
-    // REQUIRE(bat.getPosition().x == Approx(vectPos.x).epsilon(eps));
-    // REQUIRE(bat.getPosition().y == Approx(vectPos.y).epsilon(eps));
-
     SECTION("Test aucune connexion")
     {
         REQUIRE(bat.getSortie() == nullptr);
 
-        REQUIRE(bat.getConnexion(static_cast<Vector2i>(vectPos)) == nullptr);
-        REQUIRE(bat.getConnexion(Nord) == nullptr);
-        REQUIRE(bat.getConnexion(NordOuest) == nullptr);
-        REQUIRE(bat.getConnexion(SudOuest) == nullptr);
-        REQUIRE(bat.getConnexion(Sud) == nullptr);
-        REQUIRE(bat.getConnexion(SudEst) == nullptr);
-        REQUIRE(bat.getConnexion(NordEst) == nullptr);
+        REQUIRE(bat.getNbConnexions() == 0);
+        REQUIRE(bat.getNbEntrees() == 0);
 
-        REQUIRE(bat.getConnexion(NULLDIRECTION) == nullptr);
-        REQUIRE(bat.getConnexion(NORD) == nullptr);
-        REQUIRE(bat.getConnexion(NORDOUEST) == nullptr);
-        REQUIRE(bat.getConnexion(SUDOUEST) == nullptr);
-        REQUIRE(bat.getConnexion(SUD) == nullptr);
-        REQUIRE(bat.getConnexion(SUDEST) == nullptr);
-        REQUIRE(bat.getConnexion(NORDEST) == nullptr);
+        REQUIRE(bat.getConnexionDirection(static_cast<Vector2i>(vectPos)) == nullptr);
+        REQUIRE(bat.getConnexionDirection(Nord) == nullptr);
+        REQUIRE(bat.getConnexionDirection(NordOuest) == nullptr);
+        REQUIRE(bat.getConnexionDirection(SudOuest) == nullptr);
+        REQUIRE(bat.getConnexionDirection(Sud) == nullptr);
+        REQUIRE(bat.getConnexionDirection(SudEst) == nullptr);
+        REQUIRE(bat.getConnexionDirection(NordEst) == nullptr);
+
+        REQUIRE(bat.getConnexionDirection(NULLDIRECTION) == nullptr);
+        REQUIRE(bat.getConnexionDirection(NORD) == nullptr);
+        REQUIRE(bat.getConnexionDirection(NORDOUEST) == nullptr);
+        REQUIRE(bat.getConnexionDirection(SUDOUEST) == nullptr);
+        REQUIRE(bat.getConnexionDirection(SUD) == nullptr);
+        REQUIRE(bat.getConnexionDirection(SUDEST) == nullptr);
+        REQUIRE(bat.getConnexionDirection(NORDEST) == nullptr);
+
+        REQUIRE(bat.getEntrees() == list<Structure *>{});
+    }
+    SECTION("Test ajout batiment")
+    {
     }
 }
