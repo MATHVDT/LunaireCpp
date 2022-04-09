@@ -5,6 +5,9 @@
 #include <sys/types.h>
 
 #include "ContextGlobal.hpp"
+// #include "connexion_t.hpp"
+
+struct connexion_t;
 
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;
@@ -38,6 +41,8 @@ public:
 
     // Setter
     void setPosition(const Vector2f &pos);
+
+    virtual bool connecte(connexion_t *) =0;
 };
 
 /***************************************************/

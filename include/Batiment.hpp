@@ -7,23 +7,13 @@
 
 #include "Structure.hpp"
 #include "direction.hpp"
-
-struct connexion_t
-{
-    Structure *structure = nullptr;
-    Vector2i direction = NullDirection;
-    bool sortie = false;
-};
-
-extern connexion_t ConnexionNull;
-
-bool operator==(const connexion_t &cg, const connexion_t &cd);
+#include "connexion_t.hpp"
 
 class Batiment : public Structure
 {
 protected:
     uint _idBatiment;
-    list<connexion_t> _listConnexions;
+    list<connexion_t *> _listConnexions;
     bool _sortie;
 
 private: // Static
@@ -41,32 +31,34 @@ public:
     virtual void dessiner(float scaleSprite);
     virtual void update();
 
-    void deconnecterStructure(Structure *structure);
-    void deconnecterStructure(connexion_t c);
-
     // Getter
+    bool getASortie() const;
     uint getNbConnexions() const;
     uint getNbEntrees() const;
     uint getIdBatiment() const;
-    list<connexion_t> getConnexionsEntrantes() const;
-    connexion_t &getConnexionSortie() const;
-    list<connexion_t> getConnexions() const;
-    connexion_t &getConnexionDirection(const Vector2i &dir) const;
-    connexion_t &getConnexionDirection(int DIRECTION) const;
+    list<connexion_t *> getConnexionsEntrantes() const;
+    list<connexion_t *> getConnexions() const;
+    connexion_t *getConnexionSortie() const;
+    connexion_t *getConnexionDirection(const Vector2i &dir) const;
+    connexion_t *getConnexionDirection(int DIRECTION) const;
 
     // Setter
     void setSortie(Structure *structure);
+
+    // Gestion connextion_t
+    void deconnecterStructure(Structure *structure);
+    void deconnecterStructure(connexion_t *c);
+
+    bool ajouterConnexion(connexion_t *c);
+
+private:
+    bool checkConnexionPossible(connexion_t *c);
+    virtual bool connecte(connexion_t *c) override; 
 };
 
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
-inline bool operator==(const connexion_t &cg, const connexion_t &cd)
-{
-    return (cg.structure == cd.structure &&
-            cg.direction == cd.direction &&
-            cg.sortie == cd.sortie);
-}
 
 /***************************************************/
 /*              Méthodes inline static             */
@@ -76,6 +68,8 @@ inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline bool Batiment::getASortie() const { return _sortie; }
+
 inline uint Batiment::getNbConnexions() const { return _listConnexions.size(); }
 inline uint Batiment::getNbEntrees() const { return getNbConnexions() - _sortie; }
 
