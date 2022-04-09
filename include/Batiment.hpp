@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include <queue>
 #include <sys/types.h>
 
 #include "Structure.hpp"
@@ -16,11 +17,16 @@ protected:
     list<connexion_t *> _listConnexions;
     bool _sortie;
 
+
 private: // Static
     static uint _nbBatiments;
+    static const uint _tailleStockEntree;
+    static const uint _tailleStockSortie;
 
 public: // Static
     static uint getNbBatiments();
+    static uint getTailleStockEntree();
+    static uint getTailleStockSortie();
 
 public:
     Batiment(Vector2f pos);
@@ -53,11 +59,9 @@ public:
 
 private:
     bool checkConnexionPossible(connexion_t *c);
-    
-    virtual bool connecte(connexion_t *c) override; 
-    virtual bool deconnecte(Structure *c) override; 
 
-
+    virtual bool connecte(connexion_t *c) override;
+    virtual bool deconnecte(Structure *c) override;
 };
 
 /***************************************************/
@@ -68,6 +72,9 @@ private:
 /*              Méthodes inline static             */
 /***************************************************/
 inline uint Batiment::getNbBatiments() { return _nbBatiments; }
+
+inline uint Batiment::getTailleStockEntree() { return _tailleStockEntree; }
+inline uint Batiment::getTailleStockSortie() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

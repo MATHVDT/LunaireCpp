@@ -1,7 +1,10 @@
 #include "Batiment.hpp"
 
 uint Batiment::_nbBatiments = 0;
-connexion_t ConnexionNull{};
+const uint Batiment::_tailleStockEntree = 6;
+const uint Batiment::_tailleStockSortie = 1;
+
+connexion_t ConnexionNull{}; // Inutile je crois
 
 Batiment::Batiment(Vector2f pos) : Structure(pos), _idBatiment(_nbBatiments++), _listConnexions{}, _sortie(false) {}
 
