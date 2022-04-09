@@ -22,60 +22,60 @@ TEST_CASE("Test création batiment")
 {
     float eps = 0.0001;
     Vector2f vectPos{0.f, 0.f};
-    Batiment bat{Vector2f(vectPos)};
+    Batiment *bat = new Batiment{Vector2f(vectPos)};
 
-    REQUIRE(bat.getNbStructures() == 1);
-    REQUIRE(bat.getNbBatiments() == 1);
+    REQUIRE(bat->getNbStructures() == 1);
+    REQUIRE(bat->getNbBatiments() == 1);
 
-    REQUIRE(bat.getIdStructure() == 0);
-    REQUIRE(bat.getIdBatiment() == 0);
+    REQUIRE(bat->getIdStructure() == 0);
+    REQUIRE(bat->getIdBatiment() == 0);
 
-    REQUIRE(bat.getPosition().x == Approx(vectPos.x).epsilon(eps));
-    REQUIRE(bat.getPosition().y == Approx(vectPos.y).epsilon(eps));
+    REQUIRE(bat->getPosition().x == Approx(vectPos.x).epsilon(eps));
+    REQUIRE(bat->getPosition().y == Approx(vectPos.y).epsilon(eps));
 
-    Batiment bat2{Vector2f(1.5f, 4.4f)};
+    Batiment *bat2 = new Batiment{Vector2f(1.5f, 4.4f)};
 
-    REQUIRE(bat2.getNbStructures() == 2);
-    REQUIRE(bat2.getNbBatiments() == 2);
+    REQUIRE(bat2->getNbStructures() == 2);
+    REQUIRE(bat2->getNbBatiments() == 2);
 
-    REQUIRE(bat2.getIdStructure() == 1);
-    REQUIRE(bat2.getIdBatiment() == 1);
+    REQUIRE(bat2->getIdStructure() == 1);
+    REQUIRE(bat2->getIdBatiment() == 1);
 
-    REQUIRE(bat2.getPosition().x == Approx(1.5f).epsilon(eps));
-    REQUIRE(bat2.getPosition().y == Approx(4.4f).epsilon(eps));
+    REQUIRE(bat2->getPosition().x == Approx(1.5f).epsilon(eps));
+    REQUIRE(bat2->getPosition().y == Approx(4.4f).epsilon(eps));
 }
 
 TEST_CASE("Connexion batiment")
 {
     float eps = 0.0001;
     Vector2f vectPos{0.f, 0.f};
-    Batiment bat{Vector2f(vectPos)};
+    Batiment *bat = new Batiment{Vector2f(vectPos)};
 
     SECTION("Test aucune connexion")
     {
-        REQUIRE(bat.getNbConnexions() == 0);
-        REQUIRE(bat.getNbEntrees() == 0);
-        REQUIRE(bat.getASortie() == 0);
+        REQUIRE(bat->getNbConnexions() == 0);
+        REQUIRE(bat->getNbEntrees() == 0);
+        REQUIRE(bat->getASortie() == 0);
 
-        REQUIRE(bat.getConnexionDirection(static_cast<Vector2i>(vectPos)) == nullptr);
-        REQUIRE(bat.getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat.getConnexionDirection(NordOuest) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SudOuest) == nullptr);
-        REQUIRE(bat.getConnexionDirection(Sud) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SudEst) == nullptr);
-        REQUIRE(bat.getConnexionDirection(NordEst) == nullptr);
+        REQUIRE(bat->getConnexionDirection(static_cast<Vector2i>(vectPos)) == nullptr);
+        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NordOuest) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SudOuest) == nullptr);
+        REQUIRE(bat->getConnexionDirection(Sud) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SudEst) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NordEst) == nullptr);
 
-        REQUIRE(bat.getConnexionDirection(NULLDIRECTION) == nullptr);
-        REQUIRE(bat.getConnexionDirection(NORD) == nullptr);
-        REQUIRE(bat.getConnexionDirection(NORDOUEST) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SUDOUEST) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SUD) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SUDEST) == nullptr);
-        REQUIRE(bat.getConnexionDirection(NORDEST) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NULLDIRECTION) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NORD) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NORDOUEST) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SUDOUEST) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SUD) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SUDEST) == nullptr);
+        REQUIRE(bat->getConnexionDirection(NORDEST) == nullptr);
 
-        REQUIRE(bat.getConnexionsEntrantes() == list<connexion_t *>{});
-        REQUIRE(bat.getConnexions() == list<connexion_t *>{});
-        REQUIRE(bat.getConnexionSortie() == nullptr);
+        REQUIRE(bat->getConnexionsEntrantes() == list<connexion_t *>{});
+        REQUIRE(bat->getConnexions() == list<connexion_t *>{});
+        REQUIRE(bat->getConnexionSortie() == nullptr);
     }
 
     Batiment *bat2 = new Batiment{Vector2f(1.f, 1.f)};
@@ -83,49 +83,49 @@ TEST_CASE("Connexion batiment")
 
     SECTION("Test ajout batiment : 1 connexion")
     {
-        REQUIRE(bat.ajouterConnexion(c));
+        REQUIRE(bat->ajouterConnexion(c));
 
-        REQUIRE(bat.getNbConnexions() == 1);
-        REQUIRE(bat.getNbEntrees() == 1);
-        REQUIRE(bat.getASortie() == 0);
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 1);
+        REQUIRE(bat->getASortie() == 0);
 
-        REQUIRE(bat.getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SudEst) == c);
+        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SudEst) == c);
     }
 
     SECTION("Test ajout batiment : 2 fois la même connexion")
     {
-        REQUIRE(bat.ajouterConnexion(c));
-        REQUIRE_FALSE(bat.ajouterConnexion(c));
+        REQUIRE(bat->ajouterConnexion(c));
+        REQUIRE_FALSE(bat->ajouterConnexion(c));
 
-        REQUIRE(bat.getNbConnexions() == 1);
-        REQUIRE(bat.getNbEntrees() == 1);
-        REQUIRE(bat.getASortie() == false);
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 1);
+        REQUIRE(bat->getASortie() == false);
 
-        REQUIRE(bat.getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SudEst) == c);
+        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SudEst) == c);
     }
 
     SECTION("Test ajout batiment : sortie")
     {
         c->sortie = true;
-        REQUIRE(bat.ajouterConnexion(c));
-        REQUIRE_FALSE(bat.ajouterConnexion(c));
+        REQUIRE(bat->ajouterConnexion(c));
+        REQUIRE_FALSE(bat->ajouterConnexion(c));
 
-        REQUIRE(bat.getNbConnexions() == 1);
-        REQUIRE(bat.getNbEntrees() == 0);
-        REQUIRE(bat.getASortie() == true);
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 0);
+        REQUIRE(bat->getASortie() == true);
 
-        REQUIRE(bat.getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat.getConnexionDirection(SudEst) == c);
-        REQUIRE(bat.getConnexionSortie() == c);
+        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
+        REQUIRE(bat->getConnexionDirection(SudEst) == c);
+        REQUIRE(bat->getConnexionSortie() == c);
     }
 
     SECTION("Test ajout batiment : bat2 connecté  verif")
     {
-        connexion_t *cInverse = new connexion_t{&bat, directionOpposee(c->direction), !c->sortie};
+        connexion_t *cInverse = new connexion_t{bat, directionOpposee(c->direction), !c->sortie};
 
-        REQUIRE(bat.ajouterConnexion(c));
+        REQUIRE(bat->ajouterConnexion(c));
 
         REQUIRE(bat2->getNbConnexions() == 1);
         REQUIRE(bat2->getNbEntrees() == 0);
@@ -144,9 +144,9 @@ TEST_CASE("Connexion batiment")
     SECTION("Test ajout batiment : bat2 connecté sortie verif")
     {
         c->sortie = true;
-        connexion_t *cInverse = new connexion_t{&bat, directionOpposee(c->direction), !c->sortie};
+        connexion_t *cInverse = new connexion_t{bat, directionOpposee(c->direction), !c->sortie};
 
-        REQUIRE(bat.ajouterConnexion(c));
+        REQUIRE(bat->ajouterConnexion(c));
 
         REQUIRE(bat2->getNbConnexions() == 1);
         REQUIRE(bat2->getNbEntrees() == 1);
