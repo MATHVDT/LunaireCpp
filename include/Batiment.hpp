@@ -53,7 +53,11 @@ public:
 
 private:
     bool checkConnexionPossible(connexion_t *c);
+    
     virtual bool connecte(connexion_t *c) override; 
+    virtual bool deconnecte(Structure *c) override; 
+
+
 };
 
 /***************************************************/

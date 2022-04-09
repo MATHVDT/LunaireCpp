@@ -37,6 +37,36 @@ void Batiment::dessiner(float scaleSprite) {}
 
 void Batiment::update() {}
 
+/*******************************************************/
+
+/**
+ * @brief Deconnecte une structure, sans chercher à deconnecter la structure liée
+ *
+ * @details Est appelée lorqu'il y a une déconnexion de structure, une fois la connexion enlevé, cette méthode permet d'enlever l'autre *connexion Inverse* sur la structure liée. Libère la mémoire associée à la connexion inverse
+ *
+ * @param Structure - *structure*
+ * @return true - *Si la structure a été déconnectée*
+ * @return false - *Si la struture n'a pas été déconnectée"
+ */
+bool Batiment::deconnecte(Structure *structure)
+{
+    connexion_t *cSave = nullptr;
+    _listConnexions.remove_if(
+        [&cSave, structure](connexion_t *c)
+        {
+            cSave = c;
+            return c->structure == structure;
+        });
+
+    if (cSave->structure == structure)
+        delete cSave;
+    else
+        return false;
+    return true;
+}
+
+/*******************************************************/
+
 /**
  * @brief Déconnecte une structure du batiment
  * @param Structure * - *structure*
@@ -50,15 +80,18 @@ void Batiment::deconnecterStructure(Structure *structure)
 
 /**
  * @brief Déconnecte une connexion du batiment
- * @todo deco de l'autre structure
+ * @details Déconnecte une structure et libère la mémoire associée à la connexion. Appelle également la méthode permettant de deconnecté dans l'autre sens la structure connectée
  * @param connexion_t * - *connexion*
  */
 void Batiment::deconnecterStructure(connexion_t *c)
 {
     _listConnexions.remove(c);
-    // deco autre structure
-    // delete c;
+    // Déconnecter l'autre structure, connexion inverse
+    c->structure->deconnecte(this);
+    delete c;
 }
+
+/*******************************************************/
 
 /**
  * @brief Donne une liste des *connexion_t* en entrée sur le Batiment

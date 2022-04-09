@@ -43,6 +43,9 @@ TEST_CASE("Test création batiment")
 
     REQUIRE(bat2->getPosition().x == Approx(1.5f).epsilon(eps));
     REQUIRE(bat2->getPosition().y == Approx(4.4f).epsilon(eps));
+
+    delete bat;
+    delete bat2;
 }
 
 TEST_CASE("Connexion batiment")
@@ -139,6 +142,8 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat2->getConnexionSortie()->structure == cInverse->structure);
         REQUIRE(bat2->getConnexionSortie()->direction == cInverse->direction);
         REQUIRE(bat2->getConnexionSortie()->sortie == cInverse->sortie);
+
+        delete cInverse;
     }
 
     SECTION("Test ajout batiment : bat2 connecté sortie verif")
@@ -157,5 +162,10 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat2->getConnexionDirection(NordOuest)->direction == cInverse->direction);
         REQUIRE(bat2->getConnexionDirection(NordOuest)->sortie == cInverse->sortie);
         REQUIRE(bat2->getConnexionSortie() == nullptr);
+
+        delete cInverse;
     }
+
+    delete bat;
+    delete bat2;
 }

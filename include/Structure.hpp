@@ -42,7 +42,8 @@ public:
     // Setter
     void setPosition(const Vector2f &pos);
 
-    virtual bool connecte(connexion_t *) =0;
+    virtual bool connecte(connexion_t *) = 0;
+    virtual bool deconnecte(Structure *c) = 0;
 };
 
 /***************************************************/
