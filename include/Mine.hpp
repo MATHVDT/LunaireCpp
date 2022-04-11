@@ -45,6 +45,7 @@ public:
     static uint getIdMaxMines();
     uint getLevelMaxMine();
     static void initMines();
+   static void chargerTextures(string fichierCheminsTexture);
 
 public:
     Mine(Vector2f pos, Ressource type);
@@ -55,7 +56,6 @@ public:
     virtual void dessiner(float scaleSprite);
     virtual void update();
 
-    void chargerTextures(string fichierCheminsTexture);
 
     // Getter
     Ressource getTypeRessource() const;

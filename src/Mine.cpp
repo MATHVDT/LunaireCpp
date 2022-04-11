@@ -16,7 +16,7 @@ uint Mine::_offsetTextureY = 100;
 
 Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
 {
-    // _sprite->setTexture(*_texturesMine[static_cast<int>(_typeRessource)]);
+    _sprite->setTexture(*_texturesMine[static_cast<int>(_typeRessource)]);
     _nbMines++;
 }
 
@@ -27,6 +27,7 @@ Mine::~Mine()
 
 void Mine::initMines()
 {
+    chargerTextures("ressource/cheminTexturesCases.txt");
     _offsetTextureX = contextGlobal.getTailleReference();
     _offsetTextureY = contextGlobal.getTailleReference();
 }
@@ -65,6 +66,7 @@ void Mine::chargerTextures(string fichierCheminsTexture)
         {
             // Chemin de l'image texture d'une mine
             monFlux >> cheminTexture;
+            cout << cheminTexture<<endl;
 
             // Create de la nouvelle texture
             texture = new Texture();
