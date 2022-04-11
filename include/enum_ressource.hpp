@@ -1,10 +1,11 @@
-#ifndef __ENUM_SOL_HPP__
-#define __ENUM_SOL_HPP__
+#ifndef __ENUM_RESSOURCE_HPP__
+#define __ENUM_RESSOURCE_HPP__
 
 #define NB_RESSOURCES 5;
 
-enum RESSOURCE
+enum class Ressource
 {
+    Rien,
     // Matières premères
     PoussiereRegolite,
     MineraiGlace,

@@ -171,7 +171,7 @@ connexion_t *Batiment::getConnexionSortie() const
 /*******************************************************/
 
 /**
- * @brief Check si la connexion est possible : sur la direction et sur la sortie
+ * @brief Check si la connexion est possible : direction libre et sortie unique
  *
  * @param connexion_t - *c*
  * @return true - *Connexion possible*
@@ -229,3 +229,46 @@ bool Batiment::connecte(connexion_t *c)
 
     return true;
 }
+
+/*******************************************************/
+
+/**
+ * @brief Donne la ressource du stock de sortie d'un batiment et la retire du stock de sortie
+ *
+ * @return Ressource 
+ */
+Ressource Batiment::livrerStock()
+{
+    if (_stockSortie.empty())
+    {
+        return Ressource::Rien;
+    }
+    else
+    { // Récupère la ressource du stock de sortie
+        Ressource r = _stockSortie.front();
+        _stockSortie.pop(); // Enleve du stock
+        return r;
+    }
+}
+
+/**
+ * @brief Récupère les ressources des stocks de sortie des structures connectées *(une seule ressource/structure)*
+ *
+ */
+void Batiment::remplirStock()
+{
+    Ressource ress;
+    // Pour toutes les connexions aux batiments
+    for (auto c : _listConnexions)
+    {
+        if (!c->sortie) // S'il s'agit d'une entrée
+        {
+            ress = c->structure->livrerStock();
+            // Si une ressource a été récup -> ajout au stock d'entrée
+            if (ress != Ressource::Rien)
+                _stockEntree.push(ress);
+        }
+    }
+}
+
+/*******************************************************/

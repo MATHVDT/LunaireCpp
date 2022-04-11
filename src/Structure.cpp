@@ -22,4 +22,11 @@ void Structure::dessiner(float scaleSprite)
 
 void Structure::update()
 {
+    // Récupérer les ressources des entrées 
+    remplirStock();
+
+    // Traiter les ressources
+    // ... ^ v
+    // Mettre les ressources à la sortie
+
 }

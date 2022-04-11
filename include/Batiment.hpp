@@ -7,8 +7,7 @@
 #include <sys/types.h>
 
 #include "Structure.hpp"
-#include "direction.hpp"
-#include "connexion_t.hpp"
+#include "enum_ressource.hpp"
 
 class Batiment : public Structure
 {
@@ -17,6 +16,8 @@ protected:
     list<connexion_t *> _listConnexions;
     bool _sortie;
 
+    queue<Ressource> _stockEntree;
+    queue<Ressource> _stockSortie;
 
 private: // Static
     static uint _nbBatiments;
@@ -35,7 +36,7 @@ public:
     virtual void init();
 
     virtual void dessiner(float scaleSprite);
-    virtual void update();
+    virtual void update(); // = 0
 
     // Getter
     bool getASortie() const;
@@ -57,11 +58,14 @@ public:
 
     bool ajouterConnexion(connexion_t *c);
 
-private:
-    bool checkConnexionPossible(connexion_t *c);
-
     virtual bool connecte(connexion_t *c) override;
     virtual bool deconnecte(Structure *c) override;
+
+    virtual Ressource livrerStock() override;
+    virtual void remplirStock() override;
+
+private:
+    bool checkConnexionPossible(connexion_t *c);
 };
 
 /***************************************************/

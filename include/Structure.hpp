@@ -5,7 +5,9 @@
 #include <sys/types.h>
 
 #include "ContextGlobal.hpp"
-// #include "connexion_t.hpp"
+#include "enum_ressource.hpp"
+#include "connexion_t.hpp"
+#include "direction.hpp"
 
 struct connexion_t;
 
@@ -43,7 +45,10 @@ public:
     void setPosition(const Vector2f &pos);
 
     virtual bool connecte(connexion_t *) = 0;
-    virtual bool deconnecte(Structure *c) = 0;
+    virtual bool deconnecte(Structure *) = 0;
+
+    virtual Ressource livrerStock() = 0;
+    virtual void remplirStock() = 0;
 };
 
 /***************************************************/
