@@ -1,0 +1,59 @@
+#include "Mine.hpp"
+
+Texture *Mine::_texturesMine[NB_RESSOURCES];
+
+uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
+uint Mine::_offsetTextureY = contextGlobal.getTailleReference();
+
+Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _type(type), _level(0), _zoomTexture()
+{
+}
+
+Mine::~Mine()
+{
+}
+
+void Mine::init()
+{
+}
+
+void Mine::dessiner(float scaleSprite) {}
+
+void Mine::update() {}
+
+/**
+ * @brief Charge les textures des différentes mines en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
+ *
+ * @param string - *fichierCheminsTexture*
+ */
+void Mine::chargerTextures(string fichierCheminsTexture)
+{
+    string nomFichierTexture[NB_RESSOURCES];
+    string cheminTexture;
+    sf::Texture *texture;
+
+    ifstream monFlux;
+    monFlux.open(fichierCheminsTexture);
+
+    if (monFlux)
+    {
+        // Récupération des chemins
+        for (int k = 0; k < NB_RESSOURCES; ++k)
+        {
+            // Chemin de l'image texture d'une mine
+            monFlux >> cheminTexture;
+
+            // Create de la nouvelle texture
+            texture = new Texture();
+            texture->loadFromFile(cheminTexture);
+
+            _texturesMine[k] = texture;
+        }
+        // _tailleTexture = texture->getSize().y;
+        monFlux.close();
+    }
+    else
+    {
+        std::cerr << "/!\\ Erreur d'ouverture du fichier : " << fichierCheminsTexture << " /!\\" << endl;
+    }
+}

@@ -1,7 +1,8 @@
 #ifndef __ENUM_RESSOURCE_HPP__
 #define __ENUM_RESSOURCE_HPP__
 
-#define NB_RESSOURCES 5;
+// #define NB_RESSOURCES 5;
+const uint NB_RESSOURCES = 5;
 
 enum class Ressource
 {
