@@ -3,15 +3,20 @@
 uint Mine::_nbMines = 0;
 uint Mine::_idMaxMines = 0;
 
+uint Mine::_levelMax = 3;
+uint _nbAnim = 4;
+
 Texture *Mine::_texturesMine[NB_RESSOURCES];
+
 // uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
 // uint Mine::_offsetTextureY = contextGlobal.getTailleReference();
 
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
-Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _id(++_idMaxMines), _type(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
+Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
 {
+    // _sprite->setTexture(*_texturesMine[static_cast<int>(_typeRessource)]);
     _nbMines++;
 }
 
@@ -20,11 +25,22 @@ Mine::~Mine()
     _nbMines--;
 }
 
+void Mine::initMines()
+{
+    _offsetTextureX = contextGlobal.getTailleReference();
+    _offsetTextureY = contextGlobal.getTailleReference();
+}
+
 void Mine::init()
 {
 }
 
-void Mine::dessiner(float scaleSprite) {}
+void Mine::dessiner(float scaleSprite)
+{
+    // Décalage animation
+
+    Batiment::dessiner(scaleSprite);
+}
 
 void Mine::update() {}
 
@@ -63,4 +79,17 @@ void Mine::chargerTextures(string fichierCheminsTexture)
     {
         std::cerr << "/!\\ Erreur d'ouverture du fichier : " << fichierCheminsTexture << " /!\\" << endl;
     }
+}
+
+/**
+ * @brief Zoom la texture de la mine en fonction du niveau et de l'animation
+ *
+ * @param uint - *tick*
+ */
+void Mine::setSpriteTexture(uint tick)
+{
+    _zoomTexture.top = _level * _offsetTextureY;
+    _zoomTexture.left = tick * _offsetTextureX;
+
+    _sprite->setTextureRect(_zoomTexture);
 }

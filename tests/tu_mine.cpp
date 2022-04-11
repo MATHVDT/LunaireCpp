@@ -18,13 +18,16 @@
 using namespace std;
 using namespace sf;
 
+
 TEST_CASE("Test création Mine")
 {
     uint idMaxMines = Mine::getIdMaxMines();
     Mine *m = new Mine(Vector2f(0.f, 0.f), Ressource::MineraiGlace);
 
     REQUIRE(m->getNbMines() == 1);
-    REQUIRE(m->getIdMaxMines() == idMaxMines+1);
+    REQUIRE(m->getIdMaxMines() == idMaxMines + 1);
+
+    REQUIRE(m->getTypeRessource() == Ressource::MineraiGlace);
 
     delete m;
 }

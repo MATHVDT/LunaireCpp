@@ -25,13 +25,17 @@ class Mine : public Batiment
 {
 private:
     uint _id;
-    Ressource _type;
+    Ressource _typeRessource;
     uint _level;
     IntRect _zoomTexture;
 
 private:
     static uint _nbMines;
     static uint _idMaxMines;
+
+    static uint _levelMax;
+    static uint _nbAnim;
+
     static Texture *_texturesMine[NB_RESSOURCES];
     static uint _offsetTextureX;
     static uint _offsetTextureY;
@@ -39,12 +43,14 @@ private:
 public:
     static uint getNbMines();
     static uint getIdMaxMines();
+    uint getLevelMaxMine();
+    static void initMines();
 
 public:
     Mine(Vector2f pos, Ressource type);
     virtual ~Mine() override;
 
-    virtual void init() override;
+    virtual void init() override; // Va pas servir a mon avis
 
     virtual void dessiner(float scaleSprite);
     virtual void update();
@@ -52,9 +58,11 @@ public:
     void chargerTextures(string fichierCheminsTexture);
 
     // Getter
+    Ressource getTypeRessource() const;
+    uint getLevel() const;
 
     // Setter
-    void updateSpriteTexture();
+    void setSpriteTexture(uint tick);
 };
 
 /***************************************************/
@@ -67,8 +75,13 @@ public:
 inline uint Mine::getNbMines() { return _nbMines; }
 inline uint Mine::getIdMaxMines() { return _idMaxMines; }
 
+inline uint Mine::getLevelMaxMine() { return _levelMax; }
+
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline Ressource Mine::getTypeRessource() const { return _typeRessource; }
+
+inline uint Mine::getLevel() const { return _level; }
 
 #endif

@@ -6,13 +6,14 @@ const uint NB_RESSOURCES = 5;
 
 enum class Ressource
 {
-    Rien,
     // Matières premères
     PoussiereRegolite,
     MineraiGlace,
     MineraiTitane,
     MineraiSilicium,
     MineraiFer,
+ 
+    Rien,
 
     MineraiAluminium,
     MineraiMagnesium,
