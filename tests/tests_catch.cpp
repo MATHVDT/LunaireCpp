@@ -1,12 +1,15 @@
 /**
  * @file tests_catch.cpp
- * @brief 
+ * @brief
  */
 #include "catch.hpp"
 
 #include <fstream>
 #include <iostream>
 
+#include "ContextGlobal.hpp"
+
+ContextGlobal &contextGlobal = ContextGlobal::getInstance();
 
 TEST_CASE("Test random")
 {
@@ -21,4 +24,3 @@ TEST_CASE("Test random")
 //     REQUIRE(a.getY() == -1);
 //   }
 // }
-

@@ -2,10 +2,13 @@
 
 Texture *Mine::_texturesMine[NB_RESSOURCES];
 
-uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
-uint Mine::_offsetTextureY = contextGlobal.getTailleReference();
+// uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
+// uint Mine::_offsetTextureY = contextGlobal.getTailleReference();
 
-Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _type(type), _level(0), _zoomTexture()
+uint Mine::_offsetTextureX = 100;
+uint Mine::_offsetTextureY = 100;
+
+Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos}, _type(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
 {
 }
 

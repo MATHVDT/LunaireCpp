@@ -8,12 +8,12 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
-#include <Rect.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 #include "enum_sol.hpp"
-#include "ContextGlobal.hpp"
 #include "Batiment.hpp"
 
+// #include "ContextGlobal.hpp"
 // #include "enum_ressource.hpp"
 
 using namespace std;

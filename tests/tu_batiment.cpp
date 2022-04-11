@@ -16,7 +16,6 @@
 using namespace std;
 using namespace sf;
 
-ContextGlobal &contextGlobal = ContextGlobal::getInstance();
 
 TEST_CASE("Test création batiment")
 {
