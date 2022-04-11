@@ -4,7 +4,7 @@ uint Structure::_nbStructures = 0;
 uint Structure::_idMaxStructures = 0;
 
 Structure::Structure(Vector2f pos)
-    : _idStructure(_idMaxStructures++), _position(pos) { _nbStructures++; }
+    : _idStructure(++_idMaxStructures), _position(pos) { _nbStructures++; }
 
 Structure::~Structure() { _nbStructures--; }
 

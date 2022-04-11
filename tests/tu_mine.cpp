@@ -20,8 +20,11 @@ using namespace sf;
 
 TEST_CASE("Test création Mine")
 {
-    std::cout << "TU Mine : " << Structure::getNbStructures() << std::endl;
+    uint idMaxMines = Mine::getIdMaxMines();
     Mine *m = new Mine(Vector2f(0.f, 0.f), Ressource::MineraiGlace);
+
+    REQUIRE(m->getNbMines() == 1);
+    REQUIRE(m->getIdMaxMines() == idMaxMines+1);
 
     delete m;
 }

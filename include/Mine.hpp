@@ -19,29 +19,35 @@
 using namespace std;
 using namespace sf;
 
-
 extern ContextGlobal &contextGlobal;
 
 class Mine : public Batiment
 {
 private:
+    uint _id;
     Ressource _type;
     uint _level;
     IntRect _zoomTexture;
 
 private:
+    static uint _nbMines;
+    static uint _idMaxMines;
     static Texture *_texturesMine[NB_RESSOURCES];
-    static uint _offsetTextureX; 
-    static uint _offsetTextureY; 
+    static uint _offsetTextureX;
+    static uint _offsetTextureY;
+
+public:
+    static uint getNbMines();
+    static uint getIdMaxMines();
 
 public:
     Mine(Vector2f pos, Ressource type);
-    virtual ~Mine();
+    virtual ~Mine() override;
 
     virtual void init() override;
 
     virtual void dessiner(float scaleSprite);
-    virtual void update(); 
+    virtual void update();
 
     void chargerTextures(string fichierCheminsTexture);
 
@@ -50,5 +56,19 @@ public:
     // Setter
     void updateSpriteTexture();
 };
+
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+/***************************************************/
+/*              Méthodes inline static             */
+/***************************************************/
+inline uint Mine::getNbMines() { return _nbMines; }
+inline uint Mine::getIdMaxMines() { return _idMaxMines; }
+
+/***************************************************/
+/*           Méthodes inline non static            */
+/***************************************************/
 
 #endif
