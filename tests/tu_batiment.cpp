@@ -16,9 +16,12 @@
 using namespace std;
 using namespace sf;
 
-
 TEST_CASE("Test création batiment")
 {
+
+    uint idMaxStructures = Structure::getIdMaxStructures();
+    uint idMaxBatiments = Batiment::getIdMaxBatiments();
+
     float eps = 0.0001;
     Vector2f vectPos{0.f, 0.f};
     Batiment *bat = new Batiment{Vector2f(vectPos)};
@@ -26,8 +29,8 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat->getNbStructures() == 1);
     REQUIRE(bat->getNbBatiments() == 1);
 
-    REQUIRE(bat->getIdStructure() == 0);
-    REQUIRE(bat->getIdBatiment() == 0);
+    REQUIRE(bat->getIdStructure() == idMaxStructures + 0);
+    REQUIRE(bat->getIdBatiment() == idMaxBatiments + 0);
 
     REQUIRE(bat->getPosition().x == Approx(vectPos.x).epsilon(eps));
     REQUIRE(bat->getPosition().y == Approx(vectPos.y).epsilon(eps));
@@ -37,8 +40,8 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat2->getNbStructures() == 2);
     REQUIRE(bat2->getNbBatiments() == 2);
 
-    REQUIRE(bat2->getIdStructure() == 1);
-    REQUIRE(bat2->getIdBatiment() == 1);
+    REQUIRE(bat2->getIdStructure() == idMaxStructures + 1);
+    REQUIRE(bat2->getIdBatiment() == idMaxBatiments + 1);
 
     REQUIRE(bat2->getPosition().x == Approx(1.5f).epsilon(eps));
     REQUIRE(bat2->getPosition().y == Approx(4.4f).epsilon(eps));

@@ -1,13 +1,14 @@
 #include "Structure.hpp"
 
 uint Structure::_nbStructures = 0;
+uint Structure::_idMaxStructures = 0;
 
 Structure::Structure(Vector2f pos)
-    : _idStructure(_nbStructures++), _position(pos) {}
+    : _idStructure(_idMaxStructures++), _position(pos) { _nbStructures++; }
 
-Structure::~Structure() {}
+Structure::~Structure() { _nbStructures--; }
 
-void Structure::init(){}
+void Structure::init() {}
 
 /**
  * @brief Dessine le sprite de la structure à la bonne taille
@@ -22,11 +23,10 @@ void Structure::dessiner(float scaleSprite)
 
 void Structure::update()
 {
-    // Récupérer les ressources des entrées 
+    // Récupérer les ressources des entrées
     remplirStock();
 
     // Traiter les ressources
     // ... ^ v
     // Mettre les ressources à la sortie
-
 }

@@ -24,9 +24,11 @@ protected:
     Sprite *_sprite;
 
     static uint _nbStructures;
+    static uint _idMaxStructures;
 
 public:
     static uint getNbStructures();
+    static uint getIdMaxStructures();
 
 public:
     Structure(Vector2f pos);
@@ -59,6 +61,7 @@ public:
 /*              Méthodes inline static             */
 /***************************************************/
 inline uint Structure::getNbStructures() { return _nbStructures; }
+inline uint Structure::getIdMaxStructures() { return _idMaxStructures; }
 
 inline const Vector2f &Structure::getPosition() const { return _position; }
 

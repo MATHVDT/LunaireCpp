@@ -21,11 +21,13 @@ protected:
 
 private: // Static
     static uint _nbBatiments;
+    static uint _idMaxBatiments;
     static const uint _tailleStockEntree;
     static const uint _tailleStockSortie;
 
 public: // Static
     static uint getNbBatiments();
+    static uint getIdMaxBatiments();
     static uint getTailleStockEntree();
     static uint getTailleStockSortie();
 
@@ -76,6 +78,7 @@ private:
 /*              Méthodes inline static             */
 /***************************************************/
 inline uint Batiment::getNbBatiments() { return _nbBatiments; }
+inline uint Batiment::getIdMaxBatiments() { return _idMaxBatiments; }
 
 inline uint Batiment::getTailleStockEntree() { return _tailleStockEntree; }
 inline uint Batiment::getTailleStockSortie() { return _tailleStockSortie; }
