@@ -11,6 +11,7 @@
 
 #include "enum_sol.hpp"
 #include "ContextGlobal.hpp"
+#include "Structure.hpp"
 
 using namespace std;
 using namespace sf;
@@ -26,6 +27,7 @@ private:
     Vector2f _position;
     SOL _typeSol;
     Sprite *_sprite;
+    Structure *_construction;
 
     // Static
 private:
@@ -55,10 +57,10 @@ public:
     void afficherConsole(ostream &flux = cout);
     void dessiner();
 
-public:
     // Getter
     const Vector2f &getPosition() const;
     SOL getTypeSol() const;
+    Structure *getConstruction() const;
 
     // Setter
     void setPosition(float x, float y);
@@ -69,6 +71,9 @@ public:
 
     void setCase(Vector2f position,
                  SOL typeSol = SOL::Vierge);
+
+
+    void ajouterConstruction(Structure *s);
 };
 
 /***************************************************/
@@ -90,7 +95,7 @@ inline void CaseMap::setPosition(float x, float y)
     setPosition(Vector2f(x, y));
 }
 
-inline void CaseMap::setPosition(const Vector2f& pos)
+inline void CaseMap::setPosition(const Vector2f &pos)
 {
     _position = pos;
     _sprite->setPosition(_position);
@@ -113,5 +118,7 @@ inline void CaseMap::setSpriteTexture(SOL typeSol)
         cerr << "/!\\ Petit pb, demande de prendre la texture du sol " << static_cast<int>(typeSol) << " au lieu de celle du sol " << static_cast<int>(_typeSol) << " défini en attribut" << endl;
     _sprite->setTexture(*_texturesSol[static_cast<int>(typeSol)]);
 }
+
+inline Structure *CaseMap::getConstruction() const { return _construction; }
 
 #endif

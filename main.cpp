@@ -1,82 +1,5 @@
 #include "main.hpp"
 
-/*
-void testSFML()
-{
-    float ratio = 16.f / 9.f;
-    uint hauteur_fenetre = 800;
-    sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    window.close();
-            }
-        }
-
-        carte->afficher(window);
-
-        window.display();
-        window.clear();
-    }
-    // carte->afficherConsole(cout, true);
-}
-
-void testSFML2()
-{
-    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
-
-    float ratio = 16.f / 9.f;
-    uint hauteur_fenetre = 800;
-    sf::RenderWindow window(sf::VideoMode(hauteur_fenetre * ratio, hauteur_fenetre), "SFML works!", sf::Style::Default);
-
-    int nbLignes = 10;
-    int nbColonnes = 2;
-    CaseMap::setScaleCaseMap(window, nbLignes, nbColonnes);
-
-    // Declare and load a texture
-    sf::Texture texture;
-    texture.loadFromFile("ressource/hexagone_regulier_gris.png");
-    // Create a sprite
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x, texture.getSize().y));
-    sprite.setColor(sf::Color(255, 255, 255, 200));
-
-    float scale = CaseMap::getTailleCaseMap();
-    cout << scale << endl;
-    //  scale = 0.5;
-    cout << scale << endl;
-    cout << sprite.getTextureRect().height << endl;
-    sprite.setScale(scale, scale);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-            if (event.type == sf::Event::KeyPressed)
-                window.close();
-        }
-
-        window.clear();
-
-        window.draw(sprite);
-
-        window.display();
-    }
-}
-*/
 ContextGlobal &contextGlobal = ContextGlobal::getInstance();
 
 void testCarte();
@@ -95,6 +18,7 @@ int main()
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
     contextGlobal.init(Vector2u(1500, 800));
+    Mine::initMines();
 
     testCarte();
 
@@ -123,6 +47,11 @@ void testCarte()
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
+    Structure *s = new Mine{Vector2f(0.f, 0.f),
+                            Ressource::MineraiGlace};
+
+    carte->ajouterConstructionCaseCarte(s, Vector2i(0, 0));
+
     while (contextGlobal.getIsRun())
     {
         while (contextGlobal.getPollEvent())
@@ -132,4 +61,6 @@ void testCarte()
         carte->dessiner();
         contextGlobal.afficherFenetre();
     }
+
+    delete s;
 }

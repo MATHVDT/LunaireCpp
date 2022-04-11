@@ -31,7 +31,7 @@ public:
     static uint getIdMaxStructures();
 
 public:
-    Structure(Vector2f pos);
+    Structure(Vector2f pos, Texture *text);
     virtual ~Structure();
 
     virtual void init();

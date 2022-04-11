@@ -32,7 +32,7 @@ public: // Static
     static uint getTailleStockSortie();
 
 public:
-    Batiment(Vector2f pos);
+    Batiment(Vector2f pos, Texture* text);
     virtual ~Batiment();
 
     virtual void init();

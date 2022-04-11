@@ -129,7 +129,7 @@ void Carte::initCarte(uint nbLignes, uint nbColonnes)
     // Supprime la grille si elle est déjà existante
     deleteGrille();
     creerGrille(nbLignes, nbColonnes);
-        // ajustageCasesHexagone(window);
+    // ajustageCasesHexagone(window);
 }
 
 /**
@@ -235,3 +235,12 @@ void Carte::dessiner()
         }
     }
 }
+
+/*******************************************************/
+
+void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2i &pos)
+{
+    _grille[pos.y][pos.x].ajouterConstruction(s);
+}
+
+/*******************************************************/

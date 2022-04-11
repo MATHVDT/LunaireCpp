@@ -51,6 +51,10 @@ public:
 
     Vector2u getCoordCase(uint i, uint j) const;
 
+    // Setter
+    void ajouterConstructionCaseCarte(Structure *s,
+                                      const Vector2i &pos);
+
     // Convertisseur coordonnées
     static Vector2u matriceToCarte(const Vector2u &cMat);
     static Vector2u carteToMatrice(const Vector2u &cCarte);

@@ -13,7 +13,7 @@ Texture *CaseMap::_texturesSol[5];
  * @warning CaseMap vierge il faut faire setCase après pour définir ses paramètres
  * @param Vector2f - *posistion = défaut Vector2f{0, 0}*
  */
-CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierge), _sprite(new Sprite)
+CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
 {
     // set du sol et donc du sprite aussi
     setCase(_position, _typeSol);
@@ -44,6 +44,9 @@ void CaseMap::dessiner()
 
     _sprite->setScale(_scaleCaseMap, _scaleCaseMap);
     contextGlobal.dessinerFenetre(_sprite);
+    
+    if (_construction != nullptr)
+        _construction->dessiner(_scaleCaseMap);
 
     // Texte a afficher
     /*
@@ -104,6 +107,8 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
     contextGlobal.setTailleReference(_tailleCaseMap);
 }
 
+/*******************************************************/
+
 /**
  * @brief Charge les différents sprites des cases
  * @details
@@ -153,4 +158,13 @@ void CaseMap::dechargerSprites()
     {
         delete _texturesSol[k];
     }
+}
+
+/*******************************************************/
+
+void CaseMap::ajouterConstruction(Structure *s)
+{
+    if (_construction != nullptr)
+        return;
+    _construction = s;
 }

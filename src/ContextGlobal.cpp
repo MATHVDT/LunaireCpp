@@ -74,3 +74,4 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
  * @param const Drawable * - *obj*
  */
 void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj); }
+
