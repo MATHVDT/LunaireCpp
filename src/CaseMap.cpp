@@ -105,6 +105,7 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
     _scaleCaseMap = min(scaleX, scaleY);
     _tailleCaseMap = (float)_tailleTexture * _scaleCaseMap;
     contextGlobal.setTailleReference(_tailleCaseMap);
+    contextGlobal.setScaleReference(_scaleCaseMap);
 }
 
 /*******************************************************/

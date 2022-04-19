@@ -19,8 +19,7 @@ extern ContextGlobal &contextGlobal;
 
 class Structure
 {
-private:
-    // Static
+
 protected:
     uint _idStructure;
     Vector2u _position; // Position case dans la carte hexagonale

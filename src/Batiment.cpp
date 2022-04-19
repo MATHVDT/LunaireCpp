@@ -46,7 +46,6 @@ void Batiment::setSortie(Structure *structure)
 void Batiment::init() {}
 
 void Batiment::dessiner(float scaleSprite) {
-
     Structure::dessiner(scaleSprite);
 }
 

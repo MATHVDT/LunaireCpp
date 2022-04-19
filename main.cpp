@@ -59,8 +59,13 @@ void testCarte()
         while (contextGlobal.getPollEvent())
         {
         }
+        carte->dessiner();
+        contextGlobal.afficherFenetre();
         contextGlobal.update();
     }
 
+    carte->dessiner();
+    contextGlobal.afficherFenetre();
+    
     delete s;
 }

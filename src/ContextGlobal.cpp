@@ -40,7 +40,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
 void ContextGlobal::afficherFenetre()
 {
     _window.display();
-    _window.clear();
+    // _window.clear();
 }
 
 /**

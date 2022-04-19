@@ -22,6 +22,8 @@ protected:
 private: // Static
     static uint _nbBatiments;
     static uint _idMaxBatiments;
+
+protected: // Static
     static const uint _tailleStockEntree;
     static const uint _tailleStockSortie;
 
@@ -32,13 +34,13 @@ public: // Static
     static uint getTailleStockSortie();
 
 public:
-    Batiment(Vector2u pos, Texture* text);
+    Batiment(Vector2u pos, Texture *text);
     virtual ~Batiment();
 
     virtual void init();
 
     virtual void dessiner(float scaleSprite);
-    virtual void update()=0; // = 0
+    virtual void update() = 0; // = 0
 
     // Getter
     bool getASortie() const;

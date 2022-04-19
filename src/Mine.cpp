@@ -6,6 +6,7 @@ uint Mine::_idMaxMines = 0;
 uint Mine::_levelMax = 3;
 uint _nbAnim = 4;
 
+uint Mine::_tailleTexture = 0;
 Texture *Mine::_texturesMine[NB_RESSOURCES];
 
 // uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
@@ -17,6 +18,7 @@ uint Mine::_offsetTextureY = 100;
 Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
 {
     _nbMines++;
+    setSpriteTexture(0);
 }
 
 Mine::~Mine()
@@ -26,9 +28,9 @@ Mine::~Mine()
 
 void Mine::initMines()
 {
-    chargerTextures("ressource/cheminTexturesCases.txt");
-    _offsetTextureX = contextGlobal.getTailleReference();
-    _offsetTextureY = contextGlobal.getTailleReference();
+    chargerTextures("ressource/cheminTexturesMines.txt");
+    _offsetTextureX = _tailleTexture / 4;
+    _offsetTextureY = _offsetTextureX;
 }
 
 void Mine::init()
@@ -38,12 +40,19 @@ void Mine::init()
 void Mine::dessiner(float scaleSprite)
 {
     // Décalage animation
+    setSpriteTexture(0);
+    _sprite->setTextureRect(_zoomTexture);
+
+    // float scaleMine = contextGlobal.getScaleReference();
 
     Batiment::dessiner(scaleSprite);
-    // contextGlobal.dessinerFenetre(_sprite);
+    contextGlobal.dessinerFenetre(_sprite);
 }
 
-void Mine::update() {}
+void Mine::update()
+{
+    setSpriteTexture(0);
+}
 
 /**
  * @brief Charge les textures des différentes mines en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
@@ -61,12 +70,13 @@ void Mine::chargerTextures(string fichierCheminsTexture)
 
     if (monFlux)
     {
+        cerr << "Chargement des textures des Mines" << endl;
         // Récupération des chemins
         for (int k = 0; k < NB_RESSOURCES; ++k)
         {
             // Chemin de l'image texture d'une mine
             monFlux >> cheminTexture;
-            cout << cheminTexture << endl;
+            cerr << cheminTexture << endl;
 
             // Create de la nouvelle texture
             texture = new Texture();
@@ -74,7 +84,8 @@ void Mine::chargerTextures(string fichierCheminsTexture)
 
             _texturesMine[k] = texture;
         }
-        // _tailleTexture = texture->getSize().y;
+        _tailleTexture = texture->getSize().x;
+
         monFlux.close();
     }
     else
@@ -90,8 +101,13 @@ void Mine::chargerTextures(string fichierCheminsTexture)
  */
 void Mine::setSpriteTexture(uint tick)
 {
+
     _zoomTexture.top = _level * _offsetTextureY;
     _zoomTexture.left = tick * _offsetTextureX;
 
     _sprite->setTextureRect(_zoomTexture);
+
+    // cerr << "zoomTexture : ";
+    // cerr << _zoomTexture.top << ";" << _zoomTexture.left;
+    // cerr << " | " << _zoomTexture.width << ":" << _zoomTexture.height << endl;
 }

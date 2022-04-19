@@ -245,12 +245,18 @@ void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &pos)
 
 /*******************************************************/
 
+/**
+ * @brief Convertir une position dans la carte hexagonale en position sur l'écran
+ * 
+ * @param const Vector2u& - *cCarte*
+ * @return Vector2f 
+ */
 Vector2f Carte::carteToPositionEcran(const Vector2u &cCarte)
 {
     float tailleCaseMap = CaseMap::getTailleCaseMap();
     float xEcran = 0.f;
     float yEcran = 0.f;
-    // Décalage 1 ligen sur deux
+    // Décalage 1 ligne sur deux
     xEcran += (float)(cCarte.x % 2) * 0.75f * tailleCaseMap;
     // Décalage pour former la ligne
     // xEcran += ((float)cCarte.x - (float)(cCarte.x % 2)) * tailleCaseMap * 0.75f; // Equivalent à la ligne du dessous

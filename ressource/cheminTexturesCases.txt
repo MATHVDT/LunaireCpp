@@ -1,5 +1,5 @@
-./ressource/hexagone_regulier_gris.png
-./ressource/hexagone_regulier_gris.png
-./ressource/hexagone_regulier_gris.png
-./ressource/hexagone_regulier_gris.png
-./ressource/hexagone_regulier_gris.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png

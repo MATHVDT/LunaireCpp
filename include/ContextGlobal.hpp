@@ -25,6 +25,7 @@ private:
     float _ratioFenetre;
     RenderWindow _window;
     float _tailleReference;
+    float _scaleReference;
     bool _eventPresent;
     Event _event;
     bool _isRun;
@@ -55,10 +56,12 @@ public:
     const Event &getEvent() const;
     Event::EventType getEventType() const;
     const float getTailleReference() const;
+    const float getScaleReference() const;
 
     // Setter
     void setIsRun(bool run);
-    void setTailleReference(float caseMap);
+    void setTailleReference(float tailleCaseMap);
+    void setScaleReference(float scaleCaseMap);
 
 private:
     ContextGlobal();
@@ -86,9 +89,11 @@ inline const Event &ContextGlobal::getEvent() const { return _event; }
 inline Event::EventType ContextGlobal::getEventType() const { return _event.type; }
 
 inline const float ContextGlobal::getTailleReference() const { return _tailleReference; }
+inline const float ContextGlobal::getScaleReference() const { return _scaleReference; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
-inline void ContextGlobal::setTailleReference(float scaleCaseMap) { _tailleReference = scaleCaseMap; }
+inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleReference = tailleCaseMap; }
+inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
 
 #endif
