@@ -23,7 +23,7 @@ TEST_CASE("Test création Mine")
     Mine::initMines();
 
     uint idMaxMines = Mine::getIdMaxMines();
-    Mine *m = new Mine(Vector2f(0.f, 0.f), Ressource::MineraiGlace);
+    Mine *m = new Mine(Vector2u(0, 0), Ressource::MineraiGlace);
 
     REQUIRE(m->getNbMines() == 1);
     REQUIRE(m->getIdMaxMines() == idMaxMines + 1);

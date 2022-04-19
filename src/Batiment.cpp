@@ -13,7 +13,7 @@ connexion_t ConnexionNull{}; // Inutile je crois
  * @param Vector2f - *pos* 
  * @param Texture* - *texture* 
  */
-Batiment::Batiment(Vector2f pos, Texture* texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
+Batiment::Batiment(Vector2u pos, Texture* texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
 
 
 Batiment::~Batiment()

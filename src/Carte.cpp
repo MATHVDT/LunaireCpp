@@ -238,9 +238,30 @@ void Carte::dessiner()
 
 /*******************************************************/
 
-void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2i &pos)
+void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &pos)
 {
     _grille[pos.y][pos.x].ajouterConstruction(s);
 }
 
 /*******************************************************/
+
+Vector2f Carte::carteToPositionEcran(const Vector2u &cCarte)
+{
+    float tailleCaseMap = CaseMap::getTailleCaseMap();
+    float xEcran = 0.f;
+    float yEcran = 0.f;
+    // Décalage 1 ligen sur deux
+    xEcran += (float)(cCarte.x % 2) * 0.75f * tailleCaseMap;
+    // Décalage pour former la ligne
+    // xEcran += ((float)cCarte.x - (float)(cCarte.x % 2)) * tailleCaseMap * 0.75f; // Equivalent à la ligne du dessous
+    xEcran += (float)((int)(cCarte.x / 2)) * tailleCaseMap * 1.5f;
+
+    // Décalage pour faire la demi interligne ...
+    yEcran += (float)(1 - cCarte.x % 2) * tailleCaseMap / 2.f;
+    // Décalage pour faire les lignes
+    yEcran += (float)cCarte.y * tailleCaseMap;
+
+    // printf("(%5d,%5d) et (%5f,%5f)\n\n", cCarte.x, cCarte.y, xEcran, yEcran);
+
+    return Vector2f(xEcran, yEcran);
+}

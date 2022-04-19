@@ -17,7 +17,6 @@
 using namespace std;
 using namespace sf;
 
-
 TEST_CASE("Test création batiment")
 {
 
@@ -25,8 +24,8 @@ TEST_CASE("Test création batiment")
     uint idMaxBatiments = Batiment::getIdMaxBatiments();
 
     float eps = 0.0001;
-    Vector2f vectPos{0.f, 0.f};
-    Batiment *bat = new Mine{Vector2f(vectPos)}; 
+    Vector2u vectPos{0, 0};
+    Batiment *bat = new Mine{Vector2u(vectPos)};
 
     REQUIRE(bat->getNbStructures() == 1);
     REQUIRE(bat->getNbBatiments() == 1);
@@ -34,10 +33,10 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat->getIdStructure() == idMaxStructures + 1);
     REQUIRE(bat->getIdBatiment() == idMaxBatiments + 1);
 
-    REQUIRE(bat->getPosition().x == Approx(vectPos.x).epsilon(eps));
-    REQUIRE(bat->getPosition().y == Approx(vectPos.y).epsilon(eps));
+    REQUIRE(bat->getPosition().x == vectPos.x);
+    REQUIRE(bat->getPosition().y == vectPos.y);
 
-    Batiment *bat2 = new Mine{Vector2f(1.5f, 4.4f)};
+    Batiment *bat2 = new Mine{Vector2u(1, 4)};
 
     REQUIRE(bat2->getNbStructures() == 2);
     REQUIRE(bat2->getNbBatiments() == 2);
@@ -45,8 +44,8 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat2->getIdStructure() == idMaxStructures + 2);
     REQUIRE(bat2->getIdBatiment() == idMaxBatiments + 2);
 
-    REQUIRE(bat2->getPosition().x == Approx(1.5f).epsilon(eps));
-    REQUIRE(bat2->getPosition().y == Approx(4.4f).epsilon(eps));
+    REQUIRE(bat2->getPosition().x == 1);
+    REQUIRE(bat2->getPosition().y == 4);
 
     delete bat;
     delete bat2;
@@ -55,8 +54,8 @@ TEST_CASE("Test création batiment")
 TEST_CASE("Connexion batiment")
 {
     float eps = 0.0001;
-    Vector2f vectPos{0.f, 0.f};
-    Batiment *bat = new Mine{Vector2f(vectPos)};
+    Vector2u vectPos{0, 0};
+    Batiment *bat = new Mine{Vector2u(vectPos)};
 
     SECTION("Test aucune connexion")
     {
@@ -85,7 +84,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getConnexionSortie() == nullptr);
     }
 
-    Batiment *bat2 = new Mine{Vector2f(1.f, 1.f)};
+    Batiment *bat2 = new Mine{Vector2u(1, 1)};
     connexion_t *c = new connexion_t{bat2, SudEst, false};
 
     SECTION("Test ajout batiment : 1 connexion")

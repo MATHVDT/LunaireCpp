@@ -53,7 +53,7 @@ public:
 
     // Setter
     void ajouterConstructionCaseCarte(Structure *s,
-                                      const Vector2i &pos);
+                                      const Vector2u &pos);
 
     // Convertisseur coordonnées
     static Vector2u matriceToCarte(const Vector2u &cMat);

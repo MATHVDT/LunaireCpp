@@ -14,7 +14,7 @@ Texture *Mine::_texturesMine[NB_RESSOURCES];
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
-Mine::Mine(Vector2f pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
+Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
 {
     _nbMines++;
 }

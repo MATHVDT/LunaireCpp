@@ -3,11 +3,12 @@
 uint Structure::_nbStructures = 0;
 uint Structure::_idMaxStructures = 0;
 
-Structure::Structure(Vector2f pos, Texture *text)
+Structure::Structure(Vector2u pos, Texture *text)
     : _idStructure(++_idMaxStructures), _position(pos), _sprite(new Sprite(*text))
 {
     _nbStructures++;
-    _sprite->setPosition(_position);
+    Vector2f posEcran = Carte::carteToPositionEcran(_position);
+    _sprite->setPosition(posEcran);
 }
 
 Structure::~Structure() { _nbStructures--; }

@@ -47,10 +47,12 @@ void testCarte()
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
-    Structure *s = new Mine{Vector2f(0.f, 0.f),
+    Structure *s = new Mine{Vector2u(0, 0),
                             Ressource::MineraiGlace};
 
-    carte->ajouterConstructionCaseCarte(s, Vector2i(0, 0));
+    carte->ajouterConstructionCaseCarte(s, Vector2u(0, 0));
+    carte->dessiner();
+    contextGlobal.afficherFenetre();
 
     while (contextGlobal.getIsRun())
     {
@@ -58,8 +60,6 @@ void testCarte()
         {
         }
         contextGlobal.update();
-        carte->dessiner();
-        contextGlobal.afficherFenetre();
     }
 
     delete s;
