@@ -10,11 +10,13 @@
 
 #include "Structure.hpp"
 #include "Batiment.hpp"
+#include "Mine.hpp"
 #include "direction.hpp"
 #include "connexion_t.hpp"
 
 using namespace std;
 using namespace sf;
+
 
 TEST_CASE("Test création batiment")
 {
@@ -24,7 +26,7 @@ TEST_CASE("Test création batiment")
 
     float eps = 0.0001;
     Vector2f vectPos{0.f, 0.f};
-    Batiment *bat = new Batiment{Vector2f(vectPos)};
+    Batiment *bat = new Mine{Vector2f(vectPos)}; 
 
     REQUIRE(bat->getNbStructures() == 1);
     REQUIRE(bat->getNbBatiments() == 1);
@@ -35,7 +37,7 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat->getPosition().x == Approx(vectPos.x).epsilon(eps));
     REQUIRE(bat->getPosition().y == Approx(vectPos.y).epsilon(eps));
 
-    Batiment *bat2 = new Batiment{Vector2f(1.5f, 4.4f)};
+    Batiment *bat2 = new Mine{Vector2f(1.5f, 4.4f)};
 
     REQUIRE(bat2->getNbStructures() == 2);
     REQUIRE(bat2->getNbBatiments() == 2);
@@ -54,7 +56,7 @@ TEST_CASE("Connexion batiment")
 {
     float eps = 0.0001;
     Vector2f vectPos{0.f, 0.f};
-    Batiment *bat = new Batiment{Vector2f(vectPos)};
+    Batiment *bat = new Mine{Vector2f(vectPos)};
 
     SECTION("Test aucune connexion")
     {
@@ -83,7 +85,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getConnexionSortie() == nullptr);
     }
 
-    Batiment *bat2 = new Batiment{Vector2f(1.f, 1.f)};
+    Batiment *bat2 = new Mine{Vector2f(1.f, 1.f)};
     connexion_t *c = new connexion_t{bat2, SudEst, false};
 
     SECTION("Test ajout batiment : 1 connexion")

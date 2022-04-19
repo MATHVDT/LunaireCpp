@@ -48,7 +48,7 @@ public:
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Mine(Vector2f pos, Ressource type);
+    Mine(Vector2f pos, Ressource type= Ressource::PoussiereRegolite);
     virtual ~Mine() override;
 
     virtual void init() override; // Va pas servir a mon avis

@@ -7,7 +7,14 @@ const uint Batiment::_tailleStockSortie = 1;
 
 connexion_t ConnexionNull{}; // Inutile je crois
 
-Batiment::Batiment(Vector2f pos, Texture* text) : Structure(pos, text), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
+/**
+ * @brief Construct a new Batiment:: Batiment object
+ * 
+ * @param Vector2f - *pos* 
+ * @param Texture* - *texture* 
+ */
+Batiment::Batiment(Vector2f pos, Texture* texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
+
 
 Batiment::~Batiment()
 {

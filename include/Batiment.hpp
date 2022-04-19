@@ -38,7 +38,7 @@ public:
     virtual void init();
 
     virtual void dessiner(float scaleSprite);
-    virtual void update(); // = 0
+    virtual void update()=0; // = 0
 
     // Getter
     bool getASortie() const;
