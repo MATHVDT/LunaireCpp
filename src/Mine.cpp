@@ -9,16 +9,16 @@ uint _nbAnim = 4;
 uint Mine::_tailleTexture = 0;
 Texture *Mine::_texturesMine[NB_RESSOURCES];
 
-// uint Mine::_offsetTextureX = contextGlobal.getTailleReference();
-// uint Mine::_offsetTextureY = contextGlobal.getTailleReference();
-
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
-Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(_offsetTextureX, _offsetTextureY))
+Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(0, 0))
 {
     _nbMines++;
     setSpriteTexture(0);
+    if(_texturesMine[static_cast<int>(_typeRessource)]==nullptr)
+        cerr << endl
+             << endl << "nullptr" << endl << endl;
 }
 
 Mine::~Mine()
