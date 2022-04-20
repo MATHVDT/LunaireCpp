@@ -3,9 +3,10 @@
 uint Structure::_nbStructures = 0;
 uint Structure::_idMaxStructures = 0;
 
-Structure::Structure(Vector2u pos, Texture *text)
-    : _idStructure(++_idMaxStructures), _position(pos), _sprite(new Sprite(*text))
+Structure::Structure(const Vector2u &pos, Texture &text)
+    : _idStructure(++_idMaxStructures), _position(pos), _sprite(new Sprite(text))
 {
+    // _sprite->setTexture(*text);
     _nbStructures++;
     Vector2f posEcran = Carte::carteToPositionEcran(_position);
     _sprite->setPosition(posEcran);
@@ -13,7 +14,7 @@ Structure::Structure(Vector2u pos, Texture *text)
 
 Structure::~Structure() { _nbStructures--; }
 
-void  Structure::init(){}
+void Structure::init() {}
 
 /**
  * @brief Charge la mémoire allouée aux structures
@@ -47,9 +48,10 @@ void Structure::dessiner(float scaleSprite)
 void Structure::update()
 {
     // Récupérer les ressources des entrées
-    remplirStock();
+    this->remplirStock();
 
     // Traiter les ressources
-    // ... ^ v
+    this->process();
+
     // Mettre les ressources à la sortie
 }

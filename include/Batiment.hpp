@@ -9,7 +9,6 @@
 #include "Structure.hpp"
 #include "enum_ressource.hpp"
 
-
 class Batiment : public Structure
 {
 protected:
@@ -38,13 +37,13 @@ public: // Static
     static void dechargerMemoireBatiments();
 
 public:
-    Batiment(Vector2u pos, Texture *text);
+    Batiment(const Vector2u &pos, Texture &text);
     virtual ~Batiment();
 
     virtual void init();
 
     virtual void dessiner(float scaleSprite);
-    virtual void update() = 0; // = 0
+    virtual void update();
 
     // Getter
     bool getASortie() const;
@@ -56,6 +55,7 @@ public:
     connexion_t *getConnexionSortie() const;
     connexion_t *getConnexionDirection(const Vector2i &dir) const;
     connexion_t *getConnexionDirection(int DIRECTION) const;
+    bool stockEntreePlein() const;
 
     // Setter
     void setSortie(Structure *structure);
@@ -69,6 +69,7 @@ public:
     virtual bool connecte(connexion_t *c) override;
     virtual bool deconnecte(Structure *c) override;
 
+    virtual void process();
     virtual Ressource livrerStock() override;
     virtual void remplirStock() override;
 
@@ -98,5 +99,7 @@ inline uint Batiment::getNbConnexions() const { return _listConnexions.size(); }
 inline uint Batiment::getNbEntrees() const { return getNbConnexions() - _sortie; }
 
 inline uint Batiment::getIdBatiment() const { return _idBatiment; }
+
+inline bool Batiment::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
 
 #endif

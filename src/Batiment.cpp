@@ -13,7 +13,7 @@ connexion_t ConnexionNull{}; // Inutile je crois
  * @param Vector2f - *pos*
  * @param Texture* - *texture*
  */
-Batiment::Batiment(Vector2u pos, Texture *texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
+Batiment::Batiment(const Vector2u& pos, Texture &texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
 
 Batiment::~Batiment()
 {
@@ -62,7 +62,10 @@ void Batiment::dessiner(float scaleSprite)
     Structure::dessiner(scaleSprite);
 }
 
-void Batiment::update() {}
+void Batiment::update()
+{
+    Structure::update();
+}
 
 /*******************************************************/
 
@@ -290,9 +293,16 @@ void Batiment::remplirStock()
             ress = c->structure->livrerStock();
             // Si une ressource a été récup -> ajout au stock d'entrée
             if (ress != Ressource::Rien)
-                _stockEntree.push(ress);
+            { // Si ya encore de la place
+                if (!stockEntreePlein())
+                {
+                    _stockEntree.push(ress);
+                }
+            }
         }
     }
 }
+
+void Batiment::process() {}
 
 /*******************************************************/

@@ -25,7 +25,8 @@ class Mine : public Batiment
 {
 private:
     uint _id;
-    Ressource _typeRessource;
+    Ressource _typeRessourceSol;
+    Ressource _typeRessourceProduite;
     uint _level;
     IntRect _zoomTexture;
 
@@ -54,13 +55,15 @@ private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Mine(Vector2u pos, Ressource type = Ressource::PoussiereRegolite);
+    Mine(const Vector2u &pos,
+         Ressource ressourceSol = Ressource::PoussiereRegolite,
+         Ressource ressourceProduite = Ressource::PoussiereRegolite);
     virtual ~Mine() override;
 
     virtual void init() override; // Va pas servir a mon avis
 
     virtual void dessiner(float scaleSprite);
-    virtual void update();
+    virtual void update() override;
 
     // Getter
     Ressource getTypeRessource() const;
@@ -68,6 +71,10 @@ public:
 
     // Setter
     void setSpriteTexture(uint tick);
+
+    virtual void process();
+    // virtual Ressource livrerStock() override; // Pas besoin de redefinir
+    virtual void remplirStock() override;
 };
 
 /***************************************************/
@@ -86,7 +93,7 @@ inline uint Mine::getLevelMaxMine() { return _levelMax; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline Ressource Mine::getTypeRessource() const { return _typeRessource; }
+inline Ressource Mine::getTypeRessource() const { return _typeRessourceProduite; }
 
 inline uint Mine::getLevel() const { return _level; }
 

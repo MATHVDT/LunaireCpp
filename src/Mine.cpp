@@ -12,18 +12,25 @@ Texture *Mine::_texturesMine[NB_RESSOURCES];
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
-Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(0, 0, 655, 655)
+Mine::Mine(const Vector2u &pos,
+           Ressource ressourceSol,
+           Ressource ressourceProduite)
+    : Batiment{pos, *_texturesMine[static_cast<int>(_typeRessourceProduite)]},
+      _id(++_idMaxMines),
+      _typeRessourceSol(ressourceSol),
+      _typeRessourceProduite(ressourceProduite),
+      _level(0),
+      _zoomTexture(0, 0, 655, 655)
 {
     _nbMines++;
     setSpriteTexture(0);
-    if (_texturesMine[static_cast<int>(_typeRessource)] == nullptr)
+    if (_texturesMine[static_cast<int>(_typeRessourceProduite)] == nullptr)
         cerr << endl
              << endl
              << "nullptr" << endl
              << endl;
-    else
-        cout << endl
-             << "Ressource : " << static_cast<int>(_typeRessource) << endl;
+    // else
+    // cout << "Ressource : " << static_cast<int>(_typeRessourceProduite) << endl;
 }
 
 Mine::~Mine()
@@ -46,9 +53,7 @@ void Mine::dechargerMemoireMines()
     }
 }
 
-void Mine::init()
-{
-}
+void Mine::init() {}
 
 void Mine::dessiner(float scaleSprite)
 {
@@ -63,10 +68,32 @@ void Mine::dessiner(float scaleSprite)
     // contextGlobal.dessinerFenetre(_sprite);
 }
 
+/*******************************************************/
+
 void Mine::update()
 {
+    Batiment::update();
     setSpriteTexture(0);
 }
+
+/**
+ * @brief Remplir les stocks d'entrée dans la mine avec
+ * les minerais
+ */
+void Mine::remplirStock()
+{ // Verification s'il c'est la bonne ressouce
+    if (_typeRessourceProduite == _typeRessourceSol)
+    { // Remplissage tant que ya de la place
+        while (!stockEntreePlein())
+        {
+            _stockEntree.push(_typeRessourceProduite);
+        }
+    }
+}
+
+void Mine::process() {}
+
+/*******************************************************/
 
 /**
  * @brief Charge les textures des différentes mines en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*

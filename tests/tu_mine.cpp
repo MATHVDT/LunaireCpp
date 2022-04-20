@@ -23,12 +23,14 @@ TEST_CASE("Test création Mine")
     Mine::chargerMemoireMines();
 
     uint idMaxMines = Mine::getIdMaxMines();
-    Mine *m = new Mine(Vector2u(0, 0), Ressource::MineraiGlace);
+    Mine *m = new Mine(Vector2u(0, 0), Ressource::PoussiereRegolite, Ressource::PoussiereRegolite);
 
     REQUIRE(m->getNbMines() == 1);
     REQUIRE(m->getIdMaxMines() == idMaxMines + 1);
 
-    REQUIRE(m->getTypeRessource() == Ressource::MineraiGlace);
+    REQUIRE(m->getTypeRessource() == Ressource::PoussiereRegolite);
 
     delete m;
+    Mine::dechargerMemoireMines();
+
 }

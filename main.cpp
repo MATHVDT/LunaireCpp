@@ -42,6 +42,7 @@ void testCarte()
     carte->initCarte("./ressource/map.txt");
 
     Structure *s = new Mine{Vector2u(0, 0)};
+    Structure *s2 = new Mine{Vector2u(0, 0)};
 
     carte->ajouterConstructionCaseCarte(s, Vector2u(0, 0));
     // carte->dessiner();

@@ -25,7 +25,7 @@ TEST_CASE("Test création batiment")
 
     float eps = 0.0001;
     Vector2u vectPos{0, 0};
-    Batiment *bat = new Mine{Vector2u(vectPos), Ressource::PoussiereRegolite};
+    Batiment *bat = new Mine{Vector2u(vectPos)};
 
     REQUIRE(bat->getNbStructures() == 1);
     REQUIRE(bat->getNbBatiments() == 1);
@@ -36,7 +36,9 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat->getPosition().x == vectPos.x);
     REQUIRE(bat->getPosition().y == vectPos.y);
 
+    cout << "     avant new Mine 2     " << endl;
     Batiment *bat2 = new Mine{Vector2u(1, 4)};
+    cout << "     apres new Mine 2     " << endl;
 
     REQUIRE(bat2->getNbStructures() == 2);
     REQUIRE(bat2->getNbBatiments() == 2);
@@ -47,15 +49,15 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat2->getPosition().x == 1);
     REQUIRE(bat2->getPosition().y == 4);
 
-    delete bat;
     delete bat2;
+    delete bat;
 }
 
 TEST_CASE("Connexion batiment")
 {
     float eps = 0.0001;
     Vector2u vectPos{0, 0};
-    Batiment *bat = new Mine{Vector2u(vectPos), Ressource::PoussiereRegolite};
+    Batiment *bat = new Mine{Vector2u(vectPos)};
 
     SECTION("Test aucune connexion")
     {
@@ -84,7 +86,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getConnexionSortie() == nullptr);
     }
 
-    Batiment *bat2 = new Mine{Vector2u(1, 1), Ressource::PoussiereRegolite};
+    Batiment *bat2 = new Mine{Vector2u(1, 1)};
     connexion_t *c = new connexion_t{bat2, SudEst, false};
 
     SECTION("Test ajout batiment : 1 connexion")

@@ -13,9 +13,6 @@
 
 struct connexion_t;
 
-
-
-
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;
 
@@ -38,13 +35,13 @@ public:
     static void dechargerMemoireStructures();
 
 public:
-    Structure(Vector2u pos, Texture *text);
+    Structure(const Vector2u &pos, Texture &text);
     virtual ~Structure();
 
     virtual void init();
 
     virtual void dessiner(float scaleSprite) = 0;
-    virtual void update() = 0;
+    virtual void update();
 
     // Getter
     uint getIdStructure() const;
@@ -56,7 +53,8 @@ public:
     virtual bool connecte(connexion_t *) = 0;
     virtual bool deconnecte(Structure *) = 0;
 
-    virtual Ressource livrerStock() = 0;
+    virtual void process() = 0;
+    virtual Ressource livrerStock() = 0; // Livre ress de sortie
     virtual void remplirStock() = 0;
 };
 
