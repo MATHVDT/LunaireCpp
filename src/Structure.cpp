@@ -6,7 +6,6 @@ uint Structure::_idMaxStructures = 0;
 Structure::Structure(const Vector2u &pos, Texture &text)
     : _idStructure(++_idMaxStructures), _position(pos), _sprite(new Sprite(text))
 {
-    // _sprite->setTexture(*text);
     _nbStructures++;
     Vector2f posEcran = Carte::carteToPositionEcran(_position);
     _sprite->setPosition(posEcran);

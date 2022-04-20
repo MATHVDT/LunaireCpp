@@ -238,9 +238,10 @@ void Carte::dessiner()
 
 /*******************************************************/
 
-void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &pos)
+void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &posCarte)
 {
-    _grille[pos.y][pos.x].ajouterConstruction(s);
+    Vector2u posMatrice = carteToMatrice(posCarte);
+    _grille[posMatrice.y][posMatrice.x].ajouterConstruction(s);
 }
 
 /*******************************************************/

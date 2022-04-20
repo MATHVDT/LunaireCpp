@@ -19,8 +19,7 @@ Mine::Mine(const Vector2u &pos,
       _id(++_idMaxMines),
       _typeRessourceSol(ressourceSol),
       _typeRessourceProduite(ressourceProduite),
-      _level(0),
-      _zoomTexture(0, 0, 655, 655)
+      _level(0), _zoomTexture(0, 0, 655, 655)
 {
     _nbMines++;
     setSpriteTexture(0);
@@ -40,6 +39,8 @@ Mine::~Mine()
 
 void Mine::chargerMemoireMines()
 {
+    cerr << endl
+         << "chargerMemoireMines" << endl;
     chargerTextures("ressource/cheminTexturesMines.txt");
     _offsetTextureX = _tailleTexture / 4;
     _offsetTextureY = _offsetTextureX;
@@ -47,6 +48,8 @@ void Mine::chargerMemoireMines()
 
 void Mine::dechargerMemoireMines()
 {
+    cerr << endl
+         << "dechargerMemoireMines" << endl;
     for (int i = 0; i < NB_RESSOURCES; ++i)
     {
         delete _texturesMine[i];
