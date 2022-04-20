@@ -7,15 +7,14 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
-//  #include "CaseMap.hpp"
 
 
 using namespace std;
 using namespace sf;
 
+
 class CaseMap;
-// class Structure;
-// static float CaseMap::getScaleCaseMap();
+
 
 class ContextGlobal
 {

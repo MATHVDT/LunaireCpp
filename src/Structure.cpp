@@ -13,7 +13,25 @@ Structure::Structure(Vector2u pos, Texture *text)
 
 Structure::~Structure() { _nbStructures--; }
 
-void Structure::init() {}
+void  Structure::init(){}
+
+/**
+ * @brief Charge la mémoire allouée aux structures
+ * (textures ...)
+ */
+void Structure::chargerMemoireStructures()
+{
+    // Batiment::chargerMemoireBatiments();
+}
+
+/**
+ * @brief Libère la mémoire allouée aux structures
+ * (textures ...)
+ */
+void Structure::dechargerMemoireStructures()
+{
+    // Batiment::dechargerMemoireBatiments();
+}
 
 /**
  * @brief Dessine le sprite de la structure à la bonne taille

@@ -9,12 +9,11 @@ connexion_t ConnexionNull{}; // Inutile je crois
 
 /**
  * @brief Construct a new Batiment:: Batiment object
- * 
- * @param Vector2f - *pos* 
- * @param Texture* - *texture* 
+ *
+ * @param Vector2f - *pos*
+ * @param Texture* - *texture*
  */
-Batiment::Batiment(Vector2u pos, Texture* texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
-
+Batiment::Batiment(Vector2u pos, Texture *texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments), _listConnexions{}, _sortie(false) { _nbBatiments++; }
 
 Batiment::~Batiment()
 {
@@ -43,9 +42,23 @@ void Batiment::setSortie(Structure *structure)
         }
     }
 }
+
 void Batiment::init() {}
 
-void Batiment::dessiner(float scaleSprite) {
+void Batiment::chargerMemoireBatiments()
+{
+    // Mine::chargerMemoireMines();
+    // chargerMemoire Autres Batiment
+}
+
+void Batiment::dechargerMemoireBatiments()
+{
+    // Mine::dechargerMemoireMines();
+    // dechargerMemoire Autres Batiment
+}
+
+void Batiment::dessiner(float scaleSprite)
+{
     Structure::dessiner(scaleSprite);
 }
 

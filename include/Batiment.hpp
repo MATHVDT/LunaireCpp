@@ -9,6 +9,7 @@
 #include "Structure.hpp"
 #include "enum_ressource.hpp"
 
+
 class Batiment : public Structure
 {
 protected:
@@ -32,6 +33,9 @@ public: // Static
     static uint getIdMaxBatiments();
     static uint getTailleStockEntree();
     static uint getTailleStockSortie();
+
+    static void chargerMemoireBatiments();
+    static void dechargerMemoireBatiments();
 
 public:
     Batiment(Vector2u pos, Texture *text);

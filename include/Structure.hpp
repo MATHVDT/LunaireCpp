@@ -12,7 +12,9 @@
 #include "Carte.hpp"
 
 struct connexion_t;
-// class Carte;
+
+
+
 
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;
@@ -31,6 +33,9 @@ protected:
 public:
     static uint getNbStructures();
     static uint getIdMaxStructures();
+
+    static void chargerMemoireStructures();
+    static void dechargerMemoireStructures();
 
 public:
     Structure(Vector2u pos, Texture *text);

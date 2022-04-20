@@ -46,7 +46,11 @@ public: // Static
     static uint getIdMaxMines();
     static uint getNbAnimMine();
     static uint getLevelMaxMine();
-    static void initMines();
+
+    static void chargerMemoireMines();
+    static void dechargerMemoireMines();
+
+private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:

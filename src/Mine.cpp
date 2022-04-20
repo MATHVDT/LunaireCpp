@@ -26,11 +26,19 @@ Mine::~Mine()
     _nbMines--;
 }
 
-void Mine::initMines()
+void Mine::chargerMemoireMines()
 {
     chargerTextures("ressource/cheminTexturesMines.txt");
     _offsetTextureX = _tailleTexture / 4;
     _offsetTextureY = _offsetTextureX;
+}
+
+void Mine::dechargerMemoireMines()
+{
+    for (int i = 0; i < NB_RESSOURCES; ++i)
+    {
+        delete _texturesMine[i];
+    }
 }
 
 void Mine::init()

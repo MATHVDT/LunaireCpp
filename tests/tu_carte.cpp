@@ -22,7 +22,7 @@ TEST_CASE("Initialisation de la carte")
 {
     stringstream ss;
     Vector2u coordCase;
-    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
+    CaseMap::chargerMemoireCaseMap();
 
     Carte *carte = Carte::getInstance();
 
@@ -113,7 +113,7 @@ TEST_CASE("Initialisation de la carte")
         REQUIRE(ssCoord.str() == ssCoordRef.str());
     }
     delete carte;
-    CaseMap::dechargerSprites();
+    CaseMap::dechargerMemoireCaseMap();
 }
 
 TEST_CASE("Convertisseur coordonnées")

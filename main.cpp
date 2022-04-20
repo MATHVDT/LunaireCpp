@@ -18,26 +18,20 @@ int main()
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
     contextGlobal.init(Vector2u(1500, 800));
-    Mine::initMines();
+
+    CaseMap::chargerMemoireCaseMap();
+    Mine::chargerMemoireMines();
 
     testCarte();
 
-    // Structure de boucle principale avec contextGlobal
-    // while (contextGlobal.getIsRun())
-    // {
-    //     while (contextGlobal.getPollEvent())
-    //     {
-
-    //     }
-    //     contextGlobal.update();
-    // }
+    Mine::dechargerMemoireMines();
+    CaseMap::dechargerMemoireCaseMap();
 
     return 0;
 }
 
 void testCarte()
 {
-    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
 
     int nbLignes = 1;
     int nbColonnes = 1;
@@ -66,6 +60,7 @@ void testCarte()
 
     carte->dessiner();
     contextGlobal.afficherFenetre();
-    
+
     delete s;
+    delete carte;
 }

@@ -44,7 +44,7 @@ void CaseMap::dessiner()
 
     _sprite->setScale(_scaleCaseMap, _scaleCaseMap);
     contextGlobal.dessinerFenetre(_sprite);
-    
+
     if (_construction != nullptr)
         _construction->dessiner(_scaleCaseMap);
 
@@ -109,6 +109,16 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
 }
 
 /*******************************************************/
+void CaseMap::chargerMemoireCaseMap()
+{
+    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
+}
+
+void CaseMap::dechargerMemoireCaseMap()
+{
+    CaseMap::dechargerSprites();
+}
+
 
 /**
  * @brief Charge les différents sprites des cases

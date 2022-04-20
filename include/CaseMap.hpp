@@ -29,14 +29,21 @@ private:
     Sprite *_sprite;
     Structure *_construction;
 
-    // Static
-private:
+private: // Static
     static int _nb;
     static float _tailleCaseMap;
     static float _scaleCaseMap;
     static uint _tailleTexture;
     static Texture *_texturesSol[5];
     static float _coteHexagoneRayon;
+
+public: // Static
+    static void chargerMemoireCaseMap();
+    static void dechargerMemoireCaseMap();
+
+        private : // Static
+                  static void chargerSprites(string fichierCheminsTexture);
+    static void dechargerSprites();
 
 public:
     static float getTailleCaseMap();
@@ -45,9 +52,6 @@ public:
     static void setScaleCaseMap(
         uint nbLignesCarte,
         uint nbCcolonnesCarte);
-
-    static void chargerSprites(string fichierCheminsTexture);
-    static void dechargerSprites();
 
 public:
     // Case(float x = 0.f, float y = 0.f);
@@ -71,7 +75,6 @@ public:
 
     void setCase(Vector2f position,
                  SOL typeSol = SOL::Vierge);
-
 
     void ajouterConstruction(Structure *s);
 };

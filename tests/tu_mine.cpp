@@ -20,7 +20,7 @@ using namespace sf;
 
 TEST_CASE("Test création Mine")
 {
-    Mine::initMines();
+    Mine::chargerMemoireMines();
 
     uint idMaxMines = Mine::getIdMaxMines();
     Mine *m = new Mine(Vector2u(0, 0), Ressource::MineraiGlace);
