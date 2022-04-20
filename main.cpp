@@ -24,8 +24,8 @@ int main()
 
     testCarte();
 
-    Mine::dechargerMemoireMines();
     CaseMap::dechargerMemoireCaseMap();
+    Mine::dechargerMemoireMines();
 
     return 0;
 }
@@ -41,26 +41,25 @@ void testCarte()
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
-    // Structure *s = new Mine{Vector2u(0, 0),
-    //                         Ressource::MineraiGlace};
+    Structure *s = new Mine{Vector2u(0, 0)};
 
-    // carte->ajouterConstructionCaseCarte(s, Vector2u(0, 0));
-    carte->dessiner();
-    contextGlobal.afficherFenetre();
+    carte->ajouterConstructionCaseCarte(s, Vector2u(0, 0));
+    // carte->dessiner();
+    // contextGlobal.afficherFenetre();
 
     while (contextGlobal.getIsRun())
     {
         while (contextGlobal.getPollEvent())
         {
         }
+        contextGlobal.update();
         carte->dessiner();
         contextGlobal.afficherFenetre();
-        contextGlobal.update();
     }
 
-    carte->dessiner();
-    contextGlobal.afficherFenetre();
+    // carte->dessiner();
+    // contextGlobal.afficherFenetre();
 
-    // delete s;
+    delete s;
     delete carte;
 }

@@ -40,7 +40,7 @@ void Structure::dechargerMemoireStructures()
  */
 void Structure::dessiner(float scaleSprite)
 {
-    _sprite->scale(scaleSprite, scaleSprite);
+    _sprite->setScale(scaleSprite, scaleSprite);
     contextGlobal.dessinerFenetre(_sprite);
 }
 

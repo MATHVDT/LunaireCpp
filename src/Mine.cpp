@@ -12,13 +12,18 @@ Texture *Mine::_texturesMine[NB_RESSOURCES];
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
-Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(Vector2i(0, 0), Vector2i(0, 0))
+Mine::Mine(Vector2u pos, Ressource type) : Batiment{pos, _texturesMine[static_cast<int>(_typeRessource)]}, _id(++_idMaxMines), _typeRessource(type), _level(0), _zoomTexture(0, 0, 655, 655)
 {
     _nbMines++;
     setSpriteTexture(0);
-    if(_texturesMine[static_cast<int>(_typeRessource)]==nullptr)
+    if (_texturesMine[static_cast<int>(_typeRessource)] == nullptr)
         cerr << endl
-             << endl << "nullptr" << endl << endl;
+             << endl
+             << "nullptr" << endl
+             << endl;
+    else
+        cout << endl
+             << "Ressource : " << static_cast<int>(_typeRessource) << endl;
 }
 
 Mine::~Mine()
@@ -54,7 +59,8 @@ void Mine::dessiner(float scaleSprite)
     // float scaleMine = contextGlobal.getScaleReference();
 
     Batiment::dessiner(scaleSprite);
-    contextGlobal.dessinerFenetre(_sprite);
+    // _sprite->setScale(scaleSprite,scaleSprite);
+    // contextGlobal.dessinerFenetre(_sprite);
 }
 
 void Mine::update()

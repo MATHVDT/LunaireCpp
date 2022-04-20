@@ -7,7 +7,7 @@ const uint NB_RESSOURCES = 5;
 enum class Ressource
 {
     // Matières premères
-    PoussiereRegolite,
+    PoussiereRegolite=0,
     MineraiGlace,
     MineraiTitane,
     MineraiSilicium,
