@@ -37,11 +37,6 @@ int main()
 void testCarte()
 {
 
-    int nbLignes = 1;
-    int nbColonnes = 1;
-    CaseMap::setScaleCaseMap(nbLignes,
-                             nbColonnes);
-
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
