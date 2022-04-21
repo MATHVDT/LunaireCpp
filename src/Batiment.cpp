@@ -7,25 +7,36 @@ const uint Batiment::_tailleStockSortie = 1;
 
 connexion_t ConnexionNull{}; // Inutile je crois
 
+Batiment::Batiment()
+    : _idBatiment(++_idMaxBatiments)
+{
+    _nbBatiments++;
+    cerr << "Batiment() = default, id : " << _idBatiment << endl;
+}
+
 /**
  * @brief Construct a new Batiment:: Batiment object
  *
  * @param Vector2f - *pos*
  * @param Texture* - *texture*
  */
-Batiment::Batiment(const Vector2u &pos, Texture &texture) : Structure(pos, texture), _idBatiment(++_idMaxBatiments) { _nbBatiments++; }
+Batiment::Batiment(const Vector2u &pos, Texture*text)
+    : Structure{pos,text},
+      _idBatiment(++_idMaxBatiments)
+{
+    _nbBatiments++;
+    cerr << "Batiment(), id : " << _idBatiment << endl;
+}
 
 Batiment::~Batiment()
 {
     _nbBatiments--;
-    // Deconnecte tous les structures
-    while (!_listConnexions.empty())
-    {
-        deconnecterStructure(*_listConnexions.begin());
-    }
+    cerr << "~Batiment(), id : " << _idBatiment << endl;
 }
 
-void Batiment::init() {}
+void Batiment::init(){}
+
+/*******************************************************/
 
 void Batiment::chargerMemoireBatiments()
 {
@@ -38,6 +49,8 @@ void Batiment::dechargerMemoireBatiments()
     // Mine::dechargerMemoireMines();
     // dechargerMemoire Autres Batiment
 }
+
+/*******************************************************/
 
 void Batiment::dessiner(float scaleSprite)
 {

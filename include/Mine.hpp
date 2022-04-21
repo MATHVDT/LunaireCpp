@@ -24,21 +24,21 @@ extern ContextGlobal &contextGlobal;
 class Mine : public Batiment
 {
 private:
-    uint _id;
+    uint _idMine;
     Ressource _typeRessourceSol;
     Ressource _typeRessourceProduite;
     uint _level;
     IntRect _zoomTexture;
 
-private: // Static
+public: // Static
     static uint _nbMines;
     static uint _idMaxMines;
 
     static uint _levelMax;
     static uint _nbAnim;
 
-    static Texture *_texturesMine[NB_RESSOURCES];
     static uint _tailleTexture;
+    static Texture *_texturesMine[NB_RESSOURCES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 

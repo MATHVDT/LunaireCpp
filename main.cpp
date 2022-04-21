@@ -1,5 +1,9 @@
 #include "main.hpp"
 
+// Surveiller que ca reste constant ...
+// 705 blocs pas libérés dans la mémoire -> surement SFML
+// 316 blocs pas libérés dans la mémoire dans TU
+
 ContextGlobal &contextGlobal = ContextGlobal::getInstance();
 
 void testCarte();
@@ -42,11 +46,12 @@ void testCarte()
     carte->initCarte("./ressource/map.txt");
 
     Mine *s = new Mine{Vector2u(0, 0)};
+    s->init();
     carte->ajouterConstructionCaseCarte(s, s->getPosition());
 
     Mine *s2 = new Mine{Vector2u(5, 3)};
+    s2->init();
     carte->ajouterConstructionCaseCarte(s2, s2->getPosition());
-
 
     while (contextGlobal.getIsRun())
     {
@@ -59,5 +64,6 @@ void testCarte()
     }
 
     delete s;
+    delete s2;
     delete carte;
 }

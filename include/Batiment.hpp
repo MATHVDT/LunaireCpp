@@ -8,7 +8,7 @@
 
 class Batiment : public Structure
 {
-protected:
+private:
     uint _idBatiment;
 
 private: // Static
@@ -29,10 +29,11 @@ public: // Static
     static void dechargerMemoireBatiments();
 
 public:
-    Batiment(const Vector2u &pos, Texture &text);
+    Batiment();
+    Batiment(const Vector2u &pos,Texture*);
     virtual ~Batiment();
 
-    virtual void init();
+    virtual void init() ;
 
     virtual void dessiner(float scaleSprite);
     virtual void update();

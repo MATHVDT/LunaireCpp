@@ -21,9 +21,13 @@ CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierg
 
 /**
  * @brief Destructeur CaseMap
- *
+ * @todo delete la _constuction sur la carte, a term soit le batiment est supprimé de la case et donc delete, soit lorsque la carte est reset on delete le batiment
  */
-CaseMap::~CaseMap() { delete _sprite; }
+CaseMap::~CaseMap()
+{
+    delete _sprite;
+    // delete _construction;
+}
 
 void CaseMap::afficherConsole(ostream &flux)
 {
@@ -118,7 +122,6 @@ void CaseMap::dechargerMemoireCaseMap()
 {
     CaseMap::dechargerSprites();
 }
-
 
 /**
  * @brief Charge les différents sprites des cases

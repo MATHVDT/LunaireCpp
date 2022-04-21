@@ -15,27 +15,29 @@ uint Mine::_offsetTextureY = 100;
 Mine::Mine(const Vector2u &pos,
            Ressource ressourceSol,
            Ressource ressourceProduite)
-    : Batiment{pos, *_texturesMine[static_cast<int>(_typeRessourceProduite)]},
-      _id(++_idMaxMines),
+    : Batiment{pos, _texturesMine[static_cast<int>(ressourceProduite)]},
+      _idMine(++_idMaxMines),
       _typeRessourceSol(ressourceSol),
       _typeRessourceProduite(ressourceProduite),
-      _level(0), _zoomTexture(0, 0, 655, 655)
+      _level(0), _zoomTexture{0, 0, 655, 655}
 {
     _nbMines++;
+
     setSpriteTexture(0);
-    if (_texturesMine[static_cast<int>(_typeRessourceProduite)] == nullptr)
-        cerr << endl
-             << endl
-             << "nullptr" << endl
-             << endl;
-    // else
-    // cout << "Ressource : " << static_cast<int>(_typeRessourceProduite) << endl;
+    cerr << "Mine(), id : " << _idMine << endl;
 }
+
+void Mine::init() {}
 
 Mine::~Mine()
 {
     _nbMines--;
+    cerr << "~Mine(), id : " << _idMine << endl;
 }
+
+/*******************************************************/
+
+/*******************************************************/
 
 void Mine::chargerMemoireMines()
 {
@@ -56,7 +58,7 @@ void Mine::dechargerMemoireMines()
     }
 }
 
-void Mine::init() {}
+/*******************************************************/
 
 void Mine::dessiner(float scaleSprite)
 {

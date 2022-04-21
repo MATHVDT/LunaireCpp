@@ -3,22 +3,53 @@
 uint Structure::_nbStructures = 0;
 uint Structure::_idMaxStructures = 0;
 
-Structure::Structure(const Vector2u &pos, Texture &text)
+Structure::Structure()
     : _idStructure(++_idMaxStructures),
-      _position(pos),
-      _sprite(new Sprite(text)),
+      _position(),
+      _sprite{},
       _listConnexions{},
       _sortie(false),
       _stockEntree{}, _stockSortie{}
 {
     _nbStructures++;
+    // Vector2f posEcran = Carte::carteToPositionEcran(_position);
+    // _sprite->setPosition(posEcran);
+    cerr << "Structure() = default, id : " << _idStructure << endl;
+}
+
+Structure::Structure(const Vector2u &pos, Texture *text)
+    : _idStructure(++_idMaxStructures),
+      _position(pos),
+      _sprite{new Sprite()},
+      _listConnexions{},
+      _sortie(false),
+      _stockEntree{}, _stockSortie{}
+{
+    cerr << "Structure(), id : " << _idStructure << endl;
+    _nbStructures++;
+
+    _sprite->setTexture(*text);
     Vector2f posEcran = Carte::carteToPositionEcran(_position);
     _sprite->setPosition(posEcran);
 }
 
-Structure::~Structure() { _nbStructures--; }
+Structure::~Structure()
+{
+    _nbStructures--;
+    delete _sprite;
+    // Deconnecte tous les structures
+    while (!_listConnexions.empty())
+    {
+        deconnecterStructure(*_listConnexions.begin());
+    }
+    cerr << "~Structure(), id : " << _idStructure << endl;
+}
 
-void Structure::init() {}
+void Structure::init()
+{
+}
+
+/*******************************************************/
 
 /**
  * @brief Charge la mémoire allouée aux structures
@@ -37,6 +68,8 @@ void Structure::dechargerMemoireStructures()
 {
     // Structure::dechargerMemoireBatiments();
 }
+
+/*******************************************************/
 
 /**
  * @brief Dessine le sprite de la structure à la bonne taille

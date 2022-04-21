@@ -19,9 +19,10 @@ extern ContextGlobal &contextGlobal;
 
 class Structure
 {
+private:
+    uint _idStructure;
 
 protected:
-    uint _idStructure;
     Vector2u _position; // Position case dans la carte hexagonale
     Sprite *_sprite;
 
@@ -43,7 +44,8 @@ public: // Static
     static void dechargerMemoireStructures();
 
 public:
-    Structure(const Vector2u &pos, Texture &text);
+    Structure() ;
+    Structure(const Vector2u &pos, Texture*);
     virtual ~Structure();
 
     virtual void init();
