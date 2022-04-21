@@ -2,16 +2,17 @@
 #define __STRUCTURE_HPP__
 
 #include <iostream>
+#include <list>
+#include <queue>
 #include <sys/types.h>
 
 #include "ContextGlobal.hpp"
 #include "enum_ressource.hpp"
 #include "connexion_t.hpp"
 #include "direction.hpp"
+#include "connexion_t.hpp"
 
 #include "Carte.hpp"
-
-struct connexion_t;
 
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;
@@ -24,10 +25,17 @@ protected:
     Vector2u _position; // Position case dans la carte hexagonale
     Sprite *_sprite;
 
+    list<connexion_t *> _listConnexions;
+    bool _sortie;
+
+    queue<Ressource> _stockEntree;
+    queue<Ressource> _stockSortie;
+
+private:
     static uint _nbStructures;
     static uint _idMaxStructures;
 
-public:
+public: // Static
     static uint getNbStructures();
     static uint getIdMaxStructures();
 
@@ -45,17 +53,39 @@ public:
 
     // Getter
     uint getIdStructure() const;
+
     const Vector2u &getPosition() const;
 
+    virtual bool stockEntreePlein() const = 0;
+    uint getNbEntrees() const;
+    uint getNbConnexions() const;
+    bool getASortie() const;
+
+    list<connexion_t *> getConnexionsEntrantes() const;
+    list<connexion_t *> getConnexions() const;
+    connexion_t *getConnexionSortie() const;
+    connexion_t *getConnexionDirection(const Vector2i &dir) const;
+    connexion_t *getConnexionDirection(int DIRECTION) const;
+
     // Setter
+    void setSortie(Structure *structure);
     void setPosition(const Vector2u &pos);
 
-    virtual bool connecte(connexion_t *) = 0;
-    virtual bool deconnecte(Structure *) = 0;
-
     virtual void process() = 0;
-    virtual Ressource livrerStock() = 0; // Livre ress de sortie
-    virtual void remplirStock() = 0;
+
+    // Gestion connextion_t
+    void deconnecterStructure(Structure *structure);
+    void deconnecterStructure(connexion_t *c);
+
+    bool ajouterConnexion(connexion_t *c);
+
+    bool connecte(connexion_t *c);
+    bool deconnecte(Structure *c);
+
+    Ressource livrerStock();
+    virtual void remplirStock();
+
+    virtual bool checkConnexionPossible(connexion_t *c);
 };
 
 /***************************************************/
@@ -76,5 +106,10 @@ inline void Structure::setPosition(const Vector2u &pos) { _position = pos; }
 /*           Méthodes inline non static            */
 /***************************************************/
 inline uint Structure::getIdStructure() const { return _idStructure; }
+
+inline bool Structure::getASortie() const { return _sortie; }
+
+inline uint Structure::getNbConnexions() const { return _listConnexions.size(); }
+inline uint Structure::getNbEntrees() const { return getNbConnexions() - _sortie; }
 
 #endif

@@ -18,7 +18,7 @@ bool operator==(const connexion_t &cg, const connexion_t &cd);
 extern connexion_t ConnexionNull;
 
 /*************************************************** /
-    /*                 Méthodes inline                 */
+/*                 Méthodes inline                 */
 /***************************************************/
 inline bool operator==(const connexion_t &cg, const connexion_t &cd)
 {
