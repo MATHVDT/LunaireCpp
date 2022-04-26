@@ -12,14 +12,16 @@ DOSSIER_TESTS=tests/
 
 DOSSIER_BUILD=build
 DOSSIER_INCLUDE=./include
-DOSSIER_LIB=./lib
+DOSSIER_LIB=./lib/
 
 WARNING+=-Wall -Wextra
 OPTIMISATION=
 CXXFLAGS+= -MMD -g $(OPTIMISATION) -fdiagnostics-color=auto -I $(DOSSIER_INCLUDE)
 
+# -L $(DOSSIER_LIB)
+
 LDSFML= -L $(DOSSIER_LIB) -lsfml-graphics -lsfml-window -lsfml-system
-LDFLAGS=  $(LDSFML) #-lSDL
+LDFLAGS=  $(LDSFML) 
 
 
 OBJ=$(addprefix $(DOSSIER_BUILD)/, $(SRC:%.cpp=%.o) )
