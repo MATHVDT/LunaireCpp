@@ -1,6 +1,7 @@
 #include "Pipeline.hpp"
 
-string cheminFichierTexturesPipelines = "ressources/";
+// A deplacer dans un hpp qui regroupe tous les chemins
+string cheminFichierTexturesPipelines = "ressource/cheminTexturesPipelines.txt";
 
 uint Pipeline::_nbPipelines = 0;
 uint Pipeline::_idMaxPipelines = 0;
@@ -22,7 +23,7 @@ uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
  *
  * @param Vector2u & - *pos*
  */
-Pipeline::Pipeline(const Vector2u &pos, Texture *)
+Pipeline::Pipeline(const Vector2u &pos)
     : Structure{pos, _texturesPipelines[NON_RELIE],
                 _tailleStockEntree, _tailleStockSortie},
       _idPipeline(++_idMaxPipelines),
@@ -69,6 +70,7 @@ void Pipeline::dechargerMemoirePipelines()
  */
 void Pipeline::chargerTextures(string fichierCheminsTexture)
 {
+    cout << "nb texture enum :"<< NB_TEXTURE<<endl;
     string nomFichierTexture[NB_TEXTURE];
     string cheminTexture;
     sf::Texture *texture;
@@ -110,6 +112,8 @@ void Pipeline::init() {}
 void Pipeline::dessiner(float scaleSprite) {}
 
 void Pipeline::update() {}
+
+void Pipeline:: process() {}
 
 /*******************************************************/
 /*******************************************************/

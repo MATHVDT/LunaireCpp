@@ -46,7 +46,7 @@ private: // Static
     // static uint _nbAnim;   // = 1
 
     static uint _tailleTexture;
-    static Texture *_texturesPipelines[3];
+    static Texture *_texturesPipelines[NB_TEXTURE];
     static uint _offsetTextureY; // Hauteur d'1 texture
 
 public: // Static
@@ -65,13 +65,14 @@ private: // Static
 
 public:
     Pipeline();
-    Pipeline(const Vector2u &pos, Texture *);
+    Pipeline(const Vector2u &pos);
     virtual ~Pipeline();
 
     virtual void init() override;
 
     virtual void dessiner(float scaleSprite) override;
     virtual void update() override;
+virtual void process()override;
 
     // Getter
     uint getIdPipeline() const;
