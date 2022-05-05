@@ -29,7 +29,6 @@ private:
     uint _idMine;
     Ressource _typeRessourceSol;
     Ressource _typeRessourceProduite;
-    uint _level;
     IntRect _zoomTexture;
 
 public: // Static
@@ -69,7 +68,6 @@ public:
 
     // Getter
     Ressource getTypeRessource() const;
-    uint getLevel() const;
 
     // Setter
     void setSpriteTexture(uint tick);
@@ -97,6 +95,5 @@ inline uint Mine::getLevelMaxMines() { return _levelMax; }
 /***************************************************/
 inline Ressource Mine::getTypeRessource() const { return _typeRessourceProduite; }
 
-inline uint Mine::getLevel() const { return _level; }
 
 #endif

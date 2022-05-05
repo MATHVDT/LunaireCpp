@@ -21,7 +21,7 @@ Mine::Mine(const Vector2u &pos,
       _idMine(++_idMaxMines),
       _typeRessourceSol(ressourceSol),
       _typeRessourceProduite(ressourceProduite),
-      _level(0), _zoomTexture{0, 0, 655, 655}
+      _zoomTexture{0, 0, 655, 655}
 {
     _nbMines++;
 

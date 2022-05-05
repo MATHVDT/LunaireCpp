@@ -7,6 +7,7 @@ Structure::Structure()
     : _idStructure(++_idMaxStructures),
       _position(),
       _sprite{},
+      _level(0),
       _listConnexions{},
       _sortie(false),
       _stockEntree{}, _stockSortie{}

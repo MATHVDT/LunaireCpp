@@ -26,6 +26,8 @@ protected:
     Vector2u _position; // Position case dans la carte hexagonale
     Sprite *_sprite;
 
+    uint _level;
+
     list<connexion_t *> _listConnexions;
     bool _sortie;
 
@@ -63,8 +65,9 @@ public:
     uint getTailleStockEntree() const;
     uint getTailleStockSortie() const;
 
-
     const Vector2u &getPosition() const;
+
+    uint getLevel() const;
 
     virtual bool stockEntreePlein() const;
     uint getNbEntrees() const;
@@ -123,6 +126,8 @@ inline bool Structure::getASortie() const { return _sortie; }
 
 inline uint Structure::getNbConnexions() const { return _listConnexions.size(); }
 inline uint Structure::getNbEntrees() const { return getNbConnexions() - _sortie; }
+
+inline uint Structure::getLevel() const { return _level; }
 
 inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
 
