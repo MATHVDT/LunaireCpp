@@ -1,8 +1,6 @@
 #ifndef __BATIMENT_HPP__
 #define __BATIMENT_HPP__
 
-
-
 #include "Structure.hpp"
 #include "enum_ressource.hpp"
 
@@ -30,17 +28,19 @@ public: // Static
 
 public:
     Batiment();
-    Batiment(const Vector2u &pos,Texture*);
+    Batiment(const Vector2u &pos,
+             Texture *,
+             uint tailleStockEntree = _tailleStockEntree,
+             uint tailleStockSortie = _tailleStockSortie);
     virtual ~Batiment();
 
-    virtual void init() ;
+    virtual void init();
 
     virtual void dessiner(float scaleSprite);
     virtual void update();
 
     // Getter
     uint getIdBatiment() const;
-    virtual bool stockEntreePlein() const override;
 
     virtual void process();
 
@@ -65,7 +65,5 @@ inline uint Batiment::getTailleStockSortie() { return _tailleStockSortie; }
 /***************************************************/
 
 inline uint Batiment::getIdBatiment() const { return _idBatiment; }
-
-inline bool Batiment::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
 
 #endif

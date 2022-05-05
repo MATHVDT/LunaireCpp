@@ -29,6 +29,8 @@ protected:
     list<connexion_t *> _listConnexions;
     bool _sortie;
 
+    uint _tailleStockEntree;
+    uint _tailleStockSortie;
     queue<Ressource> _stockEntree;
     queue<Ressource> _stockSortie;
 
@@ -44,8 +46,11 @@ public: // Static
     static void dechargerMemoireStructures();
 
 public:
-    Structure() ;
-    Structure(const Vector2u &pos, Texture*);
+    Structure();
+    Structure(const Vector2u &pos,
+              Texture *,
+              uint tailleStockEntree,
+              uint tailleStockSortie);
     virtual ~Structure();
 
     virtual void init();
@@ -55,10 +60,12 @@ public:
 
     // Getter
     uint getIdStructure() const;
+    uint getTailleStockEntree() const;
+    uint getTailleStockSortie() const;
 
     const Vector2u &getPosition() const;
 
-    virtual bool stockEntreePlein() const = 0;
+    virtual bool stockEntreePlein() const;
     uint getNbEntrees() const;
     uint getNbConnexions() const;
     bool getASortie() const;
@@ -72,6 +79,8 @@ public:
     // Setter
     void setSortie(Structure *structure);
     void setPosition(const Vector2u &pos);
+    void setTailleStockEntree(uint newVal);
+    void setTailleStockSortie(uint newVal);
 
     virtual void process() = 0;
 
@@ -113,5 +122,13 @@ inline bool Structure::getASortie() const { return _sortie; }
 
 inline uint Structure::getNbConnexions() const { return _listConnexions.size(); }
 inline uint Structure::getNbEntrees() const { return getNbConnexions() - _sortie; }
+
+inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
+
+inline uint Structure::getTailleStockEntree() const { return _tailleStockEntree; }
+inline uint Structure::getTailleStockSortie() const { return _tailleStockSortie; }
+
+inline void Structure::setTailleStockEntree(uint newValue) { _tailleStockEntree = newValue; }
+inline void Structure::setTailleStockSortie(uint newValue) { _tailleStockSortie = newValue; }
 
 #endif

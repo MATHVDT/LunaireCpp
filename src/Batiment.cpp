@@ -20,8 +20,12 @@ Batiment::Batiment()
  * @param Vector2f - *pos*
  * @param Texture* - *texture*
  */
-Batiment::Batiment(const Vector2u &pos, Texture*text)
-    : Structure{pos,text},
+Batiment::Batiment(const Vector2u &pos,
+                   Texture *text,
+                   uint tailleStockEntree,
+                   uint tailleStockSortie)
+    : Structure{pos, text,
+                tailleStockEntree, tailleStockSortie},
       _idBatiment(++_idMaxBatiments)
 {
     _nbBatiments++;
@@ -34,7 +38,7 @@ Batiment::~Batiment()
     cerr << "~Batiment(), id : " << _idBatiment << endl;
 }
 
-void Batiment::init(){}
+void Batiment::init() {}
 
 /*******************************************************/
 

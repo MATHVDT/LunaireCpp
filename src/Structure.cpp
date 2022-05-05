@@ -17,12 +17,17 @@ Structure::Structure()
     cerr << "Structure() = default, id : " << _idStructure << endl;
 }
 
-Structure::Structure(const Vector2u &pos, Texture *text)
+Structure::Structure(const Vector2u &pos,
+                     Texture *text,
+                     uint tailleStockEntree,
+                     uint tailleStockSortie)
     : _idStructure(++_idMaxStructures),
       _position(pos),
       _sprite{new Sprite()},
       _listConnexions{},
       _sortie(false),
+      _tailleStockEntree(tailleStockEntree),
+      _tailleStockSortie(tailleStockSortie),
       _stockEntree{}, _stockSortie{}
 {
     cerr << "Structure(), id : " << _idStructure << endl;
@@ -190,11 +195,10 @@ bool Structure::ajouterConnexion(connexion_t *c)
     return true;
 }
 
-
 /**
  * @brief Ajoute une connexion déjà complète
- * 
- * @param connexion_t * - *c* 
+ *
+ * @param connexion_t * - *c*
  * @return true - *Si la connexion a pu être ajouté*
  * @return false - *Si la connexion n'a pas pu être ajouté*
  */
