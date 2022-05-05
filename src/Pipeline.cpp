@@ -14,7 +14,7 @@ uint Pipeline::_levelMax = 3;
 uint Pipeline::_tailleTexture = 0; // 655
 
 // 3 Textures : Pas connecté | droit | angle
-Texture *Pipeline::_texturesPipelines[3];
+Texture *Pipeline::_texturesPipelines[NB_TEXTURE];
 uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
 
 /**
@@ -23,7 +23,7 @@ uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
  * @param Vector2u & - *pos*
  */
 Pipeline::Pipeline(const Vector2u &pos, Texture *)
-    : Structure{pos, _texturesPipelines[0],
+    : Structure{pos, _texturesPipelines[NON_RELIE],
                 _tailleStockEntree, _tailleStockSortie},
       _idPipeline(++_idMaxPipelines),
       _zoomTexture{0, 0,
@@ -54,7 +54,7 @@ void Pipeline::dechargerMemoirePipelines()
 {
     cerr << endl
          << "dechargerMemoirePipelines" << endl;
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < NB_TEXTURE; ++i)
     {
         delete _texturesPipelines[i];
     }
@@ -69,7 +69,7 @@ void Pipeline::dechargerMemoirePipelines()
  */
 void Pipeline::chargerTextures(string fichierCheminsTexture)
 {
-    string nomFichierTexture[3];
+    string nomFichierTexture[NB_TEXTURE];
     string cheminTexture;
     sf::Texture *texture;
 
@@ -80,7 +80,7 @@ void Pipeline::chargerTextures(string fichierCheminsTexture)
     {
         cerr << "Chargement des textures des Pipelines" << endl;
         // Récupération des chemins
-        for (int k = 0; k < 3; ++k)
+        for (int k = 0; k < NB_TEXTURE; ++k)
         {
             // Chemin de l'image texture d'une Pipeline
             monFlux >> cheminTexture;
@@ -121,12 +121,7 @@ void Pipeline::update() {}
  */
 void Pipeline::setSpriteTexture(uint tick)
 {
-
     _zoomTexture.top = _level * _offsetTextureY;
 
     _sprite->setTextureRect(_zoomTexture);
-
-    // cerr << "zoomTexture : ";
-    // cerr << _zoomTexture.top << ";" << _zoomTexture.left;
-    // cerr << " | " << _zoomTexture.width << ":" << _zoomTexture.height << endl;
 }

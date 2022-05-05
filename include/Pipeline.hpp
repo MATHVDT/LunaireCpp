@@ -21,10 +21,18 @@ extern string cheminFichierTexturesPipelines;
 
 class Pipeline : public Structure
 {
+
+    enum TEXTURE
+    {
+        NON_RELIE = 0,
+        DROIT = 1,
+        ANGLE = 2,
+        NB_TEXTURE = 3
+    };
+
 private:
     uint _idPipeline;
     IntRect _zoomTexture;
-
 
 protected: // Static
     static const uint _tailleStockEntree;
