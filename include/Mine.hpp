@@ -21,6 +21,8 @@ using namespace sf;
 
 extern ContextGlobal &contextGlobal;
 
+extern string cheminFichierTexturesMines;
+
 class Mine : public Batiment
 {
 private:

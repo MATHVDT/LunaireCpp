@@ -1,5 +1,7 @@
 #include "Mine.hpp"
 
+string cheminFichierTexturesMines = "ressource/cheminTexturesMines.txt";
+
 uint Mine::_nbMines = 0;
 uint Mine::_idMaxMines = 0;
 
@@ -36,14 +38,13 @@ Mine::~Mine()
 }
 
 /*******************************************************/
-
 /*******************************************************/
 
 void Mine::chargerMemoireMines()
 {
     cerr << endl
          << "chargerMemoireMines" << endl;
-    chargerTextures("ressource/cheminTexturesMines.txt");
+    chargerTextures(cheminFichierTexturesMines);
     _offsetTextureX = _tailleTexture / 4;
     _offsetTextureY = _offsetTextureX;
 }
