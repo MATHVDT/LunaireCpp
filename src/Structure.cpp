@@ -7,9 +7,11 @@ Structure::Structure()
     : _idStructure(++_idMaxStructures),
       _position(),
       _sprite{},
-      _level(0),
+      _level{0},
       _listConnexions{},
       _sortie(false),
+      _tailleStockEntree(1  ),
+      _tailleStockSortie(1),
       _stockEntree{}, _stockSortie{}
 {
     _nbStructures++;
@@ -25,6 +27,7 @@ Structure::Structure(const Vector2u &pos,
     : _idStructure(++_idMaxStructures),
       _position(pos),
       _sprite{new Sprite()},
+      _level{0},
       _listConnexions{},
       _sortie(false),
       _tailleStockEntree(tailleStockEntree),

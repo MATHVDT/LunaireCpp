@@ -148,7 +148,6 @@ void Mine::chargerTextures(string fichierCheminsTexture)
  */
 void Mine::setSpriteTexture(uint tick)
 {
-
     _zoomTexture.top = _level * _offsetTextureY;
     _zoomTexture.left = tick * _offsetTextureX;
 
