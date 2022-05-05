@@ -63,6 +63,7 @@ public:
     uint getTailleStockEntree() const;
     uint getTailleStockSortie() const;
 
+
     const Vector2u &getPosition() const;
 
     virtual bool stockEntreePlein() const;
