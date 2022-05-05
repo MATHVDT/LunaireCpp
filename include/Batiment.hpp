@@ -57,7 +57,8 @@ public:
 inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 inline uint Batiment::getIdMaxBatiments() { return _idMaxBatiments; }
 
-
+inline uint Batiment::getTailleStockEntree() { return _tailleStockEntree; }
+inline uint Batiment::getTailleStockSortie() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */
