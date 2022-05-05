@@ -7,7 +7,7 @@ uint Mine::_levelMax = 3;
 uint _nbAnim = 4;
 
 uint Mine::_tailleTexture = 0;
-Texture *Mine::_texturesMine[NB_RESSOURCES];
+Texture *Mine::_texturesMines[NB_RESSOURCES];
 
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
@@ -15,7 +15,7 @@ uint Mine::_offsetTextureY = 100;
 Mine::Mine(const Vector2u &pos,
            Ressource ressourceSol,
            Ressource ressourceProduite)
-    : Batiment{pos, _texturesMine[static_cast<int>(ressourceProduite)]},
+    : Batiment{pos, _texturesMines[static_cast<int>(ressourceProduite)]},
       _idMine(++_idMaxMines),
       _typeRessourceSol(ressourceSol),
       _typeRessourceProduite(ressourceProduite),
@@ -54,7 +54,7 @@ void Mine::dechargerMemoireMines()
          << "dechargerMemoireMines" << endl;
     for (int i = 0; i < NB_RESSOURCES; ++i)
     {
-        delete _texturesMine[i];
+        delete _texturesMines[i];
     }
 }
 
@@ -128,7 +128,7 @@ void Mine::chargerTextures(string fichierCheminsTexture)
             texture = new Texture();
             texture->loadFromFile(cheminTexture);
 
-            _texturesMine[k] = texture;
+            _texturesMines[k] = texture;
         }
         _tailleTexture = texture->getSize().x;
 

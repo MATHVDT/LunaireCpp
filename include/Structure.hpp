@@ -32,7 +32,7 @@ protected:
     queue<Ressource> _stockEntree;
     queue<Ressource> _stockSortie;
 
-private:
+private: // Static
     static uint _nbStructures;
     static uint _idMaxStructures;
 

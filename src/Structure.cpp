@@ -190,6 +190,14 @@ bool Structure::ajouterConnexion(connexion_t *c)
     return true;
 }
 
+
+/**
+ * @brief Ajoute une connexion déjà complète
+ * 
+ * @param connexion_t * - *c* 
+ * @return true - *Si la connexion a pu être ajouté*
+ * @return false - *Si la connexion n'a pas pu être ajouté*
+ */
 bool Structure::connecte(connexion_t *c)
 {
     if (!checkConnexionPossible(c))

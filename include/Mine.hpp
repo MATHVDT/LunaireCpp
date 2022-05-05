@@ -38,15 +38,15 @@ public: // Static
     static uint _nbAnim;
 
     static uint _tailleTexture;
-    static Texture *_texturesMine[NB_RESSOURCES];
+    static Texture *_texturesMines[NB_RESSOURCES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 
 public: // Static
     static uint getNbMines();
     static uint getIdMaxMines();
-    static uint getNbAnimMine();
-    static uint getLevelMaxMine();
+    static uint getNbAnimMines();
+    static uint getLevelMaxMines();
 
     static void chargerMemoireMines();
     static void dechargerMemoireMines();
@@ -87,8 +87,8 @@ public:
 inline uint Mine::getNbMines() { return _nbMines; }
 inline uint Mine::getIdMaxMines() { return _idMaxMines; }
 
-inline uint Mine::getNbAnimMine() { return _nbAnim; }
-inline uint Mine::getLevelMaxMine() { return _levelMax; }
+inline uint Mine::getNbAnimMines() { return _nbAnim; }
+inline uint Mine::getLevelMaxMines() { return _levelMax; }
 
 /***************************************************/
 /*           Méthodes inline non static            */
