@@ -51,6 +51,8 @@ public:
 
     Vector2u getCoordCase(uint i, uint j) const;
 
+    CaseMap ** getCasesVoisines(const Vector2u& posCase, bool posCarte = true) const;
+
     // Setter
     void ajouterConstructionCaseCarte(Structure *s,
                                       const Vector2u &pos);

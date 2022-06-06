@@ -72,7 +72,7 @@ public:
 
     virtual void dessiner(float scaleSprite) override;
     virtual void update() override;
-virtual void process()override;
+    virtual void process() override;
 
     // Getter
     uint getIdPipeline() const;

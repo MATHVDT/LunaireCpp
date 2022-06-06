@@ -237,20 +237,27 @@ void Carte::dessiner()
 }
 
 /*******************************************************/
-
+/**
+ * @brief Ajoute une structure sur la carte à la position indiquée.
+ *
+ * @param Structure * - *s*,
+ * @param const Vector2u & - *posCarte*
+ */
 void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &posCarte)
 {
     Vector2u posMatrice = carteToMatrice(posCarte);
     _grille[posMatrice.y][posMatrice.x].ajouterConstruction(s);
+
+    // Si c'est pipeline gerer connexion
 }
 
 /*******************************************************/
 
 /**
  * @brief Convertir une position dans la carte hexagonale en position sur l'écran
- * 
+ *
  * @param const Vector2u& - *cCarte*
- * @return Vector2f 
+ * @return Vector2f
  */
 Vector2f Carte::carteToPositionEcran(const Vector2u &cCarte)
 {
@@ -271,4 +278,70 @@ Vector2f Carte::carteToPositionEcran(const Vector2u &cCarte)
     // printf("(%5d,%5d) et (%5f,%5f)\n\n", cCarte.x, cCarte.y, xEcran, yEcran);
 
     return Vector2f(xEcran, yEcran);
+}
+
+/**
+ * @brief Renvoie un tableau contenant les 6 cases voisines de la position indiquée.
+ *
+ * @param Vector2u & - *posCase* *(par défault position de la case en coordonnés Carte)*
+ * @param bool - *posCarte = true* *(préciser le type de coordonnées de la case)**
+ *
+ * @return CaseMap**
+ */
+CaseMap **Carte::getCasesVoisines(const Vector2u &posCase, bool posCarte) const
+{
+    // Coord carte pour manilpuler les directions
+    Vector2u coordCaseCarte;
+    if (posCarte) // Coord en carte
+    {             // On garde les coord fournit
+        coordCaseCarte = posCase;
+    }
+    else // Coord en matrice
+    {    // On convertit en coord carte
+        coordCaseCarte = matriceToCarte(posCase);
+    }
+
+    CaseMap **voisinage = new CaseMap *[6]();
+    Vector2i coordDir;
+    Vector2i coordCaseVoisinePos;
+    Vector2u coordCaseVoisineMatricePos;
+
+    // Récupération des cases voisines
+    for (int dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST; ++dir)
+    { // Pour chaque direction
+
+        // Récupération de la position de la case voisine
+        coordCaseVoisinePos = positionCaseVoisine(coordCaseCarte, dir);
+
+        // cerr << endl;
+        // cerr << "coordCaseVoisinePos " << coordCaseVoisinePos.x << ", " << coordCaseVoisinePos.y << endl;
+
+        // Test si la case est dans la carte
+        if (coordCaseVoisinePos.x >= 0 &&
+            coordCaseVoisinePos.x < _nbColonnesCarte &&
+            coordCaseVoisinePos.y >= 0 &&
+            coordCaseVoisinePos.y < _nbLignesCarte)
+        { // On est bien dans la carte
+
+            // Transformation en coord Matrice
+            coordCaseVoisineMatricePos = (Vector2u)carteToMatrice((Vector2u)coordCaseVoisinePos);
+
+            // Ajout au voisinage
+            voisinage[(int)dir] = &_grille[coordCaseVoisineMatricePos.y][coordCaseVoisineMatricePos.x];
+        }
+        else // En dehors de la carte
+        {    // Pas de case voisine dans cette directions
+            voisinage[(int)dir] = nullptr;
+        }
+    }
+    // Affichage du voisinage
+    for (int i = 0; i < 6; ++i)
+    {
+        cerr << "dir " << i;
+        if (voisinage[i] != nullptr)
+            cerr << " case" << endl;
+        else
+            cerr << " nullptr" << endl;
+    }
 }

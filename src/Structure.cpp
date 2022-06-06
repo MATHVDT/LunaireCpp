@@ -67,6 +67,9 @@ void Structure::init()
 void Structure::chargerMemoireStructures()
 {
     // Structure::chargerMemoireBatiments();
+    // Batiment::chargerMemoireBatiments();
+    // Pipeline::chargerMemoireBatiments();
+        
 }
 
 /**
@@ -75,7 +78,7 @@ void Structure::chargerMemoireStructures()
  */
 void Structure::dechargerMemoireStructures()
 {
-    // Structure::dechargerMemoireBatiments();
+    // Pipeline::dechargerMemoireBatiments();
 }
 
 /*******************************************************/

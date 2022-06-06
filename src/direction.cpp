@@ -116,42 +116,44 @@ int directionVecteurToInt(const Vector2i &dirVecteur)
 
 /********************************************************/
 
-Vector2i positionCaseVoisine(const Vector2i &posCaseCarte, enum DIRECTION dirEnum)
+Vector2i positionCaseVoisine(const Vector2i &posCaseCarte,
+                             int dirEnum)
 {
     Vector2i posCaseVoisine;
 
     switch (dirEnum)
     {
-    case DIRECTION::NORD:
+    case NORD:
         posCaseVoisine =
             positionCaseVoisineNORD(posCaseCarte);
         break;
-    case DIRECTION::NORDOUEST:
+    case NORDOUEST:
         posCaseVoisine =
             positionCaseVoisineNORDOUEST(posCaseCarte);
         break;
-    case DIRECTION::SUDOUEST:
+    case SUDOUEST:
         posCaseVoisine =
             positionCaseVoisineSUDOUEST(posCaseCarte);
         break;
-    case DIRECTION::SUD:
+    case SUD:
         posCaseVoisine =
             positionCaseVoisineSUD(posCaseCarte);
         break;
-    case DIRECTION::SUDEST:
+    case SUDEST:
         posCaseVoisine =
             positionCaseVoisineSUDEST(posCaseCarte);
         break;
-    case DIRECTION::NORDEST:
+    case NORDEST:
         posCaseVoisine =
             positionCaseVoisineNORDEST(posCaseCarte);
         break;
-    case DIRECTION::NULLDIRECTION:
+    case NULLDIRECTION:
     default:
         posCaseVoisine =
             positionCaseVoisineNULLDIRECTION(posCaseCarte);
         break;
     }
+    return posCaseVoisine;
 }
 
 Vector2i positionCaseVoisineNORD(const Vector2i &posCaseCarte)

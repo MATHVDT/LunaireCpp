@@ -176,6 +176,11 @@ void CaseMap::dechargerSprites()
 
 /*******************************************************/
 
+/**
+ * @brief Ajoute une structure si la place sur la case n'est pas déjà occupée.
+ * 
+ * @param Structure * - *s* 
+ */
 void CaseMap::ajouterConstruction(Structure *s)
 {
     if (_construction != nullptr)

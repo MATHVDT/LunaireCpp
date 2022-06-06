@@ -45,8 +45,7 @@ Pipeline::~Pipeline() { --_nbPipelines; }
 
 void Pipeline::chargerMemoirePipelines()
 {
-    cerr << endl
-         << "chargerMemoirePipelines" << endl;
+    // cerr << endl << "chargerMemoirePipelines" << endl;
     chargerTextures(cheminFichierTexturesPipelines);
     _offsetTextureY = _tailleTexture; // Largeur d'une case
 }
@@ -70,7 +69,7 @@ void Pipeline::dechargerMemoirePipelines()
  */
 void Pipeline::chargerTextures(string fichierCheminsTexture)
 {
-    cout << "nb texture enum :"<< NB_TEXTURE<<endl;
+    cout << "nb texture enum :" << NB_TEXTURE << endl;
     string nomFichierTexture[NB_TEXTURE];
     string cheminTexture;
     sf::Texture *texture;
@@ -109,11 +108,16 @@ void Pipeline::chargerTextures(string fichierCheminsTexture)
 
 void Pipeline::init() {}
 
-void Pipeline::dessiner(float scaleSprite) {}
+void Pipeline::dessiner(float scaleSprite)
+{
+    // setSpriteTexture
+    // => _sprite->setTextureRect(_zoomTexture);
+    Structure::dessiner(scaleSprite);
+}
 
 void Pipeline::update() {}
 
-void Pipeline:: process() {}
+void Pipeline::process() {}
 
 /*******************************************************/
 /*******************************************************/

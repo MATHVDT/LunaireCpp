@@ -23,7 +23,7 @@ private:
     uint _idStructure;
 
 protected:
-    Vector2u _position; // Position case dans la carte hexagonale
+    Vector2u _position; // Position case dans la carte hexagonale (x, y)
     Sprite *_sprite;
 
     uint _level;

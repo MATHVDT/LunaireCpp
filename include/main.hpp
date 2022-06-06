@@ -8,6 +8,7 @@
 #include "Structure.hpp"
 #include "Batiment.hpp"
 #include "Mine.hpp"
+#include "Pipeline.hpp"
 
 extern ContextGlobal &contextGlobal;
 

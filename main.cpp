@@ -25,11 +25,13 @@ int main()
 
     CaseMap::chargerMemoireCaseMap();
     Mine::chargerMemoireMines();
+    Pipeline::chargerMemoirePipelines();
 
     testCarte();
 
     CaseMap::dechargerMemoireCaseMap();
     Mine::dechargerMemoireMines();
+    Pipeline::dechargerMemoirePipelines();
 
     return 0;
 }
@@ -40,6 +42,8 @@ void testCarte()
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
+    carte->getCasesVoisines(Vector2u(3, 3));
+
     Mine *s = new Mine{Vector2u(0, 0)};
     s->init();
     carte->ajouterConstructionCaseCarte(s, s->getPosition());
@@ -47,6 +51,11 @@ void testCarte()
     Mine *s2 = new Mine{Vector2u(5, 3)};
     s2->init();
     carte->ajouterConstructionCaseCarte(s2, s2->getPosition());
+
+    Pipeline *p1 = new Pipeline(Vector2u(1, 1));
+    Pipeline *p2 = new Pipeline(Vector2u(4, 0));
+    carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
+    carte->ajouterConstructionCaseCarte(p2, p2->getPosition());
 
     while (contextGlobal.getIsRun())
     {
@@ -60,5 +69,7 @@ void testCarte()
 
     delete s;
     delete s2;
+    delete p1;
+    delete p2;
     delete carte;
 }
