@@ -43,6 +43,9 @@ enum DIRECTION
     NULLDIRECTION = -1 // X
 };
 
+Vector2i positionCaseVoisine(const Vector2i &posCaseCarte, enum DIRECTION dirEnum);
+Vector2i positionCaseVoisine(const Vector2u &posCaseCarte, enum DIRECTION  dirEnum);
+
 Vector2i positionCaseVoisineNORD(const Vector2i &posCaseCarte);
 Vector2i positionCaseVoisineNORDOUEST(const Vector2i &posCaseCarte);
 Vector2i positionCaseVoisineSUDOUEST(const Vector2i &posCaseCarte);
@@ -62,6 +65,10 @@ Vector2u positionCaseVoisineNULLDIRECTION(const Vector2u &posCaseCarte);
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
+inline Vector2i positionCaseVoisine(const Vector2u &posCaseCarte, enum DIRECTION  dirEnum)
+{
+    return positionCaseVoisine(posCaseCarte, dirEnum);
+}
 
 inline Vector2u positionCaseVoisineNORD(const Vector2u &posCaseCarte)
 {
