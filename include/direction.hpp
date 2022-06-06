@@ -18,11 +18,11 @@ using namespace sf;
 
 // Vector2i = (x , y)
 
-extern const Vector2i Nord;          // ↑ ( 0,-1) 
+extern const Vector2i Nord;          // ↑ ( 0,-1)
 extern const Vector2i NordOuest;     // ↖ (-1,-1) si x%2 == 1 ou (-1, 0) si x%2 == 0
 extern const Vector2i SudOuest;      // ↙ (-1, 0) si x%2 == 1 ou (-1,+1) si x%2 == 0
-extern const Vector2i Sud;           // ↓ ( 0, 1) si x%2 == 1 ou (+1,+1) si x%2 == 0
-extern const Vector2i SudEst;        // ↘ ( 1, 0)
+extern const Vector2i Sud;           // ↓ ( 0, 1)
+extern const Vector2i SudEst;        // ↘ ( 1, 0) si x%2 == 1 ou (+1,+1) si x%2 == 0
 extern const Vector2i NordEst;       // ↗ ( 1,-1) si x%1 == 1 ou (+1, 0) si x%2 == 0
 extern const Vector2i NullDirection; // X ( 0, 0)
 
@@ -42,5 +42,60 @@ enum DIRECTION
     NORDEST = 5,       // ↗
     NULLDIRECTION = -1 // X
 };
+
+Vector2i positionCaseVoisineNORD(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineNORDOUEST(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineSUDOUEST(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineSUD(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineSUDEST(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineNORDEST(const Vector2i &posCaseCarte);
+Vector2i positionCaseVoisineNULLDIRECTION(const Vector2i &posCaseCarte);
+
+Vector2u positionCaseVoisineNORD(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineNORDOUEST(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineSUDOUEST(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineSUD(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineSUDEST(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineNORDEST(const Vector2u &posCaseCarte);
+Vector2u positionCaseVoisineNULLDIRECTION(const Vector2u &posCaseCarte);
+
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+inline Vector2u positionCaseVoisineNORD(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineNORD((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineNORDOUEST(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineNORDOUEST((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineSUDOUEST(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineSUDOUEST((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineSUD(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineSUD((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineSUDEST(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineSUDEST((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineNORDEST(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineNORDEST((Vector2u)posCaseCarte);
+}
+
+inline Vector2u positionCaseVoisineNULLDIRECTION(const Vector2u &posCaseCarte)
+{
+    return positionCaseVoisineNULLDIRECTION((Vector2u)posCaseCarte);
+}
 
 #endif

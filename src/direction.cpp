@@ -10,6 +10,7 @@
  */
 #include "direction.hpp"
 
+// Deprecated NE PAS UTILISER
 const Vector2i Nord{0, -1};         // Dir. principale ↑ ( 0, -1)
 const Vector2i NordOuest{-1, -1};   // Dir. principale ↖ (-1, -1)
 const Vector2i SudOuest{-1, 0};     // Dir. principale ↙ (-1, 0)
@@ -19,6 +20,7 @@ const Vector2i NordEst{1, -1};      // Dir. principale ↗ ( 1, -1)
 const Vector2i NullDirection{0, 0}; // Dir. principale X ( 0,  0)
 
 /**
+ * @deprecated Changement de gestion des directions
  * @brief Donne le vecteur de sens opposé
  *
  * @param const Vector2i & - *dir*
@@ -48,6 +50,7 @@ Vector2i directionOpposee(const Vector2i &dir)
 }
 
 /**
+ * @deprecated Changement de gestion des directions
  * @brief Transforme un entier (qui représente un direction dans une tab[6]) en vecteur direction
  *
  * @param int - *dirInt* (indice dans un tab[6])
@@ -84,6 +87,7 @@ Vector2i directionIntToVecteur(int dirInt)
 }
 
 /**
+ * @deprecated Changement de gestion des directions
  * @brief Transforme une direction en un entier qui correspond à l'indice de la direction dans un tab[6]
  *
  * @param const Vector2i & - *dirVecteur*
@@ -108,4 +112,45 @@ int directionVecteurToInt(const Vector2i &dirVecteur)
         dirInt = NULLDIRECTION;
 
     return dirInt;
+}
+
+/********************************************************/
+
+Vector2i positionCaseVoisineNORD(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte + Vector2i(0, -1);
+}
+
+Vector2i positionCaseVoisineNORDOUEST(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte +
+           Vector2i(-1, -1 * (posCaseCarte.x % 2));
+}
+
+Vector2i positionCaseVoisineSUDOUEST(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte +
+           Vector2i(-1, 1 - (posCaseCarte.x % 2));
+}
+
+Vector2i positionCaseVoisineSUD(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte + Vector2i(0, 1);
+}
+
+Vector2i positionCaseVoisineSUDEST(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte +
+           Vector2i(1, 1 - (posCaseCarte.x % 2));
+}
+
+Vector2i positionCaseVoisineNORDEST(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte +
+           Vector2i(1, -1 * (posCaseCarte.x % 2));
+}
+
+Vector2i positionCaseVoisineNULLDIRECTION(const Vector2i &posCaseCarte)
+{
+    return posCaseCarte + Vector2i(0, 0);
 }
