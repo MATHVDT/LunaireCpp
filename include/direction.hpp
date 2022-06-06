@@ -18,16 +18,16 @@ using namespace sf;
 
 // Vector2i = (x , y)
 
-extern const Vector2i Nord;          // ↑ ( 0,-1)
-extern const Vector2i NordOuest;     // ↖ (-1,-1)
-extern const Vector2i SudOuest;      // ↙ (-1, 0)
-extern const Vector2i Sud;           // ↓ ( 0, 1)
+extern const Vector2i Nord;          // ↑ ( 0,-1) 
+extern const Vector2i NordOuest;     // ↖ (-1,-1) si x%2 == 1 ou (-1, 0) si x%2 == 0
+extern const Vector2i SudOuest;      // ↙ (-1, 0) si x%2 == 1 ou (-1,+1) si x%2 == 0
+extern const Vector2i Sud;           // ↓ ( 0, 1) si x%2 == 1 ou (+1,+1) si x%2 == 0
 extern const Vector2i SudEst;        // ↘ ( 1, 0)
-extern const Vector2i NordEst;       // ↗ ( 1,-1)
+extern const Vector2i NordEst;       // ↗ ( 1,-1) si x%1 == 1 ou (+1, 0) si x%2 == 0
 extern const Vector2i NullDirection; // X ( 0, 0)
 
- Vector2i directionOpposee(const Vector2i &dir);
- Vector2i directionIntToVecteur(int dirInt);
+Vector2i directionOpposee(const Vector2i &dir);
+Vector2i directionIntToVecteur(int dirInt);
 int directionVecteurToInt(const Vector2i &dirVecteur);
 
 enum DIRECTION
