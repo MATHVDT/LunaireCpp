@@ -314,9 +314,6 @@ CaseMap **Carte::getCasesVoisines(const Vector2u &posCase, bool posCarte) const
         // Récupération de la position de la case voisine
         coordCaseVoisinePos = positionCaseVoisine(coordCaseCarte, dir);
 
-        // cerr << endl;
-        // cerr << "coordCaseVoisinePos " << coordCaseVoisinePos.x << ", " << coordCaseVoisinePos.y << endl;
-
         // Test si la case est dans la carte
         if (coordCaseVoisinePos.x >= 0 &&
             coordCaseVoisinePos.x < _nbColonnesCarte &&
@@ -336,12 +333,13 @@ CaseMap **Carte::getCasesVoisines(const Vector2u &posCase, bool posCarte) const
         }
     }
     // Affichage du voisinage
-    for (int i = 0; i < 6; ++i)
-    {
-        cerr << "dir " << i;
-        if (voisinage[i] != nullptr)
-            cerr << " case" << endl;
-        else
-            cerr << " nullptr" << endl;
-    }
+    // for (int i = 0; i < 6; ++i)
+    // {
+    //     cerr << "dir " << i;
+    //     if (voisinage[i] != nullptr)
+    //         cerr << " case" << endl;
+    //     else
+    //         cerr << " nullptr" << endl;
+    // }
+    return voisinage;
 }
