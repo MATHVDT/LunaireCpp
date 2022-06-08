@@ -86,9 +86,9 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getConnexionDirection(SUDEST) == nullptr);
         REQUIRE(bat->getConnexionDirection(NORDEST) == nullptr);
 
-        REQUIRE(bat->getConnexionsEntrantes() == list<connexion_t *>{});
-        REQUIRE(bat->getConnexions() == list<connexion_t *>{});
-        REQUIRE(bat->getConnexionSortie() == nullptr);
+        REQUIRE(bat->getStructuresConnecteesEntrantes() == list<connexion_t *>{});
+        REQUIRE(bat->getStructuresConnectees() == list<connexion_t *>{});
+        REQUIRE(bat->getStructuresConnecteesSortante() == nullptr);
     }
 
     Batiment *bat2 = new Mine{Vector2u(1, 1)};
@@ -131,7 +131,7 @@ TEST_CASE("Connexion batiment")
 
         REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
         REQUIRE(bat->getConnexionDirection(SudEst) == c);
-        REQUIRE(bat->getConnexionSortie() == c);
+        REQUIRE(bat->getStructuresConnecteesSortante() == c);
     }
 
     SECTION("Test ajout batiment : bat2 connecté  verif")
@@ -149,9 +149,9 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat2->getConnexionDirection(NordOuest)->direction == cInverse->direction);
         REQUIRE(bat2->getConnexionDirection(NordOuest)->sortie == cInverse->sortie);
 
-        REQUIRE(bat2->getConnexionSortie()->structure == cInverse->structure);
-        REQUIRE(bat2->getConnexionSortie()->direction == cInverse->direction);
-        REQUIRE(bat2->getConnexionSortie()->sortie == cInverse->sortie);
+        REQUIRE(bat2->getStructuresConnecteesSortante()->structure == cInverse->structure);
+        REQUIRE(bat2->getStructuresConnecteesSortante()->direction == cInverse->direction);
+        REQUIRE(bat2->getStructuresConnecteesSortante()->sortie == cInverse->sortie);
 
         delete cInverse;
     }
@@ -171,7 +171,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat2->getConnexionDirection(NordOuest)->structure == cInverse->structure);
         REQUIRE(bat2->getConnexionDirection(NordOuest)->direction == cInverse->direction);
         REQUIRE(bat2->getConnexionDirection(NordOuest)->sortie == cInverse->sortie);
-        REQUIRE(bat2->getConnexionSortie() == nullptr);
+        REQUIRE(bat2->getStructuresConnecteesSortante() == nullptr);
 
         delete cInverse;
     }

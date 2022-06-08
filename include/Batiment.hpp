@@ -44,8 +44,9 @@ public:
 
     virtual void process();
 
-    virtual bool checkConnexionPossible(connexion_t *c) override;
+    virtual bool checkConnexionPossible(Structure *s)override;
 };
+
 
 /***************************************************/
 /*                 Méthodes inline                 */

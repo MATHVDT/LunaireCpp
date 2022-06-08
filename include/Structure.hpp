@@ -28,8 +28,8 @@ protected:
 
     uint _level;
 
-    list<connexion_t *> _listConnexions;
-    bool _sortie;
+    list<Structure *> _listStructuresConnectees;
+    Structure *_sortie;
 
     uint _tailleStockEntree;
     uint _tailleStockSortie;
@@ -74,33 +74,32 @@ public:
     uint getNbConnexions() const;
     bool getASortie() const;
 
-    list<connexion_t *> getConnexionsEntrantes() const;
-    list<connexion_t *> getConnexions() const;
-    connexion_t *getConnexionSortie() const;
-    connexion_t *getConnexionDirection(const Vector2i &dir) const;
-    connexion_t *getConnexionDirection(int DIRECTION) const;
+    list<Structure *> getStructuresConnecteesEntrantes() const;
+    list<Structure *> getStructuresConnectees() const;
+    Structure *getStructuresConnecteesSortante() const;
+    // connexion_t *getConnexionDirection(const Vector2i &dir) const;
+    // connexion_t *getConnexionDirection(int DIRECTION) const;
 
     // Setter
-    void setSortie(Structure *structure);
+    bool setSortie(Structure *structure);
     void setPosition(const Vector2u &pos);
     void setTailleStockEntree(uint newVal);
     void setTailleStockSortie(uint newVal);
 
     virtual void process() = 0;
 
-    // Gestion connextion_t
-    void deconnecterStructure(Structure *structure);
-    void deconnecterStructure(connexion_t *c);
+    // Gestion des structures connectées
 
-    bool ajouterConnexion(connexion_t *c);
+    // void deconnecterStructure(connexion_t *c);
+    // bool ajouterConnexion(connexion_t *c);
 
-    bool connecte(connexion_t *c);
-    bool deconnecte(Structure *c);
+    bool connecterStructure(Structure *s, bool commeSortie = true);
+    bool deconnecterStructure(Structure *s);
 
     Ressource livrerStock();
     virtual void remplirStock();
 
-    virtual bool checkConnexionPossible(connexion_t *c);
+    virtual bool checkConnexionPossible(Structure *s);
 };
 
 /***************************************************/
@@ -124,8 +123,8 @@ inline uint Structure::getIdStructure() const { return _idStructure; }
 
 inline bool Structure::getASortie() const { return _sortie; }
 
-inline uint Structure::getNbConnexions() const { return _listConnexions.size(); }
-inline uint Structure::getNbEntrees() const { return getNbConnexions() - _sortie; }
+inline uint Structure::getNbConnexions() const { return _listStructuresConnectees.size(); }
+inline uint Structure::getNbEntrees() const { return getNbConnexions() - (_sortie != nullptr); }
 
 inline uint Structure::getLevel() const { return _level; }
 

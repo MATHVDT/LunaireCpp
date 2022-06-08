@@ -71,14 +71,15 @@ void Batiment::process() {}
 /*******************************************************/
 
 /**
- * @brief Checke si la connexion est du bon type de structure
- * @todo Changer le type de structure connectable en tuyau seulement
- * @param connexion_t * - *c*
- * @return true
- * @return false
+ * @brief Check si la connexion entre les 2 Structures est possible, et si la structure peut être connectée au batiment
+ * @todo Vérfier si la structure peut être connectée
+ *
+ * @param Structure * - *s*
+ * @return true - *Connexion possible*
+ * @return false - *Connexion impossible*
  */
-bool Batiment::checkConnexionPossible(connexion_t *c)
+bool Batiment::checkConnexionPossible(Structure *s)
 {
-    return Structure::checkConnexionPossible(c);
+    return Structure::checkConnexionPossible(s);
     // &&(typeid(c->structure) == typeid(Structure));
 }

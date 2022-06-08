@@ -42,7 +42,7 @@ void testCarte()
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
 
-    carte->getCasesVoisines(Vector2u(3, 3));
+    // carte->getCasesVoisines(Vector2u(3, 3));
 
     Mine *s = new Mine{Vector2u(0, 0)};
     s->init();
