@@ -76,9 +76,7 @@ public:
 
     list<Structure *> getStructuresConnecteesEntrantes() const;
     list<Structure *> getStructuresConnectees() const;
-    Structure *getStructuresConnecteesSortante() const;
-    // connexion_t *getConnexionDirection(const Vector2i &dir) const;
-    // connexion_t *getConnexionDirection(int DIRECTION) const;
+    Structure *getSortie() const;
 
     // Setter
     bool setSortie(Structure *structure);
@@ -89,10 +87,6 @@ public:
     virtual void process() = 0;
 
     // Gestion des structures connectées
-
-    // void deconnecterStructure(connexion_t *c);
-    // bool ajouterConnexion(connexion_t *c);
-
     bool connecterStructure(Structure *s, bool commeSortie = true);
     bool deconnecterStructure(Structure *s);
 

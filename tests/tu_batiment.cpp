@@ -70,110 +70,75 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == 0);
 
-        REQUIRE(bat->getConnexionDirection(static_cast<Vector2i>(vectPos)) == nullptr);
-        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat->getConnexionDirection(NordOuest) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SudOuest) == nullptr);
-        REQUIRE(bat->getConnexionDirection(Sud) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SudEst) == nullptr);
-        REQUIRE(bat->getConnexionDirection(NordEst) == nullptr);
-
-        REQUIRE(bat->getConnexionDirection(NULLDIRECTION) == nullptr);
-        REQUIRE(bat->getConnexionDirection(NORD) == nullptr);
-        REQUIRE(bat->getConnexionDirection(NORDOUEST) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SUDOUEST) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SUD) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SUDEST) == nullptr);
-        REQUIRE(bat->getConnexionDirection(NORDEST) == nullptr);
-
-        REQUIRE(bat->getStructuresConnecteesEntrantes() == list<connexion_t *>{});
-        REQUIRE(bat->getStructuresConnectees() == list<connexion_t *>{});
-        REQUIRE(bat->getStructuresConnecteesSortante() == nullptr);
+        REQUIRE(bat->getStructuresConnecteesEntrantes() == list<Structure *>{});
+        REQUIRE(bat->getStructuresConnectees() == list<Structure *>{});
+        REQUIRE(bat->getSortie() == nullptr);
     }
 
     Batiment *bat2 = new Mine{Vector2u(1, 1)};
-    connexion_t *c = new connexion_t{bat2, SudEst, false};
 
-    SECTION("Test ajout batiment : 1 connexion")
+    SECTION("Test ajout batiment en sortie")
     {
-        REQUIRE(bat->ajouterConnexion(c));
-
-        REQUIRE(bat->getNbConnexions() == 1);
-        REQUIRE(bat->getNbEntrees() == 1);
-        REQUIRE(bat->getASortie() == 0);
-
-        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SudEst) == c);
-    }
-
-    SECTION("Test ajout batiment : 2 fois la même connexion")
-    {
-        REQUIRE(bat->ajouterConnexion(c));
-        REQUIRE_FALSE(bat->ajouterConnexion(c));
-
-        REQUIRE(bat->getNbConnexions() == 1);
-        REQUIRE(bat->getNbEntrees() == 1);
-        REQUIRE(bat->getASortie() == false);
-
-        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SudEst) == c);
-    }
-
-    SECTION("Test ajout batiment : sortie")
-    {
-        c->sortie = true;
-        REQUIRE(bat->ajouterConnexion(c));
-        REQUIRE_FALSE(bat->ajouterConnexion(c));
+        REQUIRE(bat->connecterStructure(bat2, true));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
-
-        REQUIRE(bat->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat->getConnexionDirection(SudEst) == c);
-        REQUIRE(bat->getStructuresConnecteesSortante() == c);
+        REQUIRE(bat->getSortie() == bat2);
     }
 
-    SECTION("Test ajout batiment : bat2 connecté  verif")
+    SECTION("Test ajout batiment 2 fois la même connexion en sortie")
     {
-        connexion_t *cInverse = new connexion_t{bat, directionOpposee(c->direction), !c->sortie};
+        REQUIRE(bat->connecterStructure(bat2, true));
+        REQUIRE_FALSE(bat->connecterStructure(bat2, true));
 
-        REQUIRE(bat->ajouterConnexion(c));
-
-        REQUIRE(bat2->getNbConnexions() == 1);
-        REQUIRE(bat2->getNbEntrees() == 0);
-        REQUIRE(bat2->getASortie() == true);
-
-        REQUIRE(bat2->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->structure == cInverse->structure);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->direction == cInverse->direction);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->sortie == cInverse->sortie);
-
-        REQUIRE(bat2->getStructuresConnecteesSortante()->structure == cInverse->structure);
-        REQUIRE(bat2->getStructuresConnecteesSortante()->direction == cInverse->direction);
-        REQUIRE(bat2->getStructuresConnecteesSortante()->sortie == cInverse->sortie);
-
-        delete cInverse;
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 0);
+        REQUIRE(bat->getASortie() == true);
+        REQUIRE(bat->getSortie() == bat2);
     }
 
-    SECTION("Test ajout batiment : bat2 connecté sortie verif")
+    SECTION("Test ajout batiment  en entrée")
     {
-        c->sortie = true;
-        connexion_t *cInverse = new connexion_t{bat, directionOpposee(c->direction), !c->sortie};
+        REQUIRE(bat->connecterStructure(bat2, false));
 
-        REQUIRE(bat->ajouterConnexion(c));
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 1);
+        REQUIRE(bat->getASortie() == false);
+        REQUIRE(bat->getSortie() == nullptr);
+    }
 
-        REQUIRE(bat2->getNbConnexions() == 1);
-        REQUIRE(bat2->getNbEntrees() == 1);
-        REQUIRE(bat2->getASortie() == false);
+    SECTION("Test ajout batiment 2 fois la même connexion en entrée")
+    {
+        REQUIRE(bat->connecterStructure(bat2, false));
+        REQUIRE_FALSE(bat->connecterStructure(bat2, false));
 
-        REQUIRE(bat2->getConnexionDirection(Nord) == nullptr);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->structure == cInverse->structure);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->direction == cInverse->direction);
-        REQUIRE(bat2->getConnexionDirection(NordOuest)->sortie == cInverse->sortie);
-        REQUIRE(bat2->getStructuresConnecteesSortante() == nullptr);
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 1);
+        REQUIRE(bat->getASortie() == false);
+        REQUIRE(bat->getSortie() == nullptr);
+    }
 
-        delete cInverse;
+    SECTION("Test ajout batiment 2 fois la même connexion en entrée puis en entrée")
+    {
+        REQUIRE(bat->connecterStructure(bat2, false));
+        REQUIRE_FALSE(bat->connecterStructure(bat2, true));
+
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 1);
+        REQUIRE(bat->getASortie() == false);
+        REQUIRE(bat->getSortie() == nullptr);
+    }
+
+    SECTION("Test ajout batiment 2 fois la même connexion en entrée puis en sortie puis en entrée")
+    {
+        REQUIRE(bat->connecterStructure(bat2, true));
+        REQUIRE_FALSE(bat->connecterStructure(bat2, false));
+
+        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbEntrees() == 0);
+        REQUIRE(bat->getASortie() == true);
+        REQUIRE(bat->getSortie() == bat2);
     }
 
     delete bat;

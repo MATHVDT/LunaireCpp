@@ -155,7 +155,7 @@ void Structure::remplirStock()
 
 /**
  * @brief Check si la connexion entre les 2 Structures est possible
- * @todo Verifier l'unicité de la sortie (un peu pret fait, verif si sur les 2 structs yen a un qui peu etre la sortie)
+ * @todo Verifier l'unicité de la sortie (un peu près fait, vérif si sur les 2 structs yen a un qui peu être la sortie)
  *
  * @param Structure * - *s*
  * @return true - *Connexion possible*
@@ -187,14 +187,22 @@ bool Structure::checkConnexionPossible(Structure *s)
  * @param Structure * - *s*
  * @param bool - *commeSortie = true*
  *
- * @return true - *Si la Structure a pu être connectée*
- * @return false - *Si la Structure n'a pas pu être connectée*
+ * @return true - *Si la Structure a été connectée en tant que sortie ou entrée*
+ * @return false - *Pas de possible de connecter*
  */
 bool Structure::connecterStructure(Structure *s, bool commeSortie)
 {
     // Structure adjacente
     if (!checkConnexionPossible(s))
         return false;
+
+    // Test si la structure est pas déjà connectée
+    if (find(_listStructuresConnectees.begin(),
+             _listStructuresConnectees.end(),
+             s) != _listStructuresConnectees.end())
+    {
+        return false;
+    }
 
     // Ajoute a la liste des structures connectées
     this->_listStructuresConnectees.push_back(s);
@@ -203,13 +211,13 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie)
     if (commeSortie && this->setSortie(s))
     { // Ajoute la connexion comme une entrée dans l'autre sens
         s->connecterStructure(this, false);
-        return true;
     }
     else
     { // La connexion sera une entrée
       // Ajoute la connexion comme une sortie dans l'autre sens
         s->connecterStructure(this, true);
     }
+    return true;
 }
 
 /**
@@ -358,7 +366,7 @@ list<Structure *> Structure::getStructuresConnectees() const
  *
  * @return Structure * - *(nullptr s'il n'y a pas de sortie)*
  */
-Structure *Structure::getStructuresConnecteesSortante() const
+Structure *Structure::getSortie() const
 {
 
     return _sortie;
