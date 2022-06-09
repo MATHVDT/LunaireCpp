@@ -3,6 +3,8 @@
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des fonctions sur les directions
  * @details Le terme *direction* est utilisée, mais il s'agit en faite du terme sens, ici direction est à interpreter comme *direction géographique* (suivant les points cardinaux)
+ * @warning Gestion des directions changées, certaines fonctions sont deprecated
+ * 
  * @version 0.1
  * @date 2022-03-30
  *

@@ -1,3 +1,15 @@
+/**
+ * @file connexion_t.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief 
+ * @deprecated Changement de la gestion des connexions, liste des structures connectées
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __CONNEXION_T_HPP__
 #define __CONNEXION_T_HPP__
 

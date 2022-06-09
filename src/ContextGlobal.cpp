@@ -1,3 +1,14 @@
+/**
+ * @file ContextGlobal.cpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Implémentation des méthodes de la classe ContextGlobal
+ *  
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "ContextGlobal.hpp"
 
 ContextGlobal ContextGlobal::_singleton{};
@@ -60,6 +71,7 @@ void ContextGlobal::update()
     // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
     // Vector2i mousePos = Mouse::getPosition();
     // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
+
     // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
 }
 

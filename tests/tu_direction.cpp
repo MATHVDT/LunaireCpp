@@ -1,13 +1,12 @@
 /**
  * @file tu_direction.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
- * @brief Fichier tests unitaires pour les vecteurs des directions principales
- * @details Voir image *carte_hexagonale_direction.png* pour plus d'information sur la gestion de la carte
+ * @brief Tests Unitaires des fonctions direction
+ * @details Direction calculée par rapport à une origine
  * @version 0.1
  * @date 2022-03-31
  *
  * @copyright Copyright (c) 2022
- *
  */
 #include <iostream>
 

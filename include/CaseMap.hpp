@@ -1,4 +1,13 @@
-#ifndef __CASEMAP_HPP__
+/**
+ * @file CaseMap.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Prototype des méthodes de la classe CaseMap
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 #define __CASEMAP_HPP__
 
 #include <iostream>

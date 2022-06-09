@@ -1,12 +1,12 @@
 /**
  * @file Carte.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
- * @brief Implémentation de la classe Carte
+ * @brief Implémentation des méthodes de la classe Carte
+ * 
  * @version 0.1
  * @date 2022-03-30
  *
  * @copyright Copyright (c) 2022
- *
  */
 #include "Carte.hpp"
 

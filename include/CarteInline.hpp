@@ -1,3 +1,12 @@
+/**
+ * @file CarteInline.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Méthode inline de la classe Carte
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 
 // Methode inline
 inline Vector2u Carte::getDimensionGrille() const { return Vector2u{_nbColonnesGrille, _nbLignesGrille}; }

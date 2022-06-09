@@ -1,3 +1,13 @@
+/**
+ * @file Carte.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Prototype des méthodes de la classe Carte
+ *
+ * @version 0.1
+ * @date 2022-06-09
+ *
+ * @copyright Copyright (c) 2022
+ */
 #ifndef __CARTE_HPP__
 #define __CARTE_HPP__
 
@@ -51,7 +61,7 @@ public:
 
     Vector2u getCoordCase(uint i, uint j) const;
 
-    CaseMap ** getCasesVoisines(const Vector2u& posCase, bool posCarte = true) const;
+    CaseMap **getCasesVoisines(const Vector2u &posCase, bool posCarte = true) const;
 
     // Setter
     void ajouterConstructionCaseCarte(Structure *s,

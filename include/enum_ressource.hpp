@@ -1,3 +1,13 @@
+/**
+ * @file enum_ressource.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Enum class pour les différents types de ressources
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 #ifndef __ENUM_RESSOURCE_HPP__
 #define __ENUM_RESSOURCE_HPP__
 

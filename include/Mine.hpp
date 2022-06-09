@@ -1,3 +1,13 @@
+/**
+ * @file Mine.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Prototype des méthodes de la classe Mine
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 #ifndef __MINE_HPP__
 #define __MINE_HPP__
 

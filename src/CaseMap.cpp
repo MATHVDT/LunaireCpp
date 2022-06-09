@@ -1,3 +1,13 @@
+/**
+ * @file CaseMap.cpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Implémentation des méthodes de la classe Carte
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 #include "CaseMap.hpp"
 
 float CaseMap::_coteHexagoneRayon = 10.f;

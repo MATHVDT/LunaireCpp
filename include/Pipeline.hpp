@@ -1,3 +1,13 @@
+/**
+ * @file Pipeline.hpp
+ * @author Mathieu VDT (mathieu.detorcy@gmail.com)
+ * @brief Prototype des méthodes de la classe Pipeline
+ * 
+ * @version 0.1
+ * @date 2022-06-09
+ * 
+ * @copyright Copyright (c) 2022
+ */
 #ifndef __PIPELINE_HPP__
 #define __PIPELINE_HPP__
 
