@@ -56,6 +56,11 @@ void ContextGlobal::update()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             setIsRun(false);
     }
+
+    // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
+    // Vector2i mousePos = Mouse::getPosition();
+    // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
+    // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
 }
 
 /**
@@ -74,4 +79,3 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
  * @param const Drawable * - *obj*
  */
 void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj); }
-
