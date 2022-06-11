@@ -63,6 +63,8 @@ public:
 
     CaseMap **getCasesVoisines(const Vector2u &posCase, bool posCarte = true) const;
 
+    CaseMap *getCaseToCoord(const Vector2f &point) const;
+
     // Setter
     void ajouterConstructionCaseCarte(Structure *s,
                                       const Vector2u &pos);

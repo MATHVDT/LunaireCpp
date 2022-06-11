@@ -2,10 +2,10 @@
  * @file Structure.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des méthodes de la classe Structure
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #ifndef __STRUCTURE_HPP__
@@ -23,6 +23,8 @@
 #include "connexion_t.hpp"
 
 #include "Carte.hpp"
+
+class ContextGlobal;
 
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;

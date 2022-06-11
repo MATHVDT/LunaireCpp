@@ -2,7 +2,7 @@
  * @file Carte.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe Carte
- * 
+ *
  * @version 0.1
  * @date 2022-03-30
  *
@@ -29,7 +29,10 @@ Carte *Carte::getInstance()
  * @brief Constructeur d'une carte, ne crée pas de grille
  *
  */
-Carte::Carte() : _nbColonnesGrille(0), _nbLignesGrille(0), _grille(nullptr) {}
+Carte::Carte() : _nbColonnesGrille(0), _nbLignesGrille(0), _grille(nullptr)
+{
+    contextGlobal.setCarte(this);
+}
 
 /**
  * @brief Destructeur de la carte *(Libère la mémoire associée à la grille)*
@@ -342,4 +345,39 @@ CaseMap **Carte::getCasesVoisines(const Vector2u &posCase, bool posCarte) const
     //         cerr << " nullptr" << endl;
     // }
     return voisinage;
+}
+
+float distanceEuclidienne(const Vector2f &p1, const Vector2f &p2)
+{
+    return sqrt((p1.x - p2.x) * (p1.x - p2.x) +
+                (p1.y - p2.y) * (p1.y - p2.y));
+}
+
+CaseMap *Carte::getCaseToCoord(const Vector2f &point) const
+{
+    float tailleCase = contextGlobal.getTailleReference();
+    float distance;
+    float distanceMin;
+
+    Vector2f posCaseCentre{0., 0.};
+
+    Vector2u posCaseCarteSave{0, 0};
+
+    for (uint y = 0; y < _nbLignesGrille; ++y)
+    {
+        for (uint x = 0; x < _nbColonnesGrille; ++x)
+        {
+            posCaseCentre.x = x * (1.5) * tailleCase;
+            distance = distanceEuclidienne(posCaseCentre, point);
+            if (distance < distanceMin)
+            {
+                posCaseCarteSave.x = x;
+                posCaseCarteSave.y = y;
+            }
+        }
+        posCaseCentre.y = y * (1.5) * tailleCase;
+    }
+    cout << posCaseCarteSave.x << ", " << posCaseCarteSave.y << endl;
+
+    return &_grille[posCaseCarteSave.y][posCaseCarteSave.x];
 }

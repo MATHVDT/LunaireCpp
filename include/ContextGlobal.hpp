@@ -7,14 +7,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
-
+#include "Carte.hpp"
 
 using namespace std;
 using namespace sf;
 
-
+class Carte;
 class CaseMap;
-
 
 class ContextGlobal
 {
@@ -29,11 +28,14 @@ private:
     Event _event;
     bool _isRun;
 
-    // Static
-private:
+    Carte *_carte;
+    CaseMap *_caseOver;
+    CaseMap *_caseSelectionnee;
+
+private: // Static
     static ContextGlobal _singleton;
 
-public:
+public: // Static
     static ContextGlobal &getInstance();
 
 public:
@@ -56,11 +58,13 @@ public:
     Event::EventType getEventType() const;
     const float getTailleReference() const;
     const float getScaleReference() const;
+    CaseMap *getCaseOver() const;
 
     // Setter
     void setIsRun(bool run);
     void setTailleReference(float tailleCaseMap);
     void setScaleReference(float scaleCaseMap);
+    void setCarte(Carte* carte);
 
 private:
     ContextGlobal();

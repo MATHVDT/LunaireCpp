@@ -8,6 +8,7 @@
  * 
  * @copyright Copyright (c) 2022
  */
+#ifndef __CASEMAP_HPP__
 #define __CASEMAP_HPP__
 
 #include <iostream>
@@ -24,6 +25,9 @@
 
 using namespace std;
 using namespace sf;
+
+class ContextGlobal;
+class Structure;
 
 // Initialisation dans main.cpp
 extern ContextGlobal &contextGlobal;

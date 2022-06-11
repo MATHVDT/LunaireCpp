@@ -2,12 +2,12 @@
  * @file ContextGlobal.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe ContextGlobal
- *  
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 #include "ContextGlobal.hpp"
 
@@ -43,6 +43,10 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setPosition(Vector2i(50, 50));
     _window.setTitle("Fenetre de objet ContextGlobal");
     _window.setActive();
+
+    _carte = nullptr;
+    _caseOver = nullptr;
+    _caseSelectionnee = nullptr;
 }
 
 /**
@@ -91,3 +95,16 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
  * @param const Drawable * - *obj*
  */
 void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj); }
+
+/**
+ * @brief
+ *
+ * @return CaseMap*
+ */
+CaseMap *ContextGlobal::getCaseOver() const
+{
+    Vector2i mousePos = Mouse::getPosition(_window);
+    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
+
+    _caseOver = _carte->getCaseToCoord(mousePosFloat);
+}
