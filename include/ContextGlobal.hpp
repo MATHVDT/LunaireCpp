@@ -112,15 +112,5 @@ inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
 inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleReference = tailleCaseMap; }
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
 inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
-inline void ContextGlobal::setCaseSelectionnee(bool reset)
-{
-    if (reset)
-        _caseSelectionnee = nullptr;
-    else
-    {
-        _caseSelectionnee = _caseOver;
-        cerr << "Case selectionee"<<endl;
-    }
-}
 
 #endif

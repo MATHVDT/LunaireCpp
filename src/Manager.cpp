@@ -122,7 +122,6 @@ void Manager::dessinerOverlayMap()
         contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
 }
 
-
 void Manager::update()
 {
 }
@@ -151,7 +150,6 @@ void Manager::run()
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
-      
         }
         update();
         dessiner();

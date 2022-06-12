@@ -147,23 +147,41 @@ void ContextGlobal::calculCaseOver()
         _caseOver = _carte->getCaseToCoord(mousePosFloat);
         // Set le sprite dans le manager
         _manager->setSpriteCaseOver(_caseOver->getPosition());
-        _manager->setSpriteCaseSelectionnee(_caseOver->getPosition());
+    }
+}
+
+/**
+ * @brief Set la case selectionnee en fct de la caseOverF
+ *
+ * @param bool - *reset = false* 
+ */
+void ContextGlobal::setCaseSelectionnee(bool reset)
+{
+    if (reset)
+        _caseSelectionnee = nullptr;
+    else
+    {
+        _caseSelectionnee = _caseOver;
+        _manager->setSpriteCaseSelectionnee(_caseSelectionnee->getPosition());
     }
 }
 
 /**
  * @brief Actualise le context en fonction de l'event souris
- *
+ * @details Bouton gauche -> selection case; Bouton droit sur une case déjà selectionnée -> deselection case
  */
 void ContextGlobal::clickSouris()
 {
-
-    if (Mouse::isButtonPressed(Mouse::Left))
-    {
+    // Selection case
+    if (Mouse::isButtonPressed(Mouse::Left) &&
+        _caseOver != _caseSelectionnee)
+    { //  bouton gauche souris et changement de case selectionnee
         setCaseSelectionnee();
-    }
-    else if (Mouse::isButtonPressed(Mouse::Right))
-    {
+        cerr << "case select" << endl;
+    } // Deselection case
+    else if (Mouse::isButtonPressed(Mouse::Right) &&
+             _caseOver == _caseSelectionnee)
+    { // Test bouton droit souris et caseOver est bien celle selectionnee
         setCaseSelectionnee(true);
     }
 }
