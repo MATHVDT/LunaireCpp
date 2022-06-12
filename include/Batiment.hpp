@@ -12,8 +12,10 @@
 #ifndef __BATIMENT_HPP__
 #define __BATIMENT_HPP__
 
+#include <list>
+#include <queue>
+
 #include "Structure.hpp"
-#include "enum_ressource.hpp"
 
 class Batiment : public Structure
 {

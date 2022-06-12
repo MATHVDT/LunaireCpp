@@ -100,7 +100,7 @@ void Structure::dechargerMemoireStructures()
 void Structure::dessiner(float scaleSprite)
 {
     _sprite->setScale(scaleSprite, scaleSprite);
-    contextGlobal.dessinerFenetre(_sprite);
+    contextGlobal->dessinerFenetre(_sprite);
 }
 
 void Structure::update()

@@ -57,7 +57,7 @@ void CaseMap::dessiner()
     // cout << " scaleCaseMap : " << _scaleCaseMape << endl;
 
     _sprite->setScale(_scaleCaseMap, _scaleCaseMap);
-    contextGlobal.dessinerFenetre(_sprite);
+    contextGlobal->dessinerFenetre(_sprite);
 
     if (_construction != nullptr)
         _construction->dessiner(_scaleCaseMap);
@@ -107,7 +107,7 @@ void CaseMap::setCase(Vector2f position,
 void CaseMap::setScaleCaseMap(uint nbLignesCarte,
                               uint nbCcolonnesCarte)
 {
-    const Vector2u dimFenetre = contextGlobal.getDimensionFenetre();
+    const Vector2u dimFenetre = contextGlobal->getDimensionFenetre();
     // uint minEcran = min(dimFenetre.x, dimFenetre.y);
     // uint maxCases = max(nbLignesCarte, nbCcolonnesCarte);
 
@@ -118,8 +118,8 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
 
     _scaleCaseMap = min(scaleX, scaleY);
     _tailleCaseMap = (float)_tailleTexture * _scaleCaseMap;
-    contextGlobal.setTailleReference(_tailleCaseMap);
-    contextGlobal.setScaleReference(_scaleCaseMap);
+    contextGlobal->setTailleReference(_tailleCaseMap);
+    contextGlobal->setScaleReference(_scaleCaseMap);
 }
 
 /*******************************************************/

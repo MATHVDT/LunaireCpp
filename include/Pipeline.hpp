@@ -16,18 +16,21 @@
 #include <queue>
 #include <sys/types.h>
 
-#include "ContextGlobal.hpp"
+// #include "ContextGlobal.hpp"
 #include "enum_ressource.hpp"
-#include "connexion_t.hpp"
 #include "direction.hpp"
-#include "connexion_t.hpp"
 
 #include "Structure.hpp"
 
+class ContextGlobal;
 // Initialisation dans main.cpp
-extern ContextGlobal &contextGlobal;
+extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesPipelines;
+
+using namespace std;
+using namespace sf;
+
 
 class Pipeline : public Structure
 {

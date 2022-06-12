@@ -19,9 +19,18 @@
 #include <exception>
 #include <math.h>
 
+#include <SFML/System/Vector2.hpp>
+
+#include "ContextGlobal.hpp"
 #include "CaseMap.hpp"
 
+class CaseMap;
+class Structure;
+class ContextGlobal;
+
 using namespace std;
+
+extern ContextGlobal * contextGlobal;
 
 class Carte
 {

@@ -9,7 +9,7 @@
 
 #include "ContextGlobal.hpp"
 
-ContextGlobal &contextGlobal = ContextGlobal::getInstance();
+ContextGlobal *contextGlobal = ContextGlobal::getInstance();
 
 TEST_CASE("Test random")
 {

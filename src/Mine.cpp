@@ -77,11 +77,11 @@ void Mine::dessiner(float scaleSprite)
     setSpriteTexture(0);
     _sprite->setTextureRect(_zoomTexture);
 
-    // float scaleMine = contextGlobal.getScaleReference();
+    // float scaleMine = contextGlobal->getScaleReference();
 
     Batiment::dessiner(scaleSprite);
     // _sprite->setScale(scaleSprite,scaleSprite);
-    // contextGlobal.dessinerFenetre(_sprite);
+    // contextGlobal->dessinerFenetre(_sprite);
 }
 
 /*******************************************************/

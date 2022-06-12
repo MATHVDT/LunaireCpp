@@ -15,6 +15,8 @@
 #include <fstream>
 #include <exception>
 #include <math.h>
+#include <list>
+#include <queue>
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
@@ -29,7 +31,7 @@
 using namespace std;
 using namespace sf;
 
-extern ContextGlobal &contextGlobal;
+extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesMines;
 

@@ -20,7 +20,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "enum_sol.hpp"
-#include "ContextGlobal.hpp"
+// #include "ContextGlobal.hpp"
 #include "Structure.hpp"
 
 using namespace std;
@@ -30,7 +30,7 @@ class ContextGlobal;
 class Structure;
 
 // Initialisation dans main.cpp
-extern ContextGlobal &contextGlobal;
+extern ContextGlobal *contextGlobal;
 
 class CaseMap
 {

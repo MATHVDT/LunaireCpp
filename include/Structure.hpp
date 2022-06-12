@@ -16,18 +16,21 @@
 #include <queue>
 #include <sys/types.h>
 
-#include "ContextGlobal.hpp"
 #include "enum_ressource.hpp"
-#include "connexion_t.hpp"
 #include "direction.hpp"
-#include "connexion_t.hpp"
 
-#include "Carte.hpp"
+#include "ContextGlobal.hpp"
+// #include "connexion_t.hpp"
+// #include "Carte.hpp"
 
 class ContextGlobal;
 
 // Initialisation dans main.cpp
-extern ContextGlobal &contextGlobal;
+extern ContextGlobal *contextGlobal;
+
+using namespace std;
+using namespace sf;
+
 
 class Structure
 {

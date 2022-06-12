@@ -33,10 +33,10 @@ private:
     CaseMap *_caseSelectionnee;
 
 private: // Static
-    static ContextGlobal _singleton;
+    static ContextGlobal *_singleton;
 
 public: // Static
-    static ContextGlobal &getInstance();
+    static ContextGlobal *getInstance();
 
 public:
     ~ContextGlobal();
@@ -46,6 +46,7 @@ public:
     void dessinerFenetre(const Drawable *obj);
     void afficherFenetre();
     void update();
+    void calculCaseOver();
 
     // Getter
     const RenderWindow &getWindow() const;
@@ -59,12 +60,13 @@ public:
     const float getTailleReference() const;
     const float getScaleReference() const;
     CaseMap *getCaseOver() const;
+    CaseMap *getCaseSelectionne() const;
 
     // Setter
     void setIsRun(bool run);
     void setTailleReference(float tailleCaseMap);
     void setScaleReference(float scaleCaseMap);
-    void setCarte(Carte* carte);
+    void setCarte(Carte *carte);
 
 private:
     ContextGlobal();
@@ -73,6 +75,8 @@ private:
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
+
+// Getter
 inline const RenderWindow &ContextGlobal::getWindow() const { return _window; }
 
 inline const Vector2u &ContextGlobal::getDimensionFenetre() const { return _dimensionFenetre; }
@@ -93,6 +97,9 @@ inline Event::EventType ContextGlobal::getEventType() const { return _event.type
 
 inline const float ContextGlobal::getTailleReference() const { return _tailleReference; }
 inline const float ContextGlobal::getScaleReference() const { return _scaleReference; }
+
+inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
+inline CaseMap *ContextGlobal::getCaseSelectionne() const { return _caseSelectionnee; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }

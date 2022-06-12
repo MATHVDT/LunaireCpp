@@ -29,10 +29,7 @@ Carte *Carte::getInstance()
  * @brief Constructeur d'une carte, ne crée pas de grille
  *
  */
-Carte::Carte() : _nbColonnesGrille(0), _nbLignesGrille(0), _grille(nullptr)
-{
-    contextGlobal.setCarte(this);
-}
+Carte::Carte() : _nbColonnesGrille(0), _nbLignesGrille(0), _grille(nullptr) {}
 
 /**
  * @brief Destructeur de la carte *(Libère la mémoire associée à la grille)*
@@ -349,35 +346,50 @@ CaseMap **Carte::getCasesVoisines(const Vector2u &posCase, bool posCarte) const
 
 float distanceEuclidienne(const Vector2f &p1, const Vector2f &p2)
 {
+    // cout << "srt : " << sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) << endl;
+
     return sqrt((p1.x - p2.x) * (p1.x - p2.x) +
                 (p1.y - p2.y) * (p1.y - p2.y));
 }
 
 CaseMap *Carte::getCaseToCoord(const Vector2f &point) const
 {
-    float tailleCase = contextGlobal.getTailleReference();
-    float distance;
-    float distanceMin;
-
-    Vector2f posCaseCentre{0., 0.};
-
-    Vector2u posCaseCarteSave{0, 0};
-
-    for (uint y = 0; y < _nbLignesGrille; ++y)
+    if (_grille != nullptr)
     {
-        for (uint x = 0; x < _nbColonnesGrille; ++x)
+        float tailleCase = contextGlobal->getTailleReference();
+        float distance;
+        float distanceMin = 9999.f;
+
+        Vector2f posCaseCentre{0.f, 0.f};
+
+        Vector2u posCaseMatriceSave{0, 0};
+
+        for (uint y = 0; y < _nbLignesGrille; ++y)
         {
-            posCaseCentre.x = x * (1.5) * tailleCase;
-            distance = distanceEuclidienne(posCaseCentre, point);
-            if (distance < distanceMin)
+            for (uint x = 0; x < _nbColonnesGrille; ++x)
             {
-                posCaseCarteSave.x = x;
-                posCaseCarteSave.y = y;
+                posCaseCentre = _grille[y][x].getPosition();
+                posCaseCentre.x += 0.5 * tailleCase;
+                posCaseCentre.y += 0.5 * tailleCase;
+
+                distance = distanceEuclidienne(posCaseCentre, point);
+                if (distance < distanceMin)
+                {
+                    distanceMin = distance;
+                    posCaseMatriceSave.x = x;
+                    posCaseMatriceSave.y = y;
+                }
             }
         }
-        posCaseCentre.y = y * (1.5) * tailleCase;
-    }
-    cout << posCaseCarteSave.x << ", " << posCaseCarteSave.y << endl;
 
-    return &_grille[posCaseCarteSave.y][posCaseCarteSave.x];
+        // Print coordCarte case
+        // Vector2u posCaseCarteSave = matriceToCarte(posCaseMatriceSave);
+        // cout << "case select : " << posCaseCarteSave.x << ", " << posCaseCarteSave.y << endl;
+
+        return &_grille[posCaseMatriceSave.y][posCaseMatriceSave.x];
+    }
+    else
+    {
+        return nullptr;
+    }
 }

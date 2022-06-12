@@ -1,5 +1,5 @@
 /**
- * @file ContextGlobal.cpp
+ * @file contextGlobal->cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe ContextGlobal
  *
@@ -11,9 +11,15 @@
  */
 #include "ContextGlobal.hpp"
 
-ContextGlobal ContextGlobal::_singleton{};
+ContextGlobal *ContextGlobal::_singleton = new ContextGlobal{};
 
-ContextGlobal::ContextGlobal() { std::cout << "Création contextGlobal" << std::endl; }
+ContextGlobal::ContextGlobal()
+{
+    std::cout << std::endl
+              << "Création contextGlobal" << std::endl
+              << std::endl
+              << std::endl;
+}
 
 ContextGlobal::~ContextGlobal()
 {
@@ -21,7 +27,7 @@ ContextGlobal::~ContextGlobal()
     std::cout << "Destruction contextGlobal" << std::endl;
 }
 
-ContextGlobal &ContextGlobal::getInstance() { return _singleton; }
+ContextGlobal *ContextGlobal::getInstance() { return _singleton; }
 
 /**
  * @brief Initialise le contextGlobal, en créant la fenêtre et les autres paramètres
@@ -44,7 +50,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setTitle("Fenetre de objet ContextGlobal");
     _window.setActive();
 
-    _carte = nullptr;
+    _carte = Carte::getInstance();
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 }
@@ -63,6 +69,9 @@ void ContextGlobal::afficherFenetre()
  */
 void ContextGlobal::update()
 {
+
+    calculCaseOver();
+
     // Vérification des l'events "system" => fermer fenetre
     if (_event.type == sf::Event::Closed)
         setIsRun(false);
@@ -101,10 +110,19 @@ void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj)
  *
  * @return CaseMap*
  */
-CaseMap *ContextGlobal::getCaseOver() const
+void ContextGlobal::calculCaseOver()
 {
     Vector2i mousePos = Mouse::getPosition(_window);
     Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
-
-    _caseOver = _carte->getCaseToCoord(mousePosFloat);
+    if (mousePos.x > 0 &&
+        mousePos.x < _window.getSize().x &&
+        mousePos.y > 0 &&
+        mousePos.y < _window.getSize().y )
+    {
+        _caseOver = _carte->getCaseToCoord(mousePosFloat);
+    }
+    else
+    {
+        _caseOver = nullptr;
+    }
 }

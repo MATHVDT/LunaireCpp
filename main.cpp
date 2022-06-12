@@ -4,7 +4,7 @@
 // 705 blocs pas libérés dans la mémoire -> surement SFML
 // 316 blocs pas libérés dans la mémoire dans TU
 
-ContextGlobal &contextGlobal = ContextGlobal::getInstance();
+ContextGlobal *contextGlobal = ContextGlobal::getInstance();
 
 void testCarte();
 
@@ -21,7 +21,7 @@ int main()
     // Vector2u vt = Carte::carteToMatrice(v);
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
-    contextGlobal.init(Vector2u(1500, 800));
+    contextGlobal->init(Vector2u(1500, 800));
 
     CaseMap::chargerMemoireCaseMap();
     Mine::chargerMemoireMines();
@@ -33,6 +33,8 @@ int main()
     Mine::dechargerMemoireMines();
     Pipeline::dechargerMemoirePipelines();
 
+    delete contextGlobal;
+
     return 0;
 }
 
@@ -41,6 +43,7 @@ void testCarte()
 
     Carte *carte = Carte::getInstance();
     carte->initCarte("./ressource/map.txt");
+    std::cout << "carte : " << carte << std::endl;
 
     Mine *s = new Mine{Vector2u(0, 0)};
     s->init();
@@ -55,14 +58,14 @@ void testCarte()
     carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
     carte->ajouterConstructionCaseCarte(p2, p2->getPosition());
 
-    while (contextGlobal.getIsRun())
+    while (contextGlobal->getIsRun())
     {
-        while (contextGlobal.getPollEvent())
+        while (contextGlobal->getPollEvent())
         {
         }
-        contextGlobal.update();
+        contextGlobal->update();
         carte->dessiner();
-        contextGlobal.afficherFenetre();
+        contextGlobal->afficherFenetre();
     }
 
     delete s;

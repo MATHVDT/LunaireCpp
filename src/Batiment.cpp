@@ -15,7 +15,6 @@ uint Batiment::_idMaxBatiments = 0;
 const uint Batiment::_tailleStockEntree = 6;
 const uint Batiment::_tailleStockSortie = 1;
 
-connexion_t ConnexionNull{}; // Inutile je crois
 
 Batiment::Batiment()
     : _idBatiment(++_idMaxBatiments)
