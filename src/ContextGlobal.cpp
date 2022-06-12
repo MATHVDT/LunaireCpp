@@ -148,12 +148,16 @@ void ContextGlobal::calculCaseOver()
         // Set le sprite dans le manager
         _manager->setSpriteCaseOver(_caseOver->getPosition());
     }
+    else
+    {
+        _caseOver = nullptr;
+    }
 }
 
 /**
  * @brief Set la case selectionnee en fct de la caseOverF
  *
- * @param bool - *reset = false* 
+ * @param bool - *reset = false*
  */
 void ContextGlobal::setCaseSelectionnee(bool reset)
 {
@@ -161,8 +165,11 @@ void ContextGlobal::setCaseSelectionnee(bool reset)
         _caseSelectionnee = nullptr;
     else
     {
-        _caseSelectionnee = _caseOver;
-        _manager->setSpriteCaseSelectionnee(_caseSelectionnee->getPosition());
+        if (_caseOver != nullptr)
+        {
+            _caseSelectionnee = _caseOver;
+            _manager->setSpriteCaseSelectionnee(_caseSelectionnee->getPosition());
+        }
     }
 }
 
@@ -177,7 +184,7 @@ void ContextGlobal::clickSouris()
         _caseOver != _caseSelectionnee)
     { //  bouton gauche souris et changement de case selectionnee
         setCaseSelectionnee();
-        cerr << "case select" << endl;
+        // cerr << "case select" << endl;
     } // Deselection case
     else if (Mouse::isButtonPressed(Mouse::Right) &&
              _caseOver == _caseSelectionnee)
