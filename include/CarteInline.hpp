@@ -17,7 +17,7 @@ inline uint Carte::getDimensionGrilleColonne() const { return _nbColonnesGrille;
 
 inline Vector2u Carte::getDimensionCarte() const { return Vector2u(_nbColonnesCarte, _nbLignesCarte); }
 inline uint Carte::getNbLignes() const { return _nbLignesCarte; }
-inline uint Carte::getNbColonnes() const { return _nbLignesCarte; }
+inline uint Carte::getNbColonnes() const { return _nbColonnesCarte; }
 
 inline Vector2u Carte::getCoordCase(uint i, uint j) const
 {

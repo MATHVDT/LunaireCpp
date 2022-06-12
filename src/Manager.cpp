@@ -133,10 +133,13 @@ void Manager::calculCaseOver()
     CaseMap *caseMapOver = nullptr;
     const RenderWindow &win = contextGlobal->getWindow();
 
+    uint largeurMap = contextGlobal->getTailleReference() / 4 * (3 * _carte->getNbColonnes() + 1);
+
     Vector2i mousePos = Mouse::getPosition(win);
     Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
 
     if (mousePos.x > 0 &&
+        mousePos.x < largeurMap &&
         mousePos.x < win.getSize().x &&
         mousePos.y > 0 &&
         mousePos.y < win.getSize().y)
