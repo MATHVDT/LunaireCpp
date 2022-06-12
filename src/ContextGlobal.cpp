@@ -62,7 +62,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setActive();
 
     _carte = Carte::getInstance();
-    // _manager = Manager::getInstance();
+    _manager = Manager::getInstance();
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 }
@@ -81,8 +81,6 @@ void ContextGlobal::afficherFenetre()
  */
 void ContextGlobal::update()
 {
-
-    calculCaseOver();
 
     // Vérification des l'events "system" => fermer fenetre
     if (_event.type == sf::Event::Closed)
@@ -117,24 +115,4 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
  */
 void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj); }
 
-/**
- * @brief
- *
- * @return CaseMap*
- */
-void ContextGlobal::calculCaseOver()
-{
-    Vector2i mousePos = Mouse::getPosition(_window);
-    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
-    if (mousePos.x > 0 &&
-        mousePos.x < _window.getSize().x &&
-        mousePos.y > 0 &&
-        mousePos.y < _window.getSize().y)
-    {
-        _caseOver = _carte->getCaseToCoord(mousePosFloat);
-    }
-    else
-    {
-        _caseOver = nullptr;
-    }
-}
+

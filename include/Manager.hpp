@@ -16,6 +16,9 @@ class Carte;
 
 extern ContextGlobal *contextGlobal;
 
+using namespace std;
+using namespace sf;
+
 enum OVERLAY
 {
     CASE_OVER = 0,
@@ -50,10 +53,11 @@ public:
     ~Manager();
     void init();
 
-    void dessinerOverlay();
+    void dessiner();
 
 private:
     Manager();
+    void dessinerOverlay();
     void dessinerOverlayMap();
 };
 

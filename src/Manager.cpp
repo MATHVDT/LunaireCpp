@@ -9,8 +9,8 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
  * @brief Constructeur du Manager *singleton*
  */
 Manager::Manager() : _carte(nullptr),
-                     _spriteCaseOver(new Sprite{}),
-                     _spriteCaseSelectionnee(new Sprite{}) {}
+                     _spriteCaseOver(new Sprite),
+                     _spriteCaseSelectionnee(new Sprite) {}
 /******************************************************/
 
 void Manager::init()
@@ -91,6 +91,12 @@ void Manager::chargerTextures(string fichierCheminsTexture)
 }
 
 /******************************************************/
+void Manager::dessiner()
+{
+    // _menu->dessiner();
+    _carte->dessiner();
+    dessinerOverlay();
+}
 
 void Manager::dessinerOverlay()
 {
@@ -106,4 +112,30 @@ void Manager::dessinerOverlayMap()
     // Overlay de la carte
     contextGlobal->dessinerFenetre(_spriteCaseOver);
     contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
+}
+
+/******************************************************/
+
+/**
+ * @brief Calcule la case sourvolée par la souris
+ *
+ */
+void ContextGlobal::calculCaseOver()
+{
+    CaseMap *caseMapOver = nullptr;
+    const RenderWindow &win = contextGlobal->getWindow();
+
+    Vector2i mousePos = Mouse::getPosition();
+    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
+
+    if (mousePos.x > 0 &&
+        mousePos.x < win.getSize().x &&
+        mousePos.y > 0 &&
+        mousePos.y < win.getSize().y)
+    {
+        caseMapOver = _carte->getCaseToCoord(mousePosFloat);
+    }
+    // Enregistrement de la case dans le context
+    contextGlobal->setCaseOver(caseMapOver);
+    
 }

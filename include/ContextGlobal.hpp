@@ -7,8 +7,8 @@
 #include <SFML/Graphics.hpp>
 
 // #include "enum_sol.hpp"
+#include "Manager.hpp"
 #include "Carte.hpp"
-// #include "Manager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -31,7 +31,7 @@ private:
     bool _isRun;
 
     Carte *_carte;
-    // Manager * _manager;
+    Manager *_manager;
     CaseMap *_caseOver;
     CaseMap *_caseSelectionnee;
 
@@ -70,6 +70,7 @@ public:
     void setTailleReference(float tailleCaseMap);
     void setScaleReference(float scaleCaseMap);
     void setCarte(Carte *carte);
+    void setCaseOver(CaseMap *caseOver);
 
 private:
     ContextGlobal();
@@ -108,5 +109,6 @@ inline CaseMap *ContextGlobal::getCaseSelectionne() const { return _caseSelectio
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
 inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleReference = tailleCaseMap; }
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
+inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
 
 #endif
