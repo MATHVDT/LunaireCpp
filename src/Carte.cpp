@@ -13,7 +13,7 @@
 Carte *Carte::_singleton = nullptr;
 
 /**
- * @brief Récupère ou crée un instance de manager *(patron de singleton)*
+ * @brief Récupère ou crée un instance de la carte *(patron de singleton)*
  * @warning Penser à delete le singleton
  * @return Carte* - *_singleton*
  */

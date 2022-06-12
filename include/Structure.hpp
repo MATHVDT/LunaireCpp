@@ -20,8 +20,6 @@
 #include "direction.hpp"
 
 #include "ContextGlobal.hpp"
-// #include "connexion_t.hpp"
-// #include "Carte.hpp"
 
 class ContextGlobal;
 
@@ -30,7 +28,6 @@ extern ContextGlobal *contextGlobal;
 
 using namespace std;
 using namespace sf;
-
 
 class Structure
 {

@@ -1,0 +1,2 @@
+ressource/hexagone_regulier_contour_case_over.png
+ressource/hexagone_regulier_contour_case_selectionnee.png

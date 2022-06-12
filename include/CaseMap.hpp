@@ -2,10 +2,10 @@
  * @file CaseMap.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des méthodes de la classe CaseMap
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #ifndef __CASEMAP_HPP__
@@ -54,8 +54,8 @@ public: // Static
     static void chargerMemoireCaseMap();
     static void dechargerMemoireCaseMap();
 
-        private : // Static
-                  static void chargerSprites(string fichierCheminsTexture);
+private: // Static
+    static void chargerSprites(string fichierCheminsTexture);
     static void dechargerSprites();
 
 public:

@@ -9,6 +9,7 @@
 #include "Batiment.hpp"
 #include "Mine.hpp"
 #include "Pipeline.hpp"
+#include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
 

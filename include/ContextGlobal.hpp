@@ -6,12 +6,14 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "enum_sol.hpp"
+// #include "enum_sol.hpp"
 #include "Carte.hpp"
+// #include "Manager.hpp"
 
 using namespace std;
 using namespace sf;
 
+class Manager;
 class Carte;
 class CaseMap;
 
@@ -29,6 +31,7 @@ private:
     bool _isRun;
 
     Carte *_carte;
+    // Manager * _manager;
     CaseMap *_caseOver;
     CaseMap *_caseSelectionnee;
 

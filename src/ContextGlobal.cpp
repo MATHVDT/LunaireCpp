@@ -11,7 +11,7 @@
  */
 #include "ContextGlobal.hpp"
 
-ContextGlobal *ContextGlobal::_singleton = new ContextGlobal{};
+ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 
 ContextGlobal::ContextGlobal()
 {
@@ -27,7 +27,18 @@ ContextGlobal::~ContextGlobal()
     std::cout << "Destruction contextGlobal" << std::endl;
 }
 
-ContextGlobal *ContextGlobal::getInstance() { return _singleton; }
+/**
+ * @brief Récupère ou crée un instance du ContextGlobal *(patron de singleton)*
+ * @warning Penser à delete le singleton
+ * @return ContextGlobal * - *_singleton*
+ */
+ContextGlobal *ContextGlobal::getInstance()
+{
+    // Pas d'instance créée => alors création
+    if (ContextGlobal::_singleton == nullptr)
+        _singleton = new ContextGlobal{};
+    return _singleton;
+}
 
 /**
  * @brief Initialise le contextGlobal, en créant la fenêtre et les autres paramètres
@@ -51,6 +62,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setActive();
 
     _carte = Carte::getInstance();
+    // _manager = Manager::getInstance();
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 }
@@ -117,7 +129,7 @@ void ContextGlobal::calculCaseOver()
     if (mousePos.x > 0 &&
         mousePos.x < _window.getSize().x &&
         mousePos.y > 0 &&
-        mousePos.y < _window.getSize().y )
+        mousePos.y < _window.getSize().y)
     {
         _caseOver = _carte->getCaseToCoord(mousePosFloat);
     }

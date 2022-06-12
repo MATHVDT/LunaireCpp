@@ -26,12 +26,15 @@ int main()
     CaseMap::chargerMemoireCaseMap();
     Mine::chargerMemoireMines();
     Pipeline::chargerMemoirePipelines();
+    Manager::chargerMemoireManager();
 
     testCarte();
 
     CaseMap::dechargerMemoireCaseMap();
     Mine::dechargerMemoireMines();
     Pipeline::dechargerMemoirePipelines();
+    Manager::dechargerMemoireManager();
+
 
     delete contextGlobal;
 
