@@ -122,40 +122,9 @@ void Manager::dessinerOverlayMap()
         contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
 }
 
-/******************************************************/
-
-/**
- * @brief Calcule la case sourvolée par la souris
- *
- */
-void Manager::calculCaseOver()
-{
-    CaseMap *caseMapOver = nullptr;
-    const RenderWindow &win = contextGlobal->getWindow();
-
-    uint largeurMap = contextGlobal->getTailleReference() / 4 * (3 * _carte->getNbColonnes() + 1);
-
-    Vector2i mousePos = Mouse::getPosition(win);
-    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
-
-    if (mousePos.x > 0 &&
-        mousePos.x < largeurMap &&
-        mousePos.x < win.getSize().x &&
-        mousePos.y > 0 &&
-        mousePos.y < win.getSize().y)
-    {
-        caseMapOver = _carte->getCaseToCoord(mousePosFloat);
-        _spriteCaseOver->setPosition(caseMapOver->getPosition());
-    }
-    // Enregistrement de la case dans le context
-    contextGlobal->setCaseOver(caseMapOver);
-}
-
-/******************************************************/
 
 void Manager::update()
 {
-    calculCaseOver();
 }
 
 /**
@@ -176,13 +145,14 @@ void Manager::run()
 
     // Pipeline *p1 = new Pipeline(Vector2u(1, 1));
     // carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
-
+    int i = 0;
     while (contextGlobal->getIsRun())
     {
         while (contextGlobal->getPollEvent())
-        {
+        { // Actualise le contexte seulement quand il ya une evenement
+            contextGlobal->update();
+      
         }
-        contextGlobal->update();
         update();
         dessiner();
         contextGlobal->afficherFenetre();

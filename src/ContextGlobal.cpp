@@ -91,6 +91,15 @@ void ContextGlobal::update()
             setIsRun(false);
     }
 
+    if (_event.type == sf::Event::MouseMoved)
+    {
+        calculCaseOver();
+    }
+    if (_event.type == sf::Event::MouseButtonPressed)
+    {
+        clickSouris();
+    }
+
     // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
     // Vector2i mousePos = Mouse::getPosition();
     // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
@@ -115,4 +124,48 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
  */
 void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj); }
 
+/******************************************************/
 
+/**
+ * @brief Calcule la case survolée par la souris
+ *
+ */
+void ContextGlobal::calculCaseOver()
+{
+
+    uint largeurMap = _tailleReference / 4 * (3 * _carte->getNbColonnes() + 1);
+
+    Vector2i mousePos = Mouse::getPosition(_window);
+    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
+
+    if (mousePos.x > 0 &&
+        mousePos.x < largeurMap &&
+        mousePos.x < _window.getSize().x &&
+        mousePos.y > 0 &&
+        mousePos.y < _window.getSize().y)
+    {
+        _caseOver = _carte->getCaseToCoord(mousePosFloat);
+        // Set le sprite dans le manager
+        _manager->setSpriteCaseOver(_caseOver->getPosition());
+        _manager->setSpriteCaseSelectionnee(_caseOver->getPosition());
+    }
+}
+
+/**
+ * @brief Actualise le context en fonction de l'event souris
+ *
+ */
+void ContextGlobal::clickSouris()
+{
+
+    if (Mouse::isButtonPressed(Mouse::Left))
+    {
+        setCaseSelectionnee();
+    }
+    else if (Mouse::isButtonPressed(Mouse::Right))
+    {
+        setCaseSelectionnee(true);
+    }
+}
+
+/******************************************************/

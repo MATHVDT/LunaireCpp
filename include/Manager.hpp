@@ -56,7 +56,12 @@ public:
     void update();
 
     void dessiner();
-    void calculCaseOver();
+
+    // Getter
+
+    // Setter
+    void setSpriteCaseOver(const Vector2f &position);
+    void setSpriteCaseSelectionnee(const Vector2f &position);
 
 private:
     Manager();
@@ -64,5 +69,14 @@ private:
     void dessinerOverlay();
     void dessinerOverlayMap();
 };
+
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+// Setter
+
+inline void Manager::setSpriteCaseOver(const Vector2f &position) { _spriteCaseOver->setPosition(position); }
+inline void Manager::setSpriteCaseSelectionnee(const Vector2f &position) { _spriteCaseSelectionnee->setPosition(position); }
 
 #endif
