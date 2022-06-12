@@ -63,7 +63,7 @@ public:
     const float getTailleReference() const;
     const float getScaleReference() const;
     CaseMap *getCaseOver() const;
-    CaseMap *getCaseSelectionne() const;
+    CaseMap *getCaseSelectionnee() const;
 
     // Setter
     void setIsRun(bool run);
@@ -103,7 +103,7 @@ inline const float ContextGlobal::getTailleReference() const { return _tailleRef
 inline const float ContextGlobal::getScaleReference() const { return _scaleReference; }
 
 inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
-inline CaseMap *ContextGlobal::getCaseSelectionne() const { return _caseSelectionnee; }
+inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }

@@ -28,13 +28,15 @@ int main()
     Pipeline::chargerMemoirePipelines();
     Manager::chargerMemoireManager();
 
-    testCarte();
+    Manager *m = Manager::getInstance();
+    m->init();
+    m->run();
+    // testCarte();
 
     CaseMap::dechargerMemoireCaseMap();
     Mine::dechargerMemoireMines();
     Pipeline::dechargerMemoirePipelines();
     Manager::dechargerMemoireManager();
-
 
     delete contextGlobal;
 

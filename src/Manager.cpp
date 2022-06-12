@@ -8,14 +8,14 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
 /**
  * @brief Constructeur du Manager *singleton*
  */
-Manager::Manager() : _carte(nullptr),
+Manager::Manager() : _carte(Carte::getInstance()),
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
 /******************************************************/
 
 void Manager::init()
 {
-    _carte = Carte::getInstance();
+    // _carte = Carte::getInstance();
     _spriteCaseOver->setTexture(*_texturesManager[CASE_OVER]);
     _spriteCaseSelectionnee->setTexture(*_texturesManager[CASE_SELECTIONNEE]);
 }
@@ -109,9 +109,17 @@ void Manager::dessinerOverlay()
  */
 void Manager::dessinerOverlayMap()
 {
+    // Redimensionnement
+    float scale = contextGlobal->getScaleReference();
+    _spriteCaseOver->setScale(scale, scale);
+    _spriteCaseSelectionnee->setScale(scale, scale);
+
     // Overlay de la carte
-    contextGlobal->dessinerFenetre(_spriteCaseOver);
-    contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
+    if (contextGlobal->getCaseOver() != nullptr)
+        contextGlobal->dessinerFenetre(_spriteCaseOver);
+
+    if (contextGlobal->getCaseSelectionnee() != nullptr)
+        contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
 }
 
 /******************************************************/
@@ -120,12 +128,12 @@ void Manager::dessinerOverlayMap()
  * @brief Calcule la case sourvolée par la souris
  *
  */
-void ContextGlobal::calculCaseOver()
+void Manager::calculCaseOver()
 {
     CaseMap *caseMapOver = nullptr;
     const RenderWindow &win = contextGlobal->getWindow();
 
-    Vector2i mousePos = Mouse::getPosition();
+    Vector2i mousePos = Mouse::getPosition(win);
     Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
 
     if (mousePos.x > 0 &&
@@ -134,8 +142,50 @@ void ContextGlobal::calculCaseOver()
         mousePos.y < win.getSize().y)
     {
         caseMapOver = _carte->getCaseToCoord(mousePosFloat);
+        _spriteCaseOver->setPosition(caseMapOver->getPosition());
     }
     // Enregistrement de la case dans le context
     contextGlobal->setCaseOver(caseMapOver);
-    
+}
+
+/******************************************************/
+
+void Manager::update()
+{
+    calculCaseOver();
+}
+
+/**
+ * @brief Boucle principale du jeu
+ *
+ */
+void Manager::run()
+{
+    _carte->initCarte("./ressource/map.txt");
+
+    // Mine *s = new Mine{Vector2u(0, 0)};
+    // s->init();
+    // carte->ajouterConstructionCaseCarte(s, s->getPosition());
+
+    // Mine *s2 = new Mine{Vector2u(5, 3)};
+    // s2->init();
+    // carte->ajouterConstructionCaseCarte(s2, s2->getPosition());
+
+    // Pipeline *p1 = new Pipeline(Vector2u(1, 1));
+    // carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
+
+    while (contextGlobal->getIsRun())
+    {
+        while (contextGlobal->getPollEvent())
+        {
+        }
+        contextGlobal->update();
+        update();
+        dessiner();
+        contextGlobal->afficherFenetre();
+    }
+
+    // delete s;
+    // delete s2;
+    // delete p1;
 }

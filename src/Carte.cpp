@@ -385,6 +385,7 @@ CaseMap *Carte::getCaseToCoord(const Vector2f &point) const
         // Print coordCarte case
         // Vector2u posCaseCarteSave = matriceToCarte(posCaseMatriceSave);
         // cout << "case select : " << posCaseCarteSave.x << ", " << posCaseCarteSave.y << endl;
+        // cout << "Pos souris : " << point.x << ", " << point.y << endl;
 
         return &_grille[posCaseMatriceSave.y][posCaseMatriceSave.x];
     }

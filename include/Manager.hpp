@@ -52,11 +52,15 @@ private: // Static
 public:
     ~Manager();
     void init();
+    void run();
+    void update();
 
     void dessiner();
+    void calculCaseOver();
 
 private:
     Manager();
+
     void dessinerOverlay();
     void dessinerOverlayMap();
 };
