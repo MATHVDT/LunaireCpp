@@ -2,10 +2,10 @@
  * @file Mine.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe Mine
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #include "Mine.hpp"
@@ -24,12 +24,19 @@ Texture *Mine::_texturesMines[NB_RESSOURCES];
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
+/**
+ * @brief Construct a new Mine:: Mine object
+ *
+ * @param const Vector2u & - *pos*
+ * @param TYPE_RESSOURCE - *ressourceSol* Minerai correspondant au type de sol
+ * @param TYPE_RESSOURCE - *ressourceProduite* Minerai
+ */
 Mine::Mine(const Vector2u &pos,
-           TYPE_RESSOURCE ressourceSol,
+           TYPE_SOL typeSol,
            TYPE_RESSOURCE ressourceProduite)
     : Batiment{pos, _texturesMines[static_cast<int>(ressourceProduite)]},
       _idMine(++_idMaxMines),
-      _typeRessourceSol(ressourceSol),
+      _typeSol(typeSol),
       _typeRessourceProduite(ressourceProduite),
       _zoomTexture{0, 0, 655, 655}
 {
@@ -98,7 +105,7 @@ void Mine::update()
  */
 void Mine::remplirStock()
 { // Verification s'il c'est la bonne ressouce
-    if (_typeRessourceProduite == _typeRessourceSol)
+    if (_typeRessourceProduite == typeSolToTypeRessource(_typeSol))
     { // Remplissage tant que ya de la place
         while (!stockEntreePlein())
         {

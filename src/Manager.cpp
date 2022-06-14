@@ -163,11 +163,53 @@ void Manager::run()
     // delete p1;
 }
 
+/**
+ * @brief Place une Structure sur une case si toutes les conditions sont réunis
+ * @details Conditions : une case est selectionnée, il n'y a pas de construction sur la case selectionnée, un type de structure est selectionné
+ * Appelle les fonctions placerPipeline et placerMine
+ */
 void Manager::placerStructure()
 {
-        CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
 
-        // TYPE_STRUCTURE editionStructSelect = 
+    TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
 
+    if (caseSelect != nullptr)
+    { // Case selectionnee
+        if (caseSelect->getConstruction() != nullptr)
+        { // Pas de structure sur la case choisie
 
+            if (editionStructSelect != TYPE_STRUCTURE::AucuneStructure)
+            { // Il y a un type de structure select
+                placerPipeline(caseSelect);
+                placerMine(caseSelect);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Place une Mine avec
+ *
+ * @param CaseMap * - *caseSelect*
+ * @return true -
+ * @return false -
+ */
+bool Manager::placerMine(CaseMap *caseSelect)
+{
+    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
+    TYPE_STRUCTURE editionStruct = contextGlobal->getEditionStructureSelectionnee();
+
+    ress = typeStructureToTypeRessource(editionStruct);
+
+        if (ress != TYPE_RESSOURCE::Rien)
+    {
+        // Mine *m = Mine{};
+    }
+
+    return false;
+}
+
+bool Manager::placerPipeline(CaseMap *caseSelect)
+{
 }

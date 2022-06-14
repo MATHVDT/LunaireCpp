@@ -70,6 +70,7 @@ public:
     const float getScaleReference() const;
     CaseMap *getCaseOver() const;
     CaseMap *getCaseSelectionnee() const;
+    TYPE_STRUCTURE getEditionStructureSelectionnee() const;
 
     // Setter
     void setIsRun(bool run);
@@ -78,6 +79,7 @@ public:
     void setCarte(Carte *carte);
     void setCaseOver(CaseMap *caseOver);
     void setCaseSelectionnee(bool reset = false);
+    void setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect);
 
 private:
     ContextGlobal();
@@ -111,11 +113,13 @@ inline const float ContextGlobal::getScaleReference() const { return _scaleRefer
 
 inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
+inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
 inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleReference = tailleCaseMap; }
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
 inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
+inline void ContextGlobal::setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect) { _editionStructureSelectionnee = structSelect; }
 
 #endif

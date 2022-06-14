@@ -11,6 +11,8 @@
 #ifndef __ENUM_TYPE_RESSOURCE_HPP__
 #define __ENUM_TYPE_RESSOURCE_HPP__
 
+#include <sys/types.h>
+
 // #define NB_RESSOURCES 5;
 const uint NB_RESSOURCES = 5;
 
@@ -22,13 +24,13 @@ enum class TYPE_RESSOURCE
     MineraiTitane,
     MineraiSilicium,
     MineraiFer,
- 
-    Rien,
-
+    MineraiOr,
     MineraiAluminium,
     MineraiMagnesium,
     MineraiCalcium,
     MineraiSoduim,
+ 
+    Rien,
 
     // Apres raffinerie
     LingotRegolite,

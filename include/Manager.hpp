@@ -10,10 +10,12 @@
 
 #include "ListeStructures.hpp"
 #include "ContextGlobal.hpp"
-// #include "Carte.hpp"
+#include "Carte.hpp"
+#include "correspondance.hpp"
 
 class ContextGlobal;
 class Carte;
+class CaseMap;
 
 extern ContextGlobal *contextGlobal;
 
@@ -69,6 +71,9 @@ public:
 private:
     Manager();
 
+    bool placerPipeline(CaseMap *caseSelect);
+    bool placerMine(CaseMap *caseSelect);
+
     void dessinerOverlay();
     void dessinerOverlayMap();
 };
@@ -78,7 +83,6 @@ private:
 /***************************************************/
 
 // Setter
-
 inline void Manager::setSpriteCaseOver(const Vector2f &position) { _spriteCaseOver->setPosition(position); }
 inline void Manager::setSpriteCaseSelectionnee(const Vector2f &position) { _spriteCaseSelectionnee->setPosition(position); }
 

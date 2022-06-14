@@ -2,10 +2,10 @@
  * @file Mine.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des méthodes de la classe Mine
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #ifndef __MINE_HPP__
@@ -24,6 +24,7 @@
 
 #include "EnumTypeSol.hpp"
 #include "Batiment.hpp"
+#include "correspondance.hpp"
 
 // #include "ContextGlobal.hpp"
 // #include "EnumTypeRessource.hpp"
@@ -42,7 +43,7 @@ class Mine : public Batiment
 {
 private:
     uint _idMine;
-    TYPE_RESSOURCE _typeRessourceSol;
+    TYPE_SOL _typeSol;
     TYPE_RESSOURCE _typeRessourceProduite;
     IntRect _zoomTexture;
 
@@ -72,7 +73,7 @@ private: // Static
 
 public:
     Mine(const Vector2u &pos,
-         TYPE_RESSOURCE ressourceSol = TYPE_RESSOURCE::PoussiereRegolite,
+         TYPE_SOL typeSol = TYPE_SOL::Vierge,
          TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::PoussiereRegolite);
     virtual ~Mine() override;
 
@@ -83,6 +84,7 @@ public:
 
     // Getter
     TYPE_RESSOURCE getTypeRessource() const;
+    TYPE_SOL getTypeSol() const;
 
     // Setter
     void setSpriteTexture(uint tick);
@@ -108,7 +110,7 @@ inline uint Mine::getLevelMaxMines() { return _levelMax; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline TYPE_SOL Mine::getTypeSol() const { return _typeSol; }
 inline TYPE_RESSOURCE Mine::getTypeRessource() const { return _typeRessourceProduite; }
-
 
 #endif

@@ -7,12 +7,13 @@ enum class TYPE_STRUCTURE
 
     // Mines 
     Pipeline,
+    Mine,
     MinePoussiereRegolite,
     MineGlace,
     MineTitane,
     MineSilicium,
     MineFer,
-
+    MineOr,
     MineAluminium,
     MineMagnesium,
     MineCalcium,
