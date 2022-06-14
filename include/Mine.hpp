@@ -31,6 +31,9 @@
 using namespace std;
 using namespace sf;
 
+// class Structure;
+// class Batiment;
+
 extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesMines;

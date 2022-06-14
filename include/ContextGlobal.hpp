@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 // #include "enum_sol.hpp"
+#include "ListeStructures.hpp"
 #include "Manager.hpp"
 #include "Carte.hpp"
 

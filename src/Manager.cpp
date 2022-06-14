@@ -11,6 +11,8 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
 Manager::Manager() : _carte(Carte::getInstance()),
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
+
+Manager::~Manager(){}
 /******************************************************/
 
 void Manager::init()

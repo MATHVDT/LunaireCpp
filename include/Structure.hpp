@@ -15,6 +15,10 @@
 #include <list>
 #include <queue>
 #include <sys/types.h>
+#include <string>
+
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "enum_ressource.hpp"
 #include "direction.hpp"

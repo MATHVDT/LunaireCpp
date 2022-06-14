@@ -2,10 +2,10 @@
  * @file Pipeline.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des méthodes de la classe Pipeline
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #ifndef __PIPELINE_HPP__
@@ -15,6 +15,7 @@
 #include <list>
 #include <queue>
 #include <sys/types.h>
+#include <string>
 
 // #include "ContextGlobal.hpp"
 #include "enum_ressource.hpp"
@@ -22,15 +23,16 @@
 
 #include "Structure.hpp"
 
+using namespace std;
+using namespace sf;
+
 class ContextGlobal;
+// class Structure;
+
 // Initialisation dans main.cpp
 extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesPipelines;
-
-using namespace std;
-using namespace sf;
-
 
 class Pipeline : public Structure
 {

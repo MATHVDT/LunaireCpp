@@ -8,8 +8,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "ListeStructures.hpp"
 #include "ContextGlobal.hpp"
-#include "Carte.hpp"
+// #include "Carte.hpp"
 
 class ContextGlobal;
 class Carte;

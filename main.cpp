@@ -31,6 +31,7 @@ int main()
     Manager *m = Manager::getInstance();
     m->init();
     m->run();
+
     // testCarte();
 
     CaseMap::dechargerMemoireCaseMap();
@@ -39,6 +40,7 @@ int main()
     Manager::dechargerMemoireManager();
 
     delete contextGlobal;
+    delete m;
 
     return 0;
 }

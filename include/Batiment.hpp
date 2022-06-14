@@ -2,12 +2,12 @@
  * @file Batiment.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Prototype des méthodes de la classe Batiment
- *  
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 #ifndef __BATIMENT_HPP__
 #define __BATIMENT_HPP__
@@ -16,6 +16,8 @@
 #include <queue>
 
 #include "Structure.hpp"
+
+// class Structure;
 
 class Batiment : public Structure
 {
@@ -57,9 +59,8 @@ public:
 
     virtual void process();
 
-    virtual bool checkConnexionPossible(Structure *s)override;
+    virtual bool checkConnexionPossible(Structure *s) override;
 };
-
 
 /***************************************************/
 /*                 Méthodes inline                 */
