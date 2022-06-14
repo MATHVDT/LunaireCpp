@@ -56,6 +56,8 @@ public:
     void run();
     void update();
 
+    void placerStructure();
+
     void dessiner();
 
     // Getter

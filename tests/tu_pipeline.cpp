@@ -22,7 +22,7 @@
 
 #include "Mine.hpp"
 #include "direction.hpp"
-#include "enum_ressource.hpp"
+#include "EnumTypeRessource.hpp"
 #include "connexion_t.hpp"
 
 using namespace std;

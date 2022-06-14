@@ -119,17 +119,17 @@ void Structure::update()
 /**
  * @brief Donne la ressource du stock de sortie d'un batiment et la retire du stock de sortie
  *
- * @return Ressource
+ * @return TYPE_RESSOURCE
  */
-Ressource Structure::livrerStock()
+TYPE_RESSOURCE Structure::livrerStock()
 {
     if (_stockSortie.empty())
     {
-        return Ressource::Rien;
+        return TYPE_RESSOURCE::Rien;
     }
     else
     { // Récupère la ressource du stock de sortie
-        Ressource r = _stockSortie.front();
+        TYPE_RESSOURCE r = _stockSortie.front();
         _stockSortie.pop(); // Enleve du stock
         return r;
     }
@@ -141,7 +141,7 @@ Ressource Structure::livrerStock()
  */
 void Structure::remplirStock()
 {
-    Ressource ress;
+    TYPE_RESSOURCE ress;
     // Pour toutes les connexions aux batiments
     for (auto s : _listStructuresConnectees)
     {
@@ -149,7 +149,7 @@ void Structure::remplirStock()
         {
             ress = s->livrerStock();
             // Si une ressource a été récup -> ajout au stock d'entrée
-            if (ress != Ressource::Rien)
+            if (ress != TYPE_RESSOURCE::Rien)
             { // Si ya encore de la place
                 if (!this->stockEntreePlein())
                 {

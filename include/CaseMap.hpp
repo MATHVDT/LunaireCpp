@@ -19,7 +19,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "enum_sol.hpp"
+#include "EnumTypeSol.hpp"
 // #include "ContextGlobal.hpp"
 #include "Structure.hpp"
 
@@ -38,7 +38,7 @@ class CaseMap
 private:
     int _id;
     Vector2f _position;
-    SOL _typeSol;
+    TYPE_SOL _typeSol;
     Sprite *_sprite;
     Structure *_construction;
 
@@ -76,18 +76,18 @@ public:
 
     // Getter
     const Vector2f &getPosition() const;
-    SOL getTypeSol() const;
+    TYPE_SOL getTypeSol() const;
     Structure *getConstruction() const;
 
     // Setter
     void setPosition(float x, float y);
     void setPosition(const Vector2f &pos);
-    void setTypeSol(SOL typeSol);
+    void setTypeSol(TYPE_SOL typeSol);
     void setSpriteTexture();
-    void setSpriteTexture(SOL typeSol);
+    void setSpriteTexture(TYPE_SOL typeSol);
 
     void setCase(Vector2f position,
-                 SOL typeSol = SOL::Vierge);
+                 TYPE_SOL typeSol = TYPE_SOL::Vierge);
 
     void ajouterConstruction(Structure *s);
 };
@@ -117,18 +117,18 @@ inline void CaseMap::setPosition(const Vector2f &pos)
     _sprite->setPosition(_position);
 }
 
-inline void CaseMap::setTypeSol(SOL typeSol) { _typeSol = typeSol; }
+inline void CaseMap::setTypeSol(TYPE_SOL typeSol) { _typeSol = typeSol; }
 
 inline const Vector2f &CaseMap::getPosition() const { return _position; }
 
-inline SOL CaseMap::getTypeSol() const { return _typeSol; }
+inline TYPE_SOL CaseMap::getTypeSol() const { return _typeSol; }
 
 inline void CaseMap::setSpriteTexture()
 {
     _sprite->setTexture(*_texturesSol[static_cast<int>(_typeSol)]);
 }
 
-inline void CaseMap::setSpriteTexture(SOL typeSol)
+inline void CaseMap::setSpriteTexture(TYPE_SOL typeSol)
 {
     if (typeSol != _typeSol)
         cerr << "/!\\ Petit pb, demande de prendre la texture du sol " << static_cast<int>(typeSol) << " au lieu de celle du sol " << static_cast<int>(_typeSol) << " défini en attribut" << endl;

@@ -6,6 +6,8 @@
 // #include "Mine.hpp"
 // #include "Pipeline.hpp"
 
+#include "EnumTypeStructure.hpp"
+
 class Structure;
 class Batiment;
 class Mine;

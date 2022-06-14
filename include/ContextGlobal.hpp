@@ -6,7 +6,8 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-// #include "enum_sol.hpp"
+#include "EnumTypeSol.hpp"
+#include "EnumTypeStructure.hpp"
 #include "ListeStructures.hpp"
 #include "Manager.hpp"
 #include "Carte.hpp"
@@ -36,6 +37,8 @@ private:
     CaseMap *_caseOver;
     CaseMap *_caseSelectionnee;
 
+    TYPE_STRUCTURE _editionStructureSelectionnee;
+
 private: // Static
     static ContextGlobal *_singleton;
 
@@ -51,6 +54,7 @@ public:
     void afficherFenetre();
     void update();
     void calculCaseOver();
+    void checkClavierStructures();
     void clickSouris();
 
     // Getter

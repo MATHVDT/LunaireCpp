@@ -65,6 +65,8 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _manager = Manager::getInstance();
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
+
+    _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
 }
 
 /**
@@ -88,7 +90,13 @@ void ContextGlobal::update()
     if (_event.type == sf::Event::KeyPressed)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
             setIsRun(false);
+        }
+        else
+        {
+            checkClavierStructures();
+        }
     }
 
     if (_event.type == sf::Event::MouseMoved)
@@ -194,3 +202,25 @@ void ContextGlobal::clickSouris()
 }
 
 /******************************************************/
+
+/**
+ * @brief Set la structure a construire
+ *
+ */
+void ContextGlobal::checkClavierStructures()
+{
+    switch (_event.key.code)
+    {
+    case Keyboard::Numpad1:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
+        break;
+    case Keyboard::Numpad0:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
+        break;
+    case Keyboard::Space:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
+        break;
+    default:
+        break;
+    }
+}

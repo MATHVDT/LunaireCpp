@@ -23,7 +23,7 @@ Texture *CaseMap::_texturesSol[5];
  * @warning CaseMap vierge il faut faire setCase après pour définir ses paramètres
  * @param Vector2f - *posistion = défaut Vector2f{0, 0}*
  */
-CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
+CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(TYPE_SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
 {
     // set du sol et donc du sprite aussi
     setCase(_position, _typeSol);
@@ -88,10 +88,10 @@ void CaseMap::dessiner()
  * @brief Init une case
  *
  * @param Vector2f - *position*
- * @param SOL - *typeSol*
+ * @param TYPE_SOL - *typeSol*
  */
 void CaseMap::setCase(Vector2f position,
-                      SOL typeSol)
+                      TYPE_SOL typeSol)
 {
     this->setPosition(position);
     this->setTypeSol(typeSol);

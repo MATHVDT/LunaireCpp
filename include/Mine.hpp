@@ -22,11 +22,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
-#include "enum_sol.hpp"
+#include "EnumTypeSol.hpp"
 #include "Batiment.hpp"
 
 // #include "ContextGlobal.hpp"
-// #include "enum_ressource.hpp"
+// #include "EnumTypeRessource.hpp"
 
 using namespace std;
 using namespace sf;
@@ -42,8 +42,8 @@ class Mine : public Batiment
 {
 private:
     uint _idMine;
-    Ressource _typeRessourceSol;
-    Ressource _typeRessourceProduite;
+    TYPE_RESSOURCE _typeRessourceSol;
+    TYPE_RESSOURCE _typeRessourceProduite;
     IntRect _zoomTexture;
 
 public: // Static
@@ -72,8 +72,8 @@ private: // Static
 
 public:
     Mine(const Vector2u &pos,
-         Ressource ressourceSol = Ressource::PoussiereRegolite,
-         Ressource ressourceProduite = Ressource::PoussiereRegolite);
+         TYPE_RESSOURCE ressourceSol = TYPE_RESSOURCE::PoussiereRegolite,
+         TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::PoussiereRegolite);
     virtual ~Mine() override;
 
     virtual void init() override; // Va pas servir a mon avis
@@ -82,13 +82,13 @@ public:
     virtual void update() override;
 
     // Getter
-    Ressource getTypeRessource() const;
+    TYPE_RESSOURCE getTypeRessource() const;
 
     // Setter
     void setSpriteTexture(uint tick);
 
     virtual void process();
-    // virtual Ressource livrerStock() override; // Pas besoin de redefinir
+    // virtual TYPE_RESSOURCE livrerStock() override; // Pas besoin de redefinir
     virtual void remplirStock() override;
 };
 
@@ -108,7 +108,7 @@ inline uint Mine::getLevelMaxMines() { return _levelMax; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline Ressource Mine::getTypeRessource() const { return _typeRessourceProduite; }
+inline TYPE_RESSOURCE Mine::getTypeRessource() const { return _typeRessourceProduite; }
 
 
 #endif

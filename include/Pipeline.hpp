@@ -18,7 +18,7 @@
 #include <string>
 
 // #include "ContextGlobal.hpp"
-#include "enum_ressource.hpp"
+#include "EnumTypeRessource.hpp"
 #include "direction.hpp"
 
 #include "Structure.hpp"

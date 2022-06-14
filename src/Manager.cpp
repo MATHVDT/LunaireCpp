@@ -12,7 +12,7 @@ Manager::Manager() : _carte(Carte::getInstance()),
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
 
-Manager::~Manager(){}
+Manager::~Manager() {}
 /******************************************************/
 
 void Manager::init()
@@ -161,4 +161,13 @@ void Manager::run()
     // delete s;
     // delete s2;
     // delete p1;
+}
+
+void Manager::placerStructure()
+{
+        CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+
+        // TYPE_STRUCTURE editionStructSelect = 
+
+
 }

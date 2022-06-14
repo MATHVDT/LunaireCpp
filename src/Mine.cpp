@@ -25,8 +25,8 @@ uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
 
 Mine::Mine(const Vector2u &pos,
-           Ressource ressourceSol,
-           Ressource ressourceProduite)
+           TYPE_RESSOURCE ressourceSol,
+           TYPE_RESSOURCE ressourceProduite)
     : Batiment{pos, _texturesMines[static_cast<int>(ressourceProduite)]},
       _idMine(++_idMaxMines),
       _typeRessourceSol(ressourceSol),

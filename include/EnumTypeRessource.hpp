@@ -8,13 +8,13 @@
  * 
  * @copyright Copyright (c) 2022
  */
-#ifndef __ENUM_RESSOURCE_HPP__
-#define __ENUM_RESSOURCE_HPP__
+#ifndef __ENUM_TYPE_RESSOURCE_HPP__
+#define __ENUM_TYPE_RESSOURCE_HPP__
 
 // #define NB_RESSOURCES 5;
 const uint NB_RESSOURCES = 5;
 
-enum class Ressource
+enum class TYPE_RESSOURCE
 {
     // Matières premières
     PoussiereRegolite=0,

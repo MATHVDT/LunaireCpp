@@ -20,7 +20,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "enum_ressource.hpp"
+#include "EnumTypeRessource.hpp"
 #include "direction.hpp"
 
 #include "ContextGlobal.hpp"
@@ -49,8 +49,8 @@ protected:
 
     uint _tailleStockEntree;
     uint _tailleStockSortie;
-    queue<Ressource> _stockEntree;
-    queue<Ressource> _stockSortie;
+    queue<TYPE_RESSOURCE> _stockEntree;
+    queue<TYPE_RESSOURCE> _stockSortie;
 
 private: // Static
     static uint _nbStructures;
@@ -106,7 +106,7 @@ public:
     bool connecterStructure(Structure *s, bool commeSortie = true);
     bool deconnecterStructure(Structure *s);
 
-    Ressource livrerStock();
+    TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();
 
     virtual bool checkConnexionPossible(Structure *s);

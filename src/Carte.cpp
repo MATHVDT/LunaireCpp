@@ -105,8 +105,8 @@ void Carte::initCarte(const string nomFichierMap)
             for (int j = 0; j < _nbColonnesGrille; ++j)
             {
                 monFlux >> typeSol;
-                _grille[i][j].setTypeSol(static_cast<SOL>(typeSol));
-                _grille[i][j].setSpriteTexture(static_cast<SOL>(typeSol));
+                _grille[i][j].setTypeSol(static_cast<TYPE_SOL>(typeSol));
+                _grille[i][j].setSpriteTexture(static_cast<TYPE_SOL>(typeSol));
             }
         }
         setCaseEcran();

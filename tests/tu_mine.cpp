@@ -22,7 +22,7 @@
 #include "Batiment.hpp"
 #include "Mine.hpp"
 #include "direction.hpp"
-#include "enum_ressource.hpp"
+#include "EnumTypeRessource.hpp"
 #include "connexion_t.hpp"
 
 using namespace std;
@@ -33,12 +33,12 @@ TEST_CASE("Test création Mine")
     Mine::chargerMemoireMines();
 
     uint idMaxMines = Mine::getIdMaxMines();
-    Mine *m = new Mine(Vector2u(0, 0), Ressource::PoussiereRegolite, Ressource::PoussiereRegolite);
+    Mine *m = new Mine(Vector2u(0, 0), TYPE_RESSOURCE::PoussiereRegolite, TYPE_RESSOURCE::PoussiereRegolite);
 
     REQUIRE(m->getNbMines() == 1);
     REQUIRE(m->getIdMaxMines() == idMaxMines + 1);
 
-    REQUIRE(m->getTypeRessource() == Ressource::PoussiereRegolite);
+    REQUIRE(m->getTypeRessource() == TYPE_RESSOURCE::PoussiereRegolite);
 
     delete m;
     Mine::dechargerMemoireMines();
