@@ -20,16 +20,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "EnumTypeSol.hpp"
-// #include "ContextGlobal.hpp"
 #include "Structure.hpp"
+#include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
 
-class ContextGlobal;
 class Structure;
+class ContextGlobal;
 
-// Initialisation dans main.cpp
 extern ContextGlobal *contextGlobal;
 
 class CaseMap

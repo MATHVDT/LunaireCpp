@@ -16,8 +16,11 @@
 #include <queue>
 
 #include "Structure.hpp"
+#include "ContextGlobal.hpp"
 
-// class Structure;
+class ContextGlobal;
+
+extern ContextGlobal *contextGlobal;
 
 class Batiment : public Structure
 {

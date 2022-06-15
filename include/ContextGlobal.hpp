@@ -1,5 +1,5 @@
-#ifndef __CONTEXTGLOBAL_HPP__
-#define __CONTEXTGLOBAL_HPP__
+#ifndef __CONTEXT_GLOBAL_HPP__
+#define __CONTEXT_GLOBAL_HPP__
 
 #include <iostream>
 
@@ -8,14 +8,13 @@
 
 #include "EnumTypeSol.hpp"
 #include "EnumTypeStructure.hpp"
-#include "ListeStructures.hpp"
-#include "Manager.hpp"
+#include "EnumTypeRessource.hpp"
+
 #include "Carte.hpp"
 
 using namespace std;
 using namespace sf;
 
-class Manager;
 class Carte;
 class CaseMap;
 
@@ -33,7 +32,6 @@ private:
     bool _isRun;
 
     Carte *_carte;
-    Manager *_manager;
     CaseMap *_caseOver;
     CaseMap *_caseSelectionnee;
 

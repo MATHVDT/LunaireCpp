@@ -17,19 +17,19 @@
 #include <sys/types.h>
 #include <string>
 
-// #include "ContextGlobal.hpp"
 #include "EnumTypeRessource.hpp"
 #include "direction.hpp"
 
+#include "Structure.hpp"
+#include "ContextGlobal.hpp"
 #include "Structure.hpp"
 
 using namespace std;
 using namespace sf;
 
 class ContextGlobal;
-// class Structure;
+// class Structure; 
 
-// Initialisation dans main.cpp
 extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesPipelines;

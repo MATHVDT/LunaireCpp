@@ -9,14 +9,14 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "ContextGlobal.hpp"
-#include "ListeStructures.hpp"
 #include "Carte.hpp"
 #include "correspondance.hpp"
+
+#include "Mine.hpp"
 
 class ContextGlobal;
 class Carte;
 class CaseMap;
-class Mine;
 
 extern ContextGlobal *contextGlobal;
 

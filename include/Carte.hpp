@@ -22,13 +22,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "ContextGlobal.hpp"
 #include "CaseMap.hpp"
+#include "ContextGlobal.hpp"
 
 class CaseMap;
 class Structure;
 class ContextGlobal;
-// class Manager;
 
 using namespace std;
 

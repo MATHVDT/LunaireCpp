@@ -113,15 +113,20 @@ void Manager::dessinerOverlayMap()
 {
     // Redimensionnement
     float scale = contextGlobal->getScaleReference();
-    _spriteCaseOver->setScale(scale, scale);
-    _spriteCaseSelectionnee->setScale(scale, scale);
 
     // Overlay de la carte
     if (contextGlobal->getCaseOver() != nullptr)
+    { // Set Texture : scale + position
+        _spriteCaseOver->setScale(scale, scale);
+        _spriteCaseOver->setPosition(contextGlobal->getCaseOver()->getPosition());
         contextGlobal->dessinerFenetre(_spriteCaseOver);
-
+    }
     if (contextGlobal->getCaseSelectionnee() != nullptr)
+    { // Set Texture : scale + position
+        _spriteCaseSelectionnee->setScale(scale, scale);
+        _spriteCaseSelectionnee->setPosition(contextGlobal->getCaseSelectionnee()->getPosition());
         contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
+    }
 }
 
 void Manager::update()
@@ -189,10 +194,10 @@ void Manager::placerStructure()
 }
 
 /**
- * @brief Place une Mine 
- * 
+ * @brief Place une Mine
+ *
  * @todo  Spécifier juste pour les Mines : typeStructureToTypeRessource
- * 
+ *
  * @param CaseMap * - *caseSelect*
  * @return true - Structure placée (Mine)
  * @return false - Structure non placée (Pas Mine)
@@ -204,7 +209,7 @@ bool Manager::placerMine(CaseMap *caseSelect)
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     TYPE_STRUCTURE editionStruct = contextGlobal->getEditionStructureSelectionnee();
 
-// Spécifier juste pour les Mines
+    // Spécifier juste pour les Mines
     ress = typeStructureToTypeRessource(editionStruct);
 
     if (ress != TYPE_RESSOURCE::Rien)
@@ -222,8 +227,6 @@ bool Manager::placerMine(CaseMap *caseSelect)
     return place;
 }
 
-
-
 /**
  * @brief Place un Pipeline
  *
@@ -236,5 +239,4 @@ bool Manager::placerPipeline(CaseMap *caseSelect)
     bool place = false;
 
     return place;
-
 }

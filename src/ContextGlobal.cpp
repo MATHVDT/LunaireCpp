@@ -62,7 +62,6 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setActive();
 
     _carte = Carte::getInstance();
-    _manager = Manager::getInstance();
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 
@@ -153,8 +152,6 @@ void ContextGlobal::calculCaseOver()
         mousePos.y < _window.getSize().y)
     {
         _caseOver = _carte->getCaseToCoord(mousePosFloat);
-        // Set le sprite dans le manager
-        _manager->setSpriteCaseOver(_caseOver->getPosition());
     }
     else
     {
@@ -163,7 +160,7 @@ void ContextGlobal::calculCaseOver()
 }
 
 /**
- * @brief Set la case selectionnee en fct de la caseOverF
+ * @brief Set la case selectionnee en fct de la caseOver
  *
  * @param bool - *reset = false*
  */
@@ -171,14 +168,8 @@ void ContextGlobal::setCaseSelectionnee(bool reset)
 {
     if (reset)
         _caseSelectionnee = nullptr;
-    else
-    {
-        if (_caseOver != nullptr)
-        {
-            _caseSelectionnee = _caseOver;
-            _manager->setSpriteCaseSelectionnee(_caseSelectionnee->getPosition());
-        }
-    }
+    else if (_caseOver != nullptr)
+        _caseSelectionnee = _caseOver;
 }
 
 /**

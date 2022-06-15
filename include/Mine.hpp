@@ -23,17 +23,14 @@
 #include <SFML/Graphics/Rect.hpp>
 
 #include "EnumTypeSol.hpp"
-#include "Batiment.hpp"
+#include "EnumTypeRessource.hpp"
 #include "correspondance.hpp"
 
-// #include "ContextGlobal.hpp"
-// #include "EnumTypeRessource.hpp"
+#include "Batiment.hpp"
+#include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
-
-// class Structure;
-// class Batiment;
 
 extern ContextGlobal *contextGlobal;
 

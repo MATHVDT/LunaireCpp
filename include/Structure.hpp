@@ -27,7 +27,6 @@
 
 class ContextGlobal;
 
-// Initialisation dans main.cpp
 extern ContextGlobal *contextGlobal;
 
 using namespace std;
