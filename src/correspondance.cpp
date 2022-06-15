@@ -48,6 +48,8 @@ TYPE_RESSOURCE typeSolToTypeRessource(TYPE_SOL sol)
     return ress;
 }
 
+/*******************************************************/ /*******************************************************/
+
 /**
  * @brief Donne le type de ressource associée à un type de structure
  *
@@ -55,6 +57,30 @@ TYPE_RESSOURCE typeSolToTypeRessource(TYPE_SOL sol)
  * @return TYPE_RESSOURCE - *ressource*
  */
 TYPE_RESSOURCE typeStructureToTypeRessource(TYPE_STRUCTURE structure)
+{
+    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
+
+    // Check la ressource est associée à une Mine
+    // PoussièreRegolite ou Minerai
+    ress = typeMineToTypeRessource(structure);
+    if (ress != TYPE_RESSOURCE::Rien)
+        return ress;
+
+    // Check la ressource est associée à une Usine
+    ress = typeUsineToTypeRessource(structure);
+    if (ress != TYPE_RESSOURCE::Rien)
+        return ress;
+
+    return ress;
+}
+
+/**
+ * @brief Donne le type de ressource associée à un type de Mine (Ressource Rien si pas une Mine)
+ *
+ * @param TYPE_STRUCTURE - *structure*
+ * @return TYPE_RESSOURCE - *ressource (PoussierRegolite/Minerai ou Rien*
+ */
+TYPE_RESSOURCE typeMineToTypeRessource(TYPE_STRUCTURE structure)
 {
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
 
@@ -99,12 +125,59 @@ TYPE_RESSOURCE typeStructureToTypeRessource(TYPE_STRUCTURE structure)
 }
 
 /**
- * @brief Donne le type de structure associée à un type de ressource
+ * @brief Donne le type de ressource associée à un type de Usine (Ressource Rien si pas une Usine)
+ *
+ * @param TYPE_STRUCTURE - *structure*
+ * @return TYPE_RESSOURCE - *ressource (Lingot/Produit ou Rien)*
+ */
+TYPE_RESSOURCE typeUsineToTypeRessource(TYPE_STRUCTURE structure)
+{
+    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
+
+    switch (structure)
+    {
+    // case TYPE_STRUCTURE::MinePoussiereRegolite:
+    //     ress = TYPE_RESSOURCE::PoussiereRegolite;
+    //     break;
+    default:
+        break;
+    }
+
+    return ress;
+}
+
+/*******************************************************/ /*******************************************************/
+
+/**
+ * @brief Donne le type de Structure associée à un type de ressource
  *
  * @param TYPE_RESSOURCE - *ressource*
  * @return TYPE_STRUCTURE - *structure*
  */
-TYPE_STRUCTURE typeStructureToTypeRessource(TYPE_RESSOURCE ressource)
+TYPE_STRUCTURE typeRessourceToTypeStructure(TYPE_RESSOURCE ressource)
+{
+    TYPE_STRUCTURE structure = TYPE_STRUCTURE::AucuneStructure;
+
+    // Check si correspond à une Mine
+    structure = typeRessourceToTypeMine(ressource);
+    if (structure != TYPE_STRUCTURE::AucuneStructure)
+        return structure;
+
+    // Check si correspond à une Usine
+    structure = typeRessourceToTypeUsine(ressource);
+    if (structure != TYPE_STRUCTURE::AucuneStructure)
+        return structure;
+
+    return structure;
+}
+
+/**
+ * @brief Donne le type de Mine associée à un type de ressource
+ *
+ * @param TYPE_RESSOURCE - *ressource*
+ * @return TYPE_STRUCTURE - *structure (Mine ou AucuneStructure)*
+ */
+TYPE_STRUCTURE typeRessourceToTypeMine(TYPE_RESSOURCE ressource)
 {
     TYPE_STRUCTURE structure = TYPE_STRUCTURE::AucuneStructure;
 
@@ -113,11 +186,9 @@ TYPE_STRUCTURE typeStructureToTypeRessource(TYPE_RESSOURCE ressource)
     case TYPE_RESSOURCE::Rien: // Par defaut regolite
     case TYPE_RESSOURCE::PoussiereRegolite:
         structure = TYPE_STRUCTURE::MinePoussiereRegolite;
-
         break;
     case TYPE_RESSOURCE::MineraiGlace:
         structure = TYPE_STRUCTURE::MineGlace;
-
         break;
     case TYPE_RESSOURCE::MineraiTitane:
         structure = TYPE_STRUCTURE::MineTitane;
@@ -151,3 +222,27 @@ TYPE_STRUCTURE typeStructureToTypeRessource(TYPE_RESSOURCE ressource)
 
     return structure;
 }
+
+/**
+ * @brief Donne le type de Structure associée à un type de ressource
+ *
+ * @param TYPE_RESSOURCE - *ressource*
+ * @return TYPE_STRUCTURE - *structure (Usine ou AucuneStructure)*
+ */
+TYPE_STRUCTURE typeRessourceToTypeUsine(TYPE_RESSOURCE ressource)
+{
+    TYPE_STRUCTURE structure = TYPE_STRUCTURE::AucuneStructure;
+
+    switch (ressource)
+    {
+        // case TYPE_RESSOURCE::LingotFer:
+        //     structure = TYPE_STRUCTURE::;
+        //     break;
+    default:
+        break;
+    }
+
+    return structure;
+}
+
+/*******************************************************/ /*******************************************************/

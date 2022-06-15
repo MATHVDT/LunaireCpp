@@ -13,7 +13,6 @@
 #include "Carte.hpp"
 #include "correspondance.hpp"
 
-
 class ContextGlobal;
 class Carte;
 class CaseMap;
