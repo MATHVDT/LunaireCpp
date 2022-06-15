@@ -69,8 +69,6 @@ public:
     uint getNbLignes() const;
     uint getNbColonnes() const;
 
-    Vector2u getCoordCase(uint i, uint j) const;
-
     CaseMap **getCasesVoisines(const Vector2u &posCase, bool posCarte = true) const;
 
     CaseMap *getCaseToCoord(const Vector2f &point) const;

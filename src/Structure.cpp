@@ -179,7 +179,7 @@ bool Structure::checkConnexionPossible(Structure *s)
          dir < DIRECTION::NORDEST; ++dir)
     { // Check position adjacente dans dir
         structAdjacente |=
-            (positionCaseVoisine(_position, dir) == (Vector2i)s->getPosition());
+            (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte());
     }
 
     // Si la Structure n'est pas adjacent alors false

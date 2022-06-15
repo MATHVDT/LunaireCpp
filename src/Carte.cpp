@@ -184,8 +184,7 @@ void Carte::setCaseEcran()
         {
             coordMatrice.x = j;
             coordCarte = matriceToCarte(coordMatrice);
-            coordEcran = carteToPositionEcran(coordCarte);
-            _grille[i][j].setPosition(coordEcran);
+            _grille[i][j].setPositionCarte(coordCarte);
         }
     }
 }
@@ -212,7 +211,7 @@ void Carte::afficherConsole(ostream &flux, bool coord)
         {
             if (coord)
             {
-                vectCoord = getCoordCase(i, j);
+                vectCoord = matriceToCarte(Vector2u(j, i));
                 flux << "(" << vectCoord.x << "," << vectCoord.y << ") ";
             }
             else
@@ -368,7 +367,7 @@ CaseMap *Carte::getCaseToCoord(const Vector2f &point) const
         {
             for (uint x = 0; x < _nbColonnesGrille; ++x)
             {
-                posCaseCentre = _grille[y][x].getPosition();
+                posCaseCentre = _grille[y][x].getPositionSprite();
                 posCaseCentre.x += 0.5 * tailleCase;
                 posCaseCentre.y += 0.5 * tailleCase;
 

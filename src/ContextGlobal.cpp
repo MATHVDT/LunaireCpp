@@ -202,14 +202,18 @@ void ContextGlobal::checkClavierStructures()
 {
     switch (_event.key.code)
     {
-    case Keyboard::Numpad1:
+    case Keyboard::A:
         _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
+        cerr << "MinePoussiereRegolite selectionnée" << endl;
         break;
-    case Keyboard::Numpad0:
+    case Keyboard::B:
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
+        cerr << "Pipeline selectionnée" << endl;
         break;
     case Keyboard::Space:
         _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
+        cerr << "AucuneStructure selectionnée" << endl;
+
         break;
     default:
         break;

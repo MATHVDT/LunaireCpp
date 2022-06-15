@@ -54,16 +54,16 @@ void testCarte()
 
     Mine *s = new Mine{Vector2u(0, 0)};
     s->init();
-    carte->ajouterConstructionCaseCarte(s, s->getPosition());
+    carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
 
     Mine *s2 = new Mine{Vector2u(5, 3)};
     s2->init();
-    carte->ajouterConstructionCaseCarte(s2, s2->getPosition());
+    carte->ajouterConstructionCaseCarte(s2, s2->getPositionCarte());
 
     Pipeline *p1 = new Pipeline(Vector2u(1, 1));
     Pipeline *p2 = new Pipeline(Vector2u(4, 0));
-    carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
-    carte->ajouterConstructionCaseCarte(p2, p2->getPosition());
+    carte->ajouterConstructionCaseCarte(p1, p1->getPositionCarte());
+    carte->ajouterConstructionCaseCarte(p2, p2->getPositionCarte());
 
     while (contextGlobal->getIsRun())
     {

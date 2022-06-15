@@ -80,7 +80,7 @@ public:
     uint getTailleStockEntree() const;
     uint getTailleStockSortie() const;
 
-    const Vector2u &getPosition() const;
+    const Vector2u &getPositionCarte() const;
 
     uint getLevel() const;
 
@@ -95,7 +95,7 @@ public:
 
     // Setter
     bool setSortie(Structure *structure);
-    void setPosition(const Vector2u &pos);
+    void setPositionCarte(const Vector2u &pos);
     void setTailleStockEntree(uint newVal);
     void setTailleStockSortie(uint newVal);
 
@@ -121,9 +121,9 @@ public:
 inline uint Structure::getNbStructures() { return _nbStructures; }
 inline uint Structure::getIdMaxStructures() { return _idMaxStructures; }
 
-inline const Vector2u &Structure::getPosition() const { return _position; }
+inline const Vector2u &Structure::getPositionCarte() const { return _position; }
 
-inline void Structure::setPosition(const Vector2u &pos) { _position = pos; }
+inline void Structure::setPositionCarte(const Vector2u &pos) { _position = pos; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

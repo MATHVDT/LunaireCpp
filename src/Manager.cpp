@@ -12,7 +12,10 @@ Manager::Manager() : _carte(Carte::getInstance()),
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
 
-Manager::~Manager() {}
+Manager::~Manager()
+{
+    delete _carte;
+}
 /******************************************************/
 
 void Manager::init()
@@ -118,13 +121,13 @@ void Manager::dessinerOverlayMap()
     if (contextGlobal->getCaseOver() != nullptr)
     { // Set Texture : scale + position
         _spriteCaseOver->setScale(scale, scale);
-        _spriteCaseOver->setPosition(contextGlobal->getCaseOver()->getPosition());
+        _spriteCaseOver->setPosition(contextGlobal->getCaseOver()->getPositionSprite());
         contextGlobal->dessinerFenetre(_spriteCaseOver);
     }
     if (contextGlobal->getCaseSelectionnee() != nullptr)
     { // Set Texture : scale + position
         _spriteCaseSelectionnee->setScale(scale, scale);
-        _spriteCaseSelectionnee->setPosition(contextGlobal->getCaseSelectionnee()->getPosition());
+        _spriteCaseSelectionnee->setPosition(contextGlobal->getCaseSelectionnee()->getPositionSprite());
         contextGlobal->dessinerFenetre(_spriteCaseSelectionnee);
     }
 }
@@ -141,31 +144,17 @@ void Manager::run()
 {
     _carte->initCarte("./ressource/map.txt");
 
-    // Mine *s = new Mine{Vector2u(0, 0)};
-    // s->init();
-    // carte->ajouterConstructionCaseCarte(s, s->getPosition());
-
-    // Mine *s2 = new Mine{Vector2u(5, 3)};
-    // s2->init();
-    // carte->ajouterConstructionCaseCarte(s2, s2->getPosition());
-
-    // Pipeline *p1 = new Pipeline(Vector2u(1, 1));
-    // carte->ajouterConstructionCaseCarte(p1, p1->getPosition());
-    int i = 0;
     while (contextGlobal->getIsRun())
     {
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
+            placerStructure();
         }
         update();
         dessiner();
         contextGlobal->afficherFenetre();
     }
-
-    // delete s;
-    // delete s2;
-    // delete p1;
 }
 
 /**
@@ -179,15 +168,19 @@ void Manager::placerStructure()
 
     TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
 
-    if (caseSelect != nullptr)
-    { // Case selectionnee
-        if (caseSelect->getConstruction() != nullptr)
-        { // Pas de structure sur la case choisie
-
-            if (editionStructSelect != TYPE_STRUCTURE::AucuneStructure)
-            { // Il y a un type de structure select
-                placerPipeline(caseSelect);
-                placerMine(caseSelect);
+    if (editionStructSelect != TYPE_STRUCTURE::AucuneStructure)
+    { // Il y a un type de structure select
+        if (caseSelect != nullptr)
+        { // Case selectionnee
+            if (caseSelect->getConstruction() == nullptr)
+            { // Pas de structure sur la case choisie
+                if (!placerPipeline(caseSelect))
+                {
+                    if (!placerMine(caseSelect))
+                    {
+                        // cerr << "Pas de structure posée" << endl;
+                    }
+                }
             }
         }
     }
@@ -212,15 +205,24 @@ bool Manager::placerMine(CaseMap *caseSelect)
     // Spécifier juste pour les Mines
     ress = typeStructureToTypeRessource(editionStruct);
 
+    // Construit et ajoute la Mine
     if (ress != TYPE_RESSOURCE::Rien)
     {
-        // Mine *m = new Mine{};
-        // (Vector2u)caseSelect->getPosition(),
-        // caseSelect->getTypeSol(),
-        // ress);
+        Mine *m = new Mine{
+            (Vector2u)caseSelect->getPositionCarte(),
+            caseSelect->getTypeSol(),
+            ress};
 
-        // Remettre case selectionnee a 0
-        // ...
+        _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
+
+        // Reset le choix de case select
+        // A choisir si on deselectionne la case
+        // après ajout d'une structure ???
+        // contextGlobal->setCaseSelectionnee(true);
+
+        // Reset le choix d'edition de structure select
+        contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
+
         place = true;
     }
 

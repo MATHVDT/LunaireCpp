@@ -36,7 +36,7 @@ class CaseMap
 
 private:
     int _id;
-    Vector2f _position;
+    Vector2u _position; // Position case dans la carte hexagonale (x, y)
     TYPE_SOL _typeSol;
     Sprite *_sprite;
     Structure *_construction;
@@ -66,26 +66,26 @@ public:
         uint nbCcolonnesCarte);
 
 public:
-    // Case(float x = 0.f, float y = 0.f);
-    CaseMap(Vector2f pos = Vector2f{0, 0});
+    CaseMap(Vector2u pos = Vector2u{0, 0});
     ~CaseMap();
 
     void afficherConsole(ostream &flux = cout);
     void dessiner();
 
     // Getter
-    const Vector2f &getPosition() const;
+    const Vector2f &getPositionSprite() const;
+    const Vector2u &getPositionCarte() const;
     TYPE_SOL getTypeSol() const;
     Structure *getConstruction() const;
 
     // Setter
-    void setPosition(float x, float y);
-    void setPosition(const Vector2f &pos);
+    void setPositionCarte(uint x, uint y);
+    void setPositionCarte(const Vector2u &pos);
     void setTypeSol(TYPE_SOL typeSol);
     void setSpriteTexture();
     void setSpriteTexture(TYPE_SOL typeSol);
 
-    void setCase(Vector2f position,
+    void setCase(Vector2u position,
                  TYPE_SOL typeSol = TYPE_SOL::Vierge);
 
     void ajouterConstruction(Structure *s);
@@ -105,20 +105,17 @@ inline float CaseMap::getTailleTexture() { return _tailleTexture; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline void CaseMap::setPosition(float x, float y)
+inline void CaseMap::setPositionCarte(uint x, uint y)
 {
-    setPosition(Vector2f(x, y));
+    setPositionCarte(Vector2u(x, y));
 }
 
-inline void CaseMap::setPosition(const Vector2f &pos)
-{
-    _position = pos;
-    _sprite->setPosition(_position);
-}
+
 
 inline void CaseMap::setTypeSol(TYPE_SOL typeSol) { _typeSol = typeSol; }
 
-inline const Vector2f &CaseMap::getPosition() const { return _position; }
+inline const Vector2f &CaseMap::getPositionSprite() const { return _sprite->getPosition(); }
+inline const Vector2u &CaseMap::getPositionCarte() const { return _position; }
 
 inline TYPE_SOL CaseMap::getTypeSol() const { return _typeSol; }
 

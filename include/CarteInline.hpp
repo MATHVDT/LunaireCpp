@@ -4,7 +4,7 @@
  * @brief Méthode inline de la classe Carte
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 
@@ -18,11 +18,6 @@ inline uint Carte::getDimensionGrilleColonne() const { return _nbColonnesGrille;
 inline Vector2u Carte::getDimensionCarte() const { return Vector2u(_nbColonnesCarte, _nbLignesCarte); }
 inline uint Carte::getNbLignes() const { return _nbLignesCarte; }
 inline uint Carte::getNbColonnes() const { return _nbColonnesCarte; }
-
-inline Vector2u Carte::getCoordCase(uint i, uint j) const
-{
-    return Vector2u(2 * j + (1 - (i % 2)), i / 2);
-}
 
 // Convertisseur coordonnées
 inline Vector2u Carte::matriceToCarte(const Vector2u &cMat)

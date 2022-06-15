@@ -2,10 +2,10 @@
  * @file CaseMap.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe Carte
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #include "CaseMap.hpp"
@@ -23,7 +23,7 @@ Texture *CaseMap::_texturesSol[5];
  * @warning CaseMap vierge il faut faire setCase après pour définir ses paramètres
  * @param Vector2f - *posistion = défaut Vector2f{0, 0}*
  */
-CaseMap::CaseMap(Vector2f pos) : _id(_nb++), _position{pos}, _typeSol(TYPE_SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
+CaseMap::CaseMap(Vector2u pos) : _id(_nb++), _position{pos}, _typeSol(TYPE_SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
 {
     // set du sol et donc du sprite aussi
     setCase(_position, _typeSol);
@@ -90,12 +90,26 @@ void CaseMap::dessiner()
  * @param Vector2f - *position*
  * @param TYPE_SOL - *typeSol*
  */
-void CaseMap::setCase(Vector2f position,
+void CaseMap::setCase(Vector2u position,
                       TYPE_SOL typeSol)
 {
-    this->setPosition(position);
+    Vector2f posEcran = Carte::carteToPositionEcran(_position);
+    this->setPositionCarte(position);
+
     this->setTypeSol(typeSol);
     this->setSpriteTexture(typeSol);
+}
+
+/**
+ * @brief Set la position de la case et la position du sprite sur l'écran
+ * 
+ * @param const Vector2u & - *pos* 
+ */
+void CaseMap::setPositionCarte(const Vector2u &pos)
+{
+    _position = pos;
+    Vector2f coordEcran = Carte::carteToPositionEcran(_position);
+    _sprite->setPosition(coordEcran);
 }
 
 /**
@@ -188,8 +202,8 @@ void CaseMap::dechargerSprites()
 
 /**
  * @brief Ajoute une structure si la place sur la case n'est pas déjà occupée.
- * 
- * @param Structure * - *s* 
+ *
+ * @param Structure * - *s*
  */
 void CaseMap::ajouterConstruction(Structure *s)
 {

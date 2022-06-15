@@ -44,8 +44,8 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat->getIdStructure() == idMaxStructures + 1);
     REQUIRE(bat->getIdBatiment() == idMaxBatiments + 1);
 
-    REQUIRE(bat->getPosition().x == vectPos.x);
-    REQUIRE(bat->getPosition().y == vectPos.y);
+    REQUIRE(bat->getPositionCarte().x == vectPos.x);
+    REQUIRE(bat->getPositionCarte().y == vectPos.y);
 
     cout << "     avant new Mine 2     " << endl;
     Batiment *bat2 = new Mine{Vector2u(1, 4)};
@@ -57,8 +57,8 @@ TEST_CASE("Test création batiment")
     REQUIRE(bat2->getIdStructure() == idMaxStructures + 2);
     REQUIRE(bat2->getIdBatiment() == idMaxBatiments + 2);
 
-    REQUIRE(bat2->getPosition().x == 1);
-    REQUIRE(bat2->getPosition().y == 4);
+    REQUIRE(bat2->getPositionCarte().x == 1);
+    REQUIRE(bat2->getPositionCarte().y == 4);
 
     delete bat2;
     delete bat;
