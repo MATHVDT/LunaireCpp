@@ -8,14 +8,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "ListeStructures.hpp"
 #include "ContextGlobal.hpp"
+#include "ListeStructures.hpp"
 #include "Carte.hpp"
 #include "correspondance.hpp"
+
 
 class ContextGlobal;
 class Carte;
 class CaseMap;
+class Mine;
 
 extern ContextGlobal *contextGlobal;
 

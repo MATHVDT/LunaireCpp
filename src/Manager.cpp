@@ -189,27 +189,52 @@ void Manager::placerStructure()
 }
 
 /**
- * @brief Place une Mine avec
- *
+ * @brief Place une Mine 
+ * 
+ * @todo  Spécifier juste pour les Mines : typeStructureToTypeRessource
+ * 
  * @param CaseMap * - *caseSelect*
- * @return true -
- * @return false -
+ * @return true - Structure placée (Mine)
+ * @return false - Structure non placée (Pas Mine)
  */
 bool Manager::placerMine(CaseMap *caseSelect)
 {
+    bool place = false;
+
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     TYPE_STRUCTURE editionStruct = contextGlobal->getEditionStructureSelectionnee();
 
+// Spécifier juste pour les Mines
     ress = typeStructureToTypeRessource(editionStruct);
 
-        if (ress != TYPE_RESSOURCE::Rien)
+    if (ress != TYPE_RESSOURCE::Rien)
     {
-        // Mine *m = Mine{};
+        // Mine *m = new Mine{};
+        // (Vector2u)caseSelect->getPosition(),
+        // caseSelect->getTypeSol(),
+        // ress);
+
+        // Remettre case selectionnee a 0
+        // ...
+        place = true;
     }
 
-    return false;
+    return place;
 }
 
+
+
+/**
+ * @brief Place un Pipeline
+ *
+ * @param CaseMap * - *caseSelect*
+ * @return true - Structure placée (Pipeline)
+ * @return false - Structure non placée (Pas Pipeline)
+ */
 bool Manager::placerPipeline(CaseMap *caseSelect)
 {
+    bool place = false;
+
+    return place;
+
 }
