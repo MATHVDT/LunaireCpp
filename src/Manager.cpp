@@ -149,7 +149,11 @@ void Manager::run()
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
-            placerStructure();
+            if (placerStructure())
+            { // Structure ajoutée sur la carte
+                // Adaptation de la structure à son voisinage
+                integrationStructureVoisinage();
+            }
         }
         update();
         dessiner();
@@ -161,9 +165,13 @@ void Manager::run()
  * @brief Place une Structure sur une case si toutes les conditions sont réunis
  * @details Conditions : une case est selectionnée, il n'y a pas de construction sur la case selectionnée, un type de structure est selectionné
  * Appelle les fonctions placerPipeline et placerMine
+ *
+ * @return true - *Si une structure à été placée*
+ * @return false - *Aucune structure placée*
  */
-void Manager::placerStructure()
+bool Manager::placerStructure()
 {
+    bool structPlacee = false;
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
 
     TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
@@ -174,9 +182,11 @@ void Manager::placerStructure()
         { // Case selectionnee
             if (caseSelect->getConstruction() == nullptr)
             { // Pas de structure sur la case choisie
-                if (!placerPipeline(caseSelect))
+                structPlacee = placerPipeline(caseSelect);
+                if (!structPlacee)
                 {
-                    if (!placerMine(caseSelect))
+                    structPlacee = placerMine(caseSelect);
+                    if (!structPlacee)
                     {
                         // cerr << "Pas de structure posée" << endl;
                     }
@@ -184,6 +194,8 @@ void Manager::placerStructure()
             }
         }
     }
+
+    return structPlacee;
 }
 
 /**
@@ -218,6 +230,9 @@ bool Manager::placerMine(CaseMap *caseSelect)
         // Reset le choix de case select
         // A choisir si on deselectionne la case
         // après ajout d'une structure ???
+        // A priori nn car on va avoir besoin de savoir
+        // quelle case a été ajouté pour les calculs
+        // de connexion et d'orientation
         // contextGlobal->setCaseSelectionnee(true);
 
         // Reset le choix d'edition de structure select
@@ -241,4 +256,32 @@ bool Manager::placerPipeline(CaseMap *caseSelect)
     bool place = false;
 
     return place;
+}
+
+/**
+ * @brief Intègre une structure dans la carte par rapport à son voisinage. (gère le connexion et rotation des textures)
+ *
+ * @return true - *Intégration ok*
+ * @return false - *Intégration pas ok*
+ */
+bool Manager::integrationStructureVoisinage()
+{
+    Structure *sAjoutee = contextGlobal->getCaseSelectionnee()->getConstruction();
+
+    // Erreur noramlement on devrait pas avoir nullptr
+    if (sAjoutee == nullptr)
+        return false;
+
+    // Récupération voisinages de cases
+    CaseMap **caseVoisines = _carte->getCasesVoisines(sAjoutee->getPositionCarte());
+
+    // Récupération voisinage de structures
+    Structure **structVoisines = new Structure *[6];
+    for (uint k = 0; k < 6; ++k)
+    { // Si ya une case et une structure on la récupère
+        if (caseVoisines[k] != nullptr)
+            structVoisines[k] = caseVoisines[k]->getConstruction();
+        else // Pas de case (normalement pas besoin)
+            structVoisines[k] = nullptr;
+    }
 }

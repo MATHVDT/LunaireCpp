@@ -59,7 +59,8 @@ public:
     void run();
     void update();
 
-    void placerStructure();
+    bool placerStructure();
+    bool integrationStructureVoisinage();
 
     void dessiner();
 

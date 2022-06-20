@@ -2,10 +2,10 @@
  * @file Structure.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe Pipeline
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #include "Structure.hpp"
@@ -188,11 +188,12 @@ bool Structure::checkConnexionPossible(Structure *s)
 
     // Test sur les deux Structures il ya
     // une qui peut être la sortie
-    return !(this->getASortie() && s->getASortie());
+    // return !(this->getASortie() && s->getASortie());
+    return true;
 }
 
 /**
- * @brief Connecte une *Structure*, par default comme une sortie si possible
+ * @brief Connecte une *Structure*, par default la structure sera ajoutée comme une sortie
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie = true*
@@ -202,11 +203,15 @@ bool Structure::checkConnexionPossible(Structure *s)
  */
 bool Structure::connecterStructure(Structure *s, bool commeSortie)
 {
+    // Test si la connexion en sortie est libre
+    if (commeSortie && _sortie != nullptr)
+        return false; // Ya déjà une sortie
+
     // Structure adjacente
     if (!checkConnexionPossible(s))
         return false;
 
-    // Test si la structure est pas déjà connectée
+    // Test si la structure est déjà connectée
     if (find(_listStructuresConnectees.begin(),
              _listStructuresConnectees.end(),
              s) != _listStructuresConnectees.end())

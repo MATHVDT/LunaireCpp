@@ -28,7 +28,7 @@ using namespace std;
 using namespace sf;
 
 class ContextGlobal;
-// class Structure; 
+// class Structure;
 
 extern ContextGlobal *contextGlobal;
 
