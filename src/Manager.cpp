@@ -210,7 +210,7 @@ bool Manager::placerStructure()
 }
 
 /**
- * @brief Place une Mine
+ * @brief Place une Mine sur la carte
  *
  * @todo  Spécifier juste pour les Mines : typeStructureToTypeRessource
  *
@@ -245,7 +245,9 @@ bool Manager::placerMine(CaseMap *caseSelect)
 }
 
 /**
- * @brief Place un Pipeline
+ * @brief Place un Pipeline sur la carte
+ * 
+ * @warning Ne connecte pas le Pipeline aux structures voisines
  *
  * @param CaseMap * - *caseSelect*
  * @return true - Structure placée (Pipeline)
@@ -266,22 +268,57 @@ bool Manager::placerPipeline(CaseMap *caseSelect)
  */
 bool Manager::integrationStructureVoisinage()
 {
-    Structure *sAjoutee = contextGlobal->getCaseSelectionnee()->getConstruction();
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
 
     // Erreur normalement on devrait pas avoir nullptr
-    if (sAjoutee == nullptr)
+    // car la case n'a pas été deselectionnée
+    if (caseSelect == nullptr)
+        return false;
+
+    Structure *structAjoutee = caseSelect->getConstruction();
+
+    // Erreur normalement on devrait pas avoir nullptr
+    // Enfin quand toutes les structures auront été imlémentées ;)
+    if (structAjoutee == nullptr)
         return false;
 
     // Récupération voisinages de cases
-    CaseMap **caseVoisines = _carte->getCasesVoisines(sAjoutee->getPositionCarte());
+    CaseMap **casesVoisines = _carte->getCasesVoisines(structAjoutee->getPositionCarte());
 
     // Récupération voisinage de structures
-    Structure **structVoisines = new Structure *[6];
+    Structure **structsVoisines = new Structure *[6];
+
     for (uint k = 0; k < 6; ++k)
     { // Si ya une case et une structure on la récupère
-        if (caseVoisines[k] != nullptr)
-            structVoisines[k] = caseVoisines[k]->getConstruction();
+        // Bord de la map, il n'y a pas forcement de cases voisines
+        if (casesVoisines[k] != nullptr)
+            structsVoisines[k] = casesVoisines[k]->getConstruction();
         else // Pas de case (normalement pas besoin)
-            structVoisines[k] = nullptr;
+            structsVoisines[k] = nullptr;
     }
+
+    // .... ajouterStruct ....
+    // Garder une mémoire de la précedente case select pour une amélioration de la connection plus intuitive
+    /* Pour l'instant
+    On parcourt les cases voisines dans
+    ordre habituel N->NO->...->NE
+    la première structure trouvée est une sortie
+    si sortie pas possible alors on connecte comme entrée
+    dès que une sortie a été setter, tous les autres connexions
+    sont des entrées
+    */
+    for (int k = 0; k < 6; ++k)
+    { // Pour chaque structure voisine
+        if (structsVoisines[k] != nullptr)
+        {
+            if (!structAjoutee->getASortie())
+            { // Essaye d'ajouter en sortie la structure
+                structAjoutee->connecterStructure(structsVoisines[k], true);
+            }
+            // Dans tous les cas essaye d'ajouter comme entrée
+            structAjoutee->connecterStructure(structsVoisines[k], false);
+        }
+    }
+
+    return true;
 }
