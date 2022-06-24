@@ -60,7 +60,6 @@ public:
     void update();
 
     bool placerStructure();
-    bool integrationStructureVoisinage();
 
     void dessiner();
 
@@ -75,6 +74,7 @@ private:
 
     bool placerPipeline(CaseMap *caseSelect);
     bool placerMine(CaseMap *caseSelect);
+    bool integrationStructureVoisinage();
 
     void dessinerOverlay();
     void dessinerOverlayMap();

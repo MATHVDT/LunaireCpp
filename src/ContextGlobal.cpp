@@ -110,7 +110,6 @@ void ContextGlobal::update()
     // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
     // Vector2i mousePos = Mouse::getPosition();
     // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
-
     // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
 }
 
@@ -182,7 +181,7 @@ void ContextGlobal::clickSouris()
     if (Mouse::isButtonPressed(Mouse::Left) &&
         _caseOver != _caseSelectionnee)
     { //  bouton gauche souris et changement de case selectionnee
-        setCaseSelectionnee();
+        setCaseSelectionnee(false);
         // cerr << "case select" << endl;
     } // Deselection case
     else if (Mouse::isButtonPressed(Mouse::Right) &&

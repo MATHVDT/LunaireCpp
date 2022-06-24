@@ -149,11 +149,7 @@ void Manager::run()
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
-            if (placerStructure())
-            { // Structure ajoutée sur la carte
-                // Adaptation de la structure à son voisinage
-                integrationStructureVoisinage();
-            }
+            placerStructure();
         }
         update();
         dessiner();
@@ -195,6 +191,21 @@ bool Manager::placerStructure()
         }
     }
 
+    // Structure placée -> intégration
+    if (structPlacee)
+        integrationStructureVoisinage();
+
+    // Reset le choix de case select
+    // A choisir si on deselectionne la case
+    // après ajout d'une structure ???
+    // A priori nn car on va avoir besoin de savoir
+    // quelle case a été ajouté pour les calculs
+    // de connexion et d'orientation
+    // contextGlobal->setCaseSelectionnee(true);
+
+    // Reset le choix d'edition de structure select
+    contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
+
     return structPlacee;
 }
 
@@ -227,17 +238,6 @@ bool Manager::placerMine(CaseMap *caseSelect)
 
         _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
 
-        // Reset le choix de case select
-        // A choisir si on deselectionne la case
-        // après ajout d'une structure ???
-        // A priori nn car on va avoir besoin de savoir
-        // quelle case a été ajouté pour les calculs
-        // de connexion et d'orientation
-        // contextGlobal->setCaseSelectionnee(true);
-
-        // Reset le choix d'edition de structure select
-        contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
-
         place = true;
     }
 
@@ -268,7 +268,7 @@ bool Manager::integrationStructureVoisinage()
 {
     Structure *sAjoutee = contextGlobal->getCaseSelectionnee()->getConstruction();
 
-    // Erreur noramlement on devrait pas avoir nullptr
+    // Erreur normalement on devrait pas avoir nullptr
     if (sAjoutee == nullptr)
         return false;
 
