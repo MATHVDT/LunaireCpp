@@ -173,3 +173,7 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
     }
     return Structure::checkConnexionPossible(s, commeSortie);
 }
+
+void Pipeline::adaptationTexture()
+{
+}

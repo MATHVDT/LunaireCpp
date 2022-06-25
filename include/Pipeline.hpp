@@ -41,9 +41,11 @@ class Pipeline : public Structure
     enum TEXTURE
     {
         NON_RELIE = 0,
-        DROIT = 1,
-        ANGLE = 2,
-        NB_TEXTURE = 3
+        DROIT_SE_NO = 1,
+        DROIT_S_N = 2,
+        ANGLE_S_SE = 3,
+        ANGLE_S_NO = 4,
+        NB_TEXTURE = 5
     };
 
 private:
@@ -97,6 +99,8 @@ public:
     void setSpriteTexture(uint tick);
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
+
+    void adaptationTexture();
 };
 
 /***************************************************/

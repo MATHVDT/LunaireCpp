@@ -330,5 +330,18 @@ bool Manager::integrationStructureVoisinage()
         }
     }
 
+    // Optimisation des orientations et connexions
+    // Du style changement de sens d'un pipeline complet
+    // S'il n'est pas fixé/bloqué par des contraintes sépcifiques
+    // ...
+
+    // Adapatation des textures des structures impactées
+    // structAjoutee.adaptationTexture();
+    for (int k = 0; k < 6; ++k)
+    {
+        // Actualiser orientation structure (Texture)
+        // structsVoisines[k].adaptationTexture();
+    }
+
     return true;
 }

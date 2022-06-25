@@ -1,3 +1,5 @@
-./ressource/tuyau_non_connecte_sud_to_rien.png
-./ressource/tuyau_droit_sud_to_nord.png
-./ressource/tuyau_angle_sud_to_nord_ouest.png
+./ressource/pipelines/pipeline_non_connecte_s_all.png
+./ressource/pipelines/pipeline_droit_se_no.png
+./ressource/pipelines/pipeline_droit_s_n.png
+./ressource/pipelines/pipeline_angle_s_se.png
+./ressource/pipelines/pipeline_angle_s_no.png
