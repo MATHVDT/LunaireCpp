@@ -72,8 +72,8 @@ public:
 private:
     Manager();
 
-    bool placerPipeline(CaseMap *caseSelect);
-    bool placerMine(CaseMap *caseSelect);
+    bool placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
+    bool placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
     bool integrationStructureVoisinage();
 
     void dessinerOverlay();

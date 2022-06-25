@@ -178,10 +178,10 @@ bool Manager::placerStructure()
         { // Case selectionnee
             if (caseSelect->getConstruction() == nullptr)
             { // Pas de structure sur la case choisie
-                structPlacee = placerPipeline(caseSelect);
+                structPlacee = placerPipeline(caseSelect, editionStructSelect);
                 if (!structPlacee)
                 {
-                    structPlacee = placerMine(caseSelect);
+                    structPlacee = placerMine(caseSelect, editionStructSelect);
                     if (!structPlacee)
                     {
                         // cerr << "Pas de structure posée" << endl;
@@ -218,15 +218,14 @@ bool Manager::placerStructure()
  * @return true - Structure placée (Mine)
  * @return false - Structure non placée (Pas Mine)
  */
-bool Manager::placerMine(CaseMap *caseSelect)
+bool Manager::placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
 {
     bool place = false;
 
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
-    TYPE_STRUCTURE editionStruct = contextGlobal->getEditionStructureSelectionnee();
 
     // Spécifier juste pour les Mines
-    ress = typeStructureToTypeRessource(editionStruct);
+    ress = typeMineToTypeRessource(editionStruct);
 
     // Construit et ajoute la Mine
     if (ress != TYPE_RESSOURCE::Rien)
@@ -246,16 +245,25 @@ bool Manager::placerMine(CaseMap *caseSelect)
 
 /**
  * @brief Place un Pipeline sur la carte
- * 
+ *
  * @warning Ne connecte pas le Pipeline aux structures voisines
  *
  * @param CaseMap * - *caseSelect*
  * @return true - Structure placée (Pipeline)
  * @return false - Structure non placée (Pas Pipeline)
  */
-bool Manager::placerPipeline(CaseMap *caseSelect)
+bool Manager::placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
 {
     bool place = false;
+
+    if (editionStruct == TYPE_STRUCTURE::Pipeline)
+    {
+        Pipeline *p = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
+
+        _carte->ajouterConstructionCaseCarte(p, p->getPositionCarte());
+
+        place = true;
+    }
 
     return place;
 }
@@ -313,10 +321,12 @@ bool Manager::integrationStructureVoisinage()
         {
             if (!structAjoutee->getASortie())
             { // Essaye d'ajouter en sortie la structure
-                structAjoutee->connecterStructure(structsVoisines[k], true);
+                if (structAjoutee->connecterStructure(structsVoisines[k], true))
+                    cerr << "Connexion Structure comme une sortie" << endl;
             }
             // Dans tous les cas essaye d'ajouter comme entrée
-            structAjoutee->connecterStructure(structsVoisines[k], false);
+            if (structAjoutee->connecterStructure(structsVoisines[k], false))
+                cerr << "Connexion Structure comme une entrée" << endl;
         }
     }
 
