@@ -29,6 +29,7 @@ using namespace sf;
 
 class ContextGlobal;
 // class Structure;
+class Batiment;
 
 extern ContextGlobal *contextGlobal;
 
@@ -49,9 +50,9 @@ private:
     uint _idPipeline;
     IntRect _zoomTexture;
 
-protected: // Static
-    static const uint _tailleStockEntree;
-    static const uint _tailleStockSortie;
+protected:                                // Static
+    static const uint _tailleStockEntree; // = 1
+    static const uint _tailleStockSortie; // = 1
 
 private: // Static
     static uint _nbPipelines;
@@ -94,6 +95,8 @@ public:
 
     // Setter
     void setSpriteTexture(uint tick);
+
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 };
 
 /***************************************************/

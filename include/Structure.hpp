@@ -108,7 +108,7 @@ public:
     TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();
 
-    virtual bool checkConnexionPossible(Structure *s);
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
 };
 
 /***************************************************/

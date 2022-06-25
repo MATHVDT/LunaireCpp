@@ -14,11 +14,14 @@
 
 #include <list>
 #include <queue>
+#include <typeinfo>
 
 #include "Structure.hpp"
+#include "Pipeline.hpp"
 #include "ContextGlobal.hpp"
 
 class ContextGlobal;
+class Pipeline;
 
 extern ContextGlobal *contextGlobal;
 
@@ -31,9 +34,9 @@ private: // Static
     static uint _nbBatiments;
     static uint _idMaxBatiments;
 
-protected: // Static
-    static const uint _tailleStockEntree;
-    static const uint _tailleStockSortie;
+protected:                                // Static
+    static const uint _tailleStockEntree; // = 6 defaut
+    static const uint _tailleStockSortie; // = 1
 
 public: // Static
     static uint getNbBatiments();
@@ -62,7 +65,7 @@ public:
 
     virtual void process();
 
-    virtual bool checkConnexionPossible(Structure *s) override;
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 };
 
 /***************************************************/

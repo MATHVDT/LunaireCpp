@@ -164,15 +164,27 @@ void Structure::remplirStock()
 /*******************************************************/
 
 /**
- * @brief Check si la connexion entre les 2 Structures est possible
- * @todo Verifier l'unicité de la sortie (un peu près fait, vérif si sur les 2 structs yen a un qui peu être la sortie)
+ * @brief Check si la connexion entre les 2 Structures
  *
  * @param Structure * - *s*
+ * @param bool - *commeSortie*
+ *
  * @return true - *Connexion possible*
  * @return false - *Connexion impossible*
  */
-bool Structure::checkConnexionPossible(Structure *s)
+bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
 {
+    // Verrifier que la struct existe bien
+    if (s == nullptr)
+        return false;
+
+    // Test sortie
+    // Test si la connexion en sortie est libre
+    if (commeSortie && this->getASortie() == true)
+        return false; // Ya déjà une sortie
+    if (!commeSortie && s->getASortie() == true)
+        return false; // Ya déja une sortie sur l'autre structure
+
     // Verifier que la Structure est bien adajacente
     bool structAdjacente = false;
     for (int dir = DIRECTION::NORD;
@@ -203,12 +215,12 @@ bool Structure::checkConnexionPossible(Structure *s)
  */
 bool Structure::connecterStructure(Structure *s, bool commeSortie)
 {
-    // Test si la connexion en sortie est libre
-    if (commeSortie && _sortie != nullptr)
-        return false; // Ya déjà une sortie
 
+    // Connexion possible :
     // Structure adjacente
-    if (!checkConnexionPossible(s))
+    // Sortie ok sur la structure qui doit l'être
+    // Nb de connexion ok
+    if (!checkConnexionPossible(s, commeSortie))
         return false;
 
     // Test si la structure est déjà connectée
