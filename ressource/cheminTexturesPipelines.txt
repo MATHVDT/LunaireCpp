@@ -1,5 +1,7 @@
-./ressource/pipelines/pipeline_non_connecte_s_all.png
-./ressource/pipelines/pipeline_droit_se_no.png
-./ressource/pipelines/pipeline_droit_s_n.png
-./ressource/pipelines/pipeline_angle_s_se.png
-./ressource/pipelines/pipeline_angle_s_no.png
+./ressource/pipelines/pipeline_non_connecte.png
+./ressource/pipelines/pipeline_all_sortie.png
+./ressource/pipelines/pipeline_entree_all.png
+./ressource/pipelines/pipeline_droit_vertical.png
+./ressource/pipelines/pipeline_angle_large.png
+./ressource/pipelines/pipeline_droit_oblique.png
+./ressource/pipelines/pipeline_angle_etroit.png

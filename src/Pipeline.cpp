@@ -26,6 +26,7 @@ uint Pipeline::_tailleTexture = 0; // 655
 
 // 3 Textures : Pas connecté | droit | angle
 Texture *Pipeline::_texturesPipelines[NB_TEXTURE];
+uint Pipeline::_offsetTextureX = 655; // Largeur d'1 texture
 uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
 
 /**
@@ -34,11 +35,11 @@ uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
  * @param Vector2u & - *pos*
  */
 Pipeline::Pipeline(const Vector2u &pos)
-    : Structure{pos, _texturesPipelines[NON_RELIE],
+    : Structure{pos, _texturesPipelines[NON_CONNECTE],
                 _tailleStockEntree, _tailleStockSortie},
       _idPipeline(++_idMaxPipelines),
       _zoomTexture{0, 0,
-                   (int)_offsetTextureY,
+                   (int)_offsetTextureX,
                    (int)_offsetTextureY}
 {
     ++_nbPipelines;
@@ -57,6 +58,7 @@ void Pipeline::chargerMemoirePipelines()
 {
     // cerr << endl << "chargerMemoirePipelines" << endl;
     chargerTextures(cheminFichierTexturesPipelines);
+    _offsetTextureX = _tailleTexture; // Largeur d'une case
     _offsetTextureY = _tailleTexture; // Largeur d'une case
 }
 
@@ -103,7 +105,8 @@ void Pipeline::chargerTextures(string fichierCheminsTexture)
 
             _texturesPipelines[k] = texture;
         }
-        _tailleTexture = texture->getSize().x;
+        // Récupère la taille d'une case texture
+        _tailleTexture = texture->getSize().y / 3;
 
         monFlux.close();
     }
@@ -120,8 +123,7 @@ void Pipeline::init() {}
 
 void Pipeline::dessiner(float scaleSprite)
 {
-    // setSpriteTexture
-    // => _sprite->setTextureRect(_zoomTexture);
+    setSpriteTexture(0);
     Structure::dessiner(scaleSprite);
 }
 
@@ -140,6 +142,8 @@ void Pipeline::process() {}
 void Pipeline::setSpriteTexture(uint tick)
 {
     _zoomTexture.top = _level * _offsetTextureY;
+    // uint offsetDirText = calculOffsetDirTexture()
+    // _zoomTexture.left = offsetDirText * _offsetTextureX;
 
     _sprite->setTextureRect(_zoomTexture);
 }
@@ -176,4 +180,18 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
 
 void Pipeline::adaptationTexture()
 {
+    Vector2u posEntree;
+    Vector2u posSortie;
+
+    if (_listStructuresConnectees.size() == 1)
+        posEntree = (*_listStructuresConnectees.begin())->getPositionCarte();
+
+    if (_sortie != nullptr)
+        posSortie = _sortie->getPositionCarte();
+
+    DIRECTION dirEntree = positionOrigineDestToDirection(this->getPositionCarte(), posEntree);
+
+    DIRECTION dirSortie = positionOrigineDestToDirection(this->getPositionCarte(), posSortie);
+
+    // ...
 }

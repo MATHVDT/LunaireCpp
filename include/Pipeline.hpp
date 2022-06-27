@@ -32,20 +32,65 @@ class ContextGlobal;
 class Batiment;
 
 extern ContextGlobal *contextGlobal;
-
 extern string cheminFichierTexturesPipelines;
+
+struct orientation
+{
+    uint type;     // TEXTURE
+    uint variante; // OFFSET_TEXTURE
+};
 
 class Pipeline : public Structure
 {
-
+    // Enum
     enum TEXTURE
     {
-        NON_RELIE = 0,
-        DROIT_SE_NO = 1,
-        DROIT_S_N = 2,
-        ANGLE_S_SE = 3,
-        ANGLE_S_NO = 4,
-        NB_TEXTURE = 5
+        NON_CONNECTE = 0,
+        ALL_SORTIE = 1,
+        ENTREE_ALL = 2,
+        DROIT_VERTICAL = 3,
+        ANGLE_LARGE = 4,
+        DROIT_OBLIQUE = 5,
+        ANGLE_ETROIT = 6,
+        NB_TEXTURE = 7
+    };
+    enum OFFSET_TEXTURE
+    {
+        // NON_CONNECTE
+        A_A = 0,
+        // ALL_SORTIE
+        A_N = 0,
+        A_NO = 1,
+        A_SO = 2,
+        A_S = 3,
+        A_SE = 4,
+        A_NE = 5,
+        // ENTREE_ALL
+        S_A = 0,
+        SE_A = 1,
+        NE_A = 2,
+        N_A = 3,
+        NO_A = 4,
+        SO_A = 5,
+        // DROIT_VERTICAL
+        S_N = 0,
+        N_S = 1,
+        // ANGLE_LARGE
+        S_NO = 0,
+        S_NE = 1,
+        N_SO = 2,
+        N_SE = 3,
+        // DROIT_OBLIQUE
+        SE_NO = 0,
+        NO_SE = 1,
+        SO_NE = 2,
+        NE_SO = 3,
+        // ANGLE_ETROIT
+        S_SO = 0,
+        S_SE = 1,
+        N_NO = 2,
+        N_NE = 3,
+
     };
 
 private:
@@ -65,6 +110,7 @@ private: // Static
 
     static uint _tailleTexture;
     static Texture *_texturesPipelines[NB_TEXTURE];
+    static uint _offsetTextureX; // Largeur d'1 texture
     static uint _offsetTextureY; // Hauteur d'1 texture
 
 public: // Static
