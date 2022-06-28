@@ -34,10 +34,10 @@ class Batiment;
 extern ContextGlobal *contextGlobal;
 extern string cheminFichierTexturesPipelines;
 
-struct orientation
+struct Orientation_t
 {
-    uint type;     // TEXTURE
-    uint variante; // OFFSET_TEXTURE
+    uint type;    // TEXTURE
+    uint variant; // OFFSET_TEXTURE
 };
 
 class Pipeline : public Structure
@@ -80,6 +80,10 @@ class Pipeline : public Structure
         S_NE = 1,
         N_SO = 2,
         N_SE = 3,
+        NO_S = 4,
+        NE_S = 5,
+        SO_N = 6,
+        SE_E = 7,
         // DROIT_OBLIQUE
         SE_NO = 0,
         NO_SE = 1,
@@ -90,12 +94,20 @@ class Pipeline : public Structure
         S_SE = 1,
         N_NO = 2,
         N_NE = 3,
-
+        SO_S = 4,
+        SE_S = 5,
+        NO_N = 6,
+        NE_N = 7,
+        SO_NO = 8,
+        NO_SE = 9,
+        SE_NE = 10,
+        NE_SE = 11,
     };
 
 private:
     uint _idPipeline;
     IntRect _zoomTexture;
+    Orientation_t _orientation;
 
 protected:                                // Static
     static const uint _tailleStockEntree; // = 1
@@ -146,7 +158,14 @@ public:
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
-    void adaptationTexture();
+    void updateOrientation();
+    void calculOrientation(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationEntreeAll(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationAllSortie(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationAngleLarge(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationAngleEtroit(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationDroitVertical(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool calculOrientationDroiteOblique(DIRECTION dirEntree, DIRECTION dirSortie);
 };
 
 /***************************************************/

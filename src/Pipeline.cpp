@@ -40,7 +40,8 @@ Pipeline::Pipeline(const Vector2u &pos)
       _idPipeline(++_idMaxPipelines),
       _zoomTexture{0, 0,
                    (int)_offsetTextureX,
-                   (int)_offsetTextureY}
+                   (int)_offsetTextureY},
+      _orientation{NON_CONNECTE, A_A}
 {
     ++_nbPipelines;
 }
@@ -142,8 +143,11 @@ void Pipeline::process() {}
 void Pipeline::setSpriteTexture(uint tick)
 {
     _zoomTexture.top = _level * _offsetTextureY;
-    // uint offsetDirText = calculOffsetDirTexture()
-    // _zoomTexture.left = offsetDirText * _offsetTextureX;
+
+    // Changement de Type de Pipeline
+    _sprite->setTexture(*_texturesPipelines[_orientation.type]);
+    // Changement de Variant de Pipeline
+    _zoomTexture.left = _orientation.variant * _offsetTextureX;
 
     _sprite->setTextureRect(_zoomTexture);
 }
@@ -178,7 +182,13 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
     return Structure::checkConnexionPossible(s, commeSortie);
 }
 
-void Pipeline::adaptationTexture()
+/*******************************************************/
+
+/**
+ * @brief Calcule l'orientation de Pipeline en fct des connexions dessus
+ *
+ */
+void Pipeline::updateOrientation()
 {
     Vector2u posEntree;
     Vector2u posSortie;

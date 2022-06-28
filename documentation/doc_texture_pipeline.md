@@ -53,6 +53,10 @@ enum OFFSET_TEXTURE
     S_NE = 1,
     N_SO = 2,
     N_SE = 3,
+    NO_S = 4,
+    NE_S = 5,
+    SO_N = 6,
+    SE_E = 7,
     // DROIT_OBLIQUE
     SE_NO = 0,
     NO_SE = 1,
@@ -63,6 +67,14 @@ enum OFFSET_TEXTURE
     S_SE = 1,
     N_NO = 2,
     N_NE = 3,
+    SO_S = 4,
+    SE_S = 5,
+    NO_N = 6,
+    NE_N = 7,
+    SO_NO = 8,
+    NO_SE = 9,
+    SE_NE = 10,
+    NE_SE = 11,
 };
 ```
 
