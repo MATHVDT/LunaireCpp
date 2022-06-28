@@ -111,3 +111,8 @@ bool Batiment::checkConnexionPossible(Structure *s, bool commeSortie)
 
     return Structure::checkConnexionPossible(s, commeSortie);
 }
+
+void Batiment::updateOrientation()
+{
+    // Rien
+}

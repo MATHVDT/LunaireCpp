@@ -65,6 +65,7 @@ public:
 
     virtual void process();
 
+    void updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 };
 

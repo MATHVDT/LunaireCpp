@@ -83,7 +83,11 @@ class Pipeline : public Structure
         NO_S = 4,
         NE_S = 5,
         SO_N = 6,
-        SE_E = 7,
+        SE_N = 7,
+        NO_NE = 8,
+        NE_NO = 9,
+        SO_SE = 10,
+        SE_SO = 11,
         // DROIT_OBLIQUE
         SE_NO = 0,
         NO_SE = 1,
@@ -99,7 +103,7 @@ class Pipeline : public Structure
         NO_N = 6,
         NE_N = 7,
         SO_NO = 8,
-        NO_SE = 9,
+        NO_SO = 9,
         SE_NE = 10,
         NE_SE = 11,
     };
@@ -158,7 +162,7 @@ public:
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
-    void updateOrientation();
+    void updateOrientation() override;
     void calculOrientation(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationEntreeAll(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationAllSortie(DIRECTION dirEntree, DIRECTION dirSortie);

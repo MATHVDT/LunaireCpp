@@ -74,6 +74,7 @@ public:
 
     virtual void dessiner(float scaleSprite) = 0;
     virtual void update();
+    virtual void updateOrientation() = 0;
 
     // Getter
     uint getIdStructure() const;

@@ -315,7 +315,7 @@ bool Manager::integrationStructureVoisinage()
     dès que une sortie a été setter, tous les autres connexions
     sont des entrées
     */
-   // Connexion des Structures à celle ajoutée
+    // Connexion des Structures à celle ajoutée
     for (int k = 0; k < 6; ++k)
     { // Pour chaque structure voisine
         if (structsVoisines[k] != nullptr)
@@ -337,11 +337,12 @@ bool Manager::integrationStructureVoisinage()
     // ...
 
     // Adapatation des textures des structures impactées
-    // structAjoutee.updateOrientation();
+    structAjoutee->updateOrientation();
     for (int k = 0; k < 6; ++k)
     {
         // Actualiser orientation structure (Texture)
-        // structsVoisines[k].updateOrientation();
+        if (structsVoisines[k] != nullptr)
+            structsVoisines[k]->updateOrientation();
     }
 
     return true;

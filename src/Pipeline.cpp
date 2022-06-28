@@ -150,6 +150,9 @@ void Pipeline::setSpriteTexture(uint tick)
     _zoomTexture.left = _orientation.variant * _offsetTextureX;
 
     _sprite->setTextureRect(_zoomTexture);
+
+    cerr << "type : " << _orientation.type << endl;
+    cerr << "variant : " << _orientation.variant << endl;
 }
 
 /*******************************************************/
@@ -190,18 +193,19 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
  */
 void Pipeline::updateOrientation()
 {
-    Vector2u posEntree;
-    Vector2u posSortie;
+    Vector2i posEntree = Vector2i{-1, -1};
+    Vector2i posSortie = Vector2i{-1, -1};
 
-    if (_listStructuresConnectees.size() == 1)
-        posEntree = (*_listStructuresConnectees.begin())->getPositionCarte();
+    if (this->getNbEntrees() >= 1)
+    {
+        posEntree = (Vector2i)(*getStructuresConnecteesEntrantes().begin())->getPositionCarte();
+    }
 
     if (_sortie != nullptr)
-        posSortie = _sortie->getPositionCarte();
+        posSortie = (Vector2i)_sortie->getPositionCarte();
 
-    DIRECTION dirEntree = positionOrigineDestToDirection(this->getPositionCarte(), posEntree);
+    DIRECTION dirEntree = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posEntree);
+    DIRECTION dirSortie = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posSortie);
 
-    DIRECTION dirSortie = positionOrigineDestToDirection(this->getPositionCarte(), posSortie);
-
-    // ...
+    calculOrientation(dirEntree, dirSortie);
 }

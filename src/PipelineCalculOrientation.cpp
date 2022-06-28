@@ -17,28 +17,30 @@ void Pipeline::calculOrientation(
     }
 
     // ENTREE_ALL (juste une entrée)
-    if (!calculOrientationEntreeAll(dirEntree, dirSortie))
+    if (calculOrientationEntreeAll(dirEntree, dirSortie))
         return;
 
     // ALL_SORTIE (juste une sortie)
-    if (!calculOrientationAllSortie(dirEntree, dirSortie))
+    if (calculOrientationAllSortie(dirEntree, dirSortie))
         return;
 
     // ANGLE_LARGE
-    if (!calculOrientationAngleLarge(dirEntree, dirSortie))
+    if (calculOrientationAngleLarge(dirEntree, dirSortie))
         return;
 
     // ANGLE_ETROIT
-    if (!calculOrientationAngleEtroit(dirEntree, dirSortie))
+    if (calculOrientationAngleEtroit(dirEntree, dirSortie))
         return;
 
     // DROIT_VERTICAL
-    if (!calculOrientationDroitVertical(dirEntree, dirSortie))
+    if (calculOrientationDroitVertical(dirEntree, dirSortie))
         return;
 
     // DROIT_OBLIQUE
-    if (!calculOrientationDroiteOblique(dirEntree, dirSortie))
+    if (calculOrientationDroiteOblique(dirEntree, dirSortie))
         return;
+
+    cerr << "Erreur par d'orientation trouvée pour le Pipeline de direction et sens : " << dirEntree << "->" << dirSortie << endl;
 }
 
 /*******************************************************/
@@ -76,9 +78,11 @@ bool Pipeline::calculOrientationEntreeAll(
             _orientation.type = ENTREE_ALL;
             _orientation.variant = SE_A;
         }
-        return true;
     }
-    return false;
+    if (_orientation.type == ENTREE_ALL)
+        return true;
+    else
+        return false;
 }
 
 // ALL_SORTIE (juste une sortie)
@@ -114,9 +118,11 @@ bool Pipeline::calculOrientationAllSortie(
             _orientation.type = ALL_SORTIE;
             _orientation.variant = A_SE;
         }
-        return true;
     }
-    return false;
+    if (_orientation.type == ALL_SORTIE)
+        return true;
+    else
+        return false;
 }
 
 // ANGLE_LARGE
@@ -149,11 +155,64 @@ bool Pipeline::calculOrientationAngleLarge(
             _orientation.variant = N_SE;
         }
     }
-    else
-    { // Pas un ANGLE_LARGE
-        return false;
+    else if (dirEntree == DIRECTION::NORDOUEST)
+    {
+        if (dirSortie == DIRECTION::SUD)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = NO_S;
+        }
+        else if (dirSortie == DIRECTION::NORDEST)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = NO_NE;
+        }
     }
-    return true;
+    else if (dirEntree == DIRECTION::NORDEST)
+    {
+        if (dirSortie == DIRECTION::SUD)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = NE_S;
+        }
+        else if (dirSortie == DIRECTION::NORDOUEST)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = NE_NO;
+        }
+    }
+    else if (dirEntree == DIRECTION::SUDEST)
+    {
+        if (dirSortie == DIRECTION::NORD)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = SE_N;
+        }
+        else if (dirSortie == DIRECTION::SUDOUEST)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = SE_SO;
+        }
+    }
+    else if (dirEntree == DIRECTION::SUDOUEST)
+    {
+        if (dirSortie == DIRECTION::NORD)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = SO_N;
+        }
+        else if (dirSortie == DIRECTION::SUDEST)
+        {
+            _orientation.type = ANGLE_LARGE;
+            _orientation.variant = SO_SE;
+        }
+    }
+
+    // Pas un ANGLE_LARGE
+    if (_orientation.type == ANGLE_LARGE)
+        return true;
+    else
+        return false;
 }
 
 // ANGLE_ETROIT
@@ -186,21 +245,122 @@ bool Pipeline::calculOrientationAngleEtroit(
             _orientation.variant = N_NE;
         }
     }
-    else
-    { // Pas un ANGLE_ETROIT
-        return false;
+    else if (dirEntree == DIRECTION::SUDOUEST)
+    {
+        if (dirSortie == DIRECTION::SUD)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = SO_S;
+        }
+        else if (dirSortie == DIRECTION::NORDOUEST)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = SO_NO;
+        }
     }
-    return true;
+    else if (dirEntree == DIRECTION::SUDEST)
+    {
+        if (dirSortie == DIRECTION::SUD)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = SE_S;
+        }
+        else if (dirSortie == DIRECTION::NORDEST)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = SO_NE;
+        }
+    }
+    else if (dirEntree == DIRECTION::NORDOUEST)
+    {
+        if (dirSortie == DIRECTION::SUDOUEST)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = NO_SO;
+        }
+        else if (dirSortie == DIRECTION::NORD)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = NO_N;
+        }
+    }
+    else if (dirEntree == DIRECTION::NORDEST)
+    {
+        if (dirSortie == DIRECTION::SUDEST)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = NE_SE;
+        }
+        else if (dirSortie == DIRECTION::NORD)
+        {
+            _orientation.type = ANGLE_ETROIT;
+            _orientation.variant = NE_N;
+        }
+    }
+
+    // Pas un ANGLE_ETROIT
+    if (_orientation.type == ANGLE_ETROIT)
+        return true;
+    else
+        return false;
 }
 
 // DROIT_VERTICAL
 bool Pipeline::calculOrientationDroitVertical(
     DIRECTION dirEntree, DIRECTION dirSortie)
 {
+    if (dirEntree == DIRECTION::SUD &&
+        dirSortie == DIRECTION::NORD)
+    {
+        _orientation.type = DROIT_VERTICAL;
+        _orientation.variant = S_N;
+    }
+    else if (dirEntree == DIRECTION::NORD &&
+             dirSortie == DIRECTION::SUD)
+    {
+        _orientation.type = DROIT_VERTICAL;
+        _orientation.variant = N_S;
+    }
+
+    // Pas un DROIT_VERTICAL
+    if (_orientation.type == DROIT_VERTICAL)
+        return true;
+    else
+        return false;
 }
 
 // DROIT_OBLIQUE
 bool Pipeline::calculOrientationDroiteOblique(
     DIRECTION dirEntree, DIRECTION dirSortie)
 {
+    if (dirEntree == DIRECTION::SUDEST &&
+        dirSortie == DIRECTION::NORDOUEST)
+    {
+        _orientation.type = DROIT_OBLIQUE;
+        _orientation.variant = SE_NO;
+    }
+    else if (dirEntree == DIRECTION::NORDOUEST &&
+             dirSortie == DIRECTION::SUDEST)
+    {
+        _orientation.type = DROIT_OBLIQUE;
+        _orientation.variant = NO_SE;
+    }
+    else if (dirEntree == DIRECTION::SUDOUEST &&
+             dirSortie == DIRECTION::NORDEST)
+    {
+        _orientation.type = DROIT_OBLIQUE;
+        _orientation.variant = SO_NE;
+    }
+    else if (dirEntree == DIRECTION::NORDEST &&
+             dirSortie == DIRECTION::SUDOUEST)
+    {
+        _orientation.type = DROIT_OBLIQUE;
+        _orientation.variant = NE_SO;
+    }
+
+    // Pas un DROIT_OBLIQUE
+    if (_orientation.type == DROIT_OBLIQUE)
+        return true;
+    else
+        return false;
 }
