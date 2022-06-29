@@ -328,6 +328,8 @@ bool Manager::integrationStructureVoisinage()
             // Dans tous les cas essaye d'ajouter comme entrée
             if (structAjoutee->connecterStructure(structsVoisines[k], false))
                 cerr << "Connexion Structure comme une entrée" << endl;
+            else
+                cerr << "Pas connectée comme une entrée" << endl;
         }
     }
 

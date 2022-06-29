@@ -1,6 +1,6 @@
 #include "Pipeline.hpp"
 
-void Pipeline::calculOrientation(
+bool Pipeline::calculOrientation(
     DIRECTION dirEntree, DIRECTION dirSortie)
 {
     // Par defaut
@@ -13,34 +13,36 @@ void Pipeline::calculOrientation(
     {
         _orientation.type = NON_CONNECTE;
         _orientation.variant = A_A;
-        return;
+        return true;
     }
 
     // ENTREE_ALL (juste une entrée)
     if (calculOrientationEntreeAll(dirEntree, dirSortie))
-        return;
+        return true;
 
     // ALL_SORTIE (juste une sortie)
     if (calculOrientationAllSortie(dirEntree, dirSortie))
-        return;
+        return true;
 
     // ANGLE_LARGE
     if (calculOrientationAngleLarge(dirEntree, dirSortie))
-        return;
+        return true;
 
     // ANGLE_ETROIT
     if (calculOrientationAngleEtroit(dirEntree, dirSortie))
-        return;
+        return true;
 
     // DROIT_VERTICAL
     if (calculOrientationDroitVertical(dirEntree, dirSortie))
-        return;
+        return true;
 
     // DROIT_OBLIQUE
     if (calculOrientationDroiteOblique(dirEntree, dirSortie))
-        return;
+        return true;
 
     cerr << "Erreur par d'orientation trouvée pour le Pipeline de direction et sens : " << dirEntree << "->" << dirSortie << endl;
+
+    return false;
 }
 
 /*******************************************************/
@@ -268,7 +270,7 @@ bool Pipeline::calculOrientationAngleEtroit(
         else if (dirSortie == DIRECTION::NORDEST)
         {
             _orientation.type = ANGLE_ETROIT;
-            _orientation.variant = SO_NE;
+            _orientation.variant = SE_NE;
         }
     }
     else if (dirEntree == DIRECTION::NORDOUEST)

@@ -41,7 +41,8 @@ Pipeline::Pipeline(const Vector2u &pos)
       _zoomTexture{0, 0,
                    (int)_offsetTextureX,
                    (int)_offsetTextureY},
-      _orientation{NON_CONNECTE, A_A}
+      _orientation{NULLDIRECTION, NULLDIRECTION,
+                   NON_CONNECTE, A_A}
 {
     ++_nbPipelines;
 }
@@ -124,6 +125,8 @@ void Pipeline::init() {}
 
 void Pipeline::dessiner(float scaleSprite)
 {
+    // cerr << "type : " << _orientation.type << endl;
+    // cerr << "variant : " << _orientation.variant << endl;
     setSpriteTexture(0);
     Structure::dessiner(scaleSprite);
 }
@@ -151,8 +154,8 @@ void Pipeline::setSpriteTexture(uint tick)
 
     _sprite->setTextureRect(_zoomTexture);
 
-    cerr << "type : " << _orientation.type << endl;
-    cerr << "variant : " << _orientation.variant << endl;
+    // cerr << "type : " << _orientation.type << endl;
+    // cerr << "variant : " << _orientation.variant << endl;
 }
 
 /*******************************************************/
@@ -160,6 +163,8 @@ void Pipeline::setSpriteTexture(uint tick)
 
 /**
  * @brief Check si la connexion entre le Pipeline et une autre strucutre est possible (nb de connexion)
+ *
+ * @details Dans la méthode override, on regarde si la structrures peut avoir une connexion suplémentaire (sortie ou entrée). Puis dans la méthode Structure::checkConnexionPossible, on regarde si c'est la structure que l'on veut ajouter qui peut accepter une connexion supplémentaire (entrée ou sortie).
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie*
@@ -169,19 +174,19 @@ void Pipeline::setSpriteTexture(uint tick)
  */
 bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-    // Vérifie le nombre d'entrées
-    if (commeSortie)
-    {
-        // Faut que la structure a co ait des entrées libres
-        if (s->getNbEntrees() >= s->getTailleStockEntree())
-            return false; // Toutes les entrées prises
+    // Vérifie sortie est libre
+    if (commeSortie && _sortie != nullptr)
+    { // Ya déjà une structure en sortie
+        cout << "ICI" << endl;
+        return false;
+    } // Verifie entrée libre
+    else if (!commeSortie &&
+             this->getNbEntrees() >= this->getTailleStockEntree())
+    { // Toutes les entrées prises
+        cout << "LA" << endl;
+        return false;
     }
-    else // !commeSortie
-    {
-        // Faut que this ait des entrées de libres
-        if (this->getNbEntrees() >= this->getTailleStockEntree())
-            return false; // Toutes les entrées prises
-    }
+
     return Structure::checkConnexionPossible(s, commeSortie);
 }
 
@@ -191,7 +196,7 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
  * @brief Calcule l'orientation de Pipeline en fct des connexions dessus
  *
  */
-void Pipeline::updateOrientation()
+bool Pipeline::updateOrientation()
 {
     Vector2i posEntree = Vector2i{-1, -1};
     Vector2i posSortie = Vector2i{-1, -1};
@@ -207,5 +212,8 @@ void Pipeline::updateOrientation()
     DIRECTION dirEntree = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posEntree);
     DIRECTION dirSortie = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posSortie);
 
-    calculOrientation(dirEntree, dirSortie);
+    _orientation.dirEntree = dirEntree;
+    _orientation.dirSortie = dirSortie;
+
+    return calculOrientation(dirEntree, dirSortie);
 }

@@ -74,7 +74,6 @@ public:
 
     virtual void dessiner(float scaleSprite) = 0;
     virtual void update();
-    virtual void updateOrientation() = 0;
 
     // Getter
     uint getIdStructure() const;
@@ -103,8 +102,9 @@ public:
     virtual void process() = 0;
 
     // Gestion des structures connectées
-    bool connecterStructure(Structure *s, bool commeSortie = true);
+    bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
     bool deconnecterStructure(Structure *s);
+    virtual bool updateOrientation() = 0;
 
     TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();

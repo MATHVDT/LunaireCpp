@@ -164,7 +164,7 @@ void Structure::remplirStock()
 /*******************************************************/
 
 /**
- * @brief Check si la connexion entre les 2 Structures
+ * @brief Check si la connexion entre les 2 Structures, test si c'est la structure que l'on veut connectée qui peut être connectée.
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie*
@@ -178,17 +178,22 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (s == nullptr)
         return false;
 
-    // Test sortie
-    // Test si la connexion en sortie est libre
-    if (commeSortie && this->getASortie() == true)
-        return false; // Ya déjà une sortie
-    if (!commeSortie && s->getASortie() == true)
-        return false; // Ya déja une sortie sur l'autre structure
-
+    // Test si ya de la place en entrée sur s
+    if (commeSortie &&
+        s->getNbEntrees() >= s->getTailleStockEntree())
+    { // Ya plus de place en entrée
+        return false;
+    }
+    // Test si y a déjà une sortie sur s
+    if (!commeSortie &&
+        s->getASortie() == true)
+    { // La structure a déjà une sortie
+        return false;
+    }
     // Verifier que la Structure est bien adajacente
     bool structAdjacente = false;
     for (int dir = DIRECTION::NORD;
-         dir < DIRECTION::NORDEST; ++dir)
+         dir <= DIRECTION::NORDEST; ++dir)
     { // Check position adjacente dans dir
         structAdjacente |=
             (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte());
@@ -198,9 +203,6 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (!structAdjacente)
         return false;
 
-    // Test sur les deux Structures il ya
-    // une qui peut être la sortie
-    // return !(this->getASortie() && s->getASortie());
     return true;
 }
 
@@ -209,19 +211,22 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie = true*
+ * @param bool - *connexionAutreSens = false*
  *
  * @return true - *Si la Structure a été connectée en tant que sortie ou entrée*
  * @return false - *Pas de possible de connecter*
  */
-bool Structure::connecterStructure(Structure *s, bool commeSortie)
+bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexionAutreSens)
 {
-
     // Connexion possible :
     // Structure adjacente
     // Sortie ok sur la structure qui doit l'être
     // Nb de connexion ok
-    if (!checkConnexionPossible(s, commeSortie))
+    if (!connexionAutreSens && !checkConnexionPossible(s, commeSortie))
+    {
+        cout << "ICI pos :" << s->getPositionCarte().y << endl;
         return false;
+    }
 
     // Test si la structure est déjà connectée
     if (find(_listStructuresConnectees.begin(),
@@ -231,18 +236,22 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie)
         return false;
     }
 
+    // TESTER SI CA NE CREER PAS UNE BOUCLE DANS LE "GRAPHE"
+    // EN GROS REMONTER LE CHEMIN COMME SI ON AVAIT CO
+    // ET VERIFIER QU'ON RETOMBE PAS SUR L'OBJET THIS
+
     // Ajoute a la liste des structures connectées
     this->_listStructuresConnectees.push_back(s);
 
     // Set la sortie
     if (commeSortie && this->setSortie(s))
     { // Ajoute la connexion comme une entrée dans l'autre sens
-        s->connecterStructure(this, false);
+        cout << "connexion autre sens : " << s->connecterStructure(this, false, true) << endl;
     }
     else
     { // La connexion sera une entrée
       // Ajoute la connexion comme une sortie dans l'autre sens
-        s->connecterStructure(this, true);
+        s->connecterStructure(this, true, true);
     }
     return true;
 }

@@ -36,6 +36,8 @@ extern string cheminFichierTexturesPipelines;
 
 struct Orientation_t
 {
+    DIRECTION dirEntree;
+    DIRECTION dirSortie;
     uint type;    // TEXTURE
     uint variant; // OFFSET_TEXTURE
 };
@@ -162,8 +164,8 @@ public:
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
-    void updateOrientation() override;
-    void calculOrientation(DIRECTION dirEntree, DIRECTION dirSortie);
+    bool updateOrientation() override;
+    bool calculOrientation(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationEntreeAll(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationAllSortie(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationAngleLarge(DIRECTION dirEntree, DIRECTION dirSortie);
