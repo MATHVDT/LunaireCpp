@@ -203,6 +203,10 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (!structAdjacente)
         return false;
 
+    // Check création d'un circuit avec la connexion
+    if (checkConnexionCircuit(s, commeSortie))
+        return false;
+
     return true;
 }
 
@@ -222,9 +226,9 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     // Structure adjacente
     // Sortie ok sur la structure qui doit l'être
     // Nb de connexion ok
+    // Pas de circuit crée
     if (!connexionAutreSens && !checkConnexionPossible(s, commeSortie))
     {
-        cout << "ICI pos :" << s->getPositionCarte().y << endl;
         return false;
     }
 
@@ -234,34 +238,6 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
              s) != _listStructuresConnectees.end())
     {
         return false;
-    }
-
-    // Test que l'ajout ne fasse pas une boucle/circuit
-    queue<Structure *> connexe = queue<Structure *>{};
-    Structure *tmp;
-    // Connecte comm une entrée, le chemin par de la sortie
-    if (!commeSortie && _sortie != nullptr)
-        connexe.push(_sortie); // Enfile la sortie
-    else if (commeSortie && s->getASortie())
-        connexe.push(s->getSortie());
-
-    while (!connexe.empty())
-    {
-        // Récupère le 1er elt pour le traiter
-        tmp = connexe.front();
-        connexe.pop();
-
-        // Correspond à la structure 
-        // que l'on veut connecter
-        // à qui l'on veut connecter
-        if (tmp == s ||tmp == this)
-        {
-            cerr << "Boucle trouvée" << endl;
-            return false; // Boucle/Circuit
-        }
-        // On parcours le chemin
-        if (tmp->getASortie())
-            connexe.push(tmp->getSortie());
     }
 
     // TESTER SI CA NE CREER PAS UNE BOUCLE DANS LE "GRAPHE"
@@ -282,6 +258,44 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
         s->connecterStructure(this, true, true);
     }
     return true;
+}
+
+/**
+ * @brief Vérifie que la connexion ne fait pas de circuit.
+ *
+ * @param Structure * - *s*
+ * @param bool - *commeSortie*
+ * @return true - *Si la connexion crée un circuit*
+ * @return false - *Si la connexion ne crée pas de circuit*
+ */
+bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
+{
+    // Test que l'ajout ne fasse pas une boucle/circuit
+    queue<Structure *> connexe = queue<Structure *>{};
+    Structure *tmp;
+    // Connecte comm une entrée, le chemin par de la sortie
+    if (!commeSortie && _sortie != nullptr)
+        connexe.push(_sortie); // Enfile la sortie
+    else if (commeSortie && s->getASortie())
+        connexe.push(s->getSortie());
+
+    while (!connexe.empty())
+    {
+        // Récupère le 1er elt pour le traiter
+        tmp = connexe.front();
+        connexe.pop();
+
+        // Correspond à la structure
+        // que l'on veut connecter
+        // à qui l'on veut connecter
+        if (tmp == s || tmp == this)
+            return true; // Boucle/Circuit
+
+        // On parcours le chemin
+        if (tmp->getASortie())
+            connexe.push(tmp->getSortie());
+    }
+    return false;
 }
 
 /**
@@ -324,7 +338,8 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
     Structure *structSave = nullptr;
 
     // Suppression de la structure connectée
-    int sizeStruct = _listStructuresConnectees.size();
+    int nbStructConnectee = _listStructuresConnectees.size();
+
     _listStructuresConnectees.remove_if(
         [&structSave, structADeconnectee](Structure *s)
         {
@@ -339,24 +354,29 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
             }
         });
     // Verification si la suppression c'est bien faite
-    if (sizeStruct != _listStructuresConnectees.size() - 1)
+    if (_listStructuresConnectees.size() != nbStructConnectee - 1)
         return false;
 
+    // Reset sortie si besoin
+    if (this->_sortie == structSave)
+        _sortie = nullptr;
+
     // Suppression dans l'autre sens
-    int sizeStructSave = structSave->_listStructuresConnectees.size();
+    int nbStructConnecteeSave = structSave->_listStructuresConnectees.size();
     structSave->_listStructuresConnectees.remove_if(
-        [structADeconnectee](Structure *s)
+        [this](Structure *s)
         {
-            return (s == structADeconnectee);
+            return (s == this);
         });
+
+    // Verification si la suppression c'est bien faite
+    if (structSave->_listStructuresConnectees.size() != nbStructConnecteeSave - 1)
+        return false;
+
     // Reset de la sortie si besoin
     if (structSave->_sortie == this)
-        structSave = nullptr;
-    // Verification si la suppression c'est bien faite
-    if (sizeStructSave != structSave->_listStructuresConnectees.size() - 1)
-    {
-        return false;
-    }
+        structSave->setSortie(nullptr);
+
     // Deconnexion ok dans les deux sens
     return true;
 }
