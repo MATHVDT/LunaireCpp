@@ -236,6 +236,34 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
         return false;
     }
 
+    // Test que l'ajout ne fasse pas une boucle/circuit
+    queue<Structure *> connexe = queue<Structure *>{};
+    Structure *tmp;
+    // Connecte comm une entrée, le chemin par de la sortie
+    if (!commeSortie && _sortie != nullptr)
+        connexe.push(_sortie); // Enfile la sortie
+    else if (commeSortie && s->getASortie())
+        connexe.push(s->getSortie());
+
+    while (!connexe.empty())
+    {
+        // Récupère le 1er elt pour le traiter
+        tmp = connexe.front();
+        connexe.pop();
+
+        // Correspond à la structure 
+        // que l'on veut connecter
+        // à qui l'on veut connecter
+        if (tmp == s ||tmp == this)
+        {
+            cerr << "Boucle trouvée" << endl;
+            return false; // Boucle/Circuit
+        }
+        // On parcours le chemin
+        if (tmp->getASortie())
+            connexe.push(tmp->getSortie());
+    }
+
     // TESTER SI CA NE CREER PAS UNE BOUCLE DANS LE "GRAPHE"
     // EN GROS REMONTER LE CHEMIN COMME SI ON AVAIT CO
     // ET VERIFIER QU'ON RETOMBE PAS SUR L'OBJET THIS
