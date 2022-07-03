@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <typeinfo>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -58,6 +59,7 @@ public:
     void init();
     void run();
     void update();
+    void updateEvent();
 
     bool placerStructure();
 

@@ -65,6 +65,8 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 
+    _gameEvent = AucunGameEvent;
+
     _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
 }
 
@@ -203,16 +205,17 @@ void ContextGlobal::checkClavierStructures()
     {
     case Keyboard::A:
         _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
-        cerr << "MinePoussiereRegolite selectionnée" << endl;
+        // cerr << "MinePoussiereRegolite selectionnée" << endl;
         break;
     case Keyboard::B:
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
-        cerr << "Pipeline selectionnée" << endl;
+        // cerr << "Pipeline selectionnée" << endl;
         break;
     case Keyboard::Space:
         _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
-        cerr << "AucuneStructure selectionnée" << endl;
-
+        // cerr << "AucuneStructure selectionnée" << endl;
+    case Keyboard::I:
+        _gameEvent = InverserSensPipeline;
         break;
     default:
         break;

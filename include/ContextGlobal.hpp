@@ -18,6 +18,12 @@ using namespace sf;
 class Carte;
 class CaseMap;
 
+enum GameEvent
+{
+    AucunGameEvent,
+    InverserSensPipeline
+};
+
 class ContextGlobal
 {
 
@@ -30,6 +36,7 @@ private:
     bool _eventPresent;
     Event _event;
     bool _isRun;
+    GameEvent _gameEvent;
 
     Carte *_carte;
     CaseMap *_caseOver;
@@ -69,6 +76,7 @@ public:
     CaseMap *getCaseOver() const;
     CaseMap *getCaseSelectionnee() const;
     TYPE_STRUCTURE getEditionStructureSelectionnee() const;
+    GameEvent getGameEvent() const;
 
     // Setter
     void setIsRun(bool run);
@@ -78,6 +86,7 @@ public:
     void setCaseOver(CaseMap *caseOver);
     void setCaseSelectionnee(bool reset = false);
     void setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect);
+    void setGameEvent(GameEvent gameEvent = AucunGameEvent);
 
 private:
     ContextGlobal();
@@ -112,6 +121,7 @@ inline const float ContextGlobal::getScaleReference() const { return _scaleRefer
 inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
+inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
@@ -119,5 +129,6 @@ inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleRefe
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
 inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
 inline void ContextGlobal::setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect) { _editionStructureSelectionnee = structSelect; }
+inline void ContextGlobal::setGameEvent(GameEvent gameEvent) { _gameEvent = gameEvent; }
 
 #endif

@@ -149,7 +149,7 @@ void Manager::run()
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
-            placerStructure();
+            updateEvent();
         }
         update();
         dessiner();
@@ -348,4 +348,28 @@ bool Manager::integrationStructureVoisinage()
     }
 
     return true;
+}
+
+/**
+ * @brief Effectue les calculs et actions liées au context actualisé par les event
+ *
+ */
+void Manager::updateEvent()
+{
+    placerStructure();
+
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
+
+    if (contextGlobal->getGameEvent() == InverserSensPipeline)
+    {
+        if (structSelect != nullptr &&
+            typeid(*structSelect).hash_code() == typeid(Pipeline).hash_code())
+        {
+            ((Pipeline *)structSelect)->inverserSens();
+            // ((Pipeline *)structSelect)->updateOrientation();
+
+            contextGlobal->setGameEvent();
+        }
+    }
 }

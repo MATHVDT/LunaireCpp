@@ -222,14 +222,18 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
  */
 bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexionAutreSens)
 {
+    if (s == nullptr)
+        return false;
+
     // Connexion possible :
     // Structure adjacente
     // Sortie ok sur la structure qui doit l'être
     // Nb de connexion ok
     // Pas de circuit crée
-    if (!connexionAutreSens && !checkConnexionPossible(s, commeSortie))
+    if (!checkConnexionPossible(s, commeSortie))
     {
-        return false;
+        if (!connexionAutreSens)
+            return false;
     }
 
     // Test si la structure est déjà connectée
@@ -250,7 +254,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     // Set la sortie
     if (commeSortie && this->setSortie(s))
     { // Ajoute la connexion comme une entrée dans l'autre sens
-        cout << "connexion autre sens : " << s->connecterStructure(this, false, true) << endl;
+        s->connecterStructure(this, false, true);
     }
     else
     { // La connexion sera une entrée
@@ -271,7 +275,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
 bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
 {
     // Test que l'ajout ne fasse pas une boucle/circuit
-    queue<Structure *> connexe = queue<Structure *>{};
+    queue<Structure *> connexe{};
     Structure *tmp;
     // Connecte comm une entrée, le chemin par de la sortie
     if (!commeSortie && _sortie != nullptr)
@@ -335,17 +339,17 @@ bool Structure::setSortie(Structure *structure)
  */
 bool Structure::deconnecterStructure(Structure *structADeconnectee)
 {
-    Structure *structSave = nullptr;
+    if (structADeconnectee == nullptr)
+        return false;
 
     // Suppression de la structure connectée
     int nbStructConnectee = _listStructuresConnectees.size();
 
-    _listStructuresConnectees.remove_if(
-        [&structSave, structADeconnectee](Structure *s)
+    this->_listStructuresConnectees.remove_if(
+        [structADeconnectee](Structure *s)
         {
             if (s == structADeconnectee)
             { // Save struct connectée
-                structSave = s;
                 return true;
             }
             else
@@ -354,28 +358,28 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
             }
         });
     // Verification si la suppression c'est bien faite
-    if (_listStructuresConnectees.size() != nbStructConnectee - 1)
-        return false;
+    if (this->_listStructuresConnectees.size() != nbStructConnectee - 1)
+        return false; // Erreur
 
     // Reset sortie si besoin
-    if (this->_sortie == structSave)
+    if (this->_sortie == structADeconnectee)
         _sortie = nullptr;
 
     // Suppression dans l'autre sens
-    int nbStructConnecteeSave = structSave->_listStructuresConnectees.size();
-    structSave->_listStructuresConnectees.remove_if(
+    int nbStructConnecteeSave = structADeconnectee->_listStructuresConnectees.size();
+    structADeconnectee->_listStructuresConnectees.remove_if(
         [this](Structure *s)
         {
             return (s == this);
         });
 
     // Verification si la suppression c'est bien faite
-    if (structSave->_listStructuresConnectees.size() != nbStructConnecteeSave - 1)
-        return false;
+    if (structADeconnectee->_listStructuresConnectees.size() != nbStructConnecteeSave - 1)
+        return false; // Erreur
 
     // Reset de la sortie si besoin
-    if (structSave->_sortie == this)
-        structSave->setSortie(nullptr);
+    if (structADeconnectee->_sortie == this)
+        structADeconnectee->setSortie(nullptr);
 
     // Deconnexion ok dans les deux sens
     return true;
@@ -393,9 +397,11 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
 list<Structure *> Structure::getStructuresConnecteesEntrantes() const
 {
     Structure *structSortie = _sortie;
+
     list<Structure *> listEntrees = _listStructuresConnectees;
     listEntrees.remove_if([structSortie](Structure *s)
-                          { return structSortie == s; });
+                          { return (structSortie == s); });
+
     return listEntrees;
 }
 

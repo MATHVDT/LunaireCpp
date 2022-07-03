@@ -14,6 +14,7 @@
 #include <iostream>
 #include <list>
 #include <queue>
+#include <stack>
 #include <sys/types.h>
 #include <string>
 
@@ -172,6 +173,8 @@ public:
     bool calculOrientationAngleEtroit(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationDroitVertical(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationDroiteOblique(DIRECTION dirEntree, DIRECTION dirSortie);
+
+    bool inverserSens();
 };
 
 /***************************************************/

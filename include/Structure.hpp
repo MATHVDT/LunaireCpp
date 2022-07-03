@@ -110,6 +110,7 @@ public:
     virtual void remplirStock();
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
+    bool checkConnexionCircuit(Structure *s, bool commeSortie);
 };
 
 /***************************************************/
@@ -134,7 +135,7 @@ inline uint Structure::getIdStructure() const { return _idStructure; }
 inline bool Structure::getASortie() const { return _sortie; }
 
 inline uint Structure::getNbConnexions() const { return _listStructuresConnectees.size(); }
-inline uint Structure::getNbEntrees() const { return getNbConnexions() - (_sortie != nullptr); }
+inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.size() - (_sortie != nullptr); }
 
 inline uint Structure::getLevel() const { return _level; }
 

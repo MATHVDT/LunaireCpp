@@ -177,13 +177,11 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
     // Vérifie sortie est libre
     if (commeSortie && _sortie != nullptr)
     { // Ya déjà une structure en sortie
-        cout << "ICI" << endl;
         return false;
     } // Verifie entrée libre
     else if (!commeSortie &&
              this->getNbEntrees() >= this->getTailleStockEntree())
     { // Toutes les entrées prises
-        cout << "LA" << endl;
         return false;
     }
 
@@ -216,4 +214,112 @@ bool Pipeline::updateOrientation()
     _orientation.dirSortie = dirSortie;
 
     return calculOrientation(dirEntree, dirSortie);
+}
+
+/**
+ * @brief Inverse la connexion du Pipeline
+ *
+ * @todo Test si cest d'autre pipeline qui sont co pour inverser toute le pipeline complet
+ *
+ * @return true - *Si le Pipeline a changé de sens*
+ * @return false - *Si le Pipeline n'a pas changé de sens*
+ */
+bool Pipeline::inverserSens()
+{
+    // Test que le pipeline est bien connecté dans les deux sens
+    if (this->getNbConnexions() == 0)
+        return false;
+
+    Structure *curseurPipeline = nullptr;
+    Structure *precPipeline = nullptr;
+
+    Structure *saveEntreePipeline = nullptr;
+    Structure *saveSortiePipeline = nullptr;
+
+    stack<Structure *> pilePipelineSortie{};
+    stack<Structure *> pilePipelineEntree{};
+
+    /***** Parcours jusqu'au début du pipeline ********/
+    curseurPipeline = this;
+    precPipeline = this;
+    while (curseurPipeline != nullptr &&
+           curseurPipeline->getNbEntrees() == 1 &&
+           typeid(*(curseurPipeline->getStructuresConnecteesEntrantes().front())) == typeid(Pipeline))
+    {
+        curseurPipeline = curseurPipeline->getStructuresConnecteesEntrantes().front();
+    }
+    // Marquage du premier maillon du pipeline
+    saveEntreePipeline = curseurPipeline;
+
+    /************* SORTIE **********************/
+
+    // Parcours le chemin depuis sortie jusqu'a fin pipeline
+    while (curseurPipeline != nullptr &&
+           curseurPipeline->getSortie() != nullptr &&
+           typeid(*(curseurPipeline->getSortie())) == typeid(Pipeline))
+    {
+        // Enregistrement du maillon du pipeline
+        pilePipelineSortie.push(curseurPipeline);
+        // Deconnexion de l'entrée
+        precPipeline->deconnecterStructure(curseurPipeline);
+
+        // Récupération de la sortie
+        precPipeline = curseurPipeline;
+        curseurPipeline = curseurPipeline->getSortie();
+    }
+    // Marquage du dernier maillon du pipeline
+    saveSortiePipeline = precPipeline;
+
+    /************* TEST INVERSION POSSIBLE *************/
+
+    bool inverserSortie = false;
+
+    // Essaye de connecter la sortie dans l'autre sens
+    if (!pilePipelineSortie.empty())
+    {
+        curseurPipeline = pilePipelineSortie.top();
+        if (curseurPipeline->getASortie())
+        {
+            saveSortiePipeline = curseurPipeline->getSortie();
+            if (curseurPipeline->deconnecterStructure(saveSortiePipeline))
+            {
+                // inverserSortie = curseurPipeline->connecterStructure(saveSortiePipeline, false);
+                inverserSortie = saveSortiePipeline->connecterStructure(curseurPipeline, true);
+            }
+        }
+        else
+        {
+            inverserSortie = true;
+        }
+    }
+
+    // Inverse tout si possible
+    if (true)
+    {
+        // Connexion autre sens de ancienne sortie -> caseSelect
+        while (pilePipelineSortie.size() > 1)
+        {
+            curseurPipeline = pilePipelineSortie.top();
+            pilePipelineSortie.pop();
+            curseurPipeline->connecterStructure(pilePipelineSortie.top(), true);
+        }
+        curseurPipeline = pilePipelineSortie.top();
+        curseurPipeline->connecterStructure(this, true);
+    }
+
+    /********************************************************/
+    // Une sortie mais pas d'entrée
+    // if (this->_sortie != nullptr && this->getNbEntrees() == 0)
+    // {
+    //     Structure *saveSortie = _sortie;
+    //     if (!this->deconnecterStructure(_sortie))
+    //         return false;
+
+    //     if (this->connecterStructure(saveSortie, false))
+    //         return true;
+    //     else
+    //         this->connecterStructure(saveSortie, true);
+    // }
+
+    // return false;
 }
