@@ -92,20 +92,6 @@ void Batiment::process() {}
  */
 bool Batiment::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-    // Vérifie le nombre d'entrées
-    if (commeSortie)
-    {
-        // Faut que la structure a co ait des entrées libres
-        if (s->getNbEntrees() >= s->getTailleStockEntree())
-            return false; // Toutes les entrées prises
-    }
-    else // !commeSortie
-    {
-        // Faut que this ait des entrées de libres
-        if (this->getNbEntrees() >= this->getTailleStockEntree())
-            return false; // Toutes les entrées prises
-    }
-
     // Vérifier la compatibilité des structures connectées
     if (typeid(*s) != typeid(Pipeline))
     {

@@ -83,7 +83,7 @@ void Pipeline::dechargerMemoirePipelines()
  */
 void Pipeline::chargerTextures(string fichierCheminsTexture)
 {
-    cout << "nb texture enum :" << NB_TEXTURE << endl;
+    cerr << "nb texture enum :" << NB_TEXTURE << endl;
     string nomFichierTexture[NB_TEXTURE];
     string cheminTexture;
     sf::Texture *texture;
@@ -174,17 +174,6 @@ void Pipeline::setSpriteTexture(uint tick)
  */
 bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-    // Vérifie sortie est libre
-    if (commeSortie && _sortie != nullptr)
-    { // Ya déjà une structure en sortie
-        return false;
-    } // Verifie entrée libre
-    else if (!commeSortie &&
-             this->getNbEntrees() >= this->getTailleStockEntree())
-    { // Toutes les entrées prises
-        return false;
-    }
-
     return Structure::checkConnexionPossible(s, commeSortie);
 }
 
@@ -239,14 +228,13 @@ bool Pipeline::inverserSens()
     Structure *saveSortiePipeline = nullptr;
 
     stack<Pipeline *> pilePipelineSortie{};
-    stack<Pipeline *> pilePipelineEntree{};
 
     /***** Parcours jusqu'au début du pipeline ********/
     while (curseurPipeline != nullptr &&
            curseurPipeline->getNbEntrees() == 1 &&
            typeid(*(curseurPipeline->getStructuresConnecteesEntrantes().front())) == typeid(Pipeline))
     {
-        cout << "parcours entree" << endl;
+        cerr << "parcours entree" << endl;
         precPipeline = curseurPipeline;
         curseurPipeline = (Pipeline *)curseurPipeline->getStructuresConnecteesEntrantes().front();
     }
@@ -258,16 +246,12 @@ bool Pipeline::inverserSens()
     {
         // A un batiment en entrée
         if (premierMaillon->getNbEntrees() == 1)
-        {
             saveEntreePipeline = premierMaillon->getStructuresConnecteesEntrantes().front();
-        }
         else // A pas de batiment en entrée
-        {
             saveEntreePipeline = nullptr;
-        }
+
         // Déconnecte le batiment en entrée si yen a un
-        if (saveEntreePipeline != nullptr)
-            saveEntreePipeline->deconnecterStructure(premierMaillon);
+        cerr << "deco premierMaillon : " << premierMaillon->deconnecterStructure(saveEntreePipeline) << endl;
     }
 
     /**************** SORTIE *******************/
@@ -296,81 +280,90 @@ bool Pipeline::inverserSens()
     {
         // A un batiment en sortie
         if (dernierMaillon->getASortie())
-        {
             saveSortiePipeline = dernierMaillon->getSortie();
-        }
         else // A pas de batiment en sortie
-        {
             saveSortiePipeline = nullptr;
-        }
+
         // Déconnecte le batiment en sortie si yen a un
-        if (saveSortiePipeline != nullptr)
-        {
-            cout << "ICI" << endl;
-            cout << "deco dernier maillon : " << saveSortiePipeline->deconnecterStructure((Structure *)dernierMaillon);
-            cout << "ICI" << endl;
-        }
+        cerr << "deco dernierMaillon : " << dernierMaillon->deconnecterStructure(saveSortiePipeline) << endl;
     }
 
     /************* TEST INVERSION POSSIBLE *************/
-    bool inverserSortie;
-    bool inverserEntree;
+    bool inverserSortie = true;
+    bool inverserEntree = true;
 
-    // Essaye de connecter la sortie dans l'autre sens
     // Yavait un batiment en entrée
+    cerr << "saveEntreePipeline : " << saveEntreePipeline << endl;
     if (saveEntreePipeline != nullptr)
     { // premierMaillon -> bat
-        inverserEntree = saveEntreePipeline->connecterStructure(premierMaillon, false);
+        inverserEntree = saveEntreePipeline->connecterStructure(premierMaillon, false, false);
+        cerr << "inverserEntree : " << inverserEntree << endl;
     }
 
     // Yavait un batiment en sortie
+    cerr << "saveSortiePipeline : " << saveSortiePipeline << endl;
     if (saveSortiePipeline != nullptr)
     { // bat -> dernierMaillon
-        inverserSortie = saveSortiePipeline->connecterStructure(dernierMaillon, true);
+        inverserSortie = saveSortiePipeline->connecterStructure(dernierMaillon, true, false);
+        cerr << "inverserSortie : " << inverserSortie << endl;
     }
+
+    cerr << "inverserEntree : " << inverserEntree << endl;
+    cerr << "inverserSortie : " << inverserSortie << endl;
 
     // Inverse tout si possible
     if (inverserEntree && inverserSortie)
     {
         // Connexion dans le sens inverse
         // bat -> dernierMaillon ... -> premierMaillon -> bat
-        while (pilePipelineSortie.size() > 1)
+        while ((int)pilePipelineSortie.size() > 1)
         {
             curseurPipeline = pilePipelineSortie.top();
             pilePipelineSortie.pop();
-            curseurPipeline->connecterStructure(pilePipelineSortie.top(), true);
+
+            cerr << curseurPipeline->connecterStructure(pilePipelineSortie.top(), true) << endl;
         }
     }
     else
     {
+
         // ReConnexion dans le d'avant sens
         // bat <- dernierMaillon ... <- premierMaillon <- bat
         while (pilePipelineSortie.size() > 1)
         {
+            cerr << "On vide la pile" << endl;
+            cerr << "Taille pile : " << (int)pilePipelineSortie.size() << endl;
+            precPipeline = curseurPipeline;
             curseurPipeline = pilePipelineSortie.top();
             pilePipelineSortie.pop();
-            curseurPipeline->connecterStructure(pilePipelineSortie.top(), false);
+
+            printf("(%d, %d) -> ",
+                   curseurPipeline->getPositionCarte().x,
+                   curseurPipeline->getPositionCarte().y);
+            printf("(%d, %d) \n\n",
+                   pilePipelineSortie.top()->getPositionCarte().x,
+                   pilePipelineSortie.top()->getPositionCarte().y);
+
+            cerr << curseurPipeline->connecterStructure(pilePipelineSortie.top(), false) << endl;
+        }
+        if (!pilePipelineSortie.empty())
+        {
+            curseurPipeline = pilePipelineSortie.top();
+            cerr << curseurPipeline << endl;
+            cerr << "co : " << curseurPipeline->connecterStructure(premierMaillon, false) << endl;
+            cerr << "co : " << premierMaillon->connecterStructure(curseurPipeline, false) << endl;
+            cerr << "co : " << curseurPipeline->connecterStructure(premierMaillon, true) << endl;
+            cerr << "co : " << premierMaillon->connecterStructure(curseurPipeline, true) << endl;
         }
         // premierMaillon <- bat
-        saveEntreePipeline->connecterStructure(premierMaillon, true);
+        cerr << "deco comme avant premierMaillon" << premierMaillon->deconnecterStructure(saveEntreePipeline) << endl;
+        cerr << "reco comme avant premierMaillon" << premierMaillon->connecterStructure(saveEntreePipeline, false) << endl;
+
         // bat <- dernierMaillon
-        saveSortiePipeline->connecterStructure(dernierMaillon, false);
+        cerr << "deco comme avant dernierMaillon" << dernierMaillon->connecterStructure(saveSortiePipeline, true) << endl;
+        cerr << "reco comme avant dernierMaillon" << dernierMaillon->connecterStructure(saveSortiePipeline, true) << endl;
     }
-    cout << "FIN" << endl;
-
-    /********************************************************/
-    // Une sortie mais pas d'entrée
-    // if (this->_sortie != nullptr && this->getNbEntrees() == 0)
-    // {
-    //     Structure *saveSortie = _sortie;
-    //     if (!this->deconnecterStructure(_sortie))
-    //         return false;
-
-    //     if (this->connecterStructure(saveSortie, false))
-    //         return true;
-    //     else
-    //         this->connecterStructure(saveSortie, true);
-    // }
+    cerr << "FIN" << endl;
 
     // return false;
 }

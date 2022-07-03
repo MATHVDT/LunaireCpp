@@ -132,7 +132,7 @@ inline void Structure::setPositionCarte(const Vector2u &pos) { _position = pos; 
 /***************************************************/
 inline uint Structure::getIdStructure() const { return _idStructure; }
 
-inline bool Structure::getASortie() const { return _sortie; }
+inline bool Structure::getASortie() const { return (_sortie != nullptr); }
 
 inline uint Structure::getNbConnexions() const { return _listStructuresConnectees.size(); }
 inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.size() - (_sortie != nullptr); }

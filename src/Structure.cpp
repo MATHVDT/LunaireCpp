@@ -27,7 +27,7 @@ Structure::Structure()
     _nbStructures++;
     // Vector2f posEcran = Carte::carteToPositionEcran(_position);
     // _sprite->setPosition(posEcran);
-    cerr << "Structure() = default, id : " << _idStructure << endl;
+    // cerr<< "Structure() = default, id : " << _idStructure << endl;
 }
 
 Structure::Structure(const Vector2u &pos,
@@ -44,7 +44,7 @@ Structure::Structure(const Vector2u &pos,
       _tailleStockSortie(tailleStockSortie),
       _stockEntree{}, _stockSortie{}
 {
-    cerr << "Structure(), id : " << _idStructure << endl;
+    // cerr<< "Structure(), id : " << _idStructure << endl;
     _nbStructures++;
 
     _sprite->setTexture(*text);
@@ -61,7 +61,7 @@ Structure::~Structure()
     {
         deconnecterStructure(*_listStructuresConnectees.begin());
     }
-    cerr << "~Structure(), id : " << _idStructure << endl;
+    // cerr<< "~Structure(), id : " << _idStructure << endl;
 }
 
 void Structure::init()
@@ -178,19 +178,35 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (s == nullptr)
         return false;
 
+    // Test sur this
+    // Vérifie sortie est libre
+    if (commeSortie && _sortie != nullptr)
+    { // Ya déjà une structure en sortie
+        return false;
+    } // Verifie entrée libre
+    else if (!commeSortie &&
+             this->getNbEntrees() >= this->getTailleStockEntree())
+    { // Toutes les entrées prises
+        return false;
+    }
+
+    // Test sur la structure à connecter
     // Test si ya de la place en entrée sur s
     if (commeSortie &&
         s->getNbEntrees() >= s->getTailleStockEntree())
     { // Ya plus de place en entrée
+        // cerr<< "Plus de place en entrée" << endl;
         return false;
     }
     // Test si y a déjà une sortie sur s
     if (!commeSortie &&
         s->getASortie() == true)
     { // La structure a déjà une sortie
+        // cerr<< "Plus de place en sortie pour " << s << endl;
         return false;
     }
-    // Verifier que la Structure est bien adajacente
+
+        // Verifier que la Structure est bien adajacente
     bool structAdjacente = false;
     for (int dir = DIRECTION::NORD;
          dir <= DIRECTION::NORDEST; ++dir)
@@ -201,12 +217,16 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
 
     // Si la Structure n'est pas adjacent alors false
     if (!structAdjacente)
+    {
+        // cerr<< "Structu pas adjacente" << endl;
         return false;
-
+    }
     // Check création d'un circuit avec la connexion
-    if (checkConnexionCircuit(s, commeSortie))
+    if (!commeSortie && checkConnexionCircuit(s, commeSortie))
+    {
+        // cerr<< "Crée un circuit" << endl;
         return false;
-
+    }
     return true;
 }
 
@@ -223,7 +243,10 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
 bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexionAutreSens)
 {
     if (s == nullptr)
+    {
+        // cerr<< "Connexion struct null" << endl;
         return false;
+    }
 
     // Connexion possible :
     // Structure adjacente
@@ -233,7 +256,9 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     if (!checkConnexionPossible(s, commeSortie))
     {
         if (!connexionAutreSens)
+        {
             return false;
+        }
     }
 
     // Test si la structure est déjà connectée
@@ -241,6 +266,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
              _listStructuresConnectees.end(),
              s) != _listStructuresConnectees.end())
     {
+        // cerr<< "struct deja co" << endl;
         return false;
     }
 
@@ -287,6 +313,7 @@ bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
     {
         // Récupère le 1er elt pour le traiter
         tmp = connexe.front();
+        // cerr<< "elt top : " << tmp << endl;
         connexe.pop();
 
         // Correspond à la structure
@@ -298,6 +325,7 @@ bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
         // On parcours le chemin
         if (tmp->getASortie())
             connexe.push(tmp->getSortie());
+        // cerr<< "Boucle et taille : " << connexe.size() << endl;
     }
     return false;
 }
@@ -379,7 +407,7 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
 
     // Reset de la sortie si besoin
     if (structADeconnectee->_sortie == this)
-        structADeconnectee->setSortie(nullptr);
+        structADeconnectee->_sortie = nullptr;
 
     // Deconnexion ok dans les deux sens
     return true;
