@@ -347,6 +347,7 @@ bool Manager::integrationStructureVoisinage()
             structsVoisines[k]->updateOrientation();
     }
 
+    cout << "structure ajoutée : " << structAjoutee << endl;
     return true;
 }
 
