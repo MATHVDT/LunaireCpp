@@ -195,18 +195,17 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (commeSortie &&
         s->getNbEntrees() >= s->getTailleStockEntree())
     { // Ya plus de place en entrée
-        // cerr<< "Plus de place en entrée" << endl;
+        cerr << "Plus de place, nb entrée : " << s->getNbEntrees() << " nb max : " << s->getTailleStockEntree() << endl;
         return false;
-    }
-    // Test si y a déjà une sortie sur s
-    if (!commeSortie &&
-        s->getASortie() == true)
+    } // Test si y a déjà une sortie sur s
+    else if (!commeSortie &&
+             s->getASortie() == true)
     { // La structure a déjà une sortie
         // cerr<< "Plus de place en sortie pour " << s << endl;
         return false;
     }
 
-        // Verifier que la Structure est bien adajacente
+    // Verifier que la Structure est bien adajacente
     bool structAdjacente = false;
     for (int dir = DIRECTION::NORD;
          dir <= DIRECTION::NORDEST; ++dir)

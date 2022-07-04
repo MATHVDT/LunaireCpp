@@ -251,7 +251,7 @@ bool Pipeline::inverserSens()
             saveEntreePipeline = nullptr;
 
         // Déconnecte le batiment en entrée si yen a un
-        cerr << "deco premierMaillon : " << premierMaillon->deconnecterStructure(saveEntreePipeline) << endl;
+        premierMaillon->deconnecterStructure(saveEntreePipeline);
     }
 
     /**************** SORTIE *******************/
@@ -285,9 +285,8 @@ bool Pipeline::inverserSens()
             saveSortiePipeline = nullptr;
 
         // Déconnecte le batiment en sortie si yen a un
-        cerr << "deco dernierMaillon : " << dernierMaillon->deconnecterStructure(saveSortiePipeline) << endl;
+        dernierMaillon->deconnecterStructure(saveSortiePipeline);
     }
-
     /************* TEST INVERSION POSSIBLE *************/
     bool inverserSortie = true;
     bool inverserEntree = true;
@@ -297,7 +296,6 @@ bool Pipeline::inverserSens()
     if (saveEntreePipeline != nullptr)
     { // premierMaillon -> bat
         inverserEntree = saveEntreePipeline->connecterStructure(premierMaillon, false, false);
-        cerr << "inverserEntree : " << inverserEntree << endl;
     }
 
     // Yavait un batiment en sortie
@@ -305,19 +303,14 @@ bool Pipeline::inverserSens()
     if (saveSortiePipeline != nullptr)
     { // bat -> dernierMaillon
         inverserSortie = saveSortiePipeline->connecterStructure(dernierMaillon, true, false);
-        cerr << "inverserSortie : " << inverserSortie << endl;
     }
-
-    cerr << "inverserEntree : " << inverserEntree << endl;
-    cerr << "inverserSortie : " << inverserSortie << endl;
 
     // Inverse tout si possible
     if (inverserEntree && inverserSortie)
     {
         // Connexion dans le sens inverse
-        // bat -> dernierMaillon ... -> premierMaillon -> bat
         while ((int)pilePipelineSortie.size() > 1)
-        {
+        { // bat -> dernierMaillon ... -> premierMaillon -> bat
             curseurPipeline = pilePipelineSortie.top();
             pilePipelineSortie.pop();
 
@@ -326,44 +319,25 @@ bool Pipeline::inverserSens()
     }
     else
     {
+        // ReDeconnexion des entrée et sortie
+        premierMaillon->deconnecterStructure(saveEntreePipeline);
+        dernierMaillon->connecterStructure(saveSortiePipeline, true);
 
         // ReConnexion dans le d'avant sens
-        // bat <- dernierMaillon ... <- premierMaillon <- bat
         while (pilePipelineSortie.size() > 1)
-        {
-            cerr << "On vide la pile" << endl;
-            cerr << "Taille pile : " << (int)pilePipelineSortie.size() << endl;
+        { // bat <- dernierMaillon ... <- premierMaillon <- bat
             precPipeline = curseurPipeline;
             curseurPipeline = pilePipelineSortie.top();
             pilePipelineSortie.pop();
 
-            printf("(%d, %d) -> ",
-                   curseurPipeline->getPositionCarte().x,
-                   curseurPipeline->getPositionCarte().y);
-            printf("(%d, %d) \n\n",
-                   pilePipelineSortie.top()->getPositionCarte().x,
-                   pilePipelineSortie.top()->getPositionCarte().y);
+            curseurPipeline->connecterStructure(pilePipelineSortie.top(), false);
+        }
 
-            cerr << curseurPipeline->connecterStructure(pilePipelineSortie.top(), false) << endl;
-        }
-        if (!pilePipelineSortie.empty())
-        {
-            curseurPipeline = pilePipelineSortie.top();
-            cerr << curseurPipeline << endl;
-            cerr << "co : " << curseurPipeline->connecterStructure(premierMaillon, false) << endl;
-            cerr << "co : " << premierMaillon->connecterStructure(curseurPipeline, false) << endl;
-            cerr << "co : " << curseurPipeline->connecterStructure(premierMaillon, true) << endl;
-            cerr << "co : " << premierMaillon->connecterStructure(curseurPipeline, true) << endl;
-        }
         // premierMaillon <- bat
-        cerr << "deco comme avant premierMaillon" << premierMaillon->deconnecterStructure(saveEntreePipeline) << endl;
-        cerr << "reco comme avant premierMaillon" << premierMaillon->connecterStructure(saveEntreePipeline, false) << endl;
-
+        premierMaillon->connecterStructure(saveEntreePipeline, false);
         // bat <- dernierMaillon
-        cerr << "deco comme avant dernierMaillon" << dernierMaillon->connecterStructure(saveSortiePipeline, true) << endl;
-        cerr << "reco comme avant dernierMaillon" << dernierMaillon->connecterStructure(saveSortiePipeline, true) << endl;
+        dernierMaillon->connecterStructure(saveSortiePipeline, true);
     }
-    cerr << "FIN" << endl;
 
     // return false;
 }
