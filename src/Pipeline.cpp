@@ -208,7 +208,12 @@ bool Pipeline::updateOrientation()
 /**
  * @brief Inverse la connexion du Pipeline
  *
- * @todo Test si cest d'autre pipeline qui sont co pour inverser toute le pipeline complet
+ * @details Récuperer les extrémités du pipeline en parcours (tout en déconnectant les maillons du pipeline entre eux) :
+ * - depuis les entrées tant qu'il s'agit d'un pipeline (pour obtenir le batiment en entrée)
+ * - depuis les sortie tant qu'il s'agit d'un pipeline (pour obtenir le batiment en sortie)
+ * Une fois les extremités récupérées, si y a des Batiments, alors on essaye de connecter dans l'autre sens les maillons de pipeline qui s'y connecte.
+ * Si c'est Ok pour les deux cotés, alors on reconnecte dans l'autre sens tous les maillons entre eux, en partant de la sortie jusqu'à l'entrée*. (Utilisation d'une pile remplie de l'entrée jusqu'à la sortie dans un premier temps lorsque l'on cherche les extremités, puis dépilée de la sortie jusqu'à l'entrée)
+ * Si c'est PAS Ok pour un des 2 cotés, alors on les redéconnecte les 2, et on les reconnecte dans le sens initial, puis on reconnecte tous les maillon dans le sens initial.
  *
  * @return true - *Si le Pipeline a changé de sens*
  * @return false - *Si le Pipeline n'a pas changé de sens*
@@ -227,7 +232,7 @@ bool Pipeline::inverserSens()
     Structure *saveEntreePipeline = nullptr;
     Structure *saveSortiePipeline = nullptr;
 
-    stack<Pipeline *> pilePipelineSortie{};
+    stack<Pipeline *> pilePipeline{};
 
     /***** Parcours jusqu'au début du pipeline ********/
     while (curseurPipeline != nullptr &&
@@ -256,7 +261,7 @@ bool Pipeline::inverserSens()
 
     /**************** SORTIE *******************/
     // Push du premier maillon dans la pile pour le traitement
-    pilePipelineSortie.push(premierMaillon);
+    pilePipeline.push(premierMaillon);
 
     // Parcours le chemin depuis sortie jusqu'a fin pipeline
     while (curseurPipeline != nullptr &&
@@ -268,12 +273,12 @@ bool Pipeline::inverserSens()
         curseurPipeline = (Pipeline *)curseurPipeline->getSortie();
 
         // Enregistrement du maillon du pipeline
-        pilePipelineSortie.push(curseurPipeline);
+        pilePipeline.push(curseurPipeline);
         // Deconnexion de l'entrée
         precPipeline->deconnecterStructure(curseurPipeline);
     }
     // Marquage du dernier maillon
-    dernierMaillon = pilePipelineSortie.top();
+    dernierMaillon = pilePipeline.top();
 
     // Marquage du batiment en sortie
     if (dernierMaillon != nullptr) // Normalement pas besoin
@@ -309,12 +314,12 @@ bool Pipeline::inverserSens()
     if (inverserEntree && inverserSortie)
     {
         // Connexion dans le sens inverse
-        while ((int)pilePipelineSortie.size() > 1)
+        while ((int)pilePipeline.size() > 1)
         { // bat -> dernierMaillon ... -> premierMaillon -> bat
-            curseurPipeline = pilePipelineSortie.top();
-            pilePipelineSortie.pop();
+            curseurPipeline = pilePipeline.top();
+            pilePipeline.pop();
 
-            cerr << curseurPipeline->connecterStructure(pilePipelineSortie.top(), true) << endl;
+            cerr << curseurPipeline->connecterStructure(pilePipeline.top(), true) << endl;
         }
     }
     else
@@ -324,13 +329,13 @@ bool Pipeline::inverserSens()
         dernierMaillon->connecterStructure(saveSortiePipeline, true);
 
         // ReConnexion dans le d'avant sens
-        while (pilePipelineSortie.size() > 1)
+        while (pilePipeline.size() > 1)
         { // bat <- dernierMaillon ... <- premierMaillon <- bat
             precPipeline = curseurPipeline;
-            curseurPipeline = pilePipelineSortie.top();
-            pilePipelineSortie.pop();
+            curseurPipeline = pilePipeline.top();
+            pilePipeline.pop();
 
-            curseurPipeline->connecterStructure(pilePipelineSortie.top(), false);
+            curseurPipeline->connecterStructure(pilePipeline.top(), false);
         }
 
         // premierMaillon <- bat
@@ -339,5 +344,6 @@ bool Pipeline::inverserSens()
         dernierMaillon->connecterStructure(saveSortiePipeline, true);
     }
 
-    // return false;
+    // Retourne le résultat si le pipeline a été inversé
+    return inverserEntree && inverserSortie;
 }
