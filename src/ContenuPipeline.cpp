@@ -211,7 +211,9 @@ void ContenuPipeline::remplirStock(
 
     if (!stockEntree.empty())
         r = stockEntree.front();
-
+    else
+        cout << "stocke entree decrait pas etre vide" << endl;
+        
     _contenu.push(r);
 }
 

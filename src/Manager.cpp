@@ -9,6 +9,7 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
  * @brief Constructeur du Manager *singleton*
  */
 Manager::Manager() : _carte(Carte::getInstance()),
+                     _masterBatiment{nullptr},
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
 
@@ -132,8 +133,42 @@ void Manager::dessinerOverlayMap()
     }
 }
 
+/**
+ * @brief Process les Structures pour les actualiser, en partant du MasterBatiment
+ * @warning Si des structures ne sont pas connexe au MasterBatiment, alors elle ne sont pas process
+ *
+ */
+void Manager::updateStructure()
+{
+
+    queue<Structure *> queueStruct;
+    if (_masterBatiment != nullptr)
+        queueStruct.push(_masterBatiment);
+
+    Structure *curseurStruct = nullptr;
+
+    while (!queueStruct.empty())
+    {
+        // Récuperation dans la file
+        curseurStruct = queueStruct.front();
+        queueStruct.pop();
+
+        // Récupération de toutes les structures connectées entrantes
+        // Pour remonter les connexions jusqu'aux extremités
+        for (auto s : curseurStruct->getStructuresConnecteesEntrantes())
+        {
+            queueStruct.push(s);
+        }
+
+        // Traitement de la structure
+        curseurStruct->update();
+    }
+}
+
 void Manager::update()
 {
+    // Process les structures pour les actualiser
+    updateStructure();
 }
 
 /**
@@ -151,7 +186,9 @@ void Manager::run()
             contextGlobal->update();
             updateEvent();
         }
+
         update();
+
         dessiner();
         contextGlobal->afficherFenetre();
     }
@@ -184,7 +221,11 @@ bool Manager::placerStructure()
                     structPlacee = placerMine(caseSelect, editionStructSelect);
                     if (!structPlacee)
                     {
-                        // cerr << "Pas de structure posée" << endl;
+                        structPlacee = placerStructureSpeciale(caseSelect, editionStructSelect);
+                        if (!structPlacee)
+                        {
+                            // cerr << "Pas de structure posée" << endl;
+                        }
                     }
                 }
             }
@@ -207,6 +248,30 @@ bool Manager::placerStructure()
     contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
 
     return structPlacee;
+}
+
+/**
+ * @brief Place une Structure spéciale sur la carte
+ *
+ * @param CaseMap * - *caseSelect*
+ * @return true - Structure placée (Batiment spécial)
+ * @return false - Structure non placée (Pas Batiment spéciale)
+ */
+bool Manager::placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
+{
+    bool place = false;
+
+    Structure *s;
+
+    if (editionStruct == TYPE_STRUCTURE::MasterBatiment)
+    {
+        s = new MasterBatiment{(Vector2u)caseSelect->getPositionCarte()};
+        _masterBatiment = (MasterBatiment *)s;
+    }
+
+    _carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
+
+    place = true;
 }
 
 /**

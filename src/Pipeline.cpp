@@ -135,9 +135,14 @@ void Pipeline::dessiner(float scaleSprite)
     _contenuPipeline.dessiner(scaleSprite);
 }
 
-void Pipeline::update() {}
+void Pipeline::update()
+{
+    Structure::update();
+}
 
-void Pipeline::process() {}
+void Pipeline::process()
+{
+}
 
 /*******************************************************/
 /*******************************************************/
@@ -320,7 +325,7 @@ bool Pipeline::inverserSens()
             curseurPipeline = pilePipeline.top();
             pilePipeline.pop();
 
-curseurPipeline->connecterStructure(pilePipeline.top(), true) ;
+            curseurPipeline->connecterStructure(pilePipeline.top(), true);
         }
     }
     else
@@ -361,8 +366,7 @@ TYPE_RESSOURCE Pipeline::livrerStock()
 {
     TYPE_RESSOURCE r = _contenuPipeline.livrerStock();
 
-    // Vérification que tous se passe comme prévu
-    if (Structure::livrerStock() == r)
+    if (Structure::livrerStock() != r)
     {
         r = TYPE_RESSOURCE::Rien;
         cerr << "Erreur dans la livraison de ressource" << endl;

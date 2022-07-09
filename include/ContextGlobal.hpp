@@ -5,6 +5,8 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
 
 #include "EnumTypeSol.hpp"
 #include "EnumTypeStructure.hpp"
@@ -38,6 +40,10 @@ private:
     bool _isRun;
     GameEvent _gameEvent;
 
+    Clock _clock;
+    Time _timeSave;
+    uint _tick;
+
     Carte *_carte;
     CaseMap *_caseOver;
     CaseMap *_caseSelectionnee;
@@ -46,9 +52,13 @@ private:
 
 private: // Static
     static ContextGlobal *_singleton;
+    static uint _nbTicksMax; // = 4
+    static Time _deltaTick;  // = 25ms
 
 public: // Static
     static ContextGlobal *getInstance();
+    static uint getNbTicksMax();
+    static Time getTempsTick();
 
 public:
     ~ContextGlobal();
@@ -77,6 +87,7 @@ public:
     CaseMap *getCaseSelectionnee() const;
     TYPE_STRUCTURE getEditionStructureSelectionnee() const;
     GameEvent getGameEvent() const;
+    uint getCurrentTick() const;
 
     // Setter
     void setIsRun(bool run);
@@ -95,6 +106,9 @@ private:
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
+// Static
+inline uint ContextGlobal::getNbTicksMax() { return _nbTicksMax; }
+inline Time ContextGlobal::getTempsTick() { return _deltaTick; }
 
 // Getter
 inline const RenderWindow &ContextGlobal::getWindow() const { return _window; }
@@ -122,6 +136,7 @@ inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
 inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
+inline uint ContextGlobal::getCurrentTick() const { return _tick; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }

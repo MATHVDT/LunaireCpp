@@ -50,6 +50,10 @@ Structure::Structure(const Vector2u &pos,
     _sprite->setTexture(*text);
     Vector2f posEcran = Carte::carteToPositionEcran(_position);
     _sprite->setPosition(posEcran);
+
+    while (!stockEntreePlein())
+        _stockEntree.push(TYPE_RESSOURCE::Rien);
+    _stockSortie.push(TYPE_RESSOURCE::Rien);
 }
 
 Structure::~Structure()
@@ -110,8 +114,6 @@ void Structure::update()
 
     // Traiter les ressources
     this->process();
-
-    // Mettre les ressources à la sortie
 }
 
 /*******************************************************/
@@ -149,13 +151,11 @@ void Structure::remplirStock()
         if (s != _sortie) // S'il s'agit d'une entrée
         {
             ress = s->livrerStock();
-            // Si une ressource a été récup -> ajout au stock d'entrée
-            if (ress != TYPE_RESSOURCE::Rien)
-            { // Si ya encore de la place
-                if (!this->stockEntreePlein())
-                {
-                    _stockEntree.push(ress);
-                }
+            // Ajout au stock, même si c'est Rien
+            // Si ya encore de la place
+            if (!this->stockEntreePlein())
+            {
+                _stockEntree.push(ress);
             }
         }
     }
@@ -166,7 +166,7 @@ void Structure::remplirStock()
 
 /**
  * @brief Check si la connexion entre les 2 Structures, test si c'est la structure que l'on veut connectée qui peut être connectée.
- * 
+ *
  * @bug Pb de batiment qui se connecte à lui meme : circuit
  *
  * @param Structure * - *s*

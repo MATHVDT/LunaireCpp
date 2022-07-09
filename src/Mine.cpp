@@ -81,7 +81,7 @@ void Mine::dechargerMemoireMines()
 void Mine::dessiner(float scaleSprite)
 {
     // Décalage animation
-    setSpriteTexture(0);
+    setSpriteTexture(contextGlobal->getCurrentTick());
     _sprite->setTextureRect(_zoomTexture);
 
     // float scaleMine = contextGlobal->getScaleReference();
@@ -96,7 +96,6 @@ void Mine::dessiner(float scaleSprite)
 void Mine::update()
 {
     Batiment::update();
-    setSpriteTexture(0);
 }
 
 /**
@@ -114,7 +113,24 @@ void Mine::remplirStock()
     }
 }
 
-void Mine::process() {}
+void Mine::process()
+{
+    // Récuperation dans la sortie
+    if (!_stockEntree.empty())
+    {
+        if (!stockSortiePlein())
+        {
+            _stockSortie.push(_stockEntree.front());
+            _stockEntree.pop();
+        }
+    }
+
+    if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
+        return;
+
+    if (stockEntreePlein())
+        return;
+}
 
 /*******************************************************/
 

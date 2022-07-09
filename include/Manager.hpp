@@ -14,6 +14,7 @@
 #include "correspondance.hpp"
 
 #include "Mine.hpp"
+#include "MasterBatiment.hpp"
 
 class ContextGlobal;
 class Carte;
@@ -35,6 +36,7 @@ class Manager
 {
 private:
     Carte *_carte;
+    MasterBatiment* _masterBatiment;
 
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;
@@ -59,6 +61,7 @@ public:
     void init();
     void run();
     void update();
+    void updateStructure();
     void updateEvent();
 
     bool placerStructure();
@@ -76,6 +79,7 @@ private:
 
     bool placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
     bool placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
+    bool placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
     bool integrationStructureVoisinage();
 
     void dessinerOverlay();

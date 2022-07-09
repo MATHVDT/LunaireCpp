@@ -28,6 +28,7 @@ int main()
     Pipeline::chargerMemoirePipelines();
     Manager::chargerMemoireManager();
     ContenuPipeline::chargerMemoireTypeRessource();
+    MasterBatiment::chargerMemoireMasterBatiment();
 
     Manager *m = Manager::getInstance();
     m->init();
@@ -40,6 +41,7 @@ int main()
     Pipeline::dechargerMemoirePipelines();
     Manager::dechargerMemoireManager();
     ContenuPipeline::dechargerMemoireTypeRessource();
+    MasterBatiment::dechargerMemoireMasterBatiment();
 
     delete contextGlobal;
     delete m;

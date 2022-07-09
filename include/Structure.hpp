@@ -84,7 +84,8 @@ public:
 
     uint getLevel() const;
 
-    virtual bool stockEntreePlein() const;
+     bool stockEntreePlein() const;
+     bool stockSortiePlein() const;
     uint getNbEntrees() const;
     uint getNbConnexions() const;
     bool getASortie() const;
@@ -140,6 +141,8 @@ inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.s
 inline uint Structure::getLevel() const { return _level; }
 
 inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
+inline bool Structure::stockSortiePlein
+() const { return _stockSortie.size() == _tailleStockSortie; }
 
 inline uint Structure::getTailleStockEntree() const { return _tailleStockEntree; }
 inline uint Structure::getTailleStockSortie() const { return _tailleStockSortie; }
