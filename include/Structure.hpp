@@ -106,7 +106,7 @@ public:
     bool deconnecterStructure(Structure *s);
     virtual bool updateOrientation() = 0;
 
-    TYPE_RESSOURCE livrerStock();
+    virtual TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie);

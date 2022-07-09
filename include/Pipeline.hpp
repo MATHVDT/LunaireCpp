@@ -24,6 +24,7 @@
 #include "Structure.hpp"
 #include "ContextGlobal.hpp"
 #include "Structure.hpp"
+#include "ContenuPipeline.hpp"
 
 using namespace std;
 using namespace sf;
@@ -115,6 +116,7 @@ private:
     uint _idPipeline;
     IntRect _zoomTexture;
     Orientation_t _orientation;
+    ContenuPipeline _contenuPipeline;
 
 protected:                                // Static
     static const uint _tailleStockEntree; // = 1
@@ -156,6 +158,9 @@ public:
     virtual void dessiner(float scaleSprite) override;
     virtual void update() override;
     virtual void process() override;
+
+    TYPE_RESSOURCE livrerStock();
+    void remplirStock();
 
     // Getter
     uint getIdPipeline() const;

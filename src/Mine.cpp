@@ -10,7 +10,7 @@
  */
 #include "Mine.hpp"
 
-string cheminFichierTexturesMines = "ressource/cheminTexturesMines.txt";
+string cheminFichierTexturesMines = "ressource/cheminTextures/cheminTexturesMines.txt";
 
 uint Mine::_nbMines = 0;
 uint Mine::_idMaxMines = 0;

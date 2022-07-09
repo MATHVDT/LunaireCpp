@@ -2,10 +2,10 @@
  * @file enum_ressource.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Enum class pour les différents types de ressources
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #ifndef __ENUM_TYPE_RESSOURCE_HPP__
@@ -18,8 +18,9 @@ const uint NB_RESSOURCES = 5;
 
 enum class TYPE_RESSOURCE
 {
+    Rien = 0,
     // Matières premières
-    PoussiereRegolite=0,
+    PoussiereRegolite = 1,
     MineraiGlace,
     MineraiTitane,
     MineraiSilicium,
@@ -29,8 +30,6 @@ enum class TYPE_RESSOURCE
     MineraiMagnesium,
     MineraiCalcium,
     MineraiSoduim,
- 
-    Rien,
 
     // Apres raffinerie
     LingotRegolite,

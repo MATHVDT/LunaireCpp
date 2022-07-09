@@ -118,8 +118,9 @@ void Structure::update()
 
 /**
  * @brief Donne la ressource du stock de sortie d'un batiment et la retire du stock de sortie
+ * @warning N'ai jamais appelé directement, c'est la seulement méthode remplirStock qui l'appelle
  *
- * @return TYPE_RESSOURCE
+ * @return TYPE_RESSOURCE - *issue du stock de sortie*
  */
 TYPE_RESSOURCE Structure::livrerStock()
 {
@@ -141,7 +142,7 @@ TYPE_RESSOURCE Structure::livrerStock()
  */
 void Structure::remplirStock()
 {
-    TYPE_RESSOURCE ress;
+    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     // Pour toutes les connexions aux batiments
     for (auto s : _listStructuresConnectees)
     {
@@ -165,6 +166,8 @@ void Structure::remplirStock()
 
 /**
  * @brief Check si la connexion entre les 2 Structures, test si c'est la structure que l'on veut connectée qui peut être connectée.
+ * 
+ * @bug Pb de batiment qui se connecte à lui meme : circuit
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie*
@@ -195,7 +198,6 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (commeSortie &&
         s->getNbEntrees() >= s->getTailleStockEntree())
     { // Ya plus de place en entrée
-        cerr << "Plus de place, nb entrée : " << s->getNbEntrees() << " nb max : " << s->getTailleStockEntree() << endl;
         return false;
     } // Test si y a déjà une sortie sur s
     else if (!commeSortie &&

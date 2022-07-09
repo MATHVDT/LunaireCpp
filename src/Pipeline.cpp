@@ -11,7 +11,7 @@
 #include "Pipeline.hpp"
 
 // A deplacer dans un hpp qui regroupe tous les chemins
-string cheminFichierTexturesPipelines = "ressource/cheminTexturesPipelines.txt";
+string cheminFichierTexturesPipelines = "ressource/cheminTextures/cheminTexturesPipelines.txt";
 
 uint Pipeline::_nbPipelines = 0;
 uint Pipeline::_idMaxPipelines = 0;
@@ -42,7 +42,10 @@ Pipeline::Pipeline(const Vector2u &pos)
                    (int)_offsetTextureX,
                    (int)_offsetTextureY},
       _orientation{NULLDIRECTION, NULLDIRECTION,
-                   NON_CONNECTE, A_A}
+                   NON_CONNECTE, A_A},
+      _contenuPipeline{pos,
+                       _orientation.dirEntree,
+                       _orientation.dirSortie}
 {
     ++_nbPipelines;
 }
@@ -129,6 +132,7 @@ void Pipeline::dessiner(float scaleSprite)
     // cerr << "variant : " << _orientation.variant << endl;
     setSpriteTexture(0);
     Structure::dessiner(scaleSprite);
+    _contenuPipeline.dessiner(scaleSprite);
 }
 
 void Pipeline::update() {}
@@ -239,7 +243,6 @@ bool Pipeline::inverserSens()
            curseurPipeline->getNbEntrees() == 1 &&
            typeid(*(curseurPipeline->getStructuresConnecteesEntrantes().front())) == typeid(Pipeline))
     {
-        cerr << "parcours entree" << endl;
         precPipeline = curseurPipeline;
         curseurPipeline = (Pipeline *)curseurPipeline->getStructuresConnecteesEntrantes().front();
     }
@@ -297,14 +300,12 @@ bool Pipeline::inverserSens()
     bool inverserEntree = true;
 
     // Yavait un batiment en entrée
-    cerr << "saveEntreePipeline : " << saveEntreePipeline << endl;
     if (saveEntreePipeline != nullptr)
     { // premierMaillon -> bat
         inverserEntree = saveEntreePipeline->connecterStructure(premierMaillon, false, false);
     }
 
     // Yavait un batiment en sortie
-    cerr << "saveSortiePipeline : " << saveSortiePipeline << endl;
     if (saveSortiePipeline != nullptr)
     { // bat -> dernierMaillon
         inverserSortie = saveSortiePipeline->connecterStructure(dernierMaillon, true, false);
@@ -319,7 +320,7 @@ bool Pipeline::inverserSens()
             curseurPipeline = pilePipeline.top();
             pilePipeline.pop();
 
-            cerr << curseurPipeline->connecterStructure(pilePipeline.top(), true) << endl;
+curseurPipeline->connecterStructure(pilePipeline.top(), true) ;
         }
     }
     else
@@ -345,5 +346,38 @@ bool Pipeline::inverserSens()
     }
 
     // Retourne le résultat si le pipeline a été inversé
+
     return inverserEntree && inverserSortie;
+}
+
+/**
+ * @brief Donne la ressource du stock de sortie de la Structure et la retire du stock de sortie [Structure::livrerStock], et la retire aussi du ContenuPipeline (dernière ressource ContenuPipeline = ressource dans le stock sortie de la Structure)
+ *
+ * @warning N'ai jamais appelé directement, c'est la seulement méthode remplirStock qui l'appelle
+ *
+ * @return TYPE_RESSOURCE - *issue du stock de sortie*
+ */
+TYPE_RESSOURCE Pipeline::livrerStock()
+{
+    TYPE_RESSOURCE r = _contenuPipeline.livrerStock();
+
+    // Vérification que tous se passe comme prévu
+    if (Structure::livrerStock() == r)
+    {
+        r = TYPE_RESSOURCE::Rien;
+        cerr << "Erreur dans la livraison de ressource" << endl;
+    }
+
+    return r;
+}
+
+/**
+ * @brief Récupère la ressource de la Structure connectée en entrée (son stock sortie), puis le place dans son stock sortie [Structure::remplirStock] et ensuite remplit ContenuePipeline
+ *
+ */
+void Pipeline::remplirStock()
+{
+    Structure::remplirStock();
+
+    _contenuPipeline.remplirStock(_stockEntree);
 }

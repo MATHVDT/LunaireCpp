@@ -42,7 +42,7 @@ void Manager::chargerMemoireManager()
 {
     cerr << endl
          << "chargerMemoireManager" << endl;
-    chargerTextures("ressource/cheminTexturesManager.txt");
+    chargerTextures("ressource/cheminTextures/cheminTexturesManager.txt");
 }
 
 void Manager::dechargerMemoireManager()
@@ -323,13 +323,19 @@ bool Manager::integrationStructureVoisinage()
             if (!structAjoutee->getASortie())
             { // Essaye d'ajouter en sortie la structure
                 if (structAjoutee->connecterStructure(structsVoisines[k], true))
-                    cerr << "Connexion Structure comme une sortie" << endl;
+                {
+                    // cerr << "Connexion Structure comme une sortie" << endl;
+                }
             }
             // Dans tous les cas essaye d'ajouter comme entrée
             if (structAjoutee->connecterStructure(structsVoisines[k], false))
-                cerr << "Connexion Structure comme une entrée" << endl;
+            {
+                // cerr << "Connexion Structure comme une entrée" << endl;
+            }
             else
-                cerr << "Pas connectée comme une entrée" << endl;
+            {
+                // cerr << "Pas connectée comme une entrée" << endl;
+            }
         }
     }
 
@@ -347,7 +353,6 @@ bool Manager::integrationStructureVoisinage()
             structsVoisines[k]->updateOrientation();
     }
 
-    cout << "structure ajoutée : " << structAjoutee << endl;
     return true;
 }
 
