@@ -1,5 +1,7 @@
 #include "correspondance.hpp"
 
+#include <iostream>
+
 /**
  * @brief Donne le type de ressource associée à un type de sol
  *

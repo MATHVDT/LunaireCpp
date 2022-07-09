@@ -115,7 +115,7 @@ void Mine::remplirStock()
 
 void Mine::process()
 {
-    // Récuperation dans la sortie
+    // Remplissage de la sortie
     if (!_stockEntree.empty())
     {
         if (!stockSortiePlein())
@@ -125,11 +125,11 @@ void Mine::process()
         }
     }
 
-    if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
-        return;
+    // if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
+    //     return;
 
-    if (stockEntreePlein())
-        return;
+    // if (stockEntreePlein())
+    //     return;
 }
 
 /*******************************************************/

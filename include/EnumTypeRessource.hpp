@@ -16,7 +16,7 @@
 // #define NB_RESSOURCES 5;
 const uint NB_RESSOURCES = 5;
 
-enum class TYPE_RESSOURCE
+enum class TYPE_RESSOURCE : int
 {
     Rien = 0,
     // Matières premières

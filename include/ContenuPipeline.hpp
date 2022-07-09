@@ -13,6 +13,7 @@
 #define __CONTENU_PIPELINE_HPP__
 
 #include <queue>
+#include <cstdlib>
 
 #include "EnumTypeRessource.hpp"
 #include "direction.hpp"
@@ -63,8 +64,9 @@ public: // public
 
     void dessiner(float scaleSprite);
 
-    TYPE_RESSOURCE livrerStock();
-    void remplirStock(const queue<TYPE_RESSOURCE> &stockEntree);
+    TYPE_RESSOURCE livrerStock(queue<TYPE_RESSOURCE> &stockSortie);
+    void remplirStock(queue<TYPE_RESSOURCE> &stockEntree);
+    void process();
 };
 
 /***************************************************/

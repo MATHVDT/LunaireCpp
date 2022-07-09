@@ -34,7 +34,10 @@ void MasterBatiment ::update()
 void MasterBatiment::process()
 {
     // Retire le stock (vente de ressource)
-    _stockEntree.pop();
+    if (!_stockEntree.empty())
+    {
+        _stockEntree.pop();
+    }
 }
 
 /**

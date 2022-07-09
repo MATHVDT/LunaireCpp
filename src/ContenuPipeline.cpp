@@ -36,6 +36,9 @@ ContenuPipeline::ContenuPipeline(const Vector2u &pos,
 
 void ContenuPipeline::chargerMemoireTypeRessource()
 {
+    // A deplacer
+    srand(48);
+
     // cerr << endl << "chargerMemoireTypeRessource" << endl;
     chargerTextures(cheminFichierTexturesTypeRessource);
     _offsetTextureX = _tailleTexture; // Largeur d'une case
@@ -110,8 +113,14 @@ void ContenuPipeline::dessiner(float scaleSprite)
     Vector2f ME = posEcran + VDecalageEcranEntree;
     Vector2f MS = posEcran + VDecalageEcranSortie;
 
-    Vector2f Ventree = M - ME;
-    Vector2f Vsortie = MS - M;
+    Vector2f Ventree = (M - ME);
+    Vector2f Vsortie = (MS - M);
+
+    Ventree.x += 2*contextGlobal->getCurrentTick();
+    Ventree.y += 2*contextGlobal->getCurrentTick();
+
+    Vsortie.x += 2*contextGlobal->getCurrentTick();
+    Vsortie.y += 2*contextGlobal->getCurrentTick();
 
     Vector2f posDessin;
 
@@ -122,9 +131,13 @@ void ContenuPipeline::dessiner(float scaleSprite)
         _contenu.pop();
         _contenu.push(r); // Remise dans le contenu de la ressource
 
-        _zoomTexture.left = static_cast<int>(r) * _offsetTextureX;
+        _zoomTexture.left = static_cast<float>(r) * _offsetTextureX;
         _zoomTexture.width = _tailleTexture;
         _zoomTexture.height = _tailleTexture;
+
+        // cerr << "Ressource float : " << static_cast<float>(r) << endl;
+        // cerr << "Ressource int   : " << static_cast<int>(r) << endl;
+        // cerr << "Ressource       : " << (int)r << endl;
 
         // Calcul de la position
         if (i < 5) // VEntree
@@ -205,29 +218,42 @@ Vector2f ContenuPipeline::getVDecalageEcran(DIRECTION dir)
  * @param const queue<TYPE_RESSOURCE> & - *stockEntree du Pipeline : Structure*
  */
 void ContenuPipeline::remplirStock(
-    const queue<TYPE_RESSOURCE> &stockEntree)
+    queue<TYPE_RESSOURCE> &stockEntree)
 {
-    TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
+    TYPE_RESSOURCE r;
 
     if (!stockEntree.empty())
+    {
         r = stockEntree.front();
+        stockEntree.pop();
+    }
     else
-        cout << "stocke entree decrait pas etre vide" << endl;
-        
+    {
+        r = TYPE_RESSOURCE::Rien;
+    }
+
     _contenu.push(r);
 }
 
 /**
  * @brief Retire la ressource du conten
  *
- * @param const queue<TYPE_RESSOURCE> & - *stockSorite*
+ * @param const queue<TYPE_RESSOURCE> & - *stockSortie*
  * @return TYPE_RESSOURCE
  */
-TYPE_RESSOURCE ContenuPipeline::livrerStock()
+TYPE_RESSOURCE ContenuPipeline::livrerStock(queue<TYPE_RESSOURCE> &stockSortie)
 {
-    TYPE_RESSOURCE r = _contenu.front();
+    TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
 
-    _contenu.pop();
+    // Si la sortie est vide ou remplie de Rien
+    if (!stockSortie.empty() &&
+            stockSortie.front() == TYPE_RESSOURCE::Rien ||
+        stockSortie.empty())
+    {
+        r = _contenu.front();
+        _contenu.pop();
+        stockSortie.push(r);
+    }
 
     return r;
 }

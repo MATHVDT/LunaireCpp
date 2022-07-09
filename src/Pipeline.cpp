@@ -364,15 +364,12 @@ bool Pipeline::inverserSens()
  */
 TYPE_RESSOURCE Pipeline::livrerStock()
 {
-    TYPE_RESSOURCE r = _contenuPipeline.livrerStock();
+    TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
 
-    if (Structure::livrerStock() != r)
-    {
-        r = TYPE_RESSOURCE::Rien;
-        cerr << "Erreur dans la livraison de ressource" << endl;
-    }
 
-    return r;
+    return Structure::livrerStock();
+
+ 
 }
 
 /**
@@ -382,6 +379,5 @@ TYPE_RESSOURCE Pipeline::livrerStock()
 void Pipeline::remplirStock()
 {
     Structure::remplirStock();
-
     _contenuPipeline.remplirStock(_stockEntree);
 }

@@ -12,8 +12,8 @@
 #include "ContextGlobal.hpp"
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
-uint ContextGlobal::_nbTicksMax = 4; // = 4
-Time ContextGlobal::_deltaTick = seconds(0.5f);  // = 25ms
+uint ContextGlobal::_nbTicksMax = 4;            // = 4
+Time ContextGlobal::_deltaTick = seconds(0.5f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -223,7 +223,7 @@ void ContextGlobal::checkClavierStructures()
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
         // cerr << "Pipeline selectionnée" << endl;
         break;
-            case Keyboard::C:
+    case Keyboard::C:
         _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
         // cerr << "MasterBatiment selectionnée" << endl;
         break;
