@@ -41,8 +41,10 @@ private:
     GameEvent _gameEvent;
 
     Clock _clock;
-    Time _timeSave;
+    Time _timeSaveTick;
+    Time _timeSaveAffichage;
     uint _tick;
+    bool _updateTick;
 
     Carte *_carte;
     CaseMap *_caseOver;
@@ -88,6 +90,7 @@ public:
     TYPE_STRUCTURE getEditionStructureSelectionnee() const;
     GameEvent getGameEvent() const;
     uint getCurrentTick() const;
+    bool getUpdateTick() const;
 
     // Setter
     void setIsRun(bool run);
@@ -98,6 +101,7 @@ public:
     void setCaseSelectionnee(bool reset = false);
     void setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect);
     void setGameEvent(GameEvent gameEvent = AucunGameEvent);
+    void setUpdateTick(bool reset = false);
 
 private:
     ContextGlobal();
@@ -137,6 +141,7 @@ inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelecti
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
 inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
 inline uint ContextGlobal::getCurrentTick() const { return _tick; }
+inline bool ContextGlobal::getUpdateTick() const { return _updateTick; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
@@ -145,5 +150,6 @@ inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReferen
 inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
 inline void ContextGlobal::setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect) { _editionStructureSelectionnee = structSelect; }
 inline void ContextGlobal::setGameEvent(GameEvent gameEvent) { _gameEvent = gameEvent; }
+inline void ContextGlobal::setUpdateTick(bool reset) { _updateTick = reset; }
 
 #endif

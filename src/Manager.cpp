@@ -187,10 +187,13 @@ void Manager::run()
             updateEvent();
         }
 
-        update();
-
-        dessiner();
-        contextGlobal->afficherFenetre();
+        if (contextGlobal->getUpdateTick())
+        {
+            update();
+            dessiner();
+            contextGlobal->afficherFenetre();
+            contextGlobal->setUpdateTick(false);
+        }
     }
 }
 

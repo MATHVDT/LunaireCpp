@@ -13,7 +13,7 @@
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 uint ContextGlobal::_nbTicksMax = 4;            // = 4
-Time ContextGlobal::_deltaTick = seconds(0.5f); // = 25ms
+Time ContextGlobal::_deltaTick = seconds(0.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -70,8 +70,9 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _gameEvent = AucunGameEvent;
 
     _clock.restart();
-    _timeSave = _clock.getElapsedTime();
+    _timeSaveTick = _clock.getElapsedTime();
     _tick = 0;
+    _updateTick = true;
 
     _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
 }
@@ -120,10 +121,11 @@ void ContextGlobal::update()
     // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
 
     // Calcul du tick
-    if (_timeSave + _deltaTick <= _clock.getElapsedTime())
+    if (_timeSaveTick + _deltaTick <= _clock.getElapsedTime())
     {
         _tick = (_tick + 1) % _nbTicksMax;
-        _timeSave = _clock.getElapsedTime();
+        _timeSaveTick = _clock.getElapsedTime();
+        _updateTick = true;
     }
 }
 

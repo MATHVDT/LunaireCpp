@@ -116,11 +116,13 @@ void ContenuPipeline::dessiner(float scaleSprite)
     Vector2f Ventree = (M - ME);
     Vector2f Vsortie = (MS - M);
 
-    Ventree.x += 2*contextGlobal->getCurrentTick();
-    Ventree.y += 2*contextGlobal->getCurrentTick();
+    // Ventree.x += 2*contextGlobal->getCurrentTick();
+    // Ventree.y += 2*contextGlobal->getCurrentTick();
 
-    Vsortie.x += 2*contextGlobal->getCurrentTick();
-    Vsortie.y += 2*contextGlobal->getCurrentTick();
+    // Vsortie.x += 2*contextGlobal->getCurrentTick();
+    // Vsortie.y += 2*contextGlobal->getCurrentTick();
+    float moveRand = 1.;
+    float scaleRand = 1.;
 
     Vector2f posDessin;
 
@@ -139,21 +141,27 @@ void ContenuPipeline::dessiner(float scaleSprite)
         // cerr << "Ressource int   : " << static_cast<int>(r) << endl;
         // cerr << "Ressource       : " << (int)r << endl;
 
+        // moveRand = (0.95 + (1.05 - 0.95) * (float)((float)rand() / (float)RAND_MAX));
+
         // Calcul de la position
         if (i < 5) // VEntree
         {
-            posDessin.x = ME.x + (float)((i % _capacite) / (float)_capacite) * Ventree.x;
-            posDessin.y = ME.y + (float)((i % _capacite) / (float)_capacite) * Ventree.y;
+            posDessin.x = ME.x + (float)((i % _capacite) / (float)_capacite) * Ventree.x * moveRand;
+            posDessin.y = ME.y + (float)((i % _capacite) / (float)_capacite) * Ventree.y * moveRand;
         }
         else if (i >= 5) // VSortie
         {
-            posDessin.x = M.x + (float)((i % _capacite) / (float)_capacite) * Vsortie.x;
-            posDessin.y = M.y + (float)((i % _capacite) / (float)_capacite) * Vsortie.y;
+            posDessin.x = M.x + (float)((i % _capacite) / (float)_capacite) * Vsortie.x * moveRand;
+            posDessin.y = M.y + (float)((i % _capacite) / (float)_capacite) * Vsortie.y * moveRand;
         }
+
+        scaleRand = (0.9 + (1.1 - 0.9) * (float)((float)rand() / (float)RAND_MAX));
+        _sprite->setScale(scaleSprite * scaleRand,
+                          scaleSprite * scaleRand);
 
         _sprite->setTextureRect(_zoomTexture);
         _sprite->setPosition(posDessin);
-        _sprite->setScale(scaleSprite, scaleSprite);
+
         contextGlobal->dessinerFenetre(_sprite);
     }
 }
