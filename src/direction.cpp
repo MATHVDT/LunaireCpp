@@ -3,8 +3,8 @@
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implementation des fonctions sur les directions.
  * @warning Gestion des directions changées, certaines fonctions sont deprecated
- * 
- * 
+ *
+ *
  * @version 0.1
  * @date 2022-03-30
  *
@@ -116,7 +116,8 @@ int directionVecteurToInt(const Vector2i &dirVecteur)
     return dirInt;
 }
 
-/********************************************************/
+/*******************************************************/
+/*******************************************************/
 
 Vector2i positionCaseVoisine(const Vector2i &posCaseCarte,
                              int dirEnum)
@@ -195,4 +196,28 @@ Vector2i positionCaseVoisineNORDEST(const Vector2i &posCaseCarte)
 Vector2i positionCaseVoisineNULLDIRECTION(const Vector2i &posCaseCarte)
 {
     return posCaseCarte + Vector2i(0, 0);
+}
+
+/*******************************************************/
+
+DIRECTION positionOrigineDestToDirection(const Vector2i &origine, const Vector2i &dest)
+{
+    DIRECTION dir = NULLDIRECTION;
+
+    if (positionCaseVoisineNORD(origine) == dest)
+        dir = NORD;
+    else if (positionCaseVoisineNORDOUEST(origine) == dest)
+        dir = NORDOUEST;
+    else if (positionCaseVoisineSUDOUEST(origine) == dest)
+        dir = SUDOUEST;
+    else if (positionCaseVoisineSUD(origine) == dest)
+        dir = SUD;
+    else if (positionCaseVoisineSUDEST(origine) == dest)
+        dir = SUDEST;
+    else if (positionCaseVoisineNORDEST(origine) == dest)
+        dir = NORDEST;
+    else
+        dir = NULLDIRECTION;
+
+    return dir;
 }

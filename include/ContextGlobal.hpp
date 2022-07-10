@@ -5,6 +5,8 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
 
 #include "EnumTypeSol.hpp"
 #include "EnumTypeStructure.hpp"
@@ -18,6 +20,12 @@ using namespace sf;
 class Carte;
 class CaseMap;
 
+enum GameEvent
+{
+    AucunGameEvent,
+    InverserSensPipeline
+};
+
 class ContextGlobal
 {
 
@@ -30,6 +38,13 @@ private:
     bool _eventPresent;
     Event _event;
     bool _isRun;
+    GameEvent _gameEvent;
+
+    Clock _clock;
+    Time _timeSaveTick;
+    Time _timeSaveAffichage;
+    uint _tick;
+    bool _updateTick;
 
     Carte *_carte;
     CaseMap *_caseOver;
@@ -39,9 +54,13 @@ private:
 
 private: // Static
     static ContextGlobal *_singleton;
+    static uint _nbTicksMax; // = 4
+    static Time _deltaTick;  // = 25ms
 
 public: // Static
     static ContextGlobal *getInstance();
+    static uint getNbTicksMax();
+    static Time getTempsTick();
 
 public:
     ~ContextGlobal();
@@ -69,6 +88,9 @@ public:
     CaseMap *getCaseOver() const;
     CaseMap *getCaseSelectionnee() const;
     TYPE_STRUCTURE getEditionStructureSelectionnee() const;
+    GameEvent getGameEvent() const;
+    uint getCurrentTick() const;
+    bool getUpdateTick() const;
 
     // Setter
     void setIsRun(bool run);
@@ -78,6 +100,8 @@ public:
     void setCaseOver(CaseMap *caseOver);
     void setCaseSelectionnee(bool reset = false);
     void setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect);
+    void setGameEvent(GameEvent gameEvent = AucunGameEvent);
+    void setUpdateTick(bool reset = false);
 
 private:
     ContextGlobal();
@@ -86,6 +110,9 @@ private:
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
+// Static
+inline uint ContextGlobal::getNbTicksMax() { return _nbTicksMax; }
+inline Time ContextGlobal::getTempsTick() { return _deltaTick; }
 
 // Getter
 inline const RenderWindow &ContextGlobal::getWindow() const { return _window; }
@@ -112,6 +139,9 @@ inline const float ContextGlobal::getScaleReference() const { return _scaleRefer
 inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
+inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
+inline uint ContextGlobal::getCurrentTick() const { return _tick; }
+inline bool ContextGlobal::getUpdateTick() const { return _updateTick; }
 
 // Setter
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
@@ -119,5 +149,7 @@ inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleRefe
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
 inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
 inline void ContextGlobal::setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect) { _editionStructureSelectionnee = structSelect; }
+inline void ContextGlobal::setGameEvent(GameEvent gameEvent) { _gameEvent = gameEvent; }
+inline void ContextGlobal::setUpdateTick(bool reset) { _updateTick = reset; }
 
 #endif

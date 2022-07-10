@@ -230,6 +230,11 @@ void Carte::dessiner()
     {
         for (uint x = 0; x < _nbColonnesGrille; ++x)
         {
+            // TEMPORAIRE de recalculer toutes les orientations à chaque dessin
+            if (_grille[y][x].getConstruction() != nullptr)
+            {
+                _grille[y][x].getConstruction()->updateOrientation();
+            }
             _grille[y][x].dessiner();
         }
     }

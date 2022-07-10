@@ -9,6 +9,7 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
  * @brief Constructeur du Manager *singleton*
  */
 Manager::Manager() : _carte(Carte::getInstance()),
+                     _masterBatiment{nullptr},
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite) {}
 
@@ -42,7 +43,7 @@ void Manager::chargerMemoireManager()
 {
     cerr << endl
          << "chargerMemoireManager" << endl;
-    chargerTextures("ressource/cheminTexturesManager.txt");
+    chargerTextures("ressource/cheminTextures/cheminTexturesManager.txt");
 }
 
 void Manager::dechargerMemoireManager()
@@ -132,8 +133,42 @@ void Manager::dessinerOverlayMap()
     }
 }
 
+/**
+ * @brief Process les Structures pour les actualiser, en partant du MasterBatiment
+ * @warning Si des structures ne sont pas connexe au MasterBatiment, alors elle ne sont pas process
+ *
+ */
+void Manager::updateStructure()
+{
+
+    queue<Structure *> queueStruct;
+    if (_masterBatiment != nullptr)
+        queueStruct.push(_masterBatiment);
+
+    Structure *curseurStruct = nullptr;
+
+    while (!queueStruct.empty())
+    {
+        // Récuperation dans la file
+        curseurStruct = queueStruct.front();
+        queueStruct.pop();
+
+        // Récupération de toutes les structures connectées entrantes
+        // Pour remonter les connexions jusqu'aux extremités
+        for (auto s : curseurStruct->getStructuresConnecteesEntrantes())
+        {
+            queueStruct.push(s);
+        }
+
+        // Traitement de la structure
+        curseurStruct->update();
+    }
+}
+
 void Manager::update()
 {
+    // Process les structures pour les actualiser
+    updateStructure();
 }
 
 /**
@@ -149,11 +184,16 @@ void Manager::run()
         while (contextGlobal->getPollEvent())
         { // Actualise le contexte seulement quand il ya une evenement
             contextGlobal->update();
-            placerStructure();
+            updateEvent();
         }
-        update();
-        dessiner();
-        contextGlobal->afficherFenetre();
+
+        if (contextGlobal->getUpdateTick())
+        {
+            update();
+            dessiner();
+            contextGlobal->afficherFenetre();
+            contextGlobal->setUpdateTick(false);
+        }
     }
 }
 
@@ -161,9 +201,13 @@ void Manager::run()
  * @brief Place une Structure sur une case si toutes les conditions sont réunis
  * @details Conditions : une case est selectionnée, il n'y a pas de construction sur la case selectionnée, un type de structure est selectionné
  * Appelle les fonctions placerPipeline et placerMine
+ *
+ * @return true - *Si une structure à été placée*
+ * @return false - *Aucune structure placée*
  */
-void Manager::placerStructure()
+bool Manager::placerStructure()
 {
+    bool structPlacee = false;
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
 
     TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
@@ -174,20 +218,67 @@ void Manager::placerStructure()
         { // Case selectionnee
             if (caseSelect->getConstruction() == nullptr)
             { // Pas de structure sur la case choisie
-                if (!placerPipeline(caseSelect))
+                structPlacee = placerPipeline(caseSelect, editionStructSelect);
+                if (!structPlacee)
                 {
-                    if (!placerMine(caseSelect))
+                    structPlacee = placerMine(caseSelect, editionStructSelect);
+                    if (!structPlacee)
                     {
-                        // cerr << "Pas de structure posée" << endl;
+                        structPlacee = placerStructureSpeciale(caseSelect, editionStructSelect);
+                        if (!structPlacee)
+                        {
+                            // cerr << "Pas de structure posée" << endl;
+                        }
                     }
                 }
             }
         }
     }
+
+    // Structure placée -> intégration
+    if (structPlacee)
+        integrationStructureVoisinage();
+
+    // Reset le choix de case select
+    // A choisir si on deselectionne la case
+    // après ajout d'une structure ???
+    // A priori nn car on va avoir besoin de savoir
+    // quelle case a été ajouté pour les calculs
+    // de connexion et d'orientation
+    // contextGlobal->setCaseSelectionnee(true);
+
+    // Reset le choix d'edition de structure select
+    contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
+
+    return structPlacee;
 }
 
 /**
- * @brief Place une Mine
+ * @brief Place une Structure spéciale sur la carte
+ *
+ * @param CaseMap * - *caseSelect*
+ * @return true - Structure placée (Batiment spécial)
+ * @return false - Structure non placée (Pas Batiment spéciale)
+ */
+bool Manager::placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
+{
+    bool place = false;
+
+    Structure *s;
+
+    if (editionStruct == TYPE_STRUCTURE::MasterBatiment)
+    {
+        s = new MasterBatiment{(Vector2u)caseSelect->getPositionCarte()};
+        _masterBatiment = (MasterBatiment *)s;
+    }
+
+    _carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
+
+    place = true;
+}
+
+/**
+ * @brief Place une Mine sur la carte
  *
  * @todo  Spécifier juste pour les Mines : typeStructureToTypeRessource
  *
@@ -195,15 +286,14 @@ void Manager::placerStructure()
  * @return true - Structure placée (Mine)
  * @return false - Structure non placée (Pas Mine)
  */
-bool Manager::placerMine(CaseMap *caseSelect)
+bool Manager::placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
 {
     bool place = false;
 
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
-    TYPE_STRUCTURE editionStruct = contextGlobal->getEditionStructureSelectionnee();
 
     // Spécifier juste pour les Mines
-    ress = typeStructureToTypeRessource(editionStruct);
+    ress = typeMineToTypeRessource(editionStruct);
 
     // Construit et ajoute la Mine
     if (ress != TYPE_RESSOURCE::Rien)
@@ -215,13 +305,30 @@ bool Manager::placerMine(CaseMap *caseSelect)
 
         _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
 
-        // Reset le choix de case select
-        // A choisir si on deselectionne la case
-        // après ajout d'une structure ???
-        // contextGlobal->setCaseSelectionnee(true);
+        place = true;
+    }
 
-        // Reset le choix d'edition de structure select
-        contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
+    return place;
+}
+
+/**
+ * @brief Place un Pipeline sur la carte
+ *
+ * @warning Ne connecte pas le Pipeline aux structures voisines
+ *
+ * @param CaseMap * - *caseSelect*
+ * @return true - Structure placée (Pipeline)
+ * @return false - Structure non placée (Pas Pipeline)
+ */
+bool Manager::placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
+{
+    bool place = false;
+
+    if (editionStruct == TYPE_STRUCTURE::Pipeline)
+    {
+        Pipeline *p = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
+
+        _carte->ajouterConstructionCaseCarte(p, p->getPositionCarte());
 
         place = true;
     }
@@ -230,15 +337,113 @@ bool Manager::placerMine(CaseMap *caseSelect)
 }
 
 /**
- * @brief Place un Pipeline
+ * @brief Intègre une structure dans la carte par rapport à son voisinage. (gère le connexion et rotation des textures)
  *
- * @param CaseMap * - *caseSelect*
- * @return true - Structure placée (Pipeline)
- * @return false - Structure non placée (Pas Pipeline)
+ * @return true - *Intégration ok*
+ * @return false - *Intégration pas ok*
  */
-bool Manager::placerPipeline(CaseMap *caseSelect)
+bool Manager::integrationStructureVoisinage()
 {
-    bool place = false;
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
 
-    return place;
+    // Erreur normalement on devrait pas avoir nullptr
+    // car la case n'a pas été deselectionnée
+    if (caseSelect == nullptr)
+        return false;
+
+    Structure *structAjoutee = caseSelect->getConstruction();
+
+    // Erreur normalement on devrait pas avoir nullptr
+    // Enfin quand toutes les structures auront été imlémentées ;)
+    if (structAjoutee == nullptr)
+        return false;
+
+    // Récupération voisinages de cases
+    CaseMap **casesVoisines = _carte->getCasesVoisines(structAjoutee->getPositionCarte());
+
+    // Récupération voisinage de structures
+    Structure **structsVoisines = new Structure *[6];
+
+    for (uint k = 0; k < 6; ++k)
+    { // Si ya une case et une structure on la récupère
+        // Bord de la map, il n'y a pas forcement de cases voisines
+        if (casesVoisines[k] != nullptr)
+            structsVoisines[k] = casesVoisines[k]->getConstruction();
+        else // Pas de case (normalement pas besoin)
+            structsVoisines[k] = nullptr;
+    }
+
+    // .... ajouterStruct ....
+    // Garder une mémoire de la précedente case select pour une amélioration de la connection plus intuitive
+    /* Pour l'instant
+    On parcourt les cases voisines dans
+    ordre habituel N->NO->...->NE
+    la première structure trouvée est une sortie
+    si sortie pas possible alors on connecte comme entrée
+    dès que une sortie a été setter, tous les autres connexions
+    sont des entrées
+    */
+    // Connexion des Structures à celle ajoutée
+    for (int k = 0; k < 6; ++k)
+    { // Pour chaque structure voisine
+        if (structsVoisines[k] != nullptr)
+        {
+            if (!structAjoutee->getASortie())
+            { // Essaye d'ajouter en sortie la structure
+                if (structAjoutee->connecterStructure(structsVoisines[k], true))
+                {
+                    // cerr << "Connexion Structure comme une sortie" << endl;
+                }
+            }
+            // Dans tous les cas essaye d'ajouter comme entrée
+            if (structAjoutee->connecterStructure(structsVoisines[k], false))
+            {
+                // cerr << "Connexion Structure comme une entrée" << endl;
+            }
+            else
+            {
+                // cerr << "Pas connectée comme une entrée" << endl;
+            }
+        }
+    }
+
+    // Optimisation des orientations et connexions
+    // Du style changement de sens d'un pipeline complet
+    // S'il n'est pas fixé/bloqué par des contraintes sépcifiques
+    // ...
+
+    // Adapatation des textures des structures impactées
+    structAjoutee->updateOrientation();
+    for (int k = 0; k < 6; ++k)
+    {
+        // Actualiser orientation structure (Texture)
+        if (structsVoisines[k] != nullptr)
+            structsVoisines[k]->updateOrientation();
+    }
+
+    return true;
+}
+
+/**
+ * @brief Effectue les calculs et actions liées au context actualisé par les event
+ *
+ */
+void Manager::updateEvent()
+{
+    placerStructure();
+
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
+
+    if (contextGlobal->getGameEvent() == InverserSensPipeline)
+    {
+        if (structSelect != nullptr &&
+            typeid(*structSelect).hash_code() == typeid(Pipeline).hash_code())
+        {
+            ((Pipeline *)structSelect)->inverserSens();
+            // ((Pipeline *)structSelect)->updateOrientation();
+
+            contextGlobal->setGameEvent();
+        }
+    }
 }

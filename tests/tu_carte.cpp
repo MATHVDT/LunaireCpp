@@ -55,7 +55,7 @@ TEST_CASE("Initialisation de la carte")
 
             for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
-                coordCase = carte->getCoordCase(i, j);
+                coordCase = carte->matriceToCarte(Vector2u(j, i));
                 ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }
@@ -96,7 +96,7 @@ TEST_CASE("Initialisation de la carte")
             }
             for (uint j = 0; j < Ncolonnes / 2; ++j)
             {
-                coordCase = carte->getCoordCase(i, j);
+                coordCase = carte->matriceToCarte(Vector2u(j, i));
                 ssCoordRef << "(" << coordCase.x << "," << coordCase.y << ") ";
                 ssCaseRef << 0 << " ";
             }

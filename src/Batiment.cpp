@@ -2,19 +2,19 @@
  * @file Batiment.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Implémentation des méthodes de la classe Batiment
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #include "Batiment.hpp"
 
 uint Batiment::_nbBatiments = 0;
 uint Batiment::_idMaxBatiments = 0;
+
 const uint Batiment::_tailleStockEntree = 6;
 const uint Batiment::_tailleStockSortie = 1;
-
 
 Batiment::Batiment()
     : _idBatiment(++_idMaxBatiments)
@@ -80,15 +80,29 @@ void Batiment::process() {}
 /*******************************************************/
 
 /**
- * @brief Check si la connexion entre les 2 Structures est possible, et si la structure peut être connectée au batiment
- * @todo Vérfier si la structure peut être connectée
+ * @brief Check si la connexion entre le Batiment et une autre strucutre est possible (nb de connexion)
+ *
+ * @details Dans la méthode override, on regarde si la structrures peut avoir une connexion suplémentaire (sortie ou entrée). Puis dans la méthode Structure::checkConnexionPossible, on regarde si c'est la structure que l'on veut ajouter qui peut accepeter une connexion supplémentaire (entrée ou sortie).
  *
  * @param Structure * - *s*
+ * @param bool - *commeSortie*
+ *
  * @return true - *Connexion possible*
  * @return false - *Connexion impossible*
  */
-bool Batiment::checkConnexionPossible(Structure *s)
+bool Batiment::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-    return Structure::checkConnexionPossible(s);
-    // &&(typeid(c->structure) == typeid(Structure));
+    // Vérifier la compatibilité des structures connectées
+    if (typeid(*s) != typeid(Pipeline))
+    {
+        // cerr << "Pas un pipeline que l'on co a ce batiement" << endl;
+        return false; // Co à autre chose que pipeline
+    }
+    return Structure::checkConnexionPossible(s, commeSortie);
+}
+
+bool Batiment::updateOrientation()
+{
+    // Rien
+    return false;
 }

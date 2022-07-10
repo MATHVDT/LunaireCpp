@@ -1,3 +1,0 @@
-./ressource/tuyau_non_connecte_sud_to_rien.png
-./ressource/tuyau_droit_sud_to_nord.png
-./ressource/tuyau_angle_sud_to_nord_ouest.png

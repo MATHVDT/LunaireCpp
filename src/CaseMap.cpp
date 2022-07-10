@@ -139,7 +139,7 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
 /*******************************************************/
 void CaseMap::chargerMemoireCaseMap()
 {
-    CaseMap::chargerSprites("ressource/cheminTexturesCases.txt");
+    CaseMap::chargerSprites("ressource/cheminTextures/cheminTexturesCases.txt");
 }
 
 void CaseMap::dechargerMemoireCaseMap()

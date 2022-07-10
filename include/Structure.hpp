@@ -84,7 +84,8 @@ public:
 
     uint getLevel() const;
 
-    virtual bool stockEntreePlein() const;
+     bool stockEntreePlein() const;
+     bool stockSortiePlein() const;
     uint getNbEntrees() const;
     uint getNbConnexions() const;
     bool getASortie() const;
@@ -102,13 +103,15 @@ public:
     virtual void process() = 0;
 
     // Gestion des structures connectées
-    bool connecterStructure(Structure *s, bool commeSortie = true);
+    bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
     bool deconnecterStructure(Structure *s);
+    virtual bool updateOrientation() = 0;
 
-    TYPE_RESSOURCE livrerStock();
+    virtual TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();
 
-    virtual bool checkConnexionPossible(Structure *s);
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
+    bool checkConnexionCircuit(Structure *s, bool commeSortie);
 };
 
 /***************************************************/
@@ -130,14 +133,16 @@ inline void Structure::setPositionCarte(const Vector2u &pos) { _position = pos; 
 /***************************************************/
 inline uint Structure::getIdStructure() const { return _idStructure; }
 
-inline bool Structure::getASortie() const { return _sortie; }
+inline bool Structure::getASortie() const { return (_sortie != nullptr); }
 
 inline uint Structure::getNbConnexions() const { return _listStructuresConnectees.size(); }
-inline uint Structure::getNbEntrees() const { return getNbConnexions() - (_sortie != nullptr); }
+inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.size() - (_sortie != nullptr); }
 
 inline uint Structure::getLevel() const { return _level; }
 
 inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
+inline bool Structure::stockSortiePlein
+() const { return _stockSortie.size() == _tailleStockSortie; }
 
 inline uint Structure::getTailleStockEntree() const { return _tailleStockEntree; }
 inline uint Structure::getTailleStockSortie() const { return _tailleStockSortie; }

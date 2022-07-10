@@ -13,5 +13,5 @@ enum class Sol
 };
 ```
 Cela correspond à la **matrice grille** de la carte. 
-> 1 ligne dans la carte = 2 lignes dans la grille
-> 2 colonnes dans la carte = 1 colonne dans la grille
+> 1 ligne dans la carte = 2 lignes dans la grille   
+> 2 colonnes dans la carte = 1 colonne dans la grille  

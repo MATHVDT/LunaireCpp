@@ -12,6 +12,8 @@
 #include "ContextGlobal.hpp"
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
+uint ContextGlobal::_nbTicksMax = 4;            // = 4
+Time ContextGlobal::_deltaTick = seconds(0.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -65,6 +67,13 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _caseOver = nullptr;
     _caseSelectionnee = nullptr;
 
+    _gameEvent = AucunGameEvent;
+
+    _clock.restart();
+    _timeSaveTick = _clock.getElapsedTime();
+    _tick = 0;
+    _updateTick = true;
+
     _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
 }
 
@@ -106,12 +115,18 @@ void ContextGlobal::update()
     {
         clickSouris();
     }
-
     // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
     // Vector2i mousePos = Mouse::getPosition();
     // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
-
     // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
+
+    // Calcul du tick
+    if (_timeSaveTick + _deltaTick <= _clock.getElapsedTime())
+    {
+        _tick = (_tick + 1) % _nbTicksMax;
+        _timeSaveTick = _clock.getElapsedTime();
+        _updateTick = true;
+    }
 }
 
 /**
@@ -182,7 +197,7 @@ void ContextGlobal::clickSouris()
     if (Mouse::isButtonPressed(Mouse::Left) &&
         _caseOver != _caseSelectionnee)
     { //  bouton gauche souris et changement de case selectionnee
-        setCaseSelectionnee();
+        setCaseSelectionnee(false);
         // cerr << "case select" << endl;
     } // Deselection case
     else if (Mouse::isButtonPressed(Mouse::Right) &&
@@ -204,16 +219,21 @@ void ContextGlobal::checkClavierStructures()
     {
     case Keyboard::A:
         _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
-        cerr << "MinePoussiereRegolite selectionnée" << endl;
+        // cerr << "MinePoussiereRegolite selectionnée" << endl;
         break;
     case Keyboard::B:
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
-        cerr << "Pipeline selectionnée" << endl;
+        // cerr << "Pipeline selectionnée" << endl;
+        break;
+    case Keyboard::C:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        // cerr << "MasterBatiment selectionnée" << endl;
         break;
     case Keyboard::Space:
         _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
-        cerr << "AucuneStructure selectionnée" << endl;
-
+        // cerr << "AucuneStructure selectionnée" << endl;
+    case Keyboard::I:
+        _gameEvent = InverserSensPipeline;
         break;
     default:
         break;

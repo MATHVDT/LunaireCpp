@@ -14,11 +14,14 @@
 
 #include <list>
 #include <queue>
+#include <typeinfo>
 
 #include "Structure.hpp"
+#include "Pipeline.hpp"
 #include "ContextGlobal.hpp"
 
 class ContextGlobal;
+class Pipeline;
 
 extern ContextGlobal *contextGlobal;
 
@@ -31,15 +34,15 @@ private: // Static
     static uint _nbBatiments;
     static uint _idMaxBatiments;
 
-protected: // Static
-    static const uint _tailleStockEntree;
-    static const uint _tailleStockSortie;
+protected:                                // Static
+    static const uint _tailleStockEntree; // = 6 defaut
+    static const uint _tailleStockSortie; // = 1
 
 public: // Static
     static uint getNbBatiments();
     static uint getIdMaxBatiments();
-    static uint getTailleStockEntree();
-    static uint getTailleStockSortie();
+    static uint getTailleStockEntreeBatiment();
+    static uint getTailleStockSortieBatiment();
 
     static void chargerMemoireBatiments();
     static void dechargerMemoireBatiments();
@@ -62,7 +65,8 @@ public:
 
     virtual void process();
 
-    virtual bool checkConnexionPossible(Structure *s) override;
+    bool updateOrientation() override;
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 };
 
 /***************************************************/
@@ -75,8 +79,8 @@ public:
 inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 inline uint Batiment::getIdMaxBatiments() { return _idMaxBatiments; }
 
-inline uint Batiment::getTailleStockEntree() { return _tailleStockEntree; }
-inline uint Batiment::getTailleStockSortie() { return _tailleStockSortie; }
+inline uint Batiment::getTailleStockEntreeBatiment() { return _tailleStockEntree; }
+inline uint Batiment::getTailleStockSortieBatiment() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

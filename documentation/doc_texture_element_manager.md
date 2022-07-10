@@ -8,7 +8,7 @@ Eléments du Manager :
 
 Pour l'instant il n'y a pas d'animations sur les overlays.
 
-Les chemins des images se trouves dans *ressource/cheminTexturesManager.txt*
+Les chemins des images se trouves dans *ressource/cheminTextures/cheminTexturesManager.txt*
 Les chemins sont dans l'ordre definie plus haut.
 
 

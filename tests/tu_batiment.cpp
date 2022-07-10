@@ -2,10 +2,10 @@
  * @file tu_batiment.cpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Tests Unitaires de la classe Batiment
- * 
+ *
  * @version 0.1
  * @date 2022-06-09
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 #include <iostream>
@@ -21,8 +21,8 @@
 #include "Structure.hpp"
 #include "Batiment.hpp"
 #include "Mine.hpp"
+#include "Pipeline.hpp"
 #include "direction.hpp"
-#include "connexion_t.hpp"
 
 using namespace std;
 using namespace sf;
@@ -85,32 +85,32 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->getSortie() == nullptr);
     }
 
-    Batiment *bat2 = new Mine{Vector2u(1, 1)};
+    Pipeline *p = new Pipeline{Vector2u(1, 1)};
 
     SECTION("Test ajout batiment en sortie")
     {
-        REQUIRE(bat->connecterStructure(bat2, true));
+        REQUIRE(bat->connecterStructure(p, true));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
-        REQUIRE(bat->getSortie() == bat2);
+        REQUIRE(bat->getSortie() == p);
     }
 
     SECTION("Test ajout batiment 2 fois la même connexion en sortie")
     {
-        REQUIRE(bat->connecterStructure(bat2, true));
-        REQUIRE_FALSE(bat->connecterStructure(bat2, true));
+        REQUIRE(bat->connecterStructure(p, true));
+        REQUIRE_FALSE(bat->connecterStructure(p, true));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
-        REQUIRE(bat->getSortie() == bat2);
+        REQUIRE(bat->getSortie() == p);
     }
 
     SECTION("Test ajout batiment  en entrée")
     {
-        REQUIRE(bat->connecterStructure(bat2, false));
+        REQUIRE(bat->connecterStructure(p, false));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
@@ -120,8 +120,8 @@ TEST_CASE("Connexion batiment")
 
     SECTION("Test ajout batiment 2 fois la même connexion en entrée")
     {
-        REQUIRE(bat->connecterStructure(bat2, false));
-        REQUIRE_FALSE(bat->connecterStructure(bat2, false));
+        REQUIRE(bat->connecterStructure(p, false));
+        REQUIRE_FALSE(bat->connecterStructure(p, false));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
@@ -131,8 +131,8 @@ TEST_CASE("Connexion batiment")
 
     SECTION("Test ajout batiment 2 fois la même connexion en entrée puis en entrée")
     {
-        REQUIRE(bat->connecterStructure(bat2, false));
-        REQUIRE_FALSE(bat->connecterStructure(bat2, true));
+        REQUIRE(bat->connecterStructure(p, false));
+        REQUIRE_FALSE(bat->connecterStructure(p, true));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
@@ -142,16 +142,36 @@ TEST_CASE("Connexion batiment")
 
     SECTION("Test ajout batiment 2 fois la même connexion en entrée puis en sortie puis en entrée")
     {
-        REQUIRE(bat->connecterStructure(bat2, true));
-        REQUIRE_FALSE(bat->connecterStructure(bat2, false));
+        REQUIRE(bat->connecterStructure(p, true));
+        REQUIRE_FALSE(bat->connecterStructure(p, false));
 
         REQUIRE(bat->getNbConnexions() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
-        REQUIRE(bat->getSortie() == bat2);
+        REQUIRE(bat->getSortie() == p);
+    }
+
+    SECTION("Test ajout de strucutres non autorisé a ce sonnecter à un batiment")
+    {
+        Mine *bat2 = new Mine{Vector2u(1, 0)};
+        Batiment *bat3 = new Mine{Vector2u(1, 0)};
+        Structure *bat4 = new Mine{Vector2u(1, 0)};
+        
+        REQUIRE_FALSE(bat->connecterStructure(bat2, true));
+        REQUIRE_FALSE(bat->connecterStructure(bat3, true));
+        REQUIRE_FALSE(bat->connecterStructure(bat4, true));
+
+        REQUIRE(bat->getNbConnexions() == 0);
+        REQUIRE(bat->getNbEntrees() == 0);
+        REQUIRE(bat->getASortie() == false);
+        REQUIRE(bat->getSortie() == nullptr);
+
+        delete bat2;
+        delete bat3;
+        delete bat4;
     }
 
     delete bat;
-    delete bat2;
+    delete p;
     Mine::dechargerMemoireMines();
 }

@@ -20,6 +20,7 @@
 
 #include "Pipeline.hpp"
 
+#include "ContenuPipeline.hpp"
 #include "Mine.hpp"
 #include "direction.hpp"
 #include "EnumTypeRessource.hpp"
@@ -31,6 +32,7 @@ using namespace sf;
 TEST_CASE("Test création Pipeline")
 {
     Pipeline::chargerMemoirePipelines();
+    ContenuPipeline::chargerMemoireTypeRessource();
 
     uint idMaxPipelines = Pipeline::getIdMaxPipelines();
     Pipeline *pipe = new Pipeline{Vector2u(0, 0)};
@@ -40,4 +42,5 @@ TEST_CASE("Test création Pipeline")
 
     delete pipe;
     Pipeline::dechargerMemoirePipelines();
+    ContenuPipeline::dechargerMemoireTypeRessource();
 }

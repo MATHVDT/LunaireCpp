@@ -4,8 +4,9 @@
 enum class TYPE_STRUCTURE
 {
     AucuneStructure,
-
-    // Mines 
+    MasterBatiment,
+    
+    // Mines
     Pipeline,
     Mine,
     MinePoussiereRegolite,

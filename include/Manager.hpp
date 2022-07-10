@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <typeinfo>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -13,6 +14,7 @@
 #include "correspondance.hpp"
 
 #include "Mine.hpp"
+#include "MasterBatiment.hpp"
 
 class ContextGlobal;
 class Carte;
@@ -34,6 +36,7 @@ class Manager
 {
 private:
     Carte *_carte;
+    MasterBatiment* _masterBatiment;
 
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;
@@ -58,8 +61,10 @@ public:
     void init();
     void run();
     void update();
+    void updateStructure();
+    void updateEvent();
 
-    void placerStructure();
+    bool placerStructure();
 
     void dessiner();
 
@@ -72,8 +77,10 @@ public:
 private:
     Manager();
 
-    bool placerPipeline(CaseMap *caseSelect);
-    bool placerMine(CaseMap *caseSelect);
+    bool placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
+    bool placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
+    bool placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
+    bool integrationStructureVoisinage();
 
     void dessinerOverlay();
     void dessinerOverlayMap();

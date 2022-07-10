@@ -5,10 +5,14 @@
 #include "direction.hpp"
 #include "Carte.hpp"
 #include "CaseMap.hpp"
+
 #include "Structure.hpp"
 #include "Batiment.hpp"
-#include "Mine.hpp"
+
 #include "Pipeline.hpp"
+#include "Mine.hpp"
+#include "MasterBatiment.hpp"
+
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
