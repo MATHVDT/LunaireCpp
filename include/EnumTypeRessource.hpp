@@ -37,11 +37,14 @@ enum class TYPE_RESSOURCE : int
     LingotTitane,
     LingotSilicium,
     LingotFer,
-
+    
+    LingotOr,
     LingotAluminium,
     LingotMagnesium,
     LingotCalcium,
     LingotSoduim,
+
+    Helium3, // PoussiereRegolite 
 
     // A partir de la glace
     HydrogeneGaz,
