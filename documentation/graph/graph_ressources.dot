@@ -3,48 +3,50 @@ digraph {
     // Sol
     subgraph SOL{
         rank=same; 
-        Vierge [style="solid", color="", label="Vierge",shape="plaintext"];
-        GisementOr [style="filled,solid", color="", label="Gisement Or",shape="plaintext"];
-        GisementFer [style="filled,solid", color="", label="Gisement Fer",shape="plaintext"];
-        GisementTitane [style="filled,solid", color="", label="Gisement Titane",shape="plaintext"];
-        GisementSilicium [style="filled,solid", color="", label="Gisement Silicium",shape="plaintext"];
-        GisementGlace [style="filled,solid", color="", label="Gisement Glace",shape="plaintext"];
-        GisementAluminium [style="filled,solid", color="", label="Gisement Aluminium",shape="plaintext"];
-        GisementMagnesium [style="filled,solid", color="", label="Gisement Magnesium",shape="plaintext"];
-        GisementCalcium [style="filled,solid", color="", label="Gisement Calcium",shape="plaintext"];
-        GisementSoduim [style="filled,solid", color="", label="Gisement Soduim",shape="plaintext"];
-        Montage [style="filled,solid", color="", label="Montage",shape="plaintext"];
-        Trou [style="filled,solid", color="", label="Trou",shape="plaintext"];
+        node [style="filled,solid", color="", shape="plaintext"]
+        Vierge [style="solid", color="", label="Vierge"];
+        GisementOr [label="Gisement Or"];
+        GisementFer [label="Gisement Fer"];
+        GisementTitane [label="Gisement Titane"];
+        GisementSilicium [label="Gisement Silicium"];
+        GisementGlace [label="Gisement Glace"];
+        GisementAluminium [label="Gisement Aluminium"];
+        GisementMagnesium [label="Gisement Magnesium"];
+        GisementCalcium [label="Gisement Calcium"];
+        GisementSoduim [label="Gisement Soduim"];
+        Montage [label="Montage"];
+        Trou [label="Trou"];
     }
 
     // Matière Première
     subgraph MATIERE_PREMIERE{
         rank=same; 
-        PoussiereRegolite [style="filled,solid", color="", label="Poussiere Regolite",shape="egg"];
-        MineraiGlace [style="filled,solid", color="", label="Minerai Glace",shape="egg"];
-        MineraiTitane [style="filled,solid", color="", label="Minerai Titane",shape="egg"];
-        MineraiSilicium [style="filled,solid", color="", label="Minerai Silicium",shape="egg"];
-        MineraiFer [style="filled,solid", color="", label="Minerai Fer",shape="egg"];
-        MineraiOr [style="filled,solid", color="", label="Minerai Or",shape="egg"];
-        MineraiAluminium [style="filled,solid", color="", label="Minerai Aluminium",shape="egg"];
-        MineraiMagnesium [style="filled,solid", color="", label="Minerai Magnesium",shape="egg"];
-        MineraiCalcium [style="filled,solid", color="", label="Minerai Calcium",shape="egg"];
-        MineraiSoduim [style="filled,solid", color="", label="Minerai Soduim",shape="egg"];
+        node [style="filled,solid", color="", shape="egg"]
+        PoussiereRegolite [label="Poussiere Regolite"];
+        MineraiGlace [label="Minerai Glace"];
+        MineraiTitane [label="Minerai Titane"];
+        MineraiSilicium [label="Minerai Silicium"];
+        MineraiFer [label="Minerai Fer"];
+        MineraiOr [label="Minerai Or"];
+        MineraiAluminium [label="Minerai Aluminium"];
+        MineraiMagnesium [label="Minerai Magnesium"];
+        MineraiCalcium [label="Minerai Calcium"];
+        MineraiSoduim [label="Minerai Soduim"];
     }
 
     // Lingot
     subgraph LINGOT{
         rank=same; 
-        LingotRegolite  [style="filled,solid", color="", label="Lingot Regolite",shape="rectangle"];
-        LingotGlace  [style="filled,solid", color="", label="Lingot Glace",shape="rectangle"];
-        LingotTitane  [style="filled,solid", color="", label="Lingot Titane",shape="rectangle"];
-        LingotSilicium  [style="filled,solid", color="", label="Lingot Silicium",shape="rectangle"];
-        LingotFer  [style="filled,solid", color="", label="Lingot Fer",shape="rectangle"];
-        LingotOr  [style="filled,solid", color="", label="Lingot Or",shape="rectangle"];
-        LingotAluminium  [style="filled,solid", color="", label="Lingot Aluminium",shape="rectangle"];
-        LingotMagnesium  [style="filled,solid", color="", label="Lingot Magnesium",shape="rectangle"];
-        LingotCalcium  [style="filled,solid", color="", label="Lingot Calcium",shape="rectangle"];
-        LingotSoduim  [style="filled,solid", color="", label="Lingot Soduim",shape="rectangle"];
+        node [style="filled,solid", color="", shape="rectangle"]
+        LingotRegolite  [label="Lingot Regolite"];
+        LingotTitane  [label="Lingot Titane"];
+        LingotSilicium  [label="Lingot Silicium"];
+        LingotFer  [label="Lingot Fer"];
+        LingotOr  [label="Lingot Or"];
+        LingotAluminium  [label="Lingot Aluminium"];
+        LingotMagnesium  [label="Lingot Magnesium"];
+        LingotCalcium  [label="Lingot Calcium"];
+        LingotSoduim  [label="Lingot Soduim"];
     }
 
     Helium3 [style="filled,solid", color="", label="Helium3",shape="Mcircle"];
@@ -53,25 +55,28 @@ digraph {
     // Gaz
     subgraph GAZ{
         rank=same; 
-        GazOxygene [style="filled,solid", color="", label="Gaz Oxygene",shape="egg"];
-        GazHydrogene [style="filled,solid", color="", label="Gaz Hydrogene",shape="egg"];
+        node [style="filled,solid", color="", shape="egg"]
+        GazOxygene [label="Gaz Oxygene"];
+        GazHydrogene [label="Gaz Hydrogene"];
     }
 
     // Liquide
     subgraph LIQUIDE{
         // rank=same; 
-        Eau [style="filled,solid", color="", label="Eau",shape="egg"];
-        LiquideHydrogene [style="filled,solid", color="", label="Liquide Hydrogene",shape="egg"];
-        LiquideOxygene [style="filled,solid", color="", label="Liquide Oxygene",shape="egg"];
-        PeroxydeHydrogene [style="filled,solid", color="", label="Peroxyde Hydrogene",shape="egg"];
+        Eau [label="Eau"];     
+        node [style="filled,solid", color="", shape="egg"]
+        LiquideHydrogene [label="Liquide Hydrogene"];
+        LiquideOxygene [label="Liquide Oxygene"];
+        PeroxydeHydrogene [label="Peroxyde Hydrogene"];
     }
 
     // Carburant
     subgraph CARBURANT{
         // rank=same; 
-        Carburant  [style="filled,solid", color="", label="Carburant",shape="cylinder"];
-        Carburant1  [style="filled,solid", color="", label="Carburant1",shape="cylinder"];
-        Carburant2  [style="filled,solid", color="", label="Carburant2",shape="cylinder"];
+        node [style="filled,solid", color="", shape="cylinder"]
+        Carburant  [label="Carburant"];
+        Carburant1  [label="Carburant1"];
+        Carburant2  [label="Carburant2"];
     }
 
     // Craft
@@ -79,31 +84,35 @@ digraph {
     // Niveau 1
     subgraph CRAFT1{
         // rank=same; 
-        SatelliteFragile1 [style="filled,solid", color="", label="Satellite Fragile1",shape="octagon"];
-        SatelliteRobuste1 [style="filled,solid", color="", label="Satellite Robuste1",shape="octagon"];
-        VaisseauFragile1 [style="filled,solid", color="", label="Vaisseau Fragile1",shape="tripleoctagon"];
-        VaisseauRobuste1 [style="filled,solid", color="", label="Vaisseau Robuste1",shape="octagon"];
+        node [style="filled,solid", color="", shape="octagon"]
+        SatelliteFragile1 [label="Satellite Fragile1"];
+        SatelliteRobuste1 [label="Satellite Robuste1"];
+        VaisseauFragile1 [label="Vaisseau Fragile1"];
+        VaisseauRobuste1 [label="Vaisseau Robuste1"];
     }
     // Niveau 2
     subgraph CRAFT2{
         // rank=same; 
-        SatelliteFragile2 [style="filled,solid", color="", label="Satellite Fragile2",shape="doubleoctagon"];
-        SatelliteRobuste2 [style="filled,solid", color="", label="Satellite Robuste2",shape="doubleoctagon"];
-        VaisseauFragile2 [style="filled,solid", color="", label="Vaisseau Fragile2",shape="tripleoctagon"];
-        VaisseauRobuste2 [style="filled,solid", color="", label="Vaisseau Robuste2",shape="doubleoctagon"];
+        node [style="filled,solid", color="", shape="doubleoctagon"]
+        SatelliteFragile2 [label="Satellite Fragile2"];
+        SatelliteRobuste2 [label="Satellite Robuste2"];
+        VaisseauFragile2 [label="Vaisseau Fragile2"];
+        VaisseauRobuste2 [label="Vaisseau Robuste2"];
     }
     // Niveau 3
     subgraph CRAFT3{
         // rank=same; 
-        SatelliteFragile3 [style="filled,solid", color="", label="Satellite Fragile3",shape="tripleoctagon"];
-        SatelliteRobuste3 [style="filled,solid", color="", label="Satellite Robuste3",shape="tripleoctagon"];
-        VaisseauFragile3 [style="filled,solid", color="", label="Vaisseau Fragile3",shape="tripleoctagon"];
-        VaisseauRobuste3 [style="filled,solid", color="", label="Vaisseau Robuste3",shape="tripleoctagon"];
+        node [style="filled,solid", color="", shape="tripleoctagon"]
+        SatelliteFragile3 [label="Satellite Fragile3"];
+        SatelliteRobuste3 [label="Satellite Robuste3"];
+        VaisseauFragile3 [label="Vaisseau Fragile3"];
+        VaisseauRobuste3 [label="Vaisseau Robuste3"];
     }
     // Luxe
     subgraph LUX{
-        PuceLuxe [style="filled,solid", color="", label="Puce Luxe",shape="Msquare"];
-        VaisseauLuxe [style="filled,solid", color="", label="Vaisseau Luxe",shape="Msquare"];
+        node [style="filled,solid", color="", shape="Msquare"]
+        PuceLuxe [label="Puce Luxe"];
+        VaisseauLuxe [label="Vaisseau Luxe"];
     }
 
 
@@ -111,41 +120,40 @@ digraph {
 
 /*********************************Connexion****************************************/
     Vierge -> PoussiereRegolite
-    GisementOr -> MineraiOr
-    GisementFer -> MineraiFer
-    GisementTitane -> MineraiTitane
-    GisementSilicium -> MineraiSilicium
-    GisementGlace -> MineraiGlace
-    GisementAluminium -> MineraiAluminium
-    GisementMagnesium -> MineraiMagnesium
-    GisementCalcium -> MineraiCalcium
-    GisementSoduim -> MineraiSoduim
+    GisementOr -> MineraiOr [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementFer -> MineraiFer [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementTitane -> MineraiTitane [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementSilicium -> MineraiSilicium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementAluminium -> MineraiAluminium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementMagnesium -> MineraiMagnesium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementCalcium -> MineraiCalcium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementSoduim -> MineraiSoduim [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementGlace -> MineraiGlace [label="Mine", fontcolor="grey", color="grey", style="dotted"]
 
-    PoussiereRegolite -> LingotRegolite 
+    PoussiereRegolite -> LingotRegolite [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
     PoussiereRegolite -> Helium3
-    MineraiGlace -> LingotGlace
-    MineraiTitane -> LingotTitane
-    MineraiSilicium -> LingotSilicium
-    MineraiFer -> LingotFer
-    MineraiOr -> LingotOr
-    MineraiAluminium -> LingotAluminium
-    MineraiMagnesium -> LingotMagnesium
-    MineraiCalcium -> LingotCalcium
-    MineraiSoduim -> LingotSoduim
+    MineraiTitane -> LingotTitane [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiSilicium -> LingotSilicium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiFer -> LingotFer [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiOr -> LingotOr [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiAluminium -> LingotAluminium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiMagnesium -> LingotMagnesium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiCalcium -> LingotCalcium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    MineraiSoduim -> LingotSoduim [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
 
-    LingotGlace -> Eau
-    Eau -> GazHydrogene
-    Eau -> GazOxygene
-    GazHydrogene -> LiquideHydrogene
-    GazOxygene -> LiquideOxygene
+    MineraiGlace -> Eau
+    Eau -> GazHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    Eau -> GazOxygene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    GazHydrogene -> LiquideHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    GazOxygene -> LiquideOxygene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
 
-    GazHydrogene, GazOxygene -> PeroxydeHydrogene
+    GazHydrogene, GazOxygene -> PeroxydeHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
 
-    LiquideHydrogene, LiquideOxygene -> Carburant1
-    PeroxydeHydrogene -> Carburant2
+    LiquideHydrogene, LiquideOxygene -> Carburant1 [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    PeroxydeHydrogene -> Carburant2 [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
 
-    Carburant1 -> Carburant
-    Carburant2 -> Carburant
+    Carburant1 -> Carburant [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    Carburant2 -> Carburant [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
 
     // pour aligner les suites de craft
     Puce -> PuceLuxe [style="invis", constraint=false]
@@ -154,27 +162,27 @@ digraph {
     VaisseauRobuste1 -> VaisseauRobuste2 -> VaisseauRobuste3 [style="invis"]
     VaisseauFragile1 -> VaisseauFragile2 -> VaisseauFragile3 [style="invis"]
 
-    LingotRegolite -> MateriauxConstruction
-    LingotSilicium -> Puce
-    Puce, LingotTitane, LingotOr -> PuceLuxe
+    LingotRegolite -> MateriauxConstruction [label="Fabrique", fontcolor="green", color="green", style="solid"]
+    LingotSilicium -> Puce [label="Fabrique", fontcolor="green", color="green", style="solid"]
+    Puce, LingotTitane, LingotOr -> PuceLuxe [label="Fabrique", fontcolor="green", color="green", style="solid"]
 
-    MateriauxConstruction, LingotFer, Puce -> SatelliteFragile1
-    SatelliteFragile1, LingotAluminium -> SatelliteFragile2
-    SatelliteFragile2, LingotOr -> SatelliteFragile3
+    MateriauxConstruction, LingotFer, Puce -> SatelliteFragile1 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    SatelliteFragile1, LingotAluminium -> SatelliteFragile2 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    SatelliteFragile2, LingotOr -> SatelliteFragile3 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
 
 
-    MateriauxConstruction, LingotTitane, Puce -> SatelliteRobuste1
-    SatelliteRobuste1, LingotAluminium -> SatelliteRobuste2
-    SatelliteRobuste2, LingotOr -> SatelliteRobuste3
+    MateriauxConstruction, LingotTitane, Puce -> SatelliteRobuste1 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    SatelliteRobuste1, LingotAluminium -> SatelliteRobuste2 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    SatelliteRobuste2, LingotOr -> SatelliteRobuste3 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
 
-    Carburant, MateriauxConstruction, LingotFer, Puce -> VaisseauFragile1
-    VaisseauFragile1, LingotAluminium -> VaisseauFragile2
-    VaisseauFragile2, LingotOr -> VaisseauFragile3
+    Carburant, MateriauxConstruction, LingotFer, Puce -> VaisseauFragile1 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    VaisseauFragile1, LingotAluminium -> VaisseauFragile2 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    VaisseauFragile2, LingotOr -> VaisseauFragile3 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
 
-    Carburant, MateriauxConstruction, LingotTitane, Puce -> VaisseauRobuste1
-    VaisseauRobuste1, LingotAluminium -> VaisseauRobuste2
-    VaisseauRobuste2, LingotOr -> VaisseauRobuste3
+    Carburant, MateriauxConstruction, LingotTitane, Puce -> VaisseauRobuste1 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    VaisseauRobuste1, LingotAluminium -> VaisseauRobuste2 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    VaisseauRobuste2, LingotOr -> VaisseauRobuste3 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
 
-    VaisseauRobuste3, SatelliteRobuste3, PuceLuxe -> VaisseauLuxe
+    VaisseauRobuste3, SatelliteRobuste3, PuceLuxe -> VaisseauLuxe [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
 
 }
