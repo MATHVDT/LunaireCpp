@@ -14,11 +14,13 @@ Manager::Manager() : _carte(Carte::getInstance()),
                      _spriteCaseSelectionnee(new Sprite)
 {
 
-    _btn = new Bouton{
-        Vector2f{0, 0},
-        BoutonType::boutonTuyau,
-        BoutonState::Active,
-        GameEvent::AucunGameEvent};
+    // _btn = new Bouton{
+    //     Vector2f{0, 0},
+    //     BoutonType::boutonTuyau,
+    //     BoutonState::Active,
+    //     GameEvent::AucunGameEvent};
+
+    // _menu{};
 }
 
 Manager::~Manager()
@@ -110,7 +112,6 @@ void Manager::dessiner()
     // _menu->dessiner();
 
     _carte->dessiner();
-    _btn->dessiner();
     dessinerOverlay();
 }
 
