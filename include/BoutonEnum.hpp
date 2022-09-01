@@ -27,14 +27,14 @@ const uint NB_BOUTONS = 8;
 
 enum BoutonType
 {
-    Tuyau = 0,
-    Marchand = 1,
-    Mine = 2,
-    Fonderie = 3,
-    Fabrique = 4,
-    Atelier = 5,
-    Cuve = 6,
-    ChantierSpatial = 7
+    boutonTuyau = 0,
+    boutonMarchand = 1,
+    boutonMine = 2,
+    boutonFonderie = 3,
+    boutonFabrique = 4,
+    boutonAtelier = 5,
+    boutonCuve = 6,
+    boutonChantierSpatial = 7
 };
 
 #endif

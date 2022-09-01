@@ -11,16 +11,16 @@
 #ifndef __MINE_HPP__
 #define __MINE_HPP__
 
-#include <iostream>
 #include <fstream>
 #include <exception>
 #include <math.h>
-#include <list>
-#include <queue>
 
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Rect.hpp>
+// #include <iostream>
+// #include <list>
+// #include <queue>
+// #include <SFML/System/Vector2.hpp>
+// #include <SFML/Graphics.hpp>
+// #include <SFML/Graphics/Rect.hpp>
 
 #include "EnumTypeSol.hpp"
 #include "EnumTypeRessource.hpp"

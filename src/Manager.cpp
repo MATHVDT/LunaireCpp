@@ -11,7 +11,15 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
 Manager::Manager() : _carte(Carte::getInstance()),
                      _masterBatiment{nullptr},
                      _spriteCaseOver(new Sprite),
-                     _spriteCaseSelectionnee(new Sprite) {}
+                     _spriteCaseSelectionnee(new Sprite)
+{
+
+    _btn = new Bouton{
+        Vector2f{0, 0},
+        BoutonType::boutonTuyau,
+        BoutonState::Active,
+        GameEvent::AucunGameEvent};
+}
 
 Manager::~Manager()
 {
@@ -100,7 +108,9 @@ void Manager::chargerTextures(string fichierCheminsTexture)
 void Manager::dessiner()
 {
     // _menu->dessiner();
+
     _carte->dessiner();
+    _btn->dessiner();
     dessinerOverlay();
 }
 
@@ -237,7 +247,7 @@ bool Manager::placerStructure()
 
     // Structure placée -> intégration
     if (structPlacee)
-        integrationStructureVoisinage();
+        return integrationStructureVoisinage();
 
     // Reset le choix de case select
     // A choisir si on deselectionne la case
@@ -300,8 +310,7 @@ bool Manager::placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
     {
         Mine *m = new Mine{
             (Vector2u)caseSelect->getPositionCarte(),
-            caseSelect->getTypeSol(),
-            ress};
+            caseSelect->getTypeSol(), ress};
 
         _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
 

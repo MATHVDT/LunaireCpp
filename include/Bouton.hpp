@@ -11,26 +11,32 @@
 #ifndef __BOUTON_HPP__
 #define __BOUTON_HPP__
 
-#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <fstream>
 
-#include "BoutonEnum.hpp"
+// #include <SFML/Graphics.hpp>
+
 #include "ContextGlobal.hpp"
 
+#include "BoutonEnum.hpp"
+
 class ContextGlobal;
+extern ContextGlobal *contextGlobal;
+
+extern string cheminFichierTexturesBoutons;
 
 using namespace std;
 using namespace sf;
 
-extern string cheminFichierTexturesBoutons;
-
 class Bouton
 {
 private:
-    Rect<int> _box;
+    Rect<float> _box;
     Sprite *_sprite;
-    GameEvent _action;
+    IntRect _zoomTexture;
     BoutonType _type;
     BoutonState _state;
+    GameEvent _action;
 
 public: // Static
     static Texture *_texturesBoutons[NB_BOUTONS];
@@ -45,10 +51,32 @@ private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Bouton(/* args */);
+    Bouton(const Vector2f &posBouton, BoutonType type,
+           BoutonState state = BoutonState::Normal,
+           GameEvent gameEvent = GameEvent::AucunGameEvent);
     ~Bouton();
 
-    void dessiner(float scaleSprite);
+    void dessiner(float scaleSprite = 1.f);
+
+    // Setter
+    void setSpriteTexture();
 };
+
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+/***************************************************/
+/*              Méthodes inline static             */
+/***************************************************/
+
+/***************************************************/
+/*           Méthodes inline non static            */
+/***************************************************/
+inline void Bouton::setSpriteTexture()
+{
+    _zoomTexture.top = _state * _box.height;
+    _sprite->setTextureRect(_zoomTexture);
+}
 
 #endif

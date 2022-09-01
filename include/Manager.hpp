@@ -9,16 +9,21 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+
 #include "ContextGlobal.hpp"
 #include "Carte.hpp"
 #include "correspondance.hpp"
 
+#include "Bouton.hpp"
+
 #include "Mine.hpp"
 #include "MasterBatiment.hpp"
+
 
 class ContextGlobal;
 class Carte;
 class CaseMap;
+class Mine;
 
 extern ContextGlobal *contextGlobal;
 
@@ -36,10 +41,12 @@ class Manager
 {
 private:
     Carte *_carte;
-    MasterBatiment* _masterBatiment;
+    MasterBatiment *_masterBatiment;
 
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;
+
+    Bouton* _btn; // TEMPO
 
 private: // Static
     static Manager *_singleton;

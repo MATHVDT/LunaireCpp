@@ -2,6 +2,9 @@
 #define __MAIN_HPP__
 
 #include "ContextGlobal.hpp"
+
+#include "Bouton.hpp"
+
 #include "direction.hpp"
 #include "Carte.hpp"
 #include "CaseMap.hpp"
@@ -16,5 +19,8 @@
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
+
+using namespace std;
+using namespace sf;
 
 #endif

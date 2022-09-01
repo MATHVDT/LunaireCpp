@@ -12,8 +12,8 @@
 #ifndef __BATIMENT_HPP__
 #define __BATIMENT_HPP__
 
-#include <list>
-#include <queue>
+// #include <list>
+// #include <queue>
 #include <typeinfo>
 
 #include "Structure.hpp"

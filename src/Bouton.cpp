@@ -10,14 +10,40 @@
  */
 #include "Bouton.hpp"
 
-string cheminFichierTexturesBoutons = "";
+string cheminFichierTexturesBoutons = "./ressource/cheminTextures/cheminTexturesBoutons.txt";
 
 Texture *Bouton::_texturesBoutons[NB_BOUTONS];
 // uint Bouton::_largeurBouton = 0; // Largeur d'1 Bouton
 // uint Bouton::_hauteurBouton = 0; // Hauteur d'1 Bouton
 
-Bouton::Bouton(/* args */)
+/**
+ * @brief Construct a new Bouton:: Bouton object
+ *
+ * @param const Vector2f & - *posBouton*
+ * @param BoutonType - *type*
+ * @param BoutonState - *state*
+ * @param GameEvent - *gameEventAction*
+ */
+Bouton::Bouton(const Vector2f &posBouton,
+               BoutonType type,
+               BoutonState state,
+               GameEvent gameEventAction)
+    : _box{posBouton.x, posBouton.y, 0, 0},
+      _sprite{new Sprite()},
+      _zoomTexture{0, 0, 0, 0},
+      _type(type),
+      _state(state),
+      _action(gameEventAction)
 {
+
+    _sprite->setPosition(posBouton);
+    _sprite->setTexture(*_texturesBoutons[_type]);
+    Vector2u textureSize = _sprite->getTexture()->getSize();
+
+    _box.height = _zoomTexture.height = textureSize.y / NB_STATE_BOUTONS;
+    _box.width = _zoomTexture.width = textureSize.x;
+
+    setSpriteTexture();
 }
 
 Bouton::~Bouton()
@@ -41,7 +67,7 @@ void Bouton::dechargerMemoireBoutons()
 {
     cerr << endl
          << "dechargerMemoireBoutons" << endl;
-    for (int i = 0; i < NB_RESSOURCES; ++i)
+    for (int i = 0; i < NB_BOUTONS; ++i)
     {
         delete _texturesBoutons[i];
     }
@@ -54,7 +80,7 @@ void Bouton::dechargerMemoireBoutons()
  */
 void Bouton::chargerTextures(string fichierCheminsTexture)
 {
-    string nomFichierTexture[NB_RESSOURCES];
+    string nomFichierTexture[NB_BOUTONS];
     string cheminTexture;
     sf::Texture *texture;
 
@@ -88,3 +114,14 @@ void Bouton::chargerTextures(string fichierCheminsTexture)
 
 /*******************************************************/
 /*******************************************************/
+
+void Bouton::dessiner(float scaleSprite)
+{
+    setSpriteTexture(); // Modif text ici ou alors quand changement
+    _sprite->setTextureRect(_zoomTexture);
+
+    float scale = contextGlobal->getScaleReference();
+    _sprite->setScale(scale, scale);
+
+    contextGlobal->dessinerFenetre(_sprite);
+}

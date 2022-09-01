@@ -29,9 +29,12 @@ int main()
     Manager::chargerMemoireManager();
     ContenuPipeline::chargerMemoireTypeRessource();
     MasterBatiment::chargerMemoireMasterBatiment();
+    Bouton::chargerMemoireBoutons();
 
     Manager *m = Manager::getInstance();
     m->init();
+
+
     m->run();
 
     // testCarte();
@@ -42,6 +45,7 @@ int main()
     Manager::dechargerMemoireManager();
     ContenuPipeline::dechargerMemoireTypeRessource();
     MasterBatiment::dechargerMemoireMasterBatiment();
+    Bouton::dechargerMemoireBoutons();
 
     delete contextGlobal;
     delete m;
@@ -49,6 +53,7 @@ int main()
     return 0;
 }
 
+/*
 void testCarte()
 {
 
@@ -85,3 +90,4 @@ void testCarte()
     delete p2;
     delete carte;
 }
+*/
