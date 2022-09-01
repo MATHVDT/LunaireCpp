@@ -76,6 +76,7 @@ public:
 
     // Getter
     const RenderWindow &getWindow() const;
+    const Vector2f getMouseWorldPos() const;
     const Vector2u &getDimensionFenetre() const;
     uint getLargeurFenetre() const;
     uint getHauteurFenetre() const;
@@ -116,7 +117,13 @@ inline Time ContextGlobal::getTempsTick() { return _deltaTick; }
 
 // Getter
 inline const RenderWindow &ContextGlobal::getWindow() const { return _window; }
-
+inline const Vector2f ContextGlobal::getMouseWorldPos() const
+{
+    // récupération de la position de la souris dans la fenêtre
+    Vector2i pixelPos = sf::Mouse::getPosition(_window);
+    // conversion en coordonnées "monde"
+    return _window.mapPixelToCoords(pixelPos);
+}
 inline const Vector2u &ContextGlobal::getDimensionFenetre() const { return _dimensionFenetre; }
 inline uint ContextGlobal::getLargeurFenetre() const { return _dimensionFenetre.x; }
 inline uint ContextGlobal::getHauteurFenetre() const { return _dimensionFenetre.y; }
