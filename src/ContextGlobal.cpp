@@ -12,7 +12,7 @@
 #include "ContextGlobal.hpp"
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
-uint ContextGlobal::_nbTicksMax = 4;            // = 4
+uint ContextGlobal::_nbTicksMax = 4;             // = 4
 Time ContextGlobal::_deltaTick = seconds(0.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()
@@ -157,16 +157,15 @@ void ContextGlobal::calculCaseOver()
 
     uint largeurMap = _tailleReference / 4 * (3 * _carte->getNbColonnes() + 1);
 
-    Vector2i mousePos = Mouse::getPosition(_window);
-    Vector2f mousePosFloat{(float)mousePos.x, (float)mousePos.y};
+    const Vector2f worldPos = getMouseWorldPos();
 
-    if (mousePos.x > 0 &&
-        mousePos.x < largeurMap &&
-        mousePos.x < _window.getSize().x &&
-        mousePos.y > 0 &&
-        mousePos.y < _window.getSize().y)
+    if (worldPos.x > 0 &&
+        worldPos.x < largeurMap &&
+        worldPos.x < _window.getSize().x &&
+        worldPos.y > 0 &&
+        worldPos.y < _window.getSize().y)
     {
-        _caseOver = _carte->getCaseToCoord(mousePosFloat);
+        _caseOver = _carte->getCaseToCoord(worldPos);
     }
     else
     {
