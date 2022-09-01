@@ -1,8 +1,8 @@
 ./ressource/boutons/boutonTuyau.png
-./ressource/boutons/boutonMarchand.png
-./ressource/boutons/boutonMine.png
-./ressource/boutons/boutonFonderie.png
-./ressource/boutons/boutonFabrique.png
-./ressource/boutons/boutonAtelier.png
-./ressource/boutons/boutonCuve.png
-./ressource/boutons/boutonChantierSpatial.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
+./ressource/boutons/boutonTuyau.png
