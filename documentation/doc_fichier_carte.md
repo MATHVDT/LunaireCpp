@@ -1,5 +1,5 @@
 Les deux premiers nombres correspondes aux dimensions de la **carte**.
-> nb_colonnes nb_lignes
+> nb_lignes nb_colonnes
 
 Les nombres suivant correspondent aux types de ressources associées à l'*enum classe Sol*.
 ```cpp

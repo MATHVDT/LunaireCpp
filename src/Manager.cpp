@@ -177,7 +177,7 @@ void Manager::update()
  */
 void Manager::run()
 {
-    _carte->initCarte("./ressource/map.txt");
+    _carte->initCarte("./ressource/maps/map2.txt");
 
     while (contextGlobal->getIsRun())
     {

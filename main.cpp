@@ -21,7 +21,7 @@ int main()
     // Vector2u vt = Carte::carteToMatrice(v);
     // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
 
-    contextGlobal->init(Vector2u(1500, 800));
+    contextGlobal->init(Vector2u(1600, 900));
 
     CaseMap::chargerMemoireCaseMap();
     Mine::chargerMemoireMines();
