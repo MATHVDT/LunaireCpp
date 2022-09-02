@@ -59,7 +59,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
                              _dimensionFenetre.y),
                    "SFML works!",
                    sf::Style::Default);
-    _window.setPosition(Vector2i(50, 50));
+    _window.setPosition(Vector2i(100, 50));
     _window.setTitle("Fenetre de objet ContextGlobal");
     _window.setActive();
 
@@ -140,6 +140,16 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
 }
 
 /**
+ * @brief Calcule la largeur d'écran prise par la carte
+ *  
+ * @return float - *largeur d'écran de la carte*
+ */
+float ContextGlobal::getLargeurMapEcran() const
+{
+    return (float)(_tailleReference / 4 * (3 * _carte->getNbColonnes() + 1));
+}
+
+/**
  * @brief Dessine un objet dans la fenêtre
  *
  * @param const Drawable * - *obj*
@@ -155,7 +165,7 @@ void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj)
 void ContextGlobal::calculCaseOver()
 {
 
-    uint largeurMap = _tailleReference / 4 * (3 * _carte->getNbColonnes() + 1);
+    uint largeurMap = getLargeurMapEcran();
 
     const Vector2f worldPos = getMouseWorldPos();
 

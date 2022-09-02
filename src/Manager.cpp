@@ -11,21 +11,20 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
 Manager::Manager() : _carte(Carte::getInstance()),
                      _masterBatiment{nullptr},
                      _spriteCaseOver(new Sprite),
-                     _spriteCaseSelectionnee(new Sprite)
+                     _spriteCaseSelectionnee(new Sprite),
+                     _menu{new Menu{Vector2f{100, 0}}}
 {
-
-    // _btn = new Bouton{
-    //     Vector2f{0, 0},
-    //     BoutonType::boutonTuyau,
-    //     BoutonState::Active,
-    //     GameEvent::AucunGameEvent};
-
-    // _menu{};
 }
 
 Manager::~Manager()
 {
     delete _carte;
+    delete _masterBatiment;
+
+    delete _spriteCaseOver;
+    delete _spriteCaseSelectionnee;
+
+    delete _menu;
 }
 /******************************************************/
 
@@ -109,7 +108,7 @@ void Manager::chargerTextures(string fichierCheminsTexture)
 /******************************************************/
 void Manager::dessiner()
 {
-    // _menu->dessiner();
+    _menu->dessiner();
 
     _carte->dessiner();
     dessinerOverlay();
@@ -189,6 +188,9 @@ void Manager::update()
 void Manager::run()
 {
     _carte->initCarte("./ressource/maps/map2.txt");
+
+    float largeurCarteEcran = contextGlobal->getLargeurMapEcran();
+    _menu->setPositionEcran(Vector2f{largeurCarteEcran, 0.f});
 
     while (contextGlobal->getIsRun())
     {

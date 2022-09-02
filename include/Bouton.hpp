@@ -18,7 +18,7 @@
 
 #include "ContextGlobal.hpp"
 
-#include "BoutonEnum.hpp"
+#include "EnumBouton.hpp"
 
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
@@ -31,7 +31,7 @@ using namespace sf;
 class Bouton
 {
 private:
-    Rect<float> _box;
+    Rect<float> _box; // Box du bouton sur écran
     Sprite *_sprite;
     IntRect _zoomTexture;
     BoutonType _type;
@@ -58,8 +58,16 @@ public:
 
     void dessiner(float scaleSprite = 1.f);
 
+    // Getter
+    Vector2f getPositionEcran() const;
+    bool checkIn(const Vector2f &posEcran) const;
+    BoutonState getState() const;
+
     // Setter
     void setSpriteTexture();
+    void setPositionEcran(const Vector2f &newPositionEcran);
+    void deplacerPositionEcran(const Vector2f &translation);
+    void setState(BoutonState state);
 };
 
 /***************************************************/
@@ -73,10 +81,16 @@ public:
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline Vector2f Bouton::getPositionEcran() const { return Vector2f{_box.left, _box.top}; }
+inline bool Bouton::checkIn(const Vector2f &posEcran) const { return _box.contains(posEcran); }
+inline BoutonState Bouton::getState() const { return _state; }
+
 inline void Bouton::setSpriteTexture()
 {
     _zoomTexture.top = _state * _box.height;
     _sprite->setTextureRect(_zoomTexture);
 }
+
+inline void Bouton::setState(BoutonState state) { _state = state; }
 
 #endif

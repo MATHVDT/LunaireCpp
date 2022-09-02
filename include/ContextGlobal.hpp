@@ -92,6 +92,7 @@ public:
     GameEvent getGameEvent() const;
     uint getCurrentTick() const;
     bool getUpdateTick() const;
+    float getLargeurMapEcran() const;
 
     // Setter
     void setIsRun(bool run);

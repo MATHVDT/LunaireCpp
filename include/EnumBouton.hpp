@@ -1,5 +1,5 @@
 /**
- * @file BoutonEnum.hpp
+ * @file EnumBouton.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
  * @brief Enum liés aux boutons
  *
@@ -27,7 +27,7 @@ const uint NB_BOUTONS = 8;
 
 enum BoutonType
 {
-    boutonTuyau = 0,
+    boutonPipeline = 0,
     boutonMarchand = 1,
     boutonMine = 2,
     boutonFonderie = 3,

@@ -14,7 +14,7 @@
 #include "Carte.hpp"
 #include "correspondance.hpp"
 
-#include "Bouton.hpp"
+#include "Menu.hpp"
 
 #include "Mine.hpp"
 #include "MasterBatiment.hpp"
@@ -46,7 +46,7 @@ private:
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;
 
-    Bouton* _btn; // TEMPO
+    Menu * _menu;
 
 private: // Static
     static Manager *_singleton;

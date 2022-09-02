@@ -125,3 +125,17 @@ void Bouton::dessiner(float scaleSprite)
 
     contextGlobal->dessinerFenetre(_sprite);
 }
+
+void Bouton::setPositionEcran(const Vector2f &newPositionEcran)
+{
+    _box.left = newPositionEcran.x;
+    _box.top = newPositionEcran.y;
+    _sprite->setPosition(newPositionEcran);
+}
+
+void Bouton::deplacerPositionEcran(const Vector2f &translation)
+{
+    _box.left += translation.x;
+    _box.top += translation.y;
+    _sprite->setPosition(_box.left, _box.top);
+}
