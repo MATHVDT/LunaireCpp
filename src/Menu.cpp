@@ -134,4 +134,27 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
 
 bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
 {
+    bool changement = false;
+    for (auto &btn : _boutonsChoixStructures)
+    {
+        if (btn->getState() != BoutonState::Active &&
+            btn->getState() != BoutonState::Disabled)
+        {
+            if (btn->checkIn(posMouseEcran))
+            {
+                btn->setState(BoutonState::Hover);
+                changement = true;
+            }
+            else
+            {
+                btn->setState(BoutonState::Normal);
+                changement = true;
+            }
+        }
+        else
+        {
+            contextGlobal->setGameEvent(btn->getAction());
+        }
+    }
+    return changement;
 }

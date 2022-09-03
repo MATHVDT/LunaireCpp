@@ -65,6 +65,7 @@ public:
     Vector2f getPositionEcran() const;
     bool checkIn(const Vector2f &posEcran) const;
     BoutonState getState() const;
+    GameEvent getAction() const;
 
     // Setter
     void setSpriteTexture();
@@ -88,10 +89,11 @@ public:
 inline Vector2f Bouton::getPositionEcran() const { return Vector2f{_box.left, _box.top}; }
 inline bool Bouton::checkIn(const Vector2f &posEcran) const { return _box.contains(posEcran); }
 inline BoutonState Bouton::getState() const { return _state; }
+inline GameEvent Bouton::getAction() const { return _action; }
 
 inline void Bouton::setSpriteTexture()
 {
-    _zoomTexture.top = _state * _box.height;
+    _zoomTexture.top = _state * _zoomTexture.height;
     _sprite->setTextureRect(_zoomTexture);
 }
 

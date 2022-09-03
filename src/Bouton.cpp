@@ -41,11 +41,14 @@ Bouton::Bouton(const Vector2f &posBouton,
     _sprite->setTexture(*_texturesBoutons[_type]);
     Vector2u textureSize = _sprite->getTexture()->getSize();
 
-    _box.height = _zoomTexture.height = textureSize.y / NB_STATE_BOUTONS;
-    _box.width = _zoomTexture.width = textureSize.x;
-
     setScale();
     setSpriteTexture();
+
+    _box.height = _zoomTexture.height = textureSize.y / NB_STATE_BOUTONS;
+    _box.width = _zoomTexture.width = textureSize.x;
+    // Ajustage à l'écran
+    _box.height *= _scale.x;
+    _box.width *= _scale.y;
 }
 
 Bouton::~Bouton()
