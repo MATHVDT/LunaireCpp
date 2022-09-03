@@ -102,8 +102,8 @@ void CaseMap::setCase(Vector2u position,
 
 /**
  * @brief Set la position de la case et la position du sprite sur l'écran
- * 
- * @param const Vector2u & - *pos* 
+ *
+ * @param const Vector2u & - *pos*
  */
 void CaseMap::setPositionCarte(const Vector2u &pos)
 {
@@ -119,14 +119,14 @@ void CaseMap::setPositionCarte(const Vector2u &pos)
  * @param uint - *nbColonnesGrille*
  */
 void CaseMap::setScaleCaseMap(uint nbLignesCarte,
-                              uint nbCcolonnesCarte)
+                              uint nbColonnesCarte)
 {
     const Vector2u dimFenetre = contextGlobal->getDimensionFenetre();
     // uint minEcran = min(dimFenetre.x, dimFenetre.y);
-    // uint maxCases = max(nbLignesCarte, nbCcolonnesCarte);
+    // uint maxCases = max(nbLignesCarte, nbColonnesCarte);
 
-    float scaleX =
-        (float)dimFenetre.x / ((float)nbCcolonnesCarte + 1.f) / _tailleTexture;
+    float scaleX = contextGlobal->getLargeurMapEcran() / (float)(nbColonnesCarte * (float)3.f * _tailleTexture / 4.f + (float)1.f * _tailleTexture / 4.f);
+
     float scaleY =
         (float)dimFenetre.y / ((float)nbLignesCarte + 0.5f) / _tailleTexture;
 

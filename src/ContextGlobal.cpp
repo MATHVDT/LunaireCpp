@@ -141,12 +141,13 @@ void ContextGlobal::dessinerFenetre(const Drawable &obj)
 
 /**
  * @brief Calcule la largeur d'écran prise par la carte
- *  
+ *
  * @return float - *largeur d'écran de la carte*
  */
 float ContextGlobal::getLargeurMapEcran() const
 {
-    return (float)(_tailleReference / 4 * (3 * _carte->getNbColonnes() + 1));
+    // return (float)(_tailleReference / 4 * (3 * _carte->getNbColonnes() + 1));
+    return 2 * _dimensionFenetre.x / 3;
 }
 
 /**
@@ -168,6 +169,9 @@ void ContextGlobal::calculCaseOver()
     uint largeurMap = getLargeurMapEcran();
 
     const Vector2f worldPos = getMouseWorldPos();
+
+    // Affichage coord souris
+    // cout << "souris pos : " << worldPos.x << ", " << worldPos.y << endl;
 
     if (worldPos.x > 0 &&
         worldPos.x < largeurMap &&
