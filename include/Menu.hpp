@@ -24,6 +24,8 @@ extern string cheminFichierTexturesBoutons;
 using namespace std;
 using namespace sf;
 
+class Bouton;
+
 class Menu
 {
 private:
@@ -34,10 +36,17 @@ private:
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
 
+public: // Static
+    static Menu *_singleton;
+
+public: // Static
+    static Menu *getInstance();
+
 public:
-    Menu(const Vector2f &posEcran);
+    Menu();
     ~Menu();
 
+    void init(const Vector2f &posEcran = Vector2f{0.f, 0.f});
     void dessiner(float scaleSprite = 1.f);
 
     // Getter
@@ -45,6 +54,7 @@ public:
 
     // Setter
     void setPositionEcran(const Vector2f &newPosEcran);
+    bool setBoutonsHover(const Vector2f &posMouseEcran);
 
 private:
     void setBoutonsChoixStructures();

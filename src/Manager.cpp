@@ -12,25 +12,24 @@ Manager::Manager() : _carte(Carte::getInstance()),
                      _masterBatiment{nullptr},
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite),
-                     _menu{new Menu{Vector2f{100, 0}}}
+                     _menu{Menu::getInstance()}
 {
 }
 
 Manager::~Manager()
 {
-    delete _carte;
     delete _masterBatiment;
 
     delete _spriteCaseOver;
     delete _spriteCaseSelectionnee;
-
-    delete _menu;
 }
 /******************************************************/
 
 void Manager::init()
 {
     // _carte = Carte::getInstance();
+    _menu->init();
+
     _spriteCaseOver->setTexture(*_texturesManager[CASE_OVER]);
     _spriteCaseSelectionnee->setTexture(*_texturesManager[CASE_SELECTIONNEE]);
 }

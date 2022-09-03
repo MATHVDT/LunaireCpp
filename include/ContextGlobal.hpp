@@ -8,23 +8,20 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
+#include "EnumGameEvent.hpp"
 #include "EnumTypeSol.hpp"
 #include "EnumTypeStructure.hpp"
 #include "EnumTypeRessource.hpp"
 
 #include "Carte.hpp"
+#include "Menu.hpp"
 
 using namespace std;
 using namespace sf;
 
 class Carte;
 class CaseMap;
-
-enum GameEvent
-{
-    AucunGameEvent,
-    InverserSensPipeline
-};
+class Menu;
 
 class ContextGlobal
 {
@@ -47,7 +44,8 @@ private:
     bool _updateTick;
 
     Carte *_carte;
-    CaseMap *_caseOver;
+    Menu* _menu;
+    CaseMap *_caseHover;
     CaseMap *_caseSelectionnee;
 
     TYPE_STRUCTURE _editionStructureSelectionnee;
@@ -70,7 +68,8 @@ public:
     void dessinerFenetre(const Drawable *obj);
     void afficherFenetre();
     void update();
-    void calculCaseOver();
+    void calculCaseHover();
+    void calculMenuHover();
     void checkClavierStructures();
     void clickSouris();
 
@@ -144,7 +143,7 @@ inline Event::EventType ContextGlobal::getEventType() const { return _event.type
 inline const float ContextGlobal::getTailleReference() const { return _tailleReference; }
 inline const float ContextGlobal::getScaleReference() const { return _scaleReference; }
 
-inline CaseMap *ContextGlobal::getCaseOver() const { return _caseOver; }
+inline CaseMap *ContextGlobal::getCaseOver() const { return _caseHover; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
 inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
@@ -155,7 +154,7 @@ inline bool ContextGlobal::getUpdateTick() const { return _updateTick; }
 inline void ContextGlobal::setIsRun(bool run) { _isRun = run; }
 inline void ContextGlobal::setTailleReference(float tailleCaseMap) { _tailleReference = tailleCaseMap; }
 inline void ContextGlobal::setScaleReference(float scaleCaseMap) { _scaleReference = scaleCaseMap; }
-inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseOver = caseOver; }
+inline void ContextGlobal::setCaseOver(CaseMap *caseOver) { _caseHover = caseOver; }
 inline void ContextGlobal::setEditionStructureSelectionnee(TYPE_STRUCTURE structSelect) { _editionStructureSelectionnee = structSelect; }
 inline void ContextGlobal::setGameEvent(GameEvent gameEvent) { _gameEvent = gameEvent; }
 inline void ContextGlobal::setUpdateTick(bool reset) { _updateTick = reset; }

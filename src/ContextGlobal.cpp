@@ -26,6 +26,8 @@ ContextGlobal::ContextGlobal()
 ContextGlobal::~ContextGlobal()
 {
     _window.close();
+    delete _carte;
+    delete _menu;
     std::cout << "Destruction contextGlobal" << std::endl;
 }
 
@@ -64,7 +66,8 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _window.setActive();
 
     _carte = Carte::getInstance();
-    _caseOver = nullptr;
+    _menu = Menu::getInstance();
+    _caseHover = nullptr;
     _caseSelectionnee = nullptr;
 
     _gameEvent = AucunGameEvent;
@@ -109,7 +112,15 @@ void ContextGlobal::update()
 
     if (_event.type == sf::Event::MouseMoved)
     {
-        calculCaseOver();
+        if (getMouseWorldPos().x < getLargeurMapEcran())
+        {
+            calculCaseHover();
+        }
+        else
+        {
+            _caseHover = nullptr;
+            calculMenuHover();
+        }
     }
     if (_event.type == sf::Event::MouseButtonPressed)
     {
@@ -163,7 +174,7 @@ void ContextGlobal::dessinerFenetre(const Drawable *obj) { dessinerFenetre(*obj)
  * @brief Calcule la case survolée par la souris
  *
  */
-void ContextGlobal::calculCaseOver()
+void ContextGlobal::calculCaseHover()
 {
 
     uint largeurMap = getLargeurMapEcran();
@@ -179,16 +190,31 @@ void ContextGlobal::calculCaseOver()
         worldPos.y > 0 &&
         worldPos.y < _window.getSize().y)
     {
-        _caseOver = _carte->getCaseToCoord(worldPos);
-    }
-    else
-    {
-        _caseOver = nullptr;
+        _caseHover = _carte->getCaseToCoord(worldPos);
     }
 }
 
 /**
- * @brief Set la case selectionnee en fct de la caseOver
+ * @brief Calcul la case survolée sur le menu
+ *
+ */
+void ContextGlobal::calculMenuHover()
+{
+    uint largeurMap = getLargeurMapEcran();
+    const Vector2f worldPos = getMouseWorldPos();
+
+    // Dans le menu
+    if (worldPos.x > largeurMap &&
+        worldPos.x < _window.getSize().x &&
+        worldPos.y > 0 &&
+        worldPos.y < _window.getSize().y)
+    {
+        _menu->setBoutonsHover(worldPos);
+    }
+}
+
+/**
+ * @brief Set la case selectionnee en fct de la caseHover
  *
  * @param bool - *reset = false*
  */
@@ -196,8 +222,8 @@ void ContextGlobal::setCaseSelectionnee(bool reset)
 {
     if (reset)
         _caseSelectionnee = nullptr;
-    else if (_caseOver != nullptr)
-        _caseSelectionnee = _caseOver;
+    else if (_caseHover != nullptr)
+        _caseSelectionnee = _caseHover;
 }
 
 /**
@@ -208,14 +234,14 @@ void ContextGlobal::clickSouris()
 {
     // Selection case
     if (Mouse::isButtonPressed(Mouse::Left) &&
-        _caseOver != _caseSelectionnee)
+        _caseHover != _caseSelectionnee)
     { //  bouton gauche souris et changement de case selectionnee
         setCaseSelectionnee(false);
         // cerr << "case select" << endl;
     } // Deselection case
     else if (Mouse::isButtonPressed(Mouse::Right) &&
-             _caseOver == _caseSelectionnee)
-    { // Test bouton droit souris et caseOver est bien celle selectionnee
+             _caseHover == _caseSelectionnee)
+    { // Test bouton droit souris et caseHover est bien celle selectionnee
         setCaseSelectionnee(true);
     }
 }

@@ -13,17 +13,19 @@
 
 #include <iostream>
 #include <fstream>
+#include "string"
 
 // #include <SFML/Graphics.hpp>
 
 #include "ContextGlobal.hpp"
 
 #include "EnumBouton.hpp"
+#include "EnumGameEvent.hpp"
 
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierTexturesBoutons;
+// extern string cheminFichierTexturesBoutons;
 
 using namespace std;
 using namespace sf;
@@ -33,6 +35,7 @@ class Bouton
 private:
     Rect<float> _box; // Box du bouton sur écran
     Sprite *_sprite;
+    Vector2f _scale;
     IntRect _zoomTexture;
     BoutonType _type;
     BoutonState _state;
@@ -68,6 +71,7 @@ public:
     void setPositionEcran(const Vector2f &newPositionEcran);
     void deplacerPositionEcran(const Vector2f &translation);
     void setState(BoutonState state);
+    void setScale();
 };
 
 /***************************************************/
