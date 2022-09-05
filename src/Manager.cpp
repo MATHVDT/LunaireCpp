@@ -209,15 +209,64 @@ void Manager::run()
     }
 }
 
+bool Manager::placerStructure()
+{
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
+
+    // Test si on peut placer une structure
+    if (editionStructSelect == TYPE_STRUCTURE::AucuneStructure ||
+        caseSelect == nullptr ||
+        caseSelect->getConstruction() != nullptr)
+    {
+        return false;
+    }
+
+    Structure *structAPlacer = nullptr;
+
+    switch (editionStructSelect)
+    {
+    case TYPE_STRUCTURE::Pipeline:
+        structAPlacer = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
+        break;
+    case TYPE_STRUCTURE::Mine:
+        structAPlacer = new Mine{
+            (Vector2u)caseSelect->getPositionCarte(),
+            caseSelect->getTypeSol()};
+        break;
+    default:
+        break;
+    }
+
+    _carte->ajouterConstructionCaseCarte(structAPlacer, structAPlacer->getPositionCarte());
+
+    // Structure placée -> intégration
+    integrationStructureVoisinage();
+
+    // Reset le choix de case select
+    // A choisir si on deselectionne la case
+    // après ajout d'une structure ???
+    // A priori nn car on va avoir besoin de savoir
+    // quelle case a été ajouté pour les calculs
+    // de connexion et d'orientation
+    // contextGlobal->setCaseSelectionnee(true);
+
+    // Reset le choix d'edition de structure select
+    contextGlobal->resetGameEvent();
+
+    return true;
+}
+
 /**
  * @brief Place une Structure sur une case si toutes les conditions sont réunis
+ * @deprecated changement du placement des structures
  * @details Conditions : une case est selectionnée, il n'y a pas de construction sur la case selectionnée, un type de structure est selectionné
  * Appelle les fonctions placerPipeline et placerMine
  *
  * @return true - *Si une structure à été placée*
  * @return false - *Aucune structure placée*
  */
-bool Manager::placerStructure()
+bool Manager::placerStructureOld()
 {
     bool structPlacee = false;
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
@@ -454,7 +503,7 @@ void Manager::updateEvent()
             ((Pipeline *)structSelect)->inverserSens();
             // ((Pipeline *)structSelect)->updateOrientation();
 
-            contextGlobal->setGameEvent();
+            contextGlobal->resetGameEvent();
         }
     }
 }

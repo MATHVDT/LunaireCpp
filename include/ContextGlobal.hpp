@@ -44,7 +44,7 @@ private:
     bool _updateTick;
 
     Carte *_carte;
-    Menu* _menu;
+    Menu *_menu;
     CaseMap *_caseHover;
     CaseMap *_caseSelectionnee;
 
@@ -72,6 +72,8 @@ public:
     void calculMenuHover();
     void checkClavierStructures();
     void clickSouris();
+    void processGameEvent();
+    void resetGameEvent();
 
     // Getter
     const RenderWindow &getWindow() const;

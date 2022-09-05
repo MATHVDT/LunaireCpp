@@ -94,6 +94,8 @@ void ContextGlobal::afficherFenetre()
  */
 void ContextGlobal::update()
 {
+    _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
+    processGameEvent();
 
     // Vérification des l'events "system" => fermer fenetre
     if (_event.type == sf::Event::Closed)
@@ -106,10 +108,11 @@ void ContextGlobal::update()
         }
         else
         {
-            checkClavierStructures();
+            // checkClavierStructures();
         }
     }
 
+    // Souris
     if (_event.type == sf::Event::MouseMoved)
     {
         if (getMouseWorldPos().x < getLargeurMapEcran())
@@ -126,10 +129,6 @@ void ContextGlobal::update()
     {
         clickSouris();
     }
-    // cout << "Mouse : " << Mouse::getPosition().x << ", " << Mouse::getPosition().y << endl;
-    // Vector2i mousePos = Mouse::getPosition();
-    // cout << "mapCoordsToPixel : " << _window.mapCoordsToPixel((Vector2f)mousePos).x << ", " << _window.mapCoordsToPixel((Vector2f)mousePos).y << endl;
-    // cout << "mapPixelToCoords : " << _window.mapPixelToCoords(mousePos).x << ", " << _window.mapPixelToCoords(mousePos).y << endl;
 
     // Calcul du tick
     if (_timeSaveTick + _deltaTick <= _clock.getElapsedTime())
@@ -232,17 +231,26 @@ void ContextGlobal::setCaseSelectionnee(bool reset)
  */
 void ContextGlobal::clickSouris()
 {
-    // Selection case
-    if (Mouse::isButtonPressed(Mouse::Left) &&
-        _caseHover != _caseSelectionnee)
-    { //  bouton gauche souris et changement de case selectionnee
-        setCaseSelectionnee(false);
-        // cerr << "case select" << endl;
-    } // Deselection case
-    else if (Mouse::isButtonPressed(Mouse::Right) &&
-             _caseHover == _caseSelectionnee)
-    { // Test bouton droit souris et caseHover est bien celle selectionnee
-        setCaseSelectionnee(true);
+
+    if (getMouseWorldPos().x < getLargeurMapEcran())
+    { // Souris sur case
+        // Selection case
+        if (Mouse::isButtonPressed(Mouse::Left) &&
+            _caseHover != _caseSelectionnee)
+        { //  bouton gauche souris et changement de case selectionnee
+            setCaseSelectionnee(false);
+            // cerr << "case select" << endl;
+        } // Deselection case
+        else if (Mouse::isButtonPressed(Mouse::Right) &&
+                 _caseHover == _caseSelectionnee)
+        { // Test bouton droit souris et caseHover est bien celle selectionnee
+            setCaseSelectionnee(true);
+        }
+    }
+    else
+    {
+        // _caseHover = nullptr;
+        _menu->setBoutonsClick();
     }
 }
 
@@ -277,4 +285,47 @@ void ContextGlobal::checkClavierStructures()
     default:
         break;
     }
+}
+
+void ContextGlobal::processGameEvent()
+{
+    switch (_gameEvent)
+    {
+    case AucunGameEvent:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
+        break;
+    case PlacerPipeline:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
+        break;
+    case PlacerMarchand:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
+        break;
+    case PlacerMine:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Mine;
+        break;
+    case PlacerFonderie:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
+        break;
+    case PlacerFabrique:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Fabrique;
+        break;
+    case PlacerAtelier:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Atelier;
+        break;
+    case PlacerCuve:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Cuve;
+        break;
+    case PlacerChantierSpatial:
+        _editionStructureSelectionnee = TYPE_STRUCTURE::ChantierSpatial;
+        break;
+
+    default:
+        break;
+    }
+}
+
+void ContextGlobal::resetGameEvent()
+{
+    _gameEvent = GameEvent::AucunGameEvent;
+    _menu->resetBoutonsActive();
 }

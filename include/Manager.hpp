@@ -72,6 +72,7 @@ public:
     void updateEvent();
 
     bool placerStructure();
+    bool placerStructureOld();
 
     void dessiner();
 

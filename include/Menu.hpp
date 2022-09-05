@@ -31,6 +31,7 @@ class Menu
 private:
     Vector2f _posEcran;
 
+    bool _btnActive;
     vector<Bouton *> _boutonsChoixStructures;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
@@ -51,10 +52,14 @@ public:
 
     // Getter
     Vector2f getPositionEcran() const;
+    bool getBoutonsActive() const;
 
     // Setter
     void setPositionEcran(const Vector2f &newPosEcran);
     bool setBoutonsHover(const Vector2f &posMouseEcran);
+    bool setBoutonsClick();
+    void setBoutonsActive(bool val = true);
+    bool resetBoutonsActive();
 
 private:
     void setBoutonsChoixStructures();
@@ -73,5 +78,7 @@ private:
 /*           Méthodes inline non static            */
 /***************************************************/
 inline Vector2f Menu::getPositionEcran() const { return _posEcran; }
+inline bool Menu::getBoutonsActive() const { return _btnActive; }
+inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
 
 #endif

@@ -5,10 +5,8 @@ enum class TYPE_STRUCTURE
 {
     AucuneStructure,
     MasterBatiment,
-    
+
     // Mines
-    Pipeline,
-    Mine,
     MinePoussiereRegolite,
     MineGlace,
     MineTitane,
@@ -18,7 +16,16 @@ enum class TYPE_STRUCTURE
     MineAluminium,
     MineMagnesium,
     MineCalcium,
-    MineSoduim
+    MineSoduim,
+
+    Pipeline,
+    Marchand,
+    Mine,
+    Fonderie,
+    Fabrique,
+    Atelier,
+    Cuve,
+    ChantierSpatial
 };
 
 #endif

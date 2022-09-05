@@ -15,7 +15,15 @@ const int NB_GAME_EVENT = 2;
 enum GameEvent
 {
     AucunGameEvent,
-    InverserSensPipeline
+    InverserSensPipeline,
+    PlacerPipeline,
+    PlacerMarchand,
+    PlacerMine,
+    PlacerFonderie,
+    PlacerFabrique,
+    PlacerAtelier,
+    PlacerCuve,
+    PlacerChantierSpatial
 };
 
 #endif
