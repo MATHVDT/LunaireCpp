@@ -86,7 +86,7 @@ public:
     // Setter
     void setSpriteTexture(uint tick);
 
-    virtual void process();
+    virtual void process() override;
     // virtual TYPE_RESSOURCE livrerStock() override; // Pas besoin de redefinir
     virtual void remplirStock() override;
 };

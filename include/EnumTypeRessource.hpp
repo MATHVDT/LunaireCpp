@@ -15,21 +15,33 @@
 
 // #define NB_RESSOURCES 5;
 const uint NB_RESSOURCES = 5;
+const uint NB_RESSOURCES_MINERAIS = 5;
+const uint NB_RESSOURCES_LINGOTS = 7;
 
-enum class TYPE_RESSOURCE : int
+enum class TYPE_RESSOURCE : short
 {
     Rien = 0,
+    // Gisement
+    Vierge, // Gisement poussière régolite
+    GisementGlace,
+    GisementTitane,
+    GisementSilicium,
+    GisementFer,
+    GisementOr,
+    GisementAluminium,
+
     // Matières premières
-    PoussiereRegolite = 1,
+    PoussiereRegolite,
     MineraiGlace,
     MineraiTitane,
     MineraiSilicium,
     MineraiFer,
     MineraiOr,
     MineraiAluminium,
-    MineraiMagnesium,
-    MineraiCalcium,
-    MineraiSoduim,
+
+    // MineraiMagnesium,
+    // MineraiCalcium,
+    // MineraiSoduim,
 
     // Apres raffinerie
     LingotRegolite,
@@ -37,14 +49,14 @@ enum class TYPE_RESSOURCE : int
     LingotTitane,
     LingotSilicium,
     LingotFer,
-    
     LingotOr,
     LingotAluminium,
-    LingotMagnesium,
-    LingotCalcium,
-    LingotSoduim,
 
-    Helium3, // PoussiereRegolite 
+    // LingotMagnesium,
+    // LingotCalcium,
+    // LingotSoduim,
+
+    Helium3, // PoussiereRegolite
 
     // A partir de la glace
     HydrogeneGaz,

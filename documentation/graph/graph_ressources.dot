@@ -11,9 +11,9 @@ digraph {
         GisementSilicium [label="Gisement Silicium"];
         GisementGlace [label="Gisement Glace"];
         GisementAluminium [label="Gisement Aluminium"];
-        GisementMagnesium [label="Gisement Magnesium"];
-        GisementCalcium [label="Gisement Calcium"];
-        GisementSoduim [label="Gisement Soduim"];
+        // GisementMagnesium [label="Gisement Magnesium"];
+        // GisementCalcium [label="Gisement Calcium"];
+        // GisementSoduim [label="Gisement Soduim"];
         Montage [label="Montage"];
         Trou [label="Trou"];
     }
@@ -29,9 +29,9 @@ digraph {
         MineraiFer [label="Minerai Fer"];
         MineraiOr [label="Minerai Or"];
         MineraiAluminium [label="Minerai Aluminium"];
-        MineraiMagnesium [label="Minerai Magnesium"];
-        MineraiCalcium [label="Minerai Calcium"];
-        MineraiSoduim [label="Minerai Soduim"];
+        // MineraiMagnesium [label="Minerai Magnesium"];
+        // MineraiCalcium [label="Minerai Calcium"];
+        // MineraiSoduim [label="Minerai Soduim"];
     }
 
     // Lingot
@@ -44,9 +44,9 @@ digraph {
         LingotFer  [label="Lingot Fer"];
         LingotOr  [label="Lingot Or"];
         LingotAluminium  [label="Lingot Aluminium"];
-        LingotMagnesium  [label="Lingot Magnesium"];
-        LingotCalcium  [label="Lingot Calcium"];
-        LingotSoduim  [label="Lingot Soduim"];
+        // LingotMagnesium  [label="Lingot Magnesium"];
+        // LingotCalcium  [label="Lingot Calcium"];
+        // LingotSoduim  [label="Lingot Soduim"];
     }
 
     Helium3 [style="filled,solid", color="", label="Helium3",shape="Mcircle"];
@@ -125,9 +125,9 @@ digraph {
     GisementTitane -> MineraiTitane [label="Mine", fontcolor="grey", color="grey", style="dotted"]
     GisementSilicium -> MineraiSilicium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
     GisementAluminium -> MineraiAluminium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementMagnesium -> MineraiMagnesium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementCalcium -> MineraiCalcium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementSoduim -> MineraiSoduim [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    // GisementMagnesium -> MineraiMagnesium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    // GisementCalcium -> MineraiCalcium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    // GisementSoduim -> MineraiSoduim [label="Mine", fontcolor="grey", color="grey", style="dotted"]
     GisementGlace -> MineraiGlace [label="Mine", fontcolor="grey", color="grey", style="dotted"]
 
     PoussiereRegolite -> LingotRegolite [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
@@ -137,9 +137,9 @@ digraph {
     MineraiFer -> LingotFer [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
     MineraiOr -> LingotOr [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
     MineraiAluminium -> LingotAluminium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiMagnesium -> LingotMagnesium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiCalcium -> LingotCalcium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiSoduim -> LingotSoduim [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    // MineraiMagnesium -> LingotMagnesium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    // MineraiCalcium -> LingotCalcium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    // MineraiSoduim -> LingotSoduim [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
 
     MineraiGlace -> Eau
     Eau -> GazHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]

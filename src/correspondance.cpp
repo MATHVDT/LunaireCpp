@@ -34,15 +34,15 @@ TYPE_RESSOURCE typeSolToTypeRessource(TYPE_SOL sol)
     case TYPE_SOL::GisementAluminium:
         ress = TYPE_RESSOURCE::MineraiAluminium;
         break;
-    case TYPE_SOL::GisementMagnesium:
-        ress = TYPE_RESSOURCE::MineraiMagnesium;
-        break;
-    case TYPE_SOL::GisementCalcium:
-        ress = TYPE_RESSOURCE::MineraiCalcium;
-        break;
-    case TYPE_SOL::GisementSoduim:
-        ress = TYPE_RESSOURCE::MineraiSoduim;
-        break;
+    // case TYPE_SOL::GisementMagnesium:
+    //     ress = TYPE_RESSOURCE::MineraiMagnesium;
+    //     break;
+    // case TYPE_SOL::GisementCalcium:
+    //     ress = TYPE_RESSOURCE::MineraiCalcium;
+    //     break;
+    // case TYPE_SOL::GisementSoduim:
+    //     ress = TYPE_RESSOURCE::MineraiSoduim;
+    //     break;
     default:
         break;
     }
@@ -110,15 +110,15 @@ TYPE_RESSOURCE typeMineToTypeRessource(TYPE_STRUCTURE structure)
     case TYPE_STRUCTURE::MineAluminium:
         ress = TYPE_RESSOURCE::MineraiAluminium;
         break;
-    case TYPE_STRUCTURE::MineMagnesium:
-        ress = TYPE_RESSOURCE::MineraiMagnesium;
-        break;
-    case TYPE_STRUCTURE::MineCalcium:
-        ress = TYPE_RESSOURCE::MineraiCalcium;
-        break;
-    case TYPE_STRUCTURE::MineSoduim:
-        ress = TYPE_RESSOURCE::MineraiSoduim;
-        break;
+    // case TYPE_STRUCTURE::MineMagnesium:
+    //     ress = TYPE_RESSOURCE::MineraiMagnesium;
+    //     break;
+    // case TYPE_STRUCTURE::MineCalcium:
+    //     ress = TYPE_RESSOURCE::MineraiCalcium;
+    //     break;
+    // case TYPE_STRUCTURE::MineSoduim:
+    //     ress = TYPE_RESSOURCE::MineraiSoduim;
+    //     break;
     default:
         break;
     }
@@ -208,14 +208,14 @@ TYPE_STRUCTURE typeRessourceToTypeMine(TYPE_RESSOURCE ressource)
     case TYPE_RESSOURCE::MineraiAluminium:
         structure = TYPE_STRUCTURE::MineAluminium;
         break;
-    case TYPE_RESSOURCE::MineraiMagnesium:
-        structure = TYPE_STRUCTURE::MineMagnesium;
-        break;
-    case TYPE_RESSOURCE::MineraiCalcium:
-        structure = TYPE_STRUCTURE::MineCalcium;
-        break;
-    case TYPE_RESSOURCE::MineraiSoduim:
-        structure = TYPE_STRUCTURE::MineSoduim;
+    // case TYPE_RESSOURCE::MineraiMagnesium:
+    //     structure = TYPE_STRUCTURE::MineMagnesium;
+    //     break;
+    // case TYPE_RESSOURCE::MineraiCalcium:
+    //     structure = TYPE_STRUCTURE::MineCalcium;
+    //     break;
+    // case TYPE_RESSOURCE::MineraiSoduim:
+    //     structure = TYPE_STRUCTURE::MineSoduim;
         ;
         break;
     default:

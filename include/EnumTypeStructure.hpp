@@ -1,9 +1,18 @@
 #ifndef __ENUM_TYPE_STRUCTURE__HPP
 #define __ENUM_TYPE_STRUCTURE__HPP
 
-enum class TYPE_STRUCTURE
+enum class TYPE_STRUCTURE : int
 {
-    AucuneStructure,
+    AucuneStructure = -1,
+    Pipeline = 0,
+    Marchand = 1,
+    Mine = 2,
+    Fonderie = 3,
+    Fabrique = 4,
+    Atelier = 5,
+    Cuve = 6,
+    ChantierSpatial = 7,
+
     MasterBatiment,
 
     // Mines
@@ -16,16 +25,7 @@ enum class TYPE_STRUCTURE
     MineAluminium,
     MineMagnesium,
     MineCalcium,
-    MineSoduim,
-
-    Pipeline,
-    Marchand,
-    Mine,
-    Fonderie,
-    Fabrique,
-    Atelier,
-    Cuve,
-    ChantierSpatial
+    MineSoduim
 };
 
 #endif
