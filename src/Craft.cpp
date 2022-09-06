@@ -68,9 +68,8 @@ void initCrafts(string fichierCheminCrafts)
             craftTmp->formule = listFormules;
 
             listCrafts->emplace_back(craftTmp);
-
-            monFlux.close();
         }
+        monFlux.close();
     }
     else
     {
@@ -119,7 +118,7 @@ list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule)
 }
 
 /**
- * @brief Remplit la list des formules des crafts
+ * @brief Remplit la list des formules des crafts dans un vector
  *
  * @param string - *fichierFormuleCraft*
  */
@@ -160,37 +159,162 @@ void initFormulesCraft(string fichierFormuleCraft)
 }
 
 /**
+ * @brief Affiche les formules des crafts
+ *
+ * @param ostream & - *monFlux*
+ */
+void afficherFormuleCraft(ostream &monFlux)
+{
+    for (int k = 0; k < listFormulesCraft.size(); ++k)
+    {
+        for (auto c : listFormulesCraft[k])
+        {
+            monFlux << static_cast<int>(c->composant) << " " << c->quantite << " " << c->produit << ", ";
+        }
+        monFlux << endl;
+    }
+}
+
+/**
  * @brief Donne la liste des ressources craftables
  *
  * @param size_t hash - *hash_code des structures*
  * @param queue<TYPE_RESSOURCE> stockEntree
  * @return list<TYPE_RESSOURCE>
  */
-list<TYPE_RESSOURCE> formulePossible(size_t hash, queue<TYPE_RESSOURCE> stock)
+vector<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
 {
-
-    list<TYPE_RESSOURCE> listRessCraft{};
+    vector<TYPE_RESSOURCE> vectorStock{};
+    list<TYPE_RESSOURCE> listCraftPossible{};
 
     while (!stock.empty())
     {
-        listRessCraft.push_back(stock.front());
+        if (stock.front() != TYPE_RESSOURCE::Rien)
+        {
+            vectorStock.push_back(stock.front());
+        }
         stock.pop();
     }
 
     // Garder uniquement le type (pas les qte)
-    // DEfini les operateru des comparaisons type_ressources
-    // sort(listRessCraft.begin(), listRessCraft.end());
-    // unique(listRessCraft.begin(), listRessCraft.end());
-    // while (listRessCraft.size() < 5)
+    // Ordre décroissant
+    sort(vectorStock.begin(), vectorStock.end());
+
+    vector<TYPE_RESSOURCE>::iterator it = unique(vectorStock.begin(), vectorStock.end());
+    vectorStock.resize(distance(vectorStock.begin(), it));
+
+    // Affichage stock ressource unique trié
+    cerr << endl
+         << "Affichage stock ressource unique trié" << endl;
+    for (auto x : vectorStock)
+    {
+        cerr << static_cast<short>(x) << " ";
+    };
+
+    int n = vectorStock.size();
+    int nbCombi = pow(2, n);
+    const int nbMaxReactifs = 5;
+    static int curseurLigne = 0;
+    list<TYPE_RESSOURCE> *tabListCombiCraft =
+        new list<TYPE_RESSOURCE>[nbCombi] {};
+
+    // Récupère toutes les combinaisons possibless
+    for (int k = 1; k <= n; ++k)
+    {
+        int perm[n] = {0};
+        combinate(vectorStock, perm, 0, n, k,
+                  tabListCombiCraft, curseurLigne);
+    }
+
+    // Affichage combinaison
+    cerr << endl
+         << "Affichage combinaison" << endl;
+    for (int k = 0; k < nbCombi; ++k)
+    {
+        for (auto x : tabListCombiCraft[k])
+        {
+            cerr << static_cast<short>(x) << " ";
+        }
+        cerr << endl;
+    }
+
+    // while (listStock.size() < 5)
     // {
-    //     listRessCraft.emplace_front(TYPE_RESSOURCE::Rien);
+    //     listStock.emplace_front(TYPE_RESSOURCE::Rien);
     // }
     // ICI les combi possibles
 
-    for (Craft_t *c : *listCrafts)
+    // for (Craft_t *c : *listCrafts)
+    // {
+    //     if (c->batiment == hash)
+    //     {
+    //     }
+    // }
+    return vectorStock;
+}
+
+/******************************************************/
+
+/**
+ * @brief Donne un tableau contenant toutes les combinaisons possibles d'un ensemble (dans des list<TYPE_RESSOURCE>)
+ *
+ * @param vector<TYPE_RESSOURCE> a[] : given array of chars
+ *
+ * @param int perm[] : perm[i] is 1 if a[i] is considered, else 0
+ * @param int index : subscript of perm which is to be 0ed and 1ed
+ * @param int n : length of the given input array
+ * @param int k : length of the permuted string
+ *
+ * @param list<TYPE_RESSOURCE> *tabList tableau des listes des combi
+ * @param int &curseurLigne indicateur pour remplir le tableau
+ */
+void combinate(vector<TYPE_RESSOURCE> e,
+               int perm[], int index, int n, int k,
+               list<TYPE_RESSOURCE> *tabList,
+               int &curseurLigne)
+{
+    static int count = 0;
+    if (count == k)
     {
-        if (c->batiment == hash)
+        for (int i = 0; i < n; i++)
         {
+            if (perm[i] == 1)
+            {
+                tabList[curseurLigne].push_front(e[i]);
+            }
         }
+        curseurLigne += 1;
     }
+    else if ((n - index) >= (k - count))
+    {
+        perm[index] = 1;
+        count++;
+        combinate(e, perm, index + 1, n, k, tabList, curseurLigne);
+        perm[index] = 0;
+        count--;
+        combinate(e, perm, index + 1, n, k, tabList, curseurLigne);
+    }
+}
+
+/**
+ * @brief Concatène les ressources en binaire 
+ * @details Ressource de types enum class (short) donc sur 2 octets => concatène 4 ressources => 4 * 2 = 8 octets type ulong pour faire reference à une ressource
+ * 
+ * @param combiRessources 
+ * @return ulong 
+ */
+ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources)
+{
+    const short RIEN = 0;
+    ulong valConcatBin;
+    uint nbRessources = 0;
+
+    for (auto r : combiRessources)
+    {
+        // Décalage de 2 octets (short)
+        valConcatBin = valConcatBin << 16;
+        // Concaténation avec un OU logiques
+        valConcatBin = valConcatBin | (long)r;
+    }
+    return valConcatBin;
 }

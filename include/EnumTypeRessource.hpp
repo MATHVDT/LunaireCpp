@@ -18,7 +18,7 @@ const uint NB_RESSOURCES = 5;
 const uint NB_RESSOURCES_MINERAIS = 5;
 const uint NB_RESSOURCES_LINGOTS = 7;
 
-enum class TYPE_RESSOURCE : short
+enum class TYPE_RESSOURCE : char
 {
     Rien = 0,
     // Gisement

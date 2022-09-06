@@ -17,6 +17,7 @@
 #include <cstring>
 #include <typeinfo>
 #include <algorithm>
+#include <math.h>
 
 #include "EnumTypeRessource.hpp"
 #include "Mine.hpp"
@@ -51,9 +52,17 @@ void initCrafts(string fichierCheminCrafts = cheminFichierCrafts);
 list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule);
 
 void initFormulesCraft(string fichierFormuleCraft = "ressource/crafts/formuleCraft.txt");
+void afficherFormuleCraft(ostream &monFlux = cout);
 
-list<TYPE_RESSOURCE> formulePossible(size_t hash, queue<TYPE_RESSOURCE> stock);
+// list<TYPE_RESSOURCE> CraftPossible(Structure * s, queue<TYPE_RESSOURCE> &stock);
+vector<TYPE_RESSOURCE> CraftPossible(const size_t hash,
+                                     queue<TYPE_RESSOURCE> &stock);
 
-long concatBin();
+void combinate(vector<TYPE_RESSOURCE> e,
+          int perm[], int index, int n, int k,
+          list<TYPE_RESSOURCE> *tabList,
+          int &curseurLigne);
+
+ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources);
 
 #endif

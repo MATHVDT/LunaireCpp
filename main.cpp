@@ -28,15 +28,20 @@ void testCraft()
     initFormulesCraft();
 
     // Affichage formules craft
-    for (int k = 0; k < listFormulesCraft.size(); ++k)
-    {
-        for (auto c : listFormulesCraft[k])
-        {
-            cout << static_cast<int>(c->composant) << " "
-                 << c->quantite << " " << c->produit << ", ";
-        }
-        cout << endl;
-    }
+    // afficherFormuleCraft();
+
+    queue<TYPE_RESSOURCE> stock;
+    stock.push(TYPE_RESSOURCE::LingotFer);
+    stock.push(TYPE_RESSOURCE::MineraiFer);
+    stock.push(TYPE_RESSOURCE::Rien);
+    stock.push(TYPE_RESSOURCE::LingotFer);
+    stock.push(TYPE_RESSOURCE::Rien);
+    stock.push(TYPE_RESSOURCE::MineraiFer);
+    stock.push(TYPE_RESSOURCE::MineraiFer);
+
+    const size_t hash = typeid(Mine).hash_code();
+
+    CraftPossible(hash, stock);
 }
 
 void testPartie()

@@ -1,6 +1,9 @@
 #ifndef __MAIN_HPP__
 #define __MAIN_HPP__
 
+#include <typeinfo>
+// #include <vector>
+
 #include "correspondance.hpp"
 #include "Craft.hpp"
 
