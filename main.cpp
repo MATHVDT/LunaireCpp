@@ -7,20 +7,40 @@
 ContextGlobal *contextGlobal = ContextGlobal::getInstance();
 
 void testCarte();
+void testCraft();
+void testPartie();
 
 int main()
 {
-    // testSFML();
 
-    // testSFML2();
+    testCraft();
 
-    // Vector2u v(4, 3);
-    // cout << "v_x  : " << v.x << ", v_y  : " << v.y << endl;
+    // testPartie();
 
-    // // Vector2u vt = Carte::matriceToCarte(v);
-    // Vector2u vt = Carte::carteToMatrice(v);
-    // cout << "vt_x : " << vt.x << ", vt_y : " << vt.y << endl;
+    delete contextGlobal;
 
+    return 0;
+}
+
+void testCraft()
+{
+    initCrafts();
+    initFormulesCraft();
+
+    // Affichage formules craft
+    for (int k = 0; k < listFormulesCraft.size(); ++k)
+    {
+        for (auto c : listFormulesCraft[k])
+        {
+            cout << static_cast<int>(c->composant) << " "
+                 << c->quantite << " " << c->produit << ", ";
+        }
+        cout << endl;
+    }
+}
+
+void testPartie()
+{
     contextGlobal->init(Vector2u(1600, 900));
 
     CaseMap::chargerMemoireCaseMap();
@@ -34,10 +54,7 @@ int main()
     Manager *m = Manager::getInstance();
     m->init();
 
-
     m->run();
-
-    // testCarte();
 
     CaseMap::dechargerMemoireCaseMap();
     Mine::dechargerMemoireMines();
@@ -47,10 +64,7 @@ int main()
     MasterBatiment::dechargerMemoireMasterBatiment();
     Bouton::dechargerMemoireBoutons();
 
-    delete contextGlobal;
     delete m;
-
-    return 0;
 }
 
 /*

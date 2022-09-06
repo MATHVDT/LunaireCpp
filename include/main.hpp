@@ -1,6 +1,9 @@
 #ifndef __MAIN_HPP__
 #define __MAIN_HPP__
 
+#include "correspondance.hpp"
+#include "Craft.hpp"
+
 #include "ContextGlobal.hpp"
 
 #include "Bouton.hpp"

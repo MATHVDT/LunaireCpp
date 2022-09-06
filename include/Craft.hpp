@@ -24,23 +24,33 @@
 
 using namespace std;
 
-typedef struct Formule
+typedef struct ReactifsProduitCraft
 {
     long reactifs; // concatBin
     TYPE_RESSOURCE produit;
-} Formule_t;
+} ReactifsProduitCraft_t;
 
 typedef struct Craft
 {
     std::size_t batiment;
-    list<Formule *> *formule;
+    list<ReactifsProduitCraft_t *> *formule;
 } Craft_t;
 
-extern list<Craft *> *listCrafts;
-extern string cheminFichierCrafts;
+typedef struct ComposantCraft
+{
+    TYPE_RESSOURCE composant;
+    uint quantite;
+    bool produit;
+} ComposantCraft_t;
 
-void initCrafts(string fichierCheminCrafts);
-list<Formule *> *lectureFormule(string fichierFormule);
+extern list<Craft_t *> *listCrafts;
+extern string cheminFichierCrafts;
+extern vector<list<ComposantCraft *>> listFormulesCraft;
+
+void initCrafts(string fichierCheminCrafts = cheminFichierCrafts);
+list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule);
+
+void initFormulesCraft(string fichierFormuleCraft = "ressource/crafts/formuleCraft.txt");
 
 list<TYPE_RESSOURCE> formulePossible(size_t hash, queue<TYPE_RESSOURCE> stock);
 
