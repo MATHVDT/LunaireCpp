@@ -31,17 +31,26 @@ void testCraft()
     // afficherFormuleCraft();
 
     queue<TYPE_RESSOURCE> stock;
+    // Attention stock trop rempli
     stock.push(TYPE_RESSOURCE::LingotFer);
     stock.push(TYPE_RESSOURCE::MineraiFer);
     stock.push(TYPE_RESSOURCE::Rien);
     stock.push(TYPE_RESSOURCE::LingotFer);
     stock.push(TYPE_RESSOURCE::Rien);
+    stock.push(TYPE_RESSOURCE::MineraiOr);
     stock.push(TYPE_RESSOURCE::MineraiFer);
-    stock.push(TYPE_RESSOURCE::MineraiFer);
+    stock.push(TYPE_RESSOURCE::MineraiTitane);
+    stock.push(TYPE_RESSOURCE::MineraiGlace);
+    stock.push(TYPE_RESSOURCE::MineraiAluminium);
 
-    const size_t hash = typeid(Mine).hash_code();
+    const size_t hash = typeid(Fonderie).hash_code();
 
-    CraftPossible(hash, stock);
+    auto list = CraftPossible(hash, stock);
+    cout << "Affichage ressources crafatables" << endl;
+    for (auto x : list)
+    {
+        cout << (short)x << " " << endl;
+    }
 }
 
 void testPartie()

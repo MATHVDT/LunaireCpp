@@ -27,26 +27,28 @@ using namespace std;
 
 typedef struct ReactifsProduitCraft
 {
-    long reactifs; // concatBin
+    ulong reactifs; // concatBin
     TYPE_RESSOURCE produit;
 } ReactifsProduitCraft_t;
 
-typedef struct Craft
+typedef struct CraftBatiment
 {
     std::size_t batiment;
     list<ReactifsProduitCraft_t *> *formule;
-} Craft_t;
+} CraftBatiment_t;
 
-typedef struct ComposantCraft
+typedef struct FormuleCraft
 {
     TYPE_RESSOURCE composant;
     uint quantite;
     bool produit;
-} ComposantCraft_t;
+} FormuleCraft_t;
 
-extern list<Craft_t *> *listCrafts;
 extern string cheminFichierCrafts;
-extern vector<list<ComposantCraft *>> listFormulesCraft;
+
+extern list<CraftBatiment_t *> *listCraftsBatiment;
+
+extern vector<list<FormuleCraft *>> listFormulesCraft;
 
 void initCrafts(string fichierCheminCrafts = cheminFichierCrafts);
 list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule);
@@ -54,15 +56,21 @@ list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule)
 void initFormulesCraft(string fichierFormuleCraft = "ressource/crafts/formuleCraft.txt");
 void afficherFormuleCraft(ostream &monFlux = cout);
 
-// list<TYPE_RESSOURCE> CraftPossible(Structure * s, queue<TYPE_RESSOURCE> &stock);
-vector<TYPE_RESSOURCE> CraftPossible(const size_t hash,
-                                     queue<TYPE_RESSOURCE> &stock);
+list<TYPE_RESSOURCE> CraftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock);
+list<TYPE_RESSOURCE> CraftPossible(const size_t hash,
+                                   queue<TYPE_RESSOURCE> &stock);
 
 void combinate(vector<TYPE_RESSOURCE> e,
-          int perm[], int index, int n, int k,
-          list<TYPE_RESSOURCE> *tabList,
-          int &curseurLigne);
+               int perm[], int index, int n, int k,
+               list<TYPE_RESSOURCE> *tabList,
+               int &curseurLigne);
 
 ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources);
+
+/***************************************************/
+/*                 Fonctions inline                */
+/***************************************************/
+
+inline list<TYPE_RESSOURCE> CraftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock) { return CraftPossible(typeid(*s).hash_code(), stock); }
 
 #endif

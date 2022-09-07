@@ -12,8 +12,8 @@
 
 string cheminFichierCrafts = "ressource/crafts/cheminFichierCrafts.txt";
 
-list<Craft_t *> *listCrafts = new list<Craft *>{};
-vector<list<ComposantCraft *>> listFormulesCraft;
+list<CraftBatiment_t *> *listCraftsBatiment = new list<CraftBatiment *>{};
+vector<list<FormuleCraft *>> listFormulesCraft;
 
 /**
  * @brief Remplit la list des crafts
@@ -44,7 +44,7 @@ void initCrafts(string fichierCheminCrafts)
         {typeid(Mine).hash_code(),
          typeid(Fonderie).hash_code()};
 
-    Craft_t *craftTmp = nullptr;
+    CraftBatiment_t *craftTmp = nullptr;
     list<ReactifsProduitCraft_t *> *listFormules = nullptr;
     string fichierCraft;
 
@@ -56,7 +56,7 @@ void initCrafts(string fichierCheminCrafts)
         {
             cerr << "Chargement des crafts : " << batimentNom[k] << ", hash_code : " << batimentHash[k] << endl;
 
-            craftTmp = (Craft_t *)malloc(sizeof(Craft_t));
+            craftTmp = (CraftBatiment_t *)malloc(sizeof(CraftBatiment_t));
 
             // Chemin du fichier contenant les crafts
             monFlux >> fichierCraft;
@@ -67,7 +67,7 @@ void initCrafts(string fichierCheminCrafts)
             craftTmp->batiment = batimentHash[k];
             craftTmp->formule = listFormules;
 
-            listCrafts->emplace_back(craftTmp);
+            listCraftsBatiment->emplace_back(craftTmp);
         }
         monFlux.close();
     }
@@ -88,7 +88,7 @@ list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule)
     int nbFormules = 0;
     list<ReactifsProduitCraft_t *> *listFormules = new list<ReactifsProduitCraft *>{};
     ReactifsProduitCraft_t *f;
-    long reactifs;
+    ulong reactifs;
     int produitInt;
     TYPE_RESSOURCE produit;
 
@@ -124,7 +124,7 @@ list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule)
  */
 void initFormulesCraft(string fichierFormuleCraft)
 {
-    ComposantCraft_t *composantTmp = nullptr;
+    FormuleCraft_t *composantTmp = nullptr;
     short composantShort;
     uint nbRessources;
     uint nbElementFormule;
@@ -137,12 +137,12 @@ void initFormulesCraft(string fichierFormuleCraft)
         monFlux >> nbRessources;
         for (uint k = 0; k < nbRessources; ++k)
         {
-            listFormulesCraft.push_back(list<ComposantCraft *>{});
+            listFormulesCraft.push_back(list<FormuleCraft *>{});
             // Nombre de triplet à lire
             monFlux >> nbElementFormule;
             for (uint i = 0; i < nbElementFormule; ++i)
             {
-                composantTmp = new ComposantCraft_t{};
+                composantTmp = new FormuleCraft_t{};
                 monFlux >> composantShort;
                 composantTmp->composant = static_cast<TYPE_RESSOURCE>(composantShort);
                 monFlux >> composantTmp->quantite;
@@ -180,13 +180,15 @@ void afficherFormuleCraft(ostream &monFlux)
  *
  * @param size_t hash - *hash_code des structures*
  * @param queue<TYPE_RESSOURCE> stockEntree
- * @return list<TYPE_RESSOURCE>
+ *
+ * @return list<TYPE_RESSOURCE> - *listProduitsCraftables*
  */
-vector<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
+list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
 {
     vector<TYPE_RESSOURCE> vectorStock{};
-    list<TYPE_RESSOURCE> listCraftPossible{};
+    list<TYPE_RESSOURCE> listProduitsCraftables{};
 
+    /******* Récupère différents types ressources *******/
     while (!stock.empty())
     {
         if (stock.front() != TYPE_RESSOURCE::Rien)
@@ -198,7 +200,7 @@ vector<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &s
 
     // Garder uniquement le type (pas les qte)
     // Ordre décroissant
-    sort(vectorStock.begin(), vectorStock.end());
+    sort(vectorStock.begin(), vectorStock.end(), greater<TYPE_RESSOURCE>());
 
     vector<TYPE_RESSOURCE>::iterator it = unique(vectorStock.begin(), vectorStock.end());
     vectorStock.resize(distance(vectorStock.begin(), it));
@@ -212,13 +214,13 @@ vector<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &s
     };
 
     int n = vectorStock.size();
-    int nbCombi = pow(2, n);
+    int nbCombi = pow(2, n) - 1;
     const int nbMaxReactifs = 5;
     static int curseurLigne = 0;
     list<TYPE_RESSOURCE> *tabListCombiCraft =
         new list<TYPE_RESSOURCE>[nbCombi] {};
 
-    // Récupère toutes les combinaisons possibless
+    /******* Récupère combinaisons possibles *******/
     for (int k = 1; k <= n; ++k)
     {
         int perm[n] = {0};
@@ -238,19 +240,53 @@ vector<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &s
         cerr << endl;
     }
 
-    // while (listStock.size() < 5)
-    // {
-    //     listStock.emplace_front(TYPE_RESSOURCE::Rien);
-    // }
-    // ICI les combi possibles
+    /****** Récupère liste ressources ******/
+    ulong valConcatBin;
+    list<ReactifsProduitCraft_t *> *listRessPotentielles = nullptr;
 
-    // for (Craft_t *c : *listCrafts)
-    // {
-    //     if (c->batiment == hash)
-    //     {
-    //     }
-    // }
-    return vectorStock;
+    // Récupération de la liste des ressources
+    // potentiellement craftables dans ce batiment
+    for (auto craftBat : *listCraftsBatiment)
+    {
+        if (hash == craftBat->batiment)
+        {
+            listRessPotentielles = craftBat->formule;
+            break;
+        }
+    }
+    if (listRessPotentielles == nullptr)
+    {
+        cerr << "Erreur, le hash du batiment n'a pas été trouvé dans listCraftsBatiment" << endl;
+    }
+
+    // Utilisation d'une lambda fonction
+    // Redéfini le prédicat en fct de valConcatBin
+    auto predicatValConcatBin = [&valConcatBin](ReactifsProduitCraft_t *c)
+    {
+        return c->reactifs == valConcatBin;
+    };
+
+    auto itFind = listRessPotentielles->begin();
+
+    // Pour chaque combi :
+    for (int i = 0; i < nbCombi; ++i)
+    {
+        // Récupère valeur concaténer binaire
+        // associé à la combinaison de ressources
+        valConcatBin = concatBinListRessource(tabListCombiCraft[i]);
+
+        // Check dans la list des ressources
+        // potentiellement craftables
+        itFind = find_if(listRessPotentielles->begin(), listRessPotentielles->end(), predicatValConcatBin);
+
+        // Trouvé, ie différent du dernier elt
+        if (itFind != listRessPotentielles->end())
+        { // Ajout du produit craftable
+            listProduitsCraftables.push_back((*itFind)->produit);
+        }
+    }
+
+    return listProduitsCraftables;
 }
 
 /******************************************************/
@@ -297,16 +333,16 @@ void combinate(vector<TYPE_RESSOURCE> e,
 }
 
 /**
- * @brief Concatène les ressources en binaire 
+ * @brief Concatène les ressources en binaire
  * @details Ressource de types enum class (short) donc sur 2 octets => concatène 4 ressources => 4 * 2 = 8 octets type ulong pour faire reference à une ressource
- * 
- * @param combiRessources 
- * @return ulong 
+ *
+ * @param const list<TYPE_RESSOURCE> &combiRessources
+ * @return ulong - *Valeur concaténer Binaire*
  */
 ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources)
 {
     const short RIEN = 0;
-    ulong valConcatBin;
+    ulong valConcatBin = 0;
     uint nbRessources = 0;
 
     for (auto r : combiRessources)
@@ -314,7 +350,11 @@ ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources)
         // Décalage de 2 octets (short)
         valConcatBin = valConcatBin << 16;
         // Concaténation avec un OU logiques
-        valConcatBin = valConcatBin | (long)r;
+        valConcatBin = valConcatBin | (ulong)r;
+        // cout << (ulong)r << " ";
     }
+    // cout << endl
+    //      << "valeur final : "
+    //      << valConcatBin << endl;
     return valConcatBin;
 }
