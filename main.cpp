@@ -12,7 +12,6 @@ void testPartie();
 
 int main()
 {
-
     testCraft();
 
     // testPartie();
@@ -25,7 +24,6 @@ int main()
 void testCraft()
 {
     initCrafts();
-    initFormulesCraft();
 
     // Affichage formules craft
     // afficherFormuleCraft();
@@ -45,12 +43,14 @@ void testCraft()
 
     const size_t hash = typeid(Fonderie).hash_code();
 
-    auto list = CraftPossible(hash, stock);
-    cout << "Affichage ressources crafatables" << endl;
-    for (auto x : list)
-    {
-        cout << (short)x << " " << endl;
-    }
+    // auto list = CraftPossible(hash, stock);
+    // cout << "Affichage ressources crafatables" << endl;
+    // for (auto x : list)
+    // {
+    //     cout << (short)x << " " << endl;
+    // }
+
+    deleteCraft();
 }
 
 void testPartie()

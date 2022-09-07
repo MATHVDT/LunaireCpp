@@ -12,7 +12,8 @@
 
 string cheminFichierCrafts = "ressource/crafts/cheminFichierCrafts.txt";
 
-list<CraftBatiment_t *> *listCraftsBatiment = new list<CraftBatiment *>{};
+list<CraftBatiment_t *> listCraftsBatiment{};
+// list<CraftBatiment_t *> *listCraftsBatiment = new list<CraftBatiment *>{};
 vector<list<FormuleCraft *>> listFormulesCraft;
 
 /**
@@ -52,11 +53,16 @@ void initCrafts(string fichierCheminCrafts)
     monFlux.open(fichierCheminCrafts);
     if (monFlux)
     {
+        // Chargement des formules des crafts
+        monFlux >> fichierCraft;
+        initFormulesCraft(fichierCraft);
+
+        // Chargement des crafts possibles par batiment
         for (uint k = 0; k < nbBatiment; ++k)
         {
             cerr << "Chargement des crafts : " << batimentNom[k] << ", hash_code : " << batimentHash[k] << endl;
 
-            craftTmp = (CraftBatiment_t *)malloc(sizeof(CraftBatiment_t));
+            craftTmp = new CraftBatiment_t{};
 
             // Chemin du fichier contenant les crafts
             monFlux >> fichierCraft;
@@ -67,7 +73,7 @@ void initCrafts(string fichierCheminCrafts)
             craftTmp->batiment = batimentHash[k];
             craftTmp->formule = listFormules;
 
-            listCraftsBatiment->emplace_back(craftTmp);
+            listCraftsBatiment.emplace_back(craftTmp);
         }
         monFlux.close();
     }
@@ -78,7 +84,7 @@ void initCrafts(string fichierCheminCrafts)
 }
 
 /**
- * @brief Remplit les formules des crafts
+ * @brief Remplit les formules des crafts a partir du fichier correspondant
  *
  * @param string - *fichierFormule*
  * @return list<ReactifsProduitCraft *>* - *listFormules*
@@ -158,6 +164,40 @@ void initFormulesCraft(string fichierFormuleCraft)
     }
 }
 
+/*******************************************************/
+void deleteCraft()
+{
+    // // Formule craft
+    for (auto list : listFormulesCraft)
+    {
+        for (auto elt : list)
+        { // Delete des elt dans une formule
+
+            delete elt;
+        }
+    } // vector delete tout seul car par d'allocation
+
+    // Craft batiment
+    auto it2 = listCraftsBatiment.begin();
+    while (it2 != listCraftsBatiment.end())
+    {
+        auto it3 = (*it2)->formule->begin();
+        while (it3 != (*it2)->formule->end())
+        { // delete ReactifsProduitCraft_t
+            delete *it3;
+            ++it3;
+        }
+        // delete list<ReactifsProduitCraft_t *>
+        delete (*it2)->formule;
+        // delete CraftBatiment_t *
+        delete *it2;
+        ++it2;
+    }
+}
+
+/*******************************************************/
+/*******************************************************/
+
 /**
  * @brief Affiche les formules des crafts
  *
@@ -206,12 +246,14 @@ list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
     vectorStock.resize(distance(vectorStock.begin(), it));
 
     // Affichage stock ressource unique trié
+    /*
     cerr << endl
          << "Affichage stock ressource unique trié" << endl;
     for (auto x : vectorStock)
     {
         cerr << static_cast<short>(x) << " ";
     };
+    */
 
     int n = vectorStock.size();
     int nbCombi = pow(2, n) - 1;
@@ -229,6 +271,7 @@ list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
     }
 
     // Affichage combinaison
+    /*
     cerr << endl
          << "Affichage combinaison" << endl;
     for (int k = 0; k < nbCombi; ++k)
@@ -239,6 +282,7 @@ list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
         }
         cerr << endl;
     }
+    */
 
     /****** Récupère liste ressources ******/
     ulong valConcatBin;
@@ -246,7 +290,7 @@ list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
 
     // Récupération de la liste des ressources
     // potentiellement craftables dans ce batiment
-    for (auto craftBat : *listCraftsBatiment)
+    for (auto craftBat : listCraftsBatiment)
     {
         if (hash == craftBat->batiment)
         {

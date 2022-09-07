@@ -1,2 +1,3 @@
+ressource/crafts/formuleCraft.txt
 ressource/crafts/craftMine.txt
 ressource/crafts/craftFonderie.txt

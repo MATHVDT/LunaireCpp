@@ -46,14 +46,16 @@ typedef struct FormuleCraft
 
 extern string cheminFichierCrafts;
 
-extern list<CraftBatiment_t *> *listCraftsBatiment;
-
+extern list<CraftBatiment_t *> listCraftsBatiment;
 extern vector<list<FormuleCraft *>> listFormulesCraft;
 
 void initCrafts(string fichierCheminCrafts = cheminFichierCrafts);
 list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule);
 
 void initFormulesCraft(string fichierFormuleCraft = "ressource/crafts/formuleCraft.txt");
+
+void deleteCraft();
+
 void afficherFormuleCraft(ostream &monFlux = cout);
 
 list<TYPE_RESSOURCE> CraftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock);

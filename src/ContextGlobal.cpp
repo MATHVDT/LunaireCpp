@@ -17,6 +17,8 @@ Time ContextGlobal::_deltaTick = seconds(0.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
+    _carte = Carte::getInstance();
+    _menu = Menu::getInstance();
     std::cout << std::endl
               << "Création contextGlobal" << std::endl
               << std::endl

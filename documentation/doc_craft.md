@@ -3,7 +3,7 @@
 
 ## Craft possible
 
-Pour calculer les crafts possibles à partir de différentes ressources dans un batiments spécifiques, les ressources craftables sont associées à un code unique calculé à l'aide des différentes ressources nécessaires à sa production (sans tenir compte des quantités)
+Pour calculer les crafts possibles à partir de différentes ressources dans un batiments spécifiques, les ressources craftables sont associées à un code unique calculé à l'aide des différentes ressources nécessaires à sa production (sans tenir compte des quantités)  
 
 ### Détail du calcul 
 
@@ -46,14 +46,29 @@ Cette association de *valeurConcatBin=>Ressource* est décrite dans une structur
 
 Ensuite le joueur choisira ce qu'il veut crafter dans le batiment, et la Formule complète de craft (ie avec les quantités nécessaires) dans une "matrice creuse"
 
+---
 ## Formule des crafts
 
+Tout les formules de craft (ie avec les quantités) sont stockées dans une "matrice creuse".  
+![Formule Craft : matrice creuse](structureDonnéeImage/FormuleCraftRessource.png)
 
+### Structures code associées : 
+```cpp
+extern vector<list<FormuleCraft *>> listFormulesCraft;
+```
+
+```cpp
+typedef struct FormuleCraft
+{
+    TYPE_RESSOURCE composant;
+    uint quantite;
+    bool produit;
+} FormuleCraft_t;
+````
 ## Stockage des données dans les fichiers
 
-### Possiblités de craft sur les batiments
+Un fichier *ressource/crafts/cheminFichierCrafts.txt* contient les chemins des fichiers.
 
-Un fichier *ressource/crafts/cheminFichierCrafts.txt* contient les chemins des fichiers :
 > chemin_fichier_**formuleCraft**.txt *(par encore sur)*  
 > chemin_fichier_**craftMine**.txt  
 > chemin_fichier_**craftFonderie**.txt  
@@ -61,6 +76,8 @@ Un fichier *ressource/crafts/cheminFichierCrafts.txt* contient les chemins des f
 > chemin_fichier_**craftAtelier**.txt  
 > chemin_fichier_**craftCuve**.txt  
 > chemin_fichier_**craftChantierSpatial**.txt  
+
+### Possiblités de craft sur les batiments
 
 Un fichier par batiment, organisé comme ci-dessous : 
 > *craftBatiment.txt*  
@@ -72,3 +89,22 @@ Un fichier par batiment, organisé comme ci-dessous :
 >2   
 >81606017059 45  
 >45454541332 50  
+
+
+### Formule craft
+
+Un fichier avec une formule par ligne :
+* nb elt dans la formule
+* suite de 3-uplets
+    * ressource (nombre : short)
+    * quantité  (nombre : 0 - 5)
+    * produit   (1 -> true, 0 -> false)
+
+> nb_ressources_dispo(nb de lignes)  
+> nb_3-uplets 3-uplets  
+> nb_3-uplets 3-uplets  
+> nb_3-uplets 3-uplets  
+> nb_3-uplets 3-uplets  
+
+Format un 3-uplets :
+> Ressource quantité produit(bool)  
