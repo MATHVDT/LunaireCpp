@@ -23,7 +23,8 @@ enum GameEvent
     PlacerFabrique,
     PlacerAtelier,
     PlacerCuve,
-    PlacerChantierSpatial
+    PlacerChantierSpatial,
+    CheckCraftPossible
 };
 
 #endif

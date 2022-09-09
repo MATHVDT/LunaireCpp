@@ -18,10 +18,14 @@
 #include <typeinfo>
 #include <algorithm>
 #include <math.h>
+#include <fstream>
+#include <list>
+#include <vector>
 
 #include "EnumTypeRessource.hpp"
-#include "Mine.hpp"
-#include "Fonderie.hpp"
+#include "Structure.hpp"
+// #include "Mine.hpp"
+// #include "Fonderie.hpp"
 
 using namespace std;
 
@@ -46,8 +50,9 @@ typedef struct FormuleCraft
 
 extern string cheminFichierCrafts;
 
+// VARIABLE
 extern list<CraftBatiment_t *> listCraftsBatiment;
-extern vector<list<FormuleCraft *>> listFormulesCraft;
+extern vector<list<FormuleCraft_t *> *> listFormulesCraft;
 
 void initCrafts(string fichierCheminCrafts = cheminFichierCrafts);
 list<ReactifsProduitCraft *> *lectureReactifsProduitCraft(string fichierFormule);
@@ -58,8 +63,9 @@ void deleteCraft();
 
 void afficherFormuleCraft(ostream &monFlux = cout);
 
-list<TYPE_RESSOURCE> CraftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock);
-list<TYPE_RESSOURCE> CraftPossible(const size_t hash,
+list<TYPE_RESSOURCE> craftPossible(Structure *s,
+                                   queue<TYPE_RESSOURCE> &stock);
+list<TYPE_RESSOURCE> craftPossible(const size_t hash,
                                    queue<TYPE_RESSOURCE> &stock);
 
 void combinate(vector<TYPE_RESSOURCE> e,
@@ -73,6 +79,6 @@ ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources);
 /*                 Fonctions inline                */
 /***************************************************/
 
-inline list<TYPE_RESSOURCE> CraftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock) { return CraftPossible(typeid(*s).hash_code(), stock); }
+inline list<TYPE_RESSOURCE> craftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock) { return craftPossible(typeid(*s).hash_code(), stock); }
 
 #endif

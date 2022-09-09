@@ -35,7 +35,10 @@ Batiment::Batiment(const Vector2u &pos,
                    uint tailleStockSortie)
     : Structure{pos, text,
                 tailleStockEntree, tailleStockSortie},
-      _idBatiment(++_idMaxBatiments)
+      _idBatiment(++_idMaxBatiments),
+      _isFormuleCraftDefine(false),
+      _listRessCraftPossible(),
+      _formuleCraft(nullptr)
 {
     _nbBatiments++;
     cerr << "Batiment(), id : " << _idBatiment << endl;
@@ -105,4 +108,33 @@ bool Batiment::updateOrientation()
 {
     // Rien
     return false;
+}
+
+/**
+ * @brief Si le batiment n'est pas parametré pour craft, alors on récupère la liste des ce qui est craftable avec les ressources en _stockEntree.
+ *
+ */
+void Batiment::checkCraftPossible()
+{
+    if (!_isFormuleCraftDefine)
+    {
+        // size_t hash = typeid(this).hash_code();
+        auto list = craftPossible(this, _stockEntree);
+        list.swap(_listRessCraftPossible);
+    }
+}
+
+/**
+ * @brief Set la formule des crafts du batiment.
+ *
+ * @param TYPE_RESSOURCE - *ressCraft*
+ */
+void Batiment::setFormuleCraft(TYPE_RESSOURCE ressCraft)
+{
+    if (!_isFormuleCraftDefine)
+    {
+        _formuleCraft = listFormulesCraft.at((short)ressCraft);
+        _isFormuleCraftDefine = true;
+        setTextureRessourceCraft(ressCraft);
+    }
 }

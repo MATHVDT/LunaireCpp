@@ -84,8 +84,8 @@ public:
 
     uint getLevel() const;
 
-     bool stockEntreePlein() const;
-     bool stockSortiePlein() const;
+    bool stockEntreePlein() const;
+    bool stockSortiePlein() const;
     uint getNbEntrees() const;
     uint getNbConnexions() const;
     bool getASortie() const;
@@ -107,7 +107,7 @@ public:
     bool deconnecterStructure(Structure *s);
     virtual bool updateOrientation() = 0;
 
-    virtual TYPE_RESSOURCE livrerStock();
+    TYPE_RESSOURCE livrerStock();
     virtual void remplirStock();
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
@@ -141,8 +141,7 @@ inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.s
 inline uint Structure::getLevel() const { return _level; }
 
 inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
-inline bool Structure::stockSortiePlein
-() const { return _stockSortie.size() == _tailleStockSortie; }
+inline bool Structure::stockSortiePlein() const { return _stockSortie.size() == _tailleStockSortie; }
 
 inline uint Structure::getTailleStockEntree() const { return _tailleStockEntree; }
 inline uint Structure::getTailleStockSortie() const { return _tailleStockSortie; }

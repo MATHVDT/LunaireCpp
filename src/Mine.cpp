@@ -34,7 +34,7 @@ uint Mine::_offsetTextureY = 100;
 Mine::Mine(const Vector2u &pos,
            TYPE_SOL typeSol,
            TYPE_RESSOURCE ressourceProduite)
-    : Batiment{pos, _texturesMines[static_cast<int>(ressourceProduite)]},
+    : Batiment{pos, _texturesMines[0]},
       _idMine(++_idMaxMines),
       _typeSol(typeSol),
       _typeRessourceProduite(ressourceProduite),
@@ -189,4 +189,21 @@ void Mine::setSpriteTexture(uint tick)
     // cerr << "zoomTexture : ";
     // cerr << _zoomTexture.top << ";" << _zoomTexture.left;
     // cerr << " | " << _zoomTexture.width << ":" << _zoomTexture.height << endl;
+}
+
+/**
+ * @brief Définie la bonne texture en fonction de la ressource craftée.
+ * @details Mine sans ressource à craft => _textureMines[0]
+ * Mine Regolite => _textureMines[1] ...
+ *
+ * @param TYPE_RESOOURCE - *ressCraft*
+ */
+void Mine::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
+{
+    TYPE_RESSOURCE premiereRessource = TYPE_RESSOURCE::PoussiereRegolite; // Ici minerai
+    short indice = (short)ressCraft - (short)premiereRessource + 1;
+
+    _sprite->setTexture(*_texturesMines[indice]);
+    _sprite->setTextureRect(_zoomTexture);
+
 }

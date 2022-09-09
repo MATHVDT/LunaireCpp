@@ -52,7 +52,7 @@ public: // Static
     static uint _nbAnim;
 
     static uint _tailleTexture;
-    static Texture *_texturesMines[NB_RESSOURCES];
+    static Texture *_texturesMines[NB_RESSOURCES_MINERAIS];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 
@@ -85,9 +85,9 @@ public:
 
     // Setter
     void setSpriteTexture(uint tick);
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 
     virtual void process() override;
-    // virtual TYPE_RESSOURCE livrerStock() override; // Pas besoin de redefinir
     virtual void remplirStock() override;
 };
 

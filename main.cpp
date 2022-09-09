@@ -12,9 +12,9 @@ void testPartie();
 
 int main()
 {
-    testCraft();
+    // testCraft();
 
-    // testPartie();
+    testPartie();
 
     delete contextGlobal;
 
@@ -23,6 +23,8 @@ int main()
 
 void testCraft()
 {
+    // hash des batiments sont chargés dans le manager.init()
+
     initCrafts();
 
     // Affichage formules craft
@@ -43,7 +45,7 @@ void testCraft()
 
     const size_t hash = typeid(Fonderie).hash_code();
 
-    // auto list = CraftPossible(hash, stock);
+    auto list = craftPossible(hash, stock);
     // cout << "Affichage ressources crafatables" << endl;
     // for (auto x : list)
     // {

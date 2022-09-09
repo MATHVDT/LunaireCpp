@@ -27,6 +27,21 @@ Manager::~Manager()
 
 void Manager::init()
 {
+    cerr << "Init du MANAGER" << endl;
+    uint nbBatiment = 2;
+    size_t batimentHash[nbBatiment] =
+        {typeid(Mine).hash_code(),
+         typeid(Fonderie).hash_code()};
+
+    auto it = listCraftsBatiment.begin();
+    initCrafts();
+    for (int i = 0; i < nbBatiment; ++i)
+    {
+        cerr << "hash : " << batimentHash[i] << endl;
+        it++;
+        (*it)->batiment = batimentHash[i];
+    }
+
     // _carte = Carte::getInstance();
     _menu->init();
 
@@ -316,7 +331,7 @@ bool Manager::placerStructureOld()
 
 /**
  * @brief Place une Structure spéciale sur la carte
- *
+ * @deprecated	Plus de MasterBatiment => Marchand
  * @param CaseMap * - *caseSelect*
  * @return true - Structure placée (Batiment spécial)
  * @return false - Structure non placée (Pas Batiment spéciale)
@@ -495,15 +510,47 @@ void Manager::updateEvent()
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
     Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
 
-    if (contextGlobal->getGameEvent() == InverserSensPipeline)
+    switch (contextGlobal->getGameEvent())
     {
-        if (structSelect != nullptr &&
-            typeid(*structSelect).hash_code() == typeid(Pipeline).hash_code())
-        {
-            ((Pipeline *)structSelect)->inverserSens();
-            // ((Pipeline *)structSelect)->updateOrientation();
+    case GameEvent::InverserSensPipeline:
+        inverserSensPipeline(structSelect);
+        break;
 
-            contextGlobal->resetGameEvent();
+    default:
+        break;
+    }
+
+    // Essayer de trouver une game event pour ca
+    if (structSelect != nullptr)
+    {
+        if (typeid(*structSelect).hash_code() ==
+                typeid(Mine).hash_code() ||
+            typeid(*structSelect).hash_code() ==
+                typeid(Fonderie).hash_code())
+        {
+
+            Batiment *bat = ((Batiment *)structSelect);
+            if (!bat->getIsFormuleCraftDefine())
+            {
+                bat->checkCraftPossible();
+            }
         }
+    }
+}
+
+/**
+ * @brief Instructions à effectuer pour l'inversion d'un pipeline.
+ *
+ * @param Structure * - *structSelect*
+ */
+void Manager::inverserSensPipeline(Structure *structSelect)
+{
+
+    if (structSelect != nullptr &&
+        typeid(*structSelect).hash_code() == typeid(Pipeline).hash_code())
+    {
+        ((Pipeline *)structSelect)->inverserSens();
+        // ((Pipeline *)structSelect)->updateOrientation();
+        contextGlobal->resetGameEvent();
     }
 }

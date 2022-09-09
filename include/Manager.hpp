@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
-
+#include "Craft.hpp"
 #include "ContextGlobal.hpp"
 #include "Carte.hpp"
 #include "correspondance.hpp"
@@ -17,8 +17,8 @@
 #include "Menu.hpp"
 
 #include "Mine.hpp"
+#include "Fonderie.hpp"
 #include "MasterBatiment.hpp"
-
 
 class ContextGlobal;
 class Carte;
@@ -46,7 +46,7 @@ private:
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;
 
-    Menu * _menu;
+    Menu *_menu;
 
 private: // Static
     static Manager *_singleton;
@@ -84,6 +84,8 @@ public:
 
 private:
     Manager();
+
+    void inverserSensPipeline(Structure *structSelect);
 
     bool placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
     bool placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);

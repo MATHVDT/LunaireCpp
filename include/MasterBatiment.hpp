@@ -33,6 +33,7 @@ public:
 
     virtual void dessiner(float scaleSprite) override;
     virtual void update() override;
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 
     virtual void process() override;
 
@@ -53,5 +54,6 @@ inline uint MasterBatiment::getTailleStockSortieMasterBatiment() { return _taill
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline void MasterBatiment::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) { return; }
 
 #endif

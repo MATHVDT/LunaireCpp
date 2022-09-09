@@ -222,9 +222,13 @@ void ContextGlobal::calculMenuHover()
 void ContextGlobal::setCaseSelectionnee(bool reset)
 {
     if (reset)
+    {
         _caseSelectionnee = nullptr;
+    }
     else if (_caseHover != nullptr)
+    {
         _caseSelectionnee = _caseHover;
+    }
 }
 
 /**

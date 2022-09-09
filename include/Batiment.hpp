@@ -16,19 +16,26 @@
 // #include <queue>
 #include <typeinfo>
 
+#include "EnumTypeStructure.hpp"
+
 #include "Structure.hpp"
 #include "Pipeline.hpp"
 #include "ContextGlobal.hpp"
+#include "Craft.hpp"
 
 class ContextGlobal;
 class Pipeline;
-
+class Mine;
+class Fonderie;
 extern ContextGlobal *contextGlobal;
 
 class Batiment : public Structure
 {
 private:
     uint _idBatiment;
+    bool _isFormuleCraftDefine;
+    list<TYPE_RESSOURCE> _listRessCraftPossible;
+    list<FormuleCraft_t *> *_formuleCraft;
 
 private: // Static
     static uint _nbBatiments;
@@ -50,20 +57,27 @@ public: // Static
 public:
     Batiment();
     Batiment(const Vector2u &pos,
-             Texture *,
+             Texture *text,
              uint tailleStockEntree = _tailleStockEntree,
              uint tailleStockSortie = _tailleStockSortie);
-    virtual ~Batiment();
+    virtual ~Batiment() override;
 
-    virtual void init();
+    virtual void init() override;
 
-    virtual void dessiner(float scaleSprite);
-    virtual void update();
+    virtual void dessiner(float scaleSprite) override;
+    virtual void update() override;
 
     // Getter
     uint getIdBatiment() const;
+    bool getIsFormuleCraftDefine() const;
+    const list<FormuleCraft_t *> *getFormuleCraft() const;
 
-    virtual void process();
+    // Setter
+    void setFormuleCraft(TYPE_RESSOURCE ressCraft);
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) = 0;
+
+    virtual void process() override;
+    void checkCraftPossible();
 
     bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
@@ -87,5 +101,7 @@ inline uint Batiment::getTailleStockSortieBatiment() { return _tailleStockSortie
 /***************************************************/
 
 inline uint Batiment::getIdBatiment() const { return _idBatiment; }
+inline bool Batiment::getIsFormuleCraftDefine() const { return _isFormuleCraftDefine; }
+inline const list<FormuleCraft_t *> *Batiment::getFormuleCraft() const { return _formuleCraft; }
 
 #endif

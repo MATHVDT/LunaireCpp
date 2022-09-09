@@ -141,3 +141,18 @@ void Fonderie::setSpriteTexture(uint tick)
 void Fonderie::update() {}
 void Fonderie::process() {}
 void Fonderie::remplirStock() {}
+
+/**
+ * @brief Définie la bonne texture en fonction de la ressource craftée.
+ * @details Fonderie sans ressource à craft => _textureMines[0]
+ * Fonderie Regolite => _textureMines[1] ...
+ *
+ * @param TYPE_RESOOURCE - *ressCraft*
+ */
+void Fonderie::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
+{
+    TYPE_RESSOURCE premiereRessource = TYPE_RESSOURCE::LingotRegolite; // Ici lingot
+    short indice = (short)ressCraft - (short)premiereRessource + 1;
+
+    _sprite->setTexture(*_texturesFonderies[indice]);
+}

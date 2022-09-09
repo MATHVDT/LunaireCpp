@@ -53,6 +53,7 @@ Bouton::Bouton(const Vector2f &posBouton,
 
 Bouton::~Bouton()
 {
+    delete _sprite;
 }
 
 /**

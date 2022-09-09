@@ -5,7 +5,6 @@
 // #include <vector>
 
 #include "correspondance.hpp"
-#include "Craft.hpp"
 
 #include "ContextGlobal.hpp"
 
@@ -22,9 +21,13 @@
 #include "Mine.hpp"
 #include "MasterBatiment.hpp"
 
+#include "Craft.hpp"
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
+
+class Fonderie;
+class Mine;
 
 using namespace std;
 using namespace sf;

@@ -14,7 +14,7 @@ string cheminFichierCrafts = "ressource/crafts/cheminFichierCrafts.txt";
 
 list<CraftBatiment_t *> listCraftsBatiment{};
 // list<CraftBatiment_t *> *listCraftsBatiment = new list<CraftBatiment *>{};
-vector<list<FormuleCraft *>> listFormulesCraft;
+vector<list<FormuleCraft *> *> listFormulesCraft;
 
 /**
  * @brief Remplit la list des crafts
@@ -41,9 +41,9 @@ void initCrafts(string fichierCheminCrafts)
     string batimentNom[nbBatiment] =
         {"Mine", "Fonderie"};
 
-    size_t batimentHash[nbBatiment] =
-        {typeid(Mine).hash_code(),
-         typeid(Fonderie).hash_code()};
+    // size_t batimentHash[nbBatiment] =
+    //     {typeid(Mine).hash_code(),
+    //      typeid(Fonderie).hash_code()};
 
     CraftBatiment_t *craftTmp = nullptr;
     list<ReactifsProduitCraft_t *> *listFormules = nullptr;
@@ -60,7 +60,8 @@ void initCrafts(string fichierCheminCrafts)
         // Chargement des crafts possibles par batiment
         for (uint k = 0; k < nbBatiment; ++k)
         {
-            cerr << "Chargement des crafts : " << batimentNom[k] << ", hash_code : " << batimentHash[k] << endl;
+            cerr << "Chargement des crafts : " << batimentNom[k] << endl;
+            // ", hash_code : " << batimentHash[k] << endl;
 
             craftTmp = new CraftBatiment_t{};
 
@@ -70,7 +71,7 @@ void initCrafts(string fichierCheminCrafts)
 
             listFormules = lectureReactifsProduitCraft(fichierCraft);
 
-            craftTmp->batiment = batimentHash[k];
+            // craftTmp->batiment = batimentHash[k];
             craftTmp->formule = listFormules;
 
             listCraftsBatiment.emplace_back(craftTmp);
@@ -143,7 +144,7 @@ void initFormulesCraft(string fichierFormuleCraft)
         monFlux >> nbRessources;
         for (uint k = 0; k < nbRessources; ++k)
         {
-            listFormulesCraft.push_back(list<FormuleCraft *>{});
+            listFormulesCraft.push_back(new list<FormuleCraft *>{});
             // Nombre de triplet à lire
             monFlux >> nbElementFormule;
             for (uint i = 0; i < nbElementFormule; ++i)
@@ -153,7 +154,7 @@ void initFormulesCraft(string fichierFormuleCraft)
                 composantTmp->composant = static_cast<TYPE_RESSOURCE>(composantShort);
                 monFlux >> composantTmp->quantite;
                 monFlux >> composantTmp->produit;
-                listFormulesCraft.at(k).push_back(composantTmp);
+                listFormulesCraft.at(k)->push_back(composantTmp);
             }
         }
         monFlux.close();
@@ -170,7 +171,7 @@ void deleteCraft()
     // // Formule craft
     for (auto list : listFormulesCraft)
     {
-        for (auto elt : list)
+        for (auto elt : *list)
         { // Delete des elt dans une formule
 
             delete elt;
@@ -207,7 +208,7 @@ void afficherFormuleCraft(ostream &monFlux)
 {
     for (int k = 0; k < listFormulesCraft.size(); ++k)
     {
-        for (auto c : listFormulesCraft[k])
+        for (auto c : *listFormulesCraft[k])
         {
             monFlux << static_cast<int>(c->composant) << " " << c->quantite << " " << c->produit << ", ";
         }
@@ -223,7 +224,7 @@ void afficherFormuleCraft(ostream &monFlux)
  *
  * @return list<TYPE_RESSOURCE> - *listProduitsCraftables*
  */
-list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
+list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
 {
     vector<TYPE_RESSOURCE> vectorStock{};
     list<TYPE_RESSOURCE> listProduitsCraftables{};
@@ -295,12 +296,14 @@ list<TYPE_RESSOURCE> CraftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
         if (hash == craftBat->batiment)
         {
             listRessPotentielles = craftBat->formule;
+            cerr << "hash trouvé dans listCraftsBatiment" << endl;
             break;
         }
     }
     if (listRessPotentielles == nullptr)
     {
         cerr << "Erreur, le hash du batiment n'a pas été trouvé dans listCraftsBatiment" << endl;
+        cerr << "hash pas trouve : " << hash << endl;
     }
 
     // Utilisation d'une lambda fonction

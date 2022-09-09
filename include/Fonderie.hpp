@@ -23,7 +23,7 @@ extern string cheminFichierTexturesBoutons;
 using namespace std;
 using namespace sf;
 
-class Fonderie : Batiment
+class Fonderie : public Batiment
 {
 private:
     uint _idFonderie;
@@ -69,9 +69,9 @@ public:
 
     // Setter
     void setSpriteTexture(uint tick);
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 
-    virtual void process()override;
-    // virtual TYPE_RESSOURCE livrerStock() override; // Pas besoin de redefinir
+    virtual void process() override;
     virtual void remplirStock() override;
 };
 
