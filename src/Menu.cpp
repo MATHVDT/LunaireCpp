@@ -30,7 +30,8 @@ Menu::Menu()
       _lineSeparatorStatBoutons(),
       _lineSeparatorMapMenu(),
       _btnActive(false),
-      _boutonsChoixStructures{8}, _boutonBatimentSelectionnes{2}
+      _boutonsChoixStructures{8},
+      _boutonBatimentSelect{5}
 {
 }
 
@@ -53,6 +54,7 @@ void Menu::init(const Vector2f &posEcran)
                                                0));
 
     setBoutonsChoixStructures();
+    setBoutonsBatimentSelect();
     // set les autres btn
 
     translaterBoutons(_posEcran);
@@ -73,9 +75,19 @@ void Menu::dessiner(float scaleSprite)
     contextGlobal->dessinerFenetre(_lineSeparatorMapMenu);
 
     // if state menu == Choix structure
-    for (auto &btn : _boutonsChoixStructures)
+    if (false)
     {
-        btn->dessiner(scale);
+        for (auto &btn : _boutonsChoixStructures)
+        {
+            btn->dessiner();
+        }
+    }
+    else
+    {
+        for (auto &btn : _boutonBatimentSelect)
+        {
+            btn->dessiner();
+        }
     }
 }
 
@@ -89,6 +101,10 @@ void Menu::setPositionEcran(const Vector2f &newPosEcran)
     translaterBoutons(translation);
 }
 
+/**
+ * @brief Definit les positions/tailles/action des boutons Choix structures
+ *
+ */
 void Menu::setBoutonsChoixStructures()
 {
 
@@ -160,6 +176,58 @@ void Menu::setBoutonsChoixStructures()
                    GameEvent::PlacerChantierSpatial};
 }
 
+void Menu::setBoutonsBatimentSelect()
+{
+    Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
+    Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
+    const Vector2f scaleBtn{0.48f, 0.93f};
+
+    // Upgrade
+    _boutonBatimentSelect[0] =
+        new Bouton{Vector2f{0.07f * dimMenu.x,
+                            0.775f * dimMenu.y},
+                   BoutonType::boutonUpgradeStructure,
+                   Vector2f{0.41f, 0.8f},
+                   BoutonState::Normal,
+                   GameEvent::Upgrade};
+
+    // Detruire
+    _boutonBatimentSelect[1] =
+        new Bouton{Vector2f{0.52f * dimMenu.x,
+                            0.775f * dimMenu.y},
+                   BoutonType::boutonDetruireStructure,
+                   Vector2f{0.41f, 0.8f},
+                   BoutonState::Normal,
+                   GameEvent::Detruire};
+
+    // Vider Stock
+    _boutonBatimentSelect[2] =
+        new Bouton{Vector2f{0.07f * dimMenu.x,
+                            0.93f * dimMenu.y},
+                   BoutonType::boutonViderStock,
+                   Vector2f{0.865f, 0.30f},
+                   BoutonState::Normal,
+                   GameEvent::ViderStock};
+
+    // Valider Craft
+    _boutonBatimentSelect[3] =
+        new Bouton{Vector2f{0.2f * dimMenu.x,
+                            0.60 * dimMenu.y},
+                   BoutonType::boutonValiderCraft,
+                   Vector2f{0.6f, 0.8f},
+                   BoutonState::Normal,
+                   GameEvent::ValiderCraft};
+
+    // Reset Craft
+    _boutonBatimentSelect[4] =
+        new Bouton{Vector2f{0.2f * dimMenu.x,
+                            0.60f * dimMenu.y},
+                   BoutonType::boutonResetCraft,
+                   Vector2f{0.6f, 0.9f},
+                   BoutonState::Normal,
+                   GameEvent::ResetCraft};
+}
+
 void Menu::translaterBoutons(const Vector2f &dirVect)
 {
     for (auto &btn : _boutonsChoixStructures)
@@ -168,6 +236,10 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
     }
 
     // Pour les autres btn
+    for (auto &btn : _boutonBatimentSelect)
+    {
+        btn->deplacerPositionEcran(dirVect);
+    }
 }
 
 /**

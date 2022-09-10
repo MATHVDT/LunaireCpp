@@ -24,7 +24,13 @@ enum GameEvent
     PlacerAtelier,
     PlacerCuve,
     PlacerChantierSpatial,
-    CheckCraftPossible
+    CheckCraftPossible,
+
+    ViderStock,
+    Upgrade,
+    Detruire,
+    ValiderCraft,
+    ResetCraft
 };
 
 #endif

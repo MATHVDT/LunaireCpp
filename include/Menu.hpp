@@ -36,7 +36,7 @@ private:
 
     bool _btnActive;
     vector<Bouton *> _boutonsChoixStructures;
-    vector<Bouton *> _boutonBatimentSelectionnes;
+    vector<Bouton *> _boutonBatimentSelect;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
@@ -66,8 +66,11 @@ public:
     bool resetBoutonsActive();
 
 private:
-    void setBoutonsChoixStructures();
     void translaterBoutons(const Vector2f &dirVect);
+    
+    void setBoutonsChoixStructures();
+    void setBoutonsBatimentSelect();
+    
 };
 
 /***************************************************/

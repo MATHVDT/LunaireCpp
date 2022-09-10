@@ -23,7 +23,7 @@ enum BoutonState
     Disabled = 5 // Bouton désactivé (plus cliquable)
 };
 
-const uint NB_BOUTONS = 8;
+const uint NB_BOUTONS = 13;
 
 enum BoutonType
 {
@@ -34,7 +34,13 @@ enum BoutonType
     boutonFabrique = 4,
     boutonAtelier = 5,
     boutonCuve = 6,
-    boutonChantierSpatial = 7
+    boutonChantierSpatial = 7,
+
+    boutonValiderCraft = 8,
+    boutonResetCraft = 9,
+    boutonUpgradeStructure = 10,
+    boutonDetruireStructure = 11,
+    boutonViderStock = 12
 };
 
 #endif

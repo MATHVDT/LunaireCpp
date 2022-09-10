@@ -10,7 +10,7 @@
  */
 #include "Ressource.hpp"
 
-string cheminFichierTexturesRessources = "";
+string cheminFichierTexturesRessources = "ressource/cheminTextures/cheminTexturesTypeRessource.txt";
 
 uint Ressource::_nbRessources = NB_RESSOURCES;
 Sprite *Ressource::_spriteRessources = nullptr;
