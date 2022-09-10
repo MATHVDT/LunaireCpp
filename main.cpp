@@ -66,6 +66,7 @@ void testPartie()
     ContenuPipeline::chargerMemoireTypeRessource();
     MasterBatiment::chargerMemoireMasterBatiment();
     Bouton::chargerMemoireBoutons();
+    Ressource::chargerMemoireRessources();
 
     Manager *m = Manager::getInstance();
     m->init();
@@ -79,6 +80,7 @@ void testPartie()
     ContenuPipeline::dechargerMemoireTypeRessource();
     MasterBatiment::dechargerMemoireMasterBatiment();
     Bouton::dechargerMemoireBoutons();
+    Ressource::dechargerMemoireRessources();
 
     delete m;
 }

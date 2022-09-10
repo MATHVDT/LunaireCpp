@@ -25,7 +25,6 @@ class Menu;
 
 class ContextGlobal
 {
-
 private:
     Vector2u _dimensionFenetre;
     float _ratioFenetre;

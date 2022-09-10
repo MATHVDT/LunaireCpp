@@ -21,12 +21,13 @@ Texture *Bouton::_texturesBoutons[NB_BOUTONS];
  *
  * @param const Vector2f & - *posBouton*
  * @param BoutonType - *type*
+ * @param const Vector2f & - *scale*
  * @param BoutonState - *state*
  * @param GameEvent - *gameEventAction*
  */
 Bouton::Bouton(const Vector2f &posBouton,
                BoutonType type,
-               BoutonState state,
+               const Vector2f &scale,               BoutonState state,
                GameEvent gameEventAction)
     : _box{posBouton.x, posBouton.y, 0, 0},
       _sprite{new Sprite()},
@@ -41,7 +42,7 @@ Bouton::Bouton(const Vector2f &posBouton,
     _sprite->setTexture(*_texturesBoutons[_type]);
     Vector2u textureSize = _sprite->getTexture()->getSize();
 
-    setScale();
+    setScale(scale);
     setSpriteTexture();
 
     _box.height = _zoomTexture.height = textureSize.y / NB_STATE_BOUTONS;
@@ -60,14 +61,15 @@ Bouton::~Bouton()
  * @brief Set the scale d'un bouton pour adapter la texture
  * @details Ici c'est le scale spécifique aux gros boutons choix construction
  */
-void Bouton::setScale()
+void Bouton::setScale(const Vector2f &scale)
 {
     Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
     Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
     Vector2f dimText = (Vector2f)_sprite->getTexture()->getSize();
 
     // Pour les boutons de choix de construction
-    _scale = Vector2f{0.47f * dimMenu.x / dimText.x, dimMenu.y / dimText.y};
+    _scale = Vector2f{scale.x * dimMenu.x / dimText.x, scale.y * dimMenu.y / dimText.y};
+    // _scale = Vector2f{0.48f * dimMenu.x / dimText.x, 0.93f * dimMenu.y / dimText.y};
 }
 
 /*******************************************************/

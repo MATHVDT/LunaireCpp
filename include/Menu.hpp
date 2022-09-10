@@ -31,8 +31,12 @@ class Menu
 private:
     Vector2f _posEcran;
 
+    RectangleShape _lineSeparatorStatBoutons;
+    RectangleShape _lineSeparatorMapMenu;
+
     bool _btnActive;
     vector<Bouton *> _boutonsChoixStructures;
+    vector<Bouton *> _boutonBatimentSelectionnes;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;

@@ -22,6 +22,7 @@
 #include "MasterBatiment.hpp"
 
 #include "Craft.hpp"
+#include "Ressource.hpp"
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;

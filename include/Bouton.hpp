@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "string"
+#include <string>
 
 // #include <SFML/Graphics.hpp>
 
@@ -54,7 +54,9 @@ private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Bouton(const Vector2f &posBouton, BoutonType type,
+    Bouton(const Vector2f &posBouton,
+           BoutonType type,
+           const Vector2f &scale = Vector2f(1.f, 1.f),
            BoutonState state = BoutonState::Normal,
            GameEvent gameEvent = GameEvent::AucunGameEvent);
     ~Bouton();
@@ -72,7 +74,7 @@ public:
     void setPositionEcran(const Vector2f &newPositionEcran);
     void deplacerPositionEcran(const Vector2f &translation);
     void setState(BoutonState state);
-    void setScale();
+    void setScale(const Vector2f &scale);
 };
 
 /***************************************************/

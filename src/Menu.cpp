@@ -27,12 +27,31 @@ Menu *Menu::getInstance()
 
 Menu::Menu()
     : _posEcran(Vector2f{0.f, 0.f}),
-      _boutonsChoixStructures{8}
+      _lineSeparatorStatBoutons(),
+      _lineSeparatorMapMenu(),
+      _btnActive(false),
+      _boutonsChoixStructures{8}, _boutonBatimentSelectionnes{2}
 {
 }
 
 void Menu::init(const Vector2f &posEcran)
 {
+    Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
+    Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
+
+    float largeurMap = contextGlobal->getLargeurMapEcran();
+
+    // Séparation Stat bouton
+    _lineSeparatorStatBoutons.setFillColor(Color::White);
+    _lineSeparatorStatBoutons.setSize(Vector2f(dimMenu.x, 2));
+    _lineSeparatorStatBoutons.setPosition(largeurMap, 0.35 * dimMenu.y);
+
+    // Contour Menu
+    _lineSeparatorMapMenu.setFillColor(Color::White);
+    _lineSeparatorMapMenu.setSize(Vector2f(2, dimMenu.y));
+    _lineSeparatorMapMenu.setPosition(Vector2f(largeurMap,
+                                               0));
+
     setBoutonsChoixStructures();
     // set les autres btn
 
@@ -49,6 +68,9 @@ void Menu::dessiner(float scaleSprite)
 {
     float scale = contextGlobal->getScaleReference();
     // dessiner Stat
+
+    contextGlobal->dessinerFenetre(_lineSeparatorStatBoutons);
+    contextGlobal->dessinerFenetre(_lineSeparatorMapMenu);
 
     // if state menu == Choix structure
     for (auto &btn : _boutonsChoixStructures)
@@ -72,52 +94,68 @@ void Menu::setBoutonsChoixStructures()
 
     Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
     Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
+    const Vector2f scaleBtn{0.48f, 0.93f};
 
     _boutonsChoixStructures[0] =
-        new Bouton{Vector2f{0.02f * dimMenu.x, 0.27f * dimMenu.y},
+        new Bouton{Vector2f{0.02f * dimMenu.x,
+                            0.36f * dimMenu.y},
                    BoutonType::boutonPipeline,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerPipeline};
 
     _boutonsChoixStructures[1] =
-        new Bouton{Vector2f{0.51f * dimMenu.x, 0.27f * dimMenu.y},
+        new Bouton{Vector2f{0.51f * dimMenu.x,
+                            0.36f * dimMenu.y},
                    BoutonType::boutonMarchand,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerMarchand};
 
     _boutonsChoixStructures[2] =
-        new Bouton{Vector2f{0.02f * dimMenu.x, 0.45f * dimMenu.y},
+        new Bouton{Vector2f{0.02f * dimMenu.x,
+                            0.52f * dimMenu.y},
                    BoutonType::boutonMine,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerMine};
 
     _boutonsChoixStructures[3] =
-        new Bouton{Vector2f{0.51f * dimMenu.x, 0.45f * dimMenu.y},
+        new Bouton{Vector2f{0.51f * dimMenu.x,
+                            0.52f * dimMenu.y},
                    BoutonType::boutonFonderie,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerFonderie};
 
     _boutonsChoixStructures[4] =
-        new Bouton{Vector2f{0.02f * dimMenu.x, 0.63f * dimMenu.y},
-                   BoutonType::boutonFabrique,
+        new Bouton{Vector2f{0.02f * dimMenu.x,
+                            0.68f * dimMenu.y},
+                   BoutonType::boutonFabrique, scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerFabrique};
 
     _boutonsChoixStructures[5] =
-        new Bouton{Vector2f{0.51f * dimMenu.x, 0.63f * dimMenu.y},
+        new Bouton{Vector2f{0.51f * dimMenu.x,
+                            0.68f * dimMenu.y},
                    BoutonType::boutonAtelier,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerAtelier};
 
     _boutonsChoixStructures[6] =
-        new Bouton{Vector2f{0.02f * dimMenu.x, 0.81f * dimMenu.y},
+        new Bouton{Vector2f{0.02f * dimMenu.x,
+                            0.84f * dimMenu.y},
                    BoutonType::boutonCuve,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerCuve};
 
     _boutonsChoixStructures[7] =
-        new Bouton{Vector2f{0.51f * dimMenu.x, 0.81f * dimMenu.y},
+        new Bouton{Vector2f{0.51f * dimMenu.x,
+                            0.84f * dimMenu.y},
                    BoutonType::boutonChantierSpatial,
+                   scaleBtn,
                    BoutonState::Normal,
                    GameEvent::PlacerChantierSpatial};
 }
