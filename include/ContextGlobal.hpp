@@ -93,6 +93,7 @@ public:
     uint getCurrentTick() const;
     bool getUpdateTick() const;
     float getLargeurMapEcran() const;
+    // list<TYPE_RESSOURCE> getListCraftsPossible() const;
 
     // Setter
     void setIsRun(bool run);

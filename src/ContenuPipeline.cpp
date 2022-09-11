@@ -69,7 +69,7 @@ void ContenuPipeline::chargerTextures(string fichierCheminsTexture)
     if (monFlux)
     {
         cerr << endl
-             << "Chargement de la texture des types de ressources" << endl
+             << "Chargement de la texture des types de ressources ContenuPipeline" << endl
              << endl;
         // Chemin de l'image texture d'une Pipeline
         monFlux >> cheminTexture;

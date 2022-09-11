@@ -15,6 +15,9 @@
 
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
+// #include "Structure.hpp"
+// #include "Batiment.hpp"
+#include "Ressource.hpp"
 
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
@@ -24,7 +27,16 @@ extern string cheminFichierTexturesBoutons;
 using namespace std;
 using namespace sf;
 
+class Structure;
+class Batiment;
 class Bouton;
+
+enum SectionMenu
+{
+    ChoixStructures,
+    BatimentSelectCraftDefine,
+    BatimentSelectCraftUndefine
+};
 
 class Menu
 {
@@ -33,13 +45,18 @@ private:
 
     RectangleShape _lineSeparatorStatBoutons;
     RectangleShape _lineSeparatorMapMenu;
+    RectangleShape _lineCoteDroitMenu;
 
     bool _btnActive;
+    SectionMenu _sectionMenu;
     vector<Bouton *> _boutonsChoixStructures;
     vector<Bouton *> _boutonBatimentSelect;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
+    list<TYPE_RESSOURCE> *_listCraftPossible;
+    vector<RectangleShape> _tabCraftPossible;
+    
 
 public: // Static
     static Menu *_singleton;
@@ -57,6 +74,8 @@ public:
     // Getter
     Vector2f getPositionEcran() const;
     bool getBoutonsActive() const;
+    SectionMenu getSectionMenu() const;
+    vector<Bouton *> &getBoutonsSection();
 
     // Setter
     void setPositionEcran(const Vector2f &newPosEcran);
@@ -65,12 +84,18 @@ public:
     void setBoutonsActive(bool val = true);
     bool resetBoutonsActive();
 
+    void setSectionMenu(SectionMenu section);
+    void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft);
+
 private:
     void translaterBoutons(const Vector2f &dirVect);
-    
+
     void setBoutonsChoixStructures();
     void setBoutonsBatimentSelect();
-    
+    void setTabCraftPossible();
+
+    void dessinerBatimentSelectCraftUndefine();
+    void dessinerBatimentSelectCraftDefine();
 };
 
 /***************************************************/
@@ -84,8 +109,14 @@ private:
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+// Getter
 inline Vector2f Menu::getPositionEcran() const { return _posEcran; }
 inline bool Menu::getBoutonsActive() const { return _btnActive; }
+inline SectionMenu Menu::getSectionMenu() const { return _sectionMenu; }
+
+// Setter
 inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
+inline void Menu::setSectionMenu(SectionMenu section) { _sectionMenu = section; }
+inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft) { _listCraftPossible = listRessCraft; }
 
 #endif

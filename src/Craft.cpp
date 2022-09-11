@@ -224,7 +224,7 @@ void afficherFormuleCraft(ostream &monFlux)
  *
  * @return list<TYPE_RESSOURCE> - *listProduitsCraftables*
  */
-list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> &stock)
+list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stock)
 {
     vector<TYPE_RESSOURCE> vectorStock{};
     list<TYPE_RESSOURCE> listProduitsCraftables{};
@@ -238,6 +238,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
         }
         stock.pop();
     }
+
 
     // Garder uniquement le type (pas les qte)
     // Ordre décroissant
@@ -269,6 +270,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> &sto
         int perm[n] = {0};
         combinate(vectorStock, perm, 0, n, k,
                   tabListCombiCraft, curseurLigne);
+
     }
 
     // Affichage combinaison

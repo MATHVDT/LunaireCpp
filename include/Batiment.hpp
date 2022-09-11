@@ -24,6 +24,7 @@
 #include "Craft.hpp"
 
 class ContextGlobal;
+class Structure;
 class Pipeline;
 class Mine;
 class Fonderie;
@@ -71,13 +72,14 @@ public:
     uint getIdBatiment() const;
     bool getIsFormuleCraftDefine() const;
     const list<FormuleCraft_t *> *getFormuleCraft() const;
+  const  list<TYPE_RESSOURCE> *getListCraftPossible() const;
 
     // Setter
     void setFormuleCraft(TYPE_RESSOURCE ressCraft);
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) = 0;
 
     virtual void process() override;
-    void checkCraftPossible();
+    list<TYPE_RESSOURCE> *checkCraftPossible();
 
     bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
@@ -103,5 +105,7 @@ inline uint Batiment::getTailleStockSortieBatiment() { return _tailleStockSortie
 inline uint Batiment::getIdBatiment() const { return _idBatiment; }
 inline bool Batiment::getIsFormuleCraftDefine() const { return _isFormuleCraftDefine; }
 inline const list<FormuleCraft_t *> *Batiment::getFormuleCraft() const { return _formuleCraft; }
+
+inline const list<TYPE_RESSOURCE> *Batiment::getListCraftPossible() const { return &_listRessCraftPossible; }
 
 #endif

@@ -42,6 +42,13 @@ Batiment::Batiment(const Vector2u &pos,
 {
     _nbBatiments++;
     cerr << "Batiment(), id : " << _idBatiment << endl;
+
+    // NE PAS OUBLIER DE DEGAGER CA §§§
+    _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
+    _stockEntree.push(TYPE_RESSOURCE::MineraiGlace);
+    _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
+    cerr << " taille stock : " << _stockEntree.size() << endl;
+
 }
 
 Batiment::~Batiment()
@@ -114,14 +121,18 @@ bool Batiment::updateOrientation()
  * @brief Si le batiment n'est pas parametré pour craft, alors on récupère la liste des ce qui est craftable avec les ressources en _stockEntree.
  *
  */
-void Batiment::checkCraftPossible()
+list<TYPE_RESSOURCE> *Batiment::checkCraftPossible()
 {
     if (!_isFormuleCraftDefine)
     {
         // size_t hash = typeid(this).hash_code();
-        auto list = craftPossible(this, _stockEntree);
-        list.swap(_listRessCraftPossible);
+        list<TYPE_RESSOURCE> list = craftPossible(this, _stockEntree);
+        swap(list, _listRessCraftPossible);
     }
+    cerr << " nb _listRessCraftPossible : " << _listRessCraftPossible.size() << endl;
+    cerr << " taille stockEntree : " << _stockEntree.size() << endl;
+    cerr << endl;
+    return &_listRessCraftPossible;
 }
 
 /**

@@ -64,9 +64,9 @@ void deleteCraft();
 void afficherFormuleCraft(ostream &monFlux = cout);
 
 list<TYPE_RESSOURCE> craftPossible(Structure *s,
-                                   queue<TYPE_RESSOURCE> &stock);
+                                   queue<TYPE_RESSOURCE> stock);
 list<TYPE_RESSOURCE> craftPossible(const size_t hash,
-                                   queue<TYPE_RESSOURCE> &stock);
+                                   queue<TYPE_RESSOURCE> stock);
 
 void combinate(vector<TYPE_RESSOURCE> e,
                int perm[], int index, int n, int k,
@@ -79,6 +79,6 @@ ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources);
 /*                 Fonctions inline                */
 /***************************************************/
 
-inline list<TYPE_RESSOURCE> craftPossible(Structure *s, queue<TYPE_RESSOURCE> &stock) { return craftPossible(typeid(*s).hash_code(), stock); }
+inline list<TYPE_RESSOURCE> craftPossible(Structure *s, queue<TYPE_RESSOURCE> stock) { return craftPossible(typeid(*s).hash_code(), stock); }
 
 #endif

@@ -192,7 +192,7 @@ void Manager::updateStructure()
 void Manager::update()
 {
     // Process les structures pour les actualiser
-    updateStructure();
+    // updateStructure();
 }
 
 /**
@@ -532,7 +532,7 @@ void Manager::updateEvent()
             Batiment *bat = ((Batiment *)structSelect);
             if (!bat->getIsFormuleCraftDefine())
             {
-                bat->checkCraftPossible();
+                _menu->setListCraftPossible(bat->checkCraftPossible());
             }
         }
     }

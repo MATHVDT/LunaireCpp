@@ -21,12 +21,14 @@
 
 #include "EnumTypeSol.hpp"
 #include "Structure.hpp"
+// #include "Batiment.hpp"
 #include "ContextGlobal.hpp"
 
 using namespace std;
 using namespace sf;
 
 class Structure;
+class Batiment;
 class ContextGlobal;
 
 extern ContextGlobal *contextGlobal;
@@ -77,6 +79,7 @@ public:
     const Vector2u &getPositionCarte() const;
     TYPE_SOL getTypeSol() const;
     Structure *getConstruction() const;
+    Batiment *getBatiment() const;
 
     // Setter
     void setPositionCarte(uint x, uint y);
@@ -110,8 +113,6 @@ inline void CaseMap::setPositionCarte(uint x, uint y)
     setPositionCarte(Vector2u(x, y));
 }
 
-
-
 inline void CaseMap::setTypeSol(TYPE_SOL typeSol) { _typeSol = typeSol; }
 
 inline const Vector2f &CaseMap::getPositionSprite() const { return _sprite->getPosition(); }
@@ -132,5 +133,6 @@ inline void CaseMap::setSpriteTexture(TYPE_SOL typeSol)
 }
 
 inline Structure *CaseMap::getConstruction() const { return _construction; }
+inline Batiment *CaseMap::getBatiment() const { return (Batiment *)_construction; }
 
 #endif

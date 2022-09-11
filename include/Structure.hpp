@@ -26,6 +26,7 @@
 #include "ContextGlobal.hpp"
 
 class ContextGlobal;
+class Batiment;
 
 extern ContextGlobal *contextGlobal;
 

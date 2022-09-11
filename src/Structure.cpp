@@ -110,10 +110,10 @@ void Structure::dessiner(float scaleSprite)
 void Structure::update()
 {
     // Récupérer les ressources des entrées
-    this->remplirStock();
+    // this->remplirStock();
 
-    // Traiter les ressources
-    this->process();
+    // // Traiter les ressources
+    // this->process();
 }
 
 /*******************************************************/

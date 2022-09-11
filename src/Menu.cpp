@@ -29,9 +29,13 @@ Menu::Menu()
     : _posEcran(Vector2f{0.f, 0.f}),
       _lineSeparatorStatBoutons(),
       _lineSeparatorMapMenu(),
+      _lineCoteDroitMenu(),
       _btnActive(false),
+      _sectionMenu(),
       _boutonsChoixStructures{8},
-      _boutonBatimentSelect{5}
+      _boutonBatimentSelect{5},
+      _listCraftPossible(nullptr),
+      _tabCraftPossible{15}
 {
 }
 
@@ -44,20 +48,33 @@ void Menu::init(const Vector2f &posEcran)
 
     // Séparation Stat bouton
     _lineSeparatorStatBoutons.setFillColor(Color::White);
-    _lineSeparatorStatBoutons.setSize(Vector2f(dimMenu.x, 2));
-    _lineSeparatorStatBoutons.setPosition(largeurMap, 0.35 * dimMenu.y);
+    _lineSeparatorStatBoutons.setSize(
+        Vector2f(dimMenu.x, 2));
+    _lineSeparatorStatBoutons.setPosition(
+        largeurMap, 0.35 * dimMenu.y);
 
     // Contour Menu
     _lineSeparatorMapMenu.setFillColor(Color::White);
-    _lineSeparatorMapMenu.setSize(Vector2f(2, dimMenu.y));
-    _lineSeparatorMapMenu.setPosition(Vector2f(largeurMap,
-                                               0));
+    _lineSeparatorMapMenu.setSize(
+        Vector2f(2, dimMenu.y));
+    _lineSeparatorMapMenu.setPosition(
+        Vector2f(largeurMap, 0));
+
+    _lineCoteDroitMenu.setFillColor(Color::White);
+    _lineCoteDroitMenu.setSize(
+        Vector2f(2, dimMenu.y));
+    _lineCoteDroitMenu.setPosition(
+        Vector2f(dimFenetre.x - 2, 0));
 
     setBoutonsChoixStructures();
     setBoutonsBatimentSelect();
     // set les autres btn
+    setTabCraftPossible();
 
     translaterBoutons(_posEcran);
+
+    // setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
+    setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
 }
 
 Menu::~Menu()
@@ -66,6 +83,13 @@ Menu::~Menu()
         delete btn;
 }
 
+/*******************************************************/
+
+/**
+ * @brief Dessine le Menu
+ *
+ * @param float scaleSprite *(inutile)*
+ */
 void Menu::dessiner(float scaleSprite)
 {
     float scale = contextGlobal->getScaleReference();
@@ -73,23 +97,71 @@ void Menu::dessiner(float scaleSprite)
 
     contextGlobal->dessinerFenetre(_lineSeparatorStatBoutons);
     contextGlobal->dessinerFenetre(_lineSeparatorMapMenu);
+    contextGlobal->dessinerFenetre(_lineCoteDroitMenu);
 
     // if state menu == Choix structure
-    if (false)
+    switch (_sectionMenu)
     {
+    case SectionMenu::ChoixStructures:
         for (auto &btn : _boutonsChoixStructures)
         {
             btn->dessiner();
         }
+        break;
+    case SectionMenu::BatimentSelectCraftUndefine:
+        dessinerBatimentSelectCraftUndefine();
+        break;
+    case SectionMenu::BatimentSelectCraftDefine:
+        dessinerBatimentSelectCraftDefine();
+        break;
+    default:
+        break;
     }
-    else
-    {
-        for (auto &btn : _boutonBatimentSelect)
+}
+
+/**
+ * @brief Dessine les boutons lors de la selection d'un batiment N'AYANT PAS de craft définit.
+ */
+void Menu::dessinerBatimentSelectCraftUndefine()
+{
+    for (auto &btn : _boutonBatimentSelect)
+    { // Dessine tous les btn sauf reset Action
+        if (btn->getBoutonType() != BoutonType::boutonResetCraft)
         {
             btn->dessiner();
         }
     }
+    // Afficher les crafts possibles
+    // Vector2f posPremiereRessource{};
+
+    // uint nbCrafts = _listCraftPossible->size();
+    // for (int k = 0; k < nbCrafts; ++k)
+    // {
+    //     // Ressource
+    // }
+    for (auto rectShape : _tabCraftPossible)
+    {
+
+        contextGlobal->dessinerFenetre(rectShape);
+    }
 }
+
+/**
+ * @brief Dessine les boutons lors de la selection d'un batiment AYANT aucun craft définit.
+ */
+void Menu::dessinerBatimentSelectCraftDefine()
+{
+    for (auto &btn : _boutonBatimentSelect)
+    { // Dessine tous les btn sauf reset Action
+        if (btn->getBoutonType() != BoutonType::boutonValiderCraft)
+        {
+            btn->dessiner();
+        }
+    }
+    // Afficher formule
+}
+
+/*******************************************************/
 
 void Menu::setPositionEcran(const Vector2f &newPosEcran)
 {
@@ -185,34 +257,34 @@ void Menu::setBoutonsBatimentSelect()
     // Upgrade
     _boutonBatimentSelect[0] =
         new Bouton{Vector2f{0.07f * dimMenu.x,
-                            0.775f * dimMenu.y},
+                            0.79f * dimMenu.y},
                    BoutonType::boutonUpgradeStructure,
-                   Vector2f{0.41f, 0.8f},
+                   Vector2f{0.42f, 0.8f},
                    BoutonState::Normal,
                    GameEvent::Upgrade};
 
     // Detruire
     _boutonBatimentSelect[1] =
-        new Bouton{Vector2f{0.52f * dimMenu.x,
-                            0.775f * dimMenu.y},
+        new Bouton{Vector2f{0.51f * dimMenu.x,
+                            0.79f * dimMenu.y},
                    BoutonType::boutonDetruireStructure,
-                   Vector2f{0.41f, 0.8f},
+                   Vector2f{0.42f, 0.8f},
                    BoutonState::Normal,
                    GameEvent::Detruire};
 
     // Vider Stock
     _boutonBatimentSelect[2] =
         new Bouton{Vector2f{0.07f * dimMenu.x,
-                            0.93f * dimMenu.y},
+                            0.935f * dimMenu.y},
                    BoutonType::boutonViderStock,
-                   Vector2f{0.865f, 0.30f},
+                   Vector2f{0.862f, 0.30f},
                    BoutonState::Normal,
                    GameEvent::ViderStock};
 
     // Valider Craft
     _boutonBatimentSelect[3] =
         new Bouton{Vector2f{0.2f * dimMenu.x,
-                            0.60 * dimMenu.y},
+                            0.645f * dimMenu.y},
                    BoutonType::boutonValiderCraft,
                    Vector2f{0.6f, 0.8f},
                    BoutonState::Normal,
@@ -221,11 +293,39 @@ void Menu::setBoutonsBatimentSelect()
     // Reset Craft
     _boutonBatimentSelect[4] =
         new Bouton{Vector2f{0.2f * dimMenu.x,
-                            0.60f * dimMenu.y},
+                            0.645f * dimMenu.y},
                    BoutonType::boutonResetCraft,
                    Vector2f{0.6f, 0.9f},
                    BoutonState::Normal,
                    GameEvent::ResetCraft};
+}
+
+void Menu::setTabCraftPossible()
+{
+    Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
+    Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
+    float largeurMap = contextGlobal->getLargeurMapEcran();
+
+    const Vector2f scaleRessource{0.48f, 0.93f};
+    const uint nbLignes = 3;
+    const uint nbColonnes = 5;
+    const float tailleRess = 0.08f * dimFenetre.y;
+    Vector2f pos;
+
+    for (int k = 0; k < 15; ++k)
+    {
+        pos.x =
+            0.1f * dimMenu.x +
+            0.1f * (k % nbColonnes) * dimMenu.y;
+        pos.y =
+            0.365f * dimMenu.y +
+            0.09f * (uint)(k / nbColonnes) * dimMenu.y;
+
+        _tabCraftPossible[k].setSize(Vector2f{tailleRess, tailleRess});
+        _tabCraftPossible[k].setPosition(pos.x, pos.y);
+
+        _tabCraftPossible[k].setFillColor(Color::Blue);
+    }
 }
 
 void Menu::translaterBoutons(const Vector2f &dirVect)
@@ -240,6 +340,30 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
     {
         btn->deplacerPositionEcran(dirVect);
     }
+
+    for (auto &rectShape : _tabCraftPossible)
+    {
+        Vector2f pos = rectShape.getPosition();
+        pos.x += dirVect.x;
+        pos.y += dirVect.y;
+        rectShape.setPosition(pos);
+    }
+}
+
+vector<Bouton *> &Menu::getBoutonsSection()
+{
+
+    switch (_sectionMenu)
+    {
+    case SectionMenu::ChoixStructures:
+        return _boutonsChoixStructures;
+    case SectionMenu::BatimentSelectCraftDefine:
+    case SectionMenu::BatimentSelectCraftUndefine:
+        return _boutonBatimentSelect;
+    default:
+        cerr << "Pas de boutons pour la section : " << _sectionMenu << endl;
+        break;
+    }
 }
 
 /**
@@ -252,7 +376,10 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
 bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
 {
     bool changement = false;
-    for (auto &btn : _boutonsChoixStructures)
+
+    auto boutons = getBoutonsSection();
+
+    for (auto &btn : boutons)
     {
         if (btn->getState() == BoutonState::Pressed)
         {
@@ -282,6 +409,31 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             }
         }
     }
+
+    if (_sectionMenu ==
+        SectionMenu::BatimentSelectCraftUndefine)
+    {
+        Rect<float> box;
+        for (auto &rectShape : _tabCraftPossible)
+        {
+            box.width = rectShape.getSize().x;
+            box.height = rectShape.getSize().y;
+            box.left = rectShape.getPosition().x;
+            box.top = rectShape.getPosition().y;
+
+            if (box.contains(posMouseEcran))
+            {
+                rectShape.setFillColor(Color::Yellow);
+            }
+            else
+            {
+                rectShape.setFillColor(Color::Blue);
+            }
+        }
+    }
+    // if (_listCraftPossible != nullptr)
+    //     cout << _listCraftPossible->size() << endl;
+
     return changement;
 }
 
@@ -296,7 +448,10 @@ bool Menu::setBoutonsClick()
 {
     // Mouse::isButtonPressed(Mouse::Left)
     bool changement = false;
-    for (auto &btn : _boutonsChoixStructures)
+
+    auto boutons = getBoutonsSection();
+
+    for (auto &btn : boutons)
     {
         if (btn->getState() == BoutonState::Hover)
         {
@@ -324,7 +479,10 @@ bool Menu::resetBoutonsActive()
 {
     bool changement = false;
     _btnActive = false;
-    for (auto &btn : _boutonsChoixStructures)
+
+    auto boutons = getBoutonsSection();
+
+    for (auto &btn : boutons)
     {
         if (btn->getState() == BoutonState::Active)
         {

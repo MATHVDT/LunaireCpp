@@ -72,7 +72,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _caseHover = nullptr;
     _caseSelectionnee = nullptr;
 
-    _gameEvent = AucunGameEvent;
+    _gameEvent = GameEvent::PlacerMine;
 
     _clock.restart();
     _timeSaveTick = _clock.getElapsedTime();
