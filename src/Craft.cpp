@@ -230,15 +230,14 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
     list<TYPE_RESSOURCE> listProduitsCraftables{};
 
     /******* Récupère différents types ressources *******/
-    while (!stock.empty())
-    {
-        if (stock.front() != TYPE_RESSOURCE::Rien)
-        {
-            vectorStock.push_back(stock.front());
-        }
-        stock.pop();
-    }
-
+    // while (!stock.empty())
+    // {
+    //     if (stock.front() != TYPE_RESSOURCE::Rien)
+    //     {
+    //         vectorStock.push_back(stock.front());
+    //     }
+    //     stock.pop();
+    // }
 
     // Garder uniquement le type (pas les qte)
     // Ordre décroissant
@@ -258,7 +257,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
     */
 
     int n = vectorStock.size();
-    int nbCombi = pow(2, n) - 1;
+    int nbCombi = pow(2, n) > 0 ? pow(2, n) - 1 : 0;
     const int nbMaxReactifs = 5;
     static int curseurLigne = 0;
     list<TYPE_RESSOURCE> *tabListCombiCraft =
@@ -270,7 +269,6 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
         int perm[n] = {0};
         combinate(vectorStock, perm, 0, n, k,
                   tabListCombiCraft, curseurLigne);
-
     }
 
     // Affichage combinaison
