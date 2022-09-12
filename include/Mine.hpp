@@ -78,6 +78,7 @@ public:
     virtual void init();
 
     virtual void dessiner(float scaleSprite) override;
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
     virtual void update();
     virtual void process() override;
 
@@ -93,7 +94,6 @@ public:
 
     // Setter
     void setSpriteTexture(uint tick);
-    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 };
 
 /***************************************************/

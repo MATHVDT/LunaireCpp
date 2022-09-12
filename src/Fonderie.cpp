@@ -74,6 +74,9 @@ void Fonderie::dechargerMemoireFonderies()
     }
 }
 
+
+/*******************************************************/
+
 /**
  * @brief Charge les textures des différentes Fonderies en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
  *
@@ -115,6 +118,7 @@ void Fonderie::chargerTextures(string fichierCheminsTexture)
 }
 
 /*******************************************************/
+/*******************************************************/
 
 void Fonderie::dessiner(float scaleSprite)
 {
@@ -138,9 +142,6 @@ void Fonderie::setSpriteTexture(uint tick)
     _sprite->setTextureRect(_zoomTexture);
 }
 
-void Fonderie::update() {}
-void Fonderie::process() {}
-void Fonderie::remplirStock() {}
 
 /**
  * @brief Définie la bonne texture en fonction de la ressource craftée.

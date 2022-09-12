@@ -67,6 +67,7 @@ public:
     virtual void init();
 
     virtual void dessiner(float scaleSprite) override;
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) = 0;
     virtual void update();
     virtual void process();
 
@@ -77,6 +78,8 @@ public:
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
     virtual bool updateOrientation() override;
 
+
+
     // Getter
     uint getIdBatiment() const;
     bool getIsFormuleCraftDefine() const;
@@ -85,7 +88,6 @@ public:
 
     // Setter
     void setFormuleCraft(TYPE_RESSOURCE ressCraft);
-    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) = 0;
 
     list<TYPE_RESSOURCE> *checkCraftPossible();
 };

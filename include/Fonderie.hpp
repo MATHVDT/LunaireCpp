@@ -59,20 +59,17 @@ public:
              TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::Rien);
     virtual ~Fonderie() override;
 
-    virtual void init() override; // Va pas servir a mon avis
+    // Virtual
+    virtual void init();
 
-    virtual void dessiner(float scaleSprite);
-    virtual void update() override;
+    virtual void dessiner(float scaleSprite) override;
+    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 
     // Getter
     TYPE_RESSOURCE getTypeRessource() const;
 
     // Setter
     void setSpriteTexture(uint tick);
-    virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
-
-    virtual void process() override;
-    virtual void remplirStock() override;
 };
 
 /***************************************************/
