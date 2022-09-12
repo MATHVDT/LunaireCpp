@@ -183,7 +183,76 @@ void Pipeline::setSpriteTexture(uint tick)
  */
 bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
 {
+    // CHECK ICI SI YA QUE UNE SORTIE SUR LE PIPELINE
+    // SI JAMAIS SA MARCHE PAS
+    if (commeSortie && (getASortie() ||
+                        s->getNbEntrees() >= 1))
+        return false;
+
+    if (!commeSortie && (getNbEntrees() >= 1 ||
+                         s->getASortie()))
+        return false;
+
     return Structure::checkConnexionPossible(s, commeSortie);
+}
+
+/**
+ * @brief Connecte la structure au Pipeline si possible.
+ * @details Met tous les autres slots de connexionslibres en *Blocked* s'il y a deux connexions.
+ *
+ * @param Structure * - *s*
+ * @param bool - *commeSortie = true*
+ * @param bool - *connexionAutreSens = false*
+ * @return true - *Connexion effectuée*
+ * @return false - Connexion PAS effectuée*
+ */
+bool Pipeline::connecterStructure(Structure *s, bool commeSortie, bool connexionAutreSens)
+{
+    if (Structure::connecterStructure(s, commeSortie, connexionAutreSens))
+    { // La connexion c'est faite
+        if (getNbConnexionsOccupees() >= 2)
+        { // Il y a déjà deux connexions
+            for (auto &c : _connexions)
+            {
+                if (c.type == TypeConnexion::Undefined)
+                {
+                    c.type = TypeConnexion::SealOff;
+                }
+            }
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/**
+ * @brief Déconnecte une structure et un pipeline.
+ * @details Dès qu'une structure est déco du pipeline, toutes les connexions condamné (SealOff) redeviennent accessible (Undefine)
+ *
+ * @param Structure - *s*
+ * @return true - *StructureS déco*
+ * @return false - *StructureS PAS déco*
+ */
+bool Pipeline::deconnecterStructure(Structure *s)
+{
+    if (Structure::deconnecterStructure(s))
+    {
+        for (auto &c : _connexions)
+        {
+            if (c.type == TypeConnexion::SealOff)
+            {
+                c.type = TypeConnexion::Undefined;
+            }
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /*******************************************************/
@@ -197,13 +266,27 @@ bool Pipeline::updateOrientation()
     Vector2i posEntree = Vector2i{-1, -1};
     Vector2i posSortie = Vector2i{-1, -1};
 
+    // Récupération de l'entrée et la sortie
     if (this->getNbEntrees() >= 1)
     {
-        posEntree = (Vector2i)(*getStructuresConnecteesEntrantes().begin())->getPositionCarte();
+        for (const auto c : _connexions)
+        {
+            if (c.type == TypeConnexion::Input)
+            {
+                posEntree = (Vector2i)c.structure->getPositionCarte();
+            }
+        }
     }
-
-    if (_sortie != nullptr)
-        posSortie = (Vector2i)_sortie->getPositionCarte();
+    if (this->getASortie())
+    {
+        for (const auto c : _connexions)
+        {
+            if (c.type == TypeConnexion::Output)
+            {
+                posSortie = (Vector2i)c.structure->getPositionCarte();
+            }
+        }
+    }
 
     DIRECTION dirEntree = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posEntree);
     DIRECTION dirSortie = positionOrigineDestToDirection((Vector2i)this->getPositionCarte(), posSortie);
@@ -230,7 +313,7 @@ bool Pipeline::updateOrientation()
 bool Pipeline::inverserSens()
 {
     // Test que le pipeline est bien connecté dans les deux sens
-    if (this->getNbConnexions() == 0)
+    if (this->getNbConnexionsOccupees() == 0)
         return false;
 
     Pipeline *curseurPipeline = this;
@@ -246,10 +329,10 @@ bool Pipeline::inverserSens()
     /***** Parcours jusqu'au début du pipeline ********/
     while (curseurPipeline != nullptr &&
            curseurPipeline->getNbEntrees() == 1 &&
-           typeid(*(curseurPipeline->getStructuresConnecteesEntrantes().front())) == typeid(Pipeline))
+           typeid(*(curseurPipeline->getStructureEntreePipeline())) == typeid(Pipeline))
     {
         precPipeline = curseurPipeline;
-        curseurPipeline = (Pipeline *)curseurPipeline->getStructuresConnecteesEntrantes().front();
+        curseurPipeline = (Pipeline *)curseurPipeline->getStructureEntreePipeline();
     }
     // Marquage du premier maillon
     premierMaillon = curseurPipeline;
@@ -259,7 +342,7 @@ bool Pipeline::inverserSens()
     {
         // A un batiment en entrée
         if (premierMaillon->getNbEntrees() == 1)
-            saveEntreePipeline = premierMaillon->getStructuresConnecteesEntrantes().front();
+            saveEntreePipeline = premierMaillon->getStructureEntreePipeline();
         else // A pas de batiment en entrée
             saveEntreePipeline = nullptr;
 
@@ -366,10 +449,7 @@ TYPE_RESSOURCE Pipeline::livrerStock()
 {
     TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
 
-
     return Structure::livrerStock();
-
- 
 }
 
 /**

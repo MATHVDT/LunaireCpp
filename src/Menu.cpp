@@ -74,7 +74,8 @@ void Menu::init(const Vector2f &posEcran)
     translaterBoutons(_posEcran);
 
     // setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
-    setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
+    // setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
+    setSectionMenu(SectionMenu::ChoixStructures);
 }
 
 Menu::~Menu()

@@ -179,9 +179,14 @@ void Manager::updateStructure()
 
         // Récupération de toutes les structures connectées entrantes
         // Pour remonter les connexions jusqu'aux extremités
-        for (auto s : curseurStruct->getStructuresConnecteesEntrantes())
+        for (int dir = DIRECTION::NORD; dir < DIRECTION::NORDEST; ++dir)
         {
-            queueStruct.push(s);
+            connexion_t &c =
+                curseurStruct->getConnexions()[dir];
+            if (c.structure != nullptr)
+            {
+                queueStruct.push(c.structure);
+            }
         }
 
         // Traitement de la structure
@@ -351,6 +356,7 @@ bool Manager::placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editio
     _carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
 
     place = true;
+    return place;
 }
 
 /**

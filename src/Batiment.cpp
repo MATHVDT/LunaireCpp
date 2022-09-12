@@ -129,9 +129,9 @@ list<TYPE_RESSOURCE> *Batiment::checkCraftPossible()
         list<TYPE_RESSOURCE> list = craftPossible(this, _stockEntree);
         swap(list, _listRessCraftPossible);
     }
-    cerr << " nb _listRessCraftPossible : " << _listRessCraftPossible.size() << endl;
-    cerr << " taille stockEntree : " << _stockEntree.size() << endl;
-    cerr << endl;
+    // cerr << " nb _listRessCraftPossible : " << _listRessCraftPossible.size() << endl;
+    // cerr << " taille stockEntree : " << _stockEntree.size() << endl;
+    // cerr << endl;
     return &_listRessCraftPossible;
 }
 

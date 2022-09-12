@@ -14,6 +14,7 @@
 #include <iostream>
 #include <list>
 #include <queue>
+#include <vector>
 #include <sys/types.h>
 #include <string>
 
@@ -22,6 +23,7 @@
 
 #include "EnumTypeRessource.hpp"
 #include "direction.hpp"
+#include "connexion_t.hpp"
 
 #include "ContextGlobal.hpp"
 
@@ -32,6 +34,8 @@ extern ContextGlobal *contextGlobal;
 
 using namespace std;
 using namespace sf;
+
+const uint NB_CONNEXIONS = 6;
 
 class Structure
 {
@@ -44,8 +48,10 @@ protected:
 
     uint _level;
 
-    list<Structure *> _listStructuresConnectees;
-    Structure *_sortie;
+    // list<Structure *> _listStructuresConnectees;
+    // Structure *_sortie;
+
+    connexion_t _connexions[NB_CONNEXIONS];
 
     uint _tailleStockEntree;
     uint _tailleStockSortie;
@@ -71,10 +77,22 @@ public:
               uint tailleStockSortie);
     virtual ~Structure();
 
+    // Virtual
     virtual void init();
 
     virtual void dessiner(float scaleSprite) = 0;
     virtual void update();
+    virtual void process() = 0;
+
+    virtual bool updateOrientation() = 0;
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
+
+    virtual void remplirStock();
+    virtual TYPE_RESSOURCE livrerStock();
+
+    // Gestion des structures connectées
+    virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
+    virtual bool deconnecterStructure(Structure *s);
 
     // Getter
     uint getIdStructure() const;
@@ -88,12 +106,13 @@ public:
     bool stockEntreePlein() const;
     bool stockSortiePlein() const;
     uint getNbEntrees() const;
-    uint getNbConnexions() const;
+    uint getNbConnexionsOccupees() const;
+    uint getNbConnexionsLibres() const;
     bool getASortie() const;
 
-    list<Structure *> getStructuresConnecteesEntrantes() const;
-    list<Structure *> getStructuresConnectees() const;
+    connexion_t *getConnexions();
     Structure *getSortie() const;
+    bool getIsStructureConnected(Structure *s) const;
 
     // Setter
     bool setSortie(Structure *structure);
@@ -101,17 +120,6 @@ public:
     void setTailleStockEntree(uint newVal);
     void setTailleStockSortie(uint newVal);
 
-    virtual void process() = 0;
-
-    // Gestion des structures connectées
-    bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
-    bool deconnecterStructure(Structure *s);
-    virtual bool updateOrientation() = 0;
-
-    TYPE_RESSOURCE livrerStock();
-    virtual void remplirStock();
-
-    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
     bool checkConnexionCircuit(Structure *s, bool commeSortie);
 };
 
@@ -134,10 +142,55 @@ inline void Structure::setPositionCarte(const Vector2u &pos) { _position = pos; 
 /***************************************************/
 inline uint Structure::getIdStructure() const { return _idStructure; }
 
-inline bool Structure::getASortie() const { return (_sortie != nullptr); }
+inline bool Structure::getASortie() const
+{
+    for (auto c : _connexions)
+    {
+        if (c.type == TypeConnexion::Output)
+            return true;
+    }
+    return false;
+}
 
-inline uint Structure::getNbConnexions() const { return _listStructuresConnectees.size(); }
-inline uint Structure::getNbEntrees() const { return _listStructuresConnectees.size() - (_sortie != nullptr); }
+inline uint Structure::getNbConnexionsOccupees() const
+{
+    uint compt = 0;
+    for (auto c : _connexions)
+    {
+        compt += (c.type == TypeConnexion::Input || c.type == TypeConnexion::Output);
+    }
+    return compt;
+}
+inline uint Structure::getNbConnexionsLibres() const
+{
+    uint compt = 0;
+    for (auto c : _connexions)
+    {
+        compt += c.type == TypeConnexion::Undefined;
+    }
+    return compt;
+}
+
+inline uint Structure::getNbEntrees() const
+{
+    uint compt = 0;
+    for (auto c : _connexions)
+    {
+        compt += c.type == TypeConnexion::Input;
+    }
+    return compt;
+}
+inline connexion_t *Structure::getConnexions() { return _connexions; }
+
+inline bool Structure::getIsStructureConnected(Structure *s) const
+{
+    for (auto c : _connexions)
+    {
+        if (c.structure == s)
+            return true;
+    }
+    return false;
+}
 
 inline uint Structure::getLevel() const { return _level; }
 

@@ -76,7 +76,7 @@ TEST_CASE("Connexion batiment")
 
     SECTION("Test aucune connexion")
     {
-        REQUIRE(bat->getNbConnexions() == 0);
+        REQUIRE(bat->getNbConnexionsOccupees() == 0);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == 0);
 
@@ -91,7 +91,7 @@ TEST_CASE("Connexion batiment")
     {
         REQUIRE(bat->connecterStructure(p, true));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
         REQUIRE(bat->getSortie() == p);
@@ -102,7 +102,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->connecterStructure(p, true));
         REQUIRE_FALSE(bat->connecterStructure(p, true));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
         REQUIRE(bat->getSortie() == p);
@@ -112,7 +112,7 @@ TEST_CASE("Connexion batiment")
     {
         REQUIRE(bat->connecterStructure(p, false));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
         REQUIRE(bat->getASortie() == false);
         REQUIRE(bat->getSortie() == nullptr);
@@ -123,7 +123,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->connecterStructure(p, false));
         REQUIRE_FALSE(bat->connecterStructure(p, false));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
         REQUIRE(bat->getASortie() == false);
         REQUIRE(bat->getSortie() == nullptr);
@@ -134,7 +134,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->connecterStructure(p, false));
         REQUIRE_FALSE(bat->connecterStructure(p, true));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 1);
         REQUIRE(bat->getASortie() == false);
         REQUIRE(bat->getSortie() == nullptr);
@@ -145,7 +145,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE(bat->connecterStructure(p, true));
         REQUIRE_FALSE(bat->connecterStructure(p, false));
 
-        REQUIRE(bat->getNbConnexions() == 1);
+        REQUIRE(bat->getNbConnexionsOccupees() == 1);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == true);
         REQUIRE(bat->getSortie() == p);
@@ -161,7 +161,7 @@ TEST_CASE("Connexion batiment")
         REQUIRE_FALSE(bat->connecterStructure(bat3, true));
         REQUIRE_FALSE(bat->connecterStructure(bat4, true));
 
-        REQUIRE(bat->getNbConnexions() == 0);
+        REQUIRE(bat->getNbConnexionsOccupees() == 0);
         REQUIRE(bat->getNbEntrees() == 0);
         REQUIRE(bat->getASortie() == false);
         REQUIRE(bat->getSortie() == nullptr);

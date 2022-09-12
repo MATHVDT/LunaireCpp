@@ -18,16 +18,17 @@ Structure::Structure()
       _position(),
       _sprite{},
       _level{0},
-      _listStructuresConnectees{},
-      _sortie(nullptr),
+      _connexions(),
       _tailleStockEntree(1),
       _tailleStockSortie(1),
       _stockEntree{}, _stockSortie{}
 {
     _nbStructures++;
-    // Vector2f posEcran = Carte::carteToPositionEcran(_position);
-    // _sprite->setPosition(posEcran);
-    // cerr<< "Structure() = default, id : " << _idStructure << endl;
+    // Définit les directions des connexionx
+    for (int dir = NORD; dir <= NORDEST; ++dir)
+    {
+        _connexions[dir].direction = (DIRECTION)dir;
+    }
 }
 
 Structure::Structure(const Vector2u &pos,
@@ -38,8 +39,7 @@ Structure::Structure(const Vector2u &pos,
       _position(pos),
       _sprite{new Sprite()},
       _level{0},
-      _listStructuresConnectees{},
-      _sortie(nullptr),
+      _connexions(),
       _tailleStockEntree(tailleStockEntree),
       _tailleStockSortie(tailleStockSortie),
       _stockEntree{}, _stockSortie{}
@@ -51,9 +51,11 @@ Structure::Structure(const Vector2u &pos,
     Vector2f posEcran = Carte::carteToPositionEcran(_position);
     _sprite->setPosition(posEcran);
 
-    while (!stockEntreePlein())
-        _stockEntree.push(TYPE_RESSOURCE::Rien);
-    _stockSortie.push(TYPE_RESSOURCE::Rien);
+    // Définit les directions des connexionx
+    for (int dir = NORD; dir <= NORDEST; ++dir)
+    {
+        _connexions[dir].direction = (DIRECTION)dir;
+    }
 }
 
 Structure::~Structure()
@@ -61,10 +63,7 @@ Structure::~Structure()
     _nbStructures--;
     delete _sprite;
     // Deconnecte tous les structures
-    while (!_listStructuresConnectees.empty())
-    {
-        deconnecterStructure(*_listStructuresConnectees.begin());
-    }
+    // Plus besoin vu que c'est un tableau
     // cerr<< "~Structure(), id : " << _idStructure << endl;
 }
 
@@ -146,11 +145,11 @@ void Structure::remplirStock()
 {
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     // Pour toutes les connexions aux batiments
-    for (auto s : _listStructuresConnectees)
+    for (auto c : _connexions)
     {
-        if (s != _sortie) // S'il s'agit d'une entrée
+        if (c.type == TypeConnexion::Input) // S'il s'agit d'une entrée
         {
-            ress = s->livrerStock();
+            ress = c.structure->livrerStock();
             // Ajout au stock, même si c'est Rien
             // Si ya encore de la place
             if (!this->stockEntreePlein())
@@ -165,9 +164,13 @@ void Structure::remplirStock()
 /*******************************************************/
 
 /**
- * @brief Check si la connexion entre les 2 Structures, test si c'est la structure que l'on veut connectée qui peut être connectée.
+ * @brief Check si la connexion entre les 2 Structures est possible.
+ * @details Test :
+ * - les sorties this et structure a connecter
+ * - l'adjacence des structures
+ * - les circuits
  *
- * @bug Pb de batiment qui se connecte à lui meme : circuit
+ * @bug Pb de batiment qui se connecte à lui meme : circuit *(a verifier avec nouvelle gestion)*
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie*
@@ -181,22 +184,21 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     if (s == nullptr)
         return false;
 
+    // Verifie s'il ya de la place en connexion
+    if (getNbConnexionsLibres() == 0)
+        return false; // Toutes les places prises
+
     // Test sur this
     // Vérifie sortie est libre
-    if (commeSortie && _sortie != nullptr)
+    if (commeSortie && getASortie())
     { // Ya déjà une structure en sortie
-        return false;
-    } // Verifie entrée libre
-    else if (!commeSortie &&
-             this->getNbEntrees() >= this->getTailleStockEntree())
-    { // Toutes les entrées prises
         return false;
     }
 
     // Test sur la structure à connecter
     // Test si ya de la place en entrée sur s
     if (commeSortie &&
-        s->getNbEntrees() >= s->getTailleStockEntree())
+        s->getNbConnexionsOccupees() >= NB_CONNEXIONS)
     { // Ya plus de place en entrée
         return false;
     } // Test si y a déjà une sortie sur s
@@ -208,16 +210,18 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     }
 
     // Verifier que la Structure est bien adajacente
-    bool structAdjacente = false;
+    DIRECTION dirAdjacence = DIRECTION::NULLDIRECTION;
     for (int dir = DIRECTION::NORD;
          dir <= DIRECTION::NORDEST; ++dir)
     { // Check position adjacente dans dir
-        structAdjacente |=
-            (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte());
+        if (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte())
+        {
+            dirAdjacence = (DIRECTION)dir;
+        }
     }
 
     // Si la Structure n'est pas adjacent alors false
-    if (!structAdjacente)
+    if (dirAdjacence == DIRECTION::NULLDIRECTION)
     {
         // cerr<< "Structu pas adjacente" << endl;
         return false;
@@ -228,6 +232,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
         // cerr<< "Crée un circuit" << endl;
         return false;
     }
+
     return true;
 }
 
@@ -244,7 +249,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
 bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexionAutreSens)
 {
     if (s == nullptr)
-    {
+    { // S'il y a bien structure a connecter
         // cerr<< "Connexion struct null" << endl;
         return false;
     }
@@ -255,7 +260,10 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     // Nb de connexion ok
     // Pas de circuit crée
     if (!checkConnexionPossible(s, commeSortie))
-    {
+    { // Condition de co pas OK
+        // Si c'est l'autre sens
+        // Pas grave parce que les conditions
+        // ont déjà été vérifiés dans le premier sens
         if (!connexionAutreSens)
         {
             return false;
@@ -263,31 +271,40 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     }
 
     // Test si la structure est déjà connectée
-    if (find(_listStructuresConnectees.begin(),
-             _listStructuresConnectees.end(),
-             s) != _listStructuresConnectees.end())
+    for (auto c : _connexions)
     {
-        // cerr<< "struct deja co" << endl;
-        return false;
+        if (c.structure == s)
+            return false;
     }
 
-    // TESTER SI CA NE CREER PAS UNE BOUCLE DANS LE "GRAPHE"
-    // EN GROS REMONTER LE CHEMIN COMME SI ON AVAIT CO
-    // ET VERIFIER QU'ON RETOMBE PAS SUR L'OBJET THIS
+    //  Calcule la directions de la connexion
+    DIRECTION dirAdjacence = DIRECTION::NULLDIRECTION;
+    for (int dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST; ++dir)
+    { // Check position adjacente dans dir
+        if (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte())
+        {
+            dirAdjacence = (DIRECTION)dir;
+        }
+    }
+    // Ajout de la connexion
+    _connexions[(int)dirAdjacence].direction = dirAdjacence;
+    _connexions[(int)dirAdjacence].structure = s;
+    _connexions[(int)dirAdjacence].type = (commeSortie ? TypeConnexion::Output : TypeConnexion::Input);
 
-    // Ajoute a la liste des structures connectées
-    this->_listStructuresConnectees.push_back(s);
-
-    // Set la sortie
-    if (commeSortie && this->setSortie(s))
-    { // Ajoute la connexion comme une entrée dans l'autre sens
-        s->connecterStructure(this, false, true);
+    if (connexionAutreSens)
+    { // Connexion dans l'autre sens des structures
+        return true;
     }
     else
-    { // La connexion sera une entrée
-      // Ajoute la connexion comme une sortie dans l'autre sens
-        s->connecterStructure(this, true, true);
+    { // Un seul coté connecté
+        if (s->connecterStructure(this, !commeSortie, true) == false)
+        {
+            cerr << "ERREUR DE CONNEXION DANS AUTRE SENS, FAUT DECO" << endl;
+            return false;
+        }
     }
+
     return true;
 }
 
@@ -305,8 +322,8 @@ bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
     queue<Structure *> connexe{};
     Structure *tmp;
     // Connecte comm une entrée, le chemin par de la sortie
-    if (!commeSortie && _sortie != nullptr)
-        connexe.push(_sortie); // Enfile la sortie
+    if (!commeSortie && getASortie())
+        connexe.push(getSortie()); // Enfile la sortie
     else if (commeSortie && s->getASortie())
         connexe.push(s->getSortie());
 
@@ -332,29 +349,34 @@ bool Structure::checkConnexionCircuit(Structure *s, bool commeSortie)
 }
 
 /**
- * @brief Defini la *Structure* de sortie de la *Structure*
+ * @brief Definit la *Structure* de sortie de la *Structure* si elle est déjà connecté
  *
  * @details Chaque *Structure* ne peut avoir qu'une structure de sortie.
  * @warning La Structure est déjà connectée ou en train d'être connectée
  * @todo A finir ...
  *
- * @param Structure * - *structure*
+ * @param Structure * - *s*
  *
  * @return true - *Si la structure a bien été définie comme la sortie*
- * @return false - *Si la structure n'a PAS être définie comme la sortie, car il y avait déjà une sortie*
+ * @return false - *Si la structure n'a PAS être définie comme la sortie, car il y avait déjà une sortie ou batiment pas connecté*
  */
-bool Structure::setSortie(Structure *structure)
+bool Structure::setSortie(Structure *s)
 {
-    // Définie la sortie
-    if (_sortie == nullptr)
-    {
-        _sortie = structure;
-        return true;
+    if (getIsStructureConnected(s))
+    {                      // Définie la sortie
+        if (!getASortie()) // Pas de sortie
+        {
+            for (auto &c : _connexions)
+            {
+                if (c.structure == s)
+                {
+                    c.type = TypeConnexion::Output;
+                    return true;
+                }
+            }
+        }
     }
-    else
-    { // Déjà une sortie
-        return false;
-    }
+    return false;
 }
 
 /*******************************************************/
@@ -363,7 +385,7 @@ bool Structure::setSortie(Structure *structure)
  * @brief Deconnecte une structure
  *
  * @param Structure - *s*
- * @return true - *Si les structures ont bien été déconnectées correctement*
+ * @return true - *Si LES structureS ont bien été déconnectées correctement*
  * @return false - *S'il y a eu un soucis dans la déconnexion*
  */
 bool Structure::deconnecterStructure(Structure *structADeconnectee)
@@ -371,114 +393,40 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
     if (structADeconnectee == nullptr)
         return false;
 
-    // Suppression de la structure connectée
-    int nbStructConnectee = _listStructuresConnectees.size();
-
-    this->_listStructuresConnectees.remove_if(
-        [structADeconnectee](Structure *s)
+    bool deco = false;
+    // Déco dans le sens principale
+    for (auto &c : _connexions)
+    {
+        if (c.structure == structADeconnectee)
         {
-            if (s == structADeconnectee)
-            { // Save struct connectée
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        });
-    // Verification si la suppression c'est bien faite
-    if (this->_listStructuresConnectees.size() != nbStructConnectee - 1)
-        return false; // Erreur
-
-    // Reset sortie si besoin
-    if (this->_sortie == structADeconnectee)
-        _sortie = nullptr;
-
-    // Suppression dans l'autre sens
-    int nbStructConnecteeSave = structADeconnectee->_listStructuresConnectees.size();
-    structADeconnectee->_listStructuresConnectees.remove_if(
-        [this](Structure *s)
+            c.structure = nullptr;
+            c.direction = DIRECTION::NULLDIRECTION;
+            c.type = TypeConnexion::Undefined;
+            deco = true;
+        }
+    }
+    //  Déco dans l'autre sens
+    for (auto &c : structADeconnectee->_connexions)
+    {
+        if (c.structure == this)
         {
-            return (s == this);
-        });
-
-    // Verification si la suppression c'est bien faite
-    if (structADeconnectee->_listStructuresConnectees.size() != nbStructConnecteeSave - 1)
-        return false; // Erreur
-
-    // Reset de la sortie si besoin
-    if (structADeconnectee->_sortie == this)
-        structADeconnectee->_sortie = nullptr;
-
+            c.structure = nullptr;
+            c.direction = DIRECTION::NULLDIRECTION;
+            c.type = TypeConnexion::Undefined;
+            deco = deco && true;
+        }
+    }
+    if (deco == false)
+    {
+        cerr << "Erreur dans la déconnexion dans un des 2 sens" << endl;
+    }
     // Deconnexion ok dans les deux sens
-    return true;
+    return deco;
 }
 
 /*******************************************************/
 
 /*******************************************************/
-
-/**
- * @brief Donne une liste des *Structure* en entrée de la *Structure*
- *
- * @return list<Structure *> - *listEntrees*
- */
-list<Structure *> Structure::getStructuresConnecteesEntrantes() const
-{
-    Structure *structSortie = _sortie;
-
-    list<Structure *> listEntrees = _listStructuresConnectees;
-    listEntrees.remove_if([structSortie](Structure *s)
-                          { return (structSortie == s); });
-
-    return listEntrees;
-}
-
-/**
- * @brief Donne une liste des *Structure* en entrée et sortie de la *Structure*
- *
- * @return list<Structure *> - *_listStructuresConnectees*
- */
-list<Structure *> Structure::getStructuresConnectees() const
-{
-    return _listStructuresConnectees;
-}
-
-/**
- * @deprecated Nouvelle gestion direction et ajoute structure connectee
- *
- * @brief Donne la  avec le batiment suivant la direction indiquée
- *
- * @param const Vector2i & - *dir*
- * @return connexion_t * - *(nullptr s'il n'y a rien de connecté)*
- */
-// connexion_t *Structure::getConnexionDirection(const Vector2i &dir) const
-// {
-//     int dirInt = directionVecteurToInt(dir);
-//     for (auto c : _listStructuresConnectees)
-//     {
-//         if (c->direction == dir)
-//         {
-//             return c;
-//         }
-//     }
-
-//     return nullptr;
-// }
-
-/**
- * @deprecated Nouvelle gestion direction et ajoute structure connectee
- *
- * @overload N'a plus trop d'utilité *(enfin je crois)*
- *
- * @param int DIRECTION
- * @return connexion_t *
- */
-// connexion_t *Structure::getConnexionDirection(int DIRECTION) const
-// {
-//     Vector2i dirVect = directionIntToVecteur(DIRECTION);
-//     return getConnexionDirection(dirVect);
-// }
 
 /**
  * @brief Donne la *Structure* sortante de la *Structure*
@@ -487,8 +435,12 @@ list<Structure *> Structure::getStructuresConnectees() const
  */
 Structure *Structure::getSortie() const
 {
-
-    return _sortie;
+    for (auto c : _connexions)
+    {
+        if (c.type == TypeConnexion::Output)
+            return c.structure;
+    }
+    return nullptr;
 }
 
 /*******************************************************/

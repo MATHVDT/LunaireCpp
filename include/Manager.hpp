@@ -13,6 +13,7 @@
 #include "ContextGlobal.hpp"
 #include "Carte.hpp"
 #include "correspondance.hpp"
+#include "connexion_t.hpp"
 
 #include "Menu.hpp"
 

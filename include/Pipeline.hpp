@@ -153,24 +153,29 @@ public:
     Pipeline(const Vector2u &pos);
     virtual ~Pipeline();
 
-    virtual void init() override;
+    virtual void init();
 
     virtual void dessiner(float scaleSprite) override;
-    virtual void update() override;
-    virtual void process() override;
+    virtual void update();
+    virtual void process() ;
+
+    virtual bool updateOrientation() override;
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
     TYPE_RESSOURCE livrerStock();
-    void remplirStock();
+    virtual void remplirStock();
+
+    // Gestion des structures connectées
+    virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false) override;
+    virtual bool deconnecterStructure(Structure *s) override;
 
     // Getter
     uint getIdPipeline() const;
+    Structure *getStructureEntreePipeline() const;
 
     // Setter
     void setSpriteTexture(uint tick);
 
-    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
-
-    bool updateOrientation() override;
     bool calculOrientation(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationEntreeAll(DIRECTION dirEntree, DIRECTION dirSortie);
     bool calculOrientationAllSortie(DIRECTION dirEntree, DIRECTION dirSortie);
@@ -199,5 +204,14 @@ inline uint Pipeline::getTailleStockSortie() { return _tailleStockSortie; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
+inline Structure *Pipeline::getStructureEntreePipeline() const
+{
+    for (auto &c : _connexions)
+    {
+        if (c.type == TypeConnexion::Input)
+            return c.structure;
+    }
+    return nullptr;
+}
 
 #endif
