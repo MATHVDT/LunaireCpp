@@ -110,7 +110,7 @@ void ContextGlobal::update()
         }
         else
         {
-            // checkClavierStructures();
+            checkClavierStructures();
         }
     }
 
@@ -271,11 +271,13 @@ void ContextGlobal::checkClavierStructures()
     switch (_event.key.code)
     {
     case Keyboard::A:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
+        // _editionStructureSelectionnee = TYPE_STRUCTURE::MinePoussiereRegolite;
+        _gameEvent = GameEvent::PlacerMine;
         // cerr << "MinePoussiereRegolite selectionnée" << endl;
         break;
     case Keyboard::B:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
+        // _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
+        _gameEvent = GameEvent::PlacerPipeline;
         // cerr << "Pipeline selectionnée" << endl;
         break;
     case Keyboard::C:

@@ -296,7 +296,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
         if (hash == craftBat->batiment)
         {
             listRessPotentielles = craftBat->formule;
-            cerr << "hash trouvé dans listCraftsBatiment" << endl;
+            // cerr << "hash trouvé dans listCraftsBatiment" << endl;
             break;
         }
     }

@@ -63,26 +63,31 @@ public:
              uint tailleStockSortie = _tailleStockSortie);
     virtual ~Batiment() override;
 
-    virtual void init() override;
+    // Virtual
+    virtual void init();
 
     virtual void dessiner(float scaleSprite) override;
-    virtual void update() override;
+    virtual void update();
+    virtual void process();
+
+    virtual void remplirStock() ;
+    virtual TYPE_RESSOURCE livrerStock() ;
+
+    // Gestion des structures connectées
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
+    virtual bool updateOrientation() override;
 
     // Getter
     uint getIdBatiment() const;
     bool getIsFormuleCraftDefine() const;
     const list<FormuleCraft_t *> *getFormuleCraft() const;
-  const  list<TYPE_RESSOURCE> *getListCraftPossible() const;
+    const list<TYPE_RESSOURCE> *getListCraftPossible() const;
 
     // Setter
     void setFormuleCraft(TYPE_RESSOURCE ressCraft);
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) = 0;
 
-    virtual void process() override;
     list<TYPE_RESSOURCE> *checkCraftPossible();
-
-    bool updateOrientation() override;
-    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 };
 
 /***************************************************/

@@ -74,10 +74,18 @@ public:
          TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::PoussiereRegolite);
     virtual ~Mine() override;
 
-    virtual void init() override; // Va pas servir a mon avis
+    // Virtual
+    virtual void init();
 
-    virtual void dessiner(float scaleSprite);
-    virtual void update() override;
+    virtual void dessiner(float scaleSprite) override;
+    virtual void update();
+    virtual void process() override;
+
+    // virtual void remplirStock() override;
+    // virtual TYPE_RESSOURCE livrerStock() override;
+
+    // Gestion des structures connectées
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie)override;
 
     // Getter
     TYPE_RESSOURCE getTypeRessource() const;
@@ -86,9 +94,6 @@ public:
     // Setter
     void setSpriteTexture(uint tick);
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
-
-    virtual void process() override;
-    virtual void remplirStock() override;
 };
 
 /***************************************************/

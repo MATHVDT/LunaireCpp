@@ -44,11 +44,10 @@ Batiment::Batiment(const Vector2u &pos,
     cerr << "Batiment(), id : " << _idBatiment << endl;
 
     // NE PAS OUBLIER DE DEGAGER CA §§§
-    _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
-    _stockEntree.push(TYPE_RESSOURCE::MineraiGlace);
-    _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
-    cerr << " taille stock : " << _stockEntree.size() << endl;
-
+    // _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
+    // _stockEntree.push(TYPE_RESSOURCE::MineraiGlace);
+    // _stockEntree.push(TYPE_RESSOURCE::MineraiFer);
+    // cerr << " taille stock : " << _stockEntree.size() << endl;
 }
 
 Batiment::~Batiment()
@@ -148,4 +147,13 @@ void Batiment::setFormuleCraft(TYPE_RESSOURCE ressCraft)
         _isFormuleCraftDefine = true;
         setTextureRessourceCraft(ressCraft);
     }
+}
+
+void Batiment::remplirStock()
+{
+    return Structure::remplirStock();
+}
+TYPE_RESSOURCE Batiment::livrerStock()
+{
+    return Structure::livrerStock();
 }

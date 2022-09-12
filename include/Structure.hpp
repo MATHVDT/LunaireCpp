@@ -84,15 +84,15 @@ public:
     virtual void update();
     virtual void process() = 0;
 
-    virtual bool updateOrientation() = 0;
-    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
-
     virtual void remplirStock();
     virtual TYPE_RESSOURCE livrerStock();
 
     // Gestion des structures connectées
     virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
     virtual bool deconnecterStructure(Structure *s);
+
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
+    virtual bool updateOrientation() = 0;
 
     // Getter
     uint getIdStructure() const;

@@ -164,10 +164,11 @@ void Structure::remplirStock()
 /*******************************************************/
 
 /**
- * @brief Check si la connexion entre les 2 Structures est possible.
+ * @brief Check si la connexion dans un sens est possible.
  * @details Test :
- * - les sorties this et structure a connecter
- * - l'adjacence des structures
+ * - l'existence d'une sorties this
+ * - la strucutre déjà connectée ET
+ * - l'adjacence de la structure
  * - les circuits
  *
  * @bug Pb de batiment qui se connecte à lui meme : circuit *(a verifier avec nouvelle gestion)*
@@ -195,28 +196,19 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
         return false;
     }
 
-    // Test sur la structure à connecter
-    // Test si ya de la place en entrée sur s
-    if (commeSortie &&
-        s->getNbConnexionsOccupees() >= NB_CONNEXIONS)
-    { // Ya plus de place en entrée
-        return false;
-    } // Test si y a déjà une sortie sur s
-    else if (!commeSortie &&
-             s->getASortie() == true)
-    { // La structure a déjà une sortie
-        // cerr<< "Plus de place en sortie pour " << s << endl;
-        return false;
-    }
-
+        // Test si la structure est déjà connectée ET
     // Verifier que la Structure est bien adajacente
     DIRECTION dirAdjacence = DIRECTION::NULLDIRECTION;
-    for (int dir = DIRECTION::NORD;
-         dir <= DIRECTION::NORDEST; ++dir)
-    { // Check position adjacente dans dir
-        if (positionCaseVoisine(_position, dir) == (Vector2i)s->getPositionCarte())
+    for (auto c : _connexions)
+    {
+        if (c.structure == s)
         {
-            dirAdjacence = (DIRECTION)dir;
+            return false;
+        }
+        if (c.type == TypeConnexion::Undefined &&
+            positionCaseVoisine(_position, c.direction) == (Vector2i)s->getPositionCarte())
+        {
+            dirAdjacence = c.direction;
         }
     }
 
@@ -232,6 +224,8 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
         // cerr<< "Crée un circuit" << endl;
         return false;
     }
+
+    // s->checkConnexionPossible(this, !commeSortie);
 
     return true;
 }
@@ -259,22 +253,14 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
     // Sortie ok sur la structure qui doit l'être
     // Nb de connexion ok
     // Pas de circuit crée
-    if (!checkConnexionPossible(s, commeSortie))
+    if (!connexionAutreSens &&
+        (!checkConnexionPossible(s, commeSortie) ||
+         !s->checkConnexionPossible(this, !commeSortie)))
     { // Condition de co pas OK
         // Si c'est l'autre sens
         // Pas grave parce que les conditions
-        // ont déjà été vérifiés dans le premier sens
-        if (!connexionAutreSens)
-        {
-            return false;
-        }
-    }
-
-    // Test si la structure est déjà connectée
-    for (auto c : _connexions)
-    {
-        if (c.structure == s)
-            return false;
+        // ont déjà été vérifiés pour les 2 sens
+        return false;
     }
 
     //  Calcule la directions de la connexion

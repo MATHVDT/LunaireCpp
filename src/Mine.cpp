@@ -78,62 +78,6 @@ void Mine::dechargerMemoireMines()
 
 /*******************************************************/
 
-void Mine::dessiner(float scaleSprite)
-{
-    // Décalage animation
-    setSpriteTexture(contextGlobal->getCurrentTick());
-    _sprite->setTextureRect(_zoomTexture);
-
-    // float scaleMine = contextGlobal->getScaleReference();
-
-    Batiment::dessiner(scaleSprite);
-    // _sprite->setScale(scaleSprite,scaleSprite);
-    // contextGlobal->dessinerFenetre(_sprite);
-}
-
-/*******************************************************/
-
-void Mine::update()
-{
-    Batiment::update();
-}
-
-/**
- * @brief Remplir les stocks d'entrée dans la mine avec
- * les minerais
- */
-void Mine::remplirStock()
-{ // Verification s'il c'est la bonne ressouce
-    // if (_typeRessourceProduite == typeSolToTypeRessource(_typeSol))
-    // { // Remplissage tant que ya de la place
-    //     while (!stockEntreePlein())
-    //     {
-    //         _stockEntree.push(_typeRessourceProduite);
-    //     }
-    // }
-}
-
-void Mine::process()
-{
-    // Remplissage de la sortie
-    // if (!_stockEntree.empty())
-    // {
-    //     if (!stockSortiePlein())
-    //     {
-    //         _stockSortie.push(_stockEntree.front());
-    //         _stockEntree.pop();
-    //     }
-    // }
-
-    // if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
-    //     return;
-
-    // if (stockEntreePlein())
-    //     return;
-}
-
-/*******************************************************/
-
 /**
  * @brief Charge les textures des différentes mines en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
  *
@@ -173,6 +117,65 @@ void Mine::chargerTextures(string fichierCheminsTexture)
         std::cerr << "/!\\ Erreur d'ouverture du fichier : " << fichierCheminsTexture << " /!\\" << endl;
     }
 }
+/*******************************************************/
+/*******************************************************/
+
+void Mine::dessiner(float scaleSprite)
+{
+    // Décalage animation
+    setSpriteTexture(contextGlobal->getCurrentTick());
+    _sprite->setTextureRect(_zoomTexture);
+
+    // float scaleMine = contextGlobal->getScaleReference();
+
+    Batiment::dessiner(scaleSprite);
+    // _sprite->setScale(scaleSprite,scaleSprite);
+    // contextGlobal->dessinerFenetre(_sprite);
+}
+
+/*******************************************************/
+
+void Mine::update()
+{
+    Batiment::update();
+}
+
+/**
+ * @brief Remplir les stocks d'entrée dans la mine avec
+ * les minerais
+ */
+// void Mine::remplirStock()
+// { // Verification s'il c'est la bonne ressouce
+// if (_typeRessourceProduite == typeSolToTypeRessource(_typeSol))
+// { // Remplissage tant que ya de la place
+//     while (!stockEntreePlein())
+//     {
+//         _stockEntree.push(_typeRessourceProduite);
+//     }
+// }
+// }
+
+void Mine::process()
+{
+    Batiment::process();
+    // Remplissage de la sortie
+    // if (!_stockEntree.empty())
+    // {
+    //     if (!stockSortiePlein())
+    //     {
+    //         _stockSortie.push(_stockEntree.front());
+    //         _stockEntree.pop();
+    //     }
+    // }
+
+    // if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
+    //     return;
+
+    // if (stockEntreePlein())
+    //     return;
+}
+
+/*******************************************************/
 
 /**
  * @brief Zoom la texture de la mine en fonction du niveau et de l'animation
@@ -205,5 +208,25 @@ void Mine::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
 
     _sprite->setTexture(*_texturesMines[indice]);
     _sprite->setTextureRect(_zoomTexture);
+}
 
+/**
+ * @brief Check si les connexions sont possibles
+ *
+ * @param Structure * - *s*
+ * @param bool - *commeSortie = true*
+ * @return true - *Connexion possible*
+ * @return false - *Connexion impossible*
+ */
+bool Mine::checkConnexionPossible(Structure *s, bool commeSortie)
+{
+    if (!commeSortie)
+    {
+        return false; // A garder par la suite
+        // return Batiment::checkConnexionPossible(s, commeSortie);
+    }
+    else
+    {
+        return Batiment::checkConnexionPossible(s, commeSortie);
+    }
 }
