@@ -220,29 +220,30 @@ void afficherFormuleCraft(ostream &monFlux)
  * @brief Donne la liste des ressources craftables
  *
  * @param size_t hash - *hash_code des structures*
- * @param queue<TYPE_RESSOURCE> stockEntree
+ * @param TYPE_RESSOURCE stock[NB_CONNEXIONS]
  *
  * @return list<TYPE_RESSOURCE> - *listProduitsCraftables*
  */
-list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stock)
+list<TYPE_RESSOURCE> craftPossible(const size_t hash,
+                                   TYPE_RESSOURCE stock[NB_CONNEXIONS])
 {
     vector<TYPE_RESSOURCE> vectorStock{};
     list<TYPE_RESSOURCE> listProduitsCraftables{};
 
-    /******* Récupère différents types ressources *******/
-    // while (!stock.empty())
-    // {
-    //     if (stock.front() != TYPE_RESSOURCE::Rien)
-    //     {
-    //         vectorStock.push_back(stock.front());
-    //     }
-    //     stock.pop();
-    // }
+    /***** Récupère différents types ressources ******/
+    for (uint dir = DIRECTION::NORD;
+         dir < DIRECTION::NORDEST;
+         ++dir)
+    {
+        vectorStock.push_back(stock[dir]);
+    }
 
     // Garder uniquement le type (pas les qte)
     // Ordre décroissant
-    sort(vectorStock.begin(), vectorStock.end(), greater<TYPE_RESSOURCE>());
+    sort(vectorStock.begin(), vectorStock.end());
+    // greater<TYPE_RESSOURCE>());
 
+    // On garde q'un par type de ressource
     vector<TYPE_RESSOURCE>::iterator it = unique(vectorStock.begin(), vectorStock.end());
     vectorStock.resize(distance(vectorStock.begin(), it));
 
@@ -257,9 +258,9 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
     */
 
     int n = vectorStock.size();
-    int nbCombi = pow(2, n) > 0 ? pow(2, n) - 1 : 0;
+    int nbCombi = pow(2, n) - 1;
     const int nbMaxReactifs = 5;
-    static int curseurLigne = 0;
+    int curseurLigne = 0;
     list<TYPE_RESSOURCE> *tabListCombiCraft =
         new list<TYPE_RESSOURCE>[nbCombi] {};
 
@@ -279,7 +280,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash, queue<TYPE_RESSOURCE> stoc
     {
         for (auto x : tabListCombiCraft[k])
         {
-            cerr << static_cast<short>(x) << " ";
+            cerr << (short)x << " ";
         }
         cerr << endl;
     }

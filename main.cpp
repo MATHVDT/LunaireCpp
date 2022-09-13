@@ -26,31 +26,41 @@ void testCraft()
     // hash des batiments sont chargés dans le manager.init()
 
     initCrafts();
+    uint nbBatiment = 2;
+    // ATTENTION Hash inverser ....
+    size_t batimentHash[nbBatiment] =
+        {typeid(Fonderie).hash_code(),
+         typeid(Mine).hash_code()};
+
+    auto it = listCraftsBatiment.begin();
+    initCrafts();
+    for (int i = 0; i < nbBatiment; ++i)
+    {
+        cerr << "hash : " << batimentHash[i] << endl;
+        it++;
+        (*it)->batiment = batimentHash[i];
+    }
 
     // Affichage formules craft
     // afficherFormuleCraft();
 
-    queue<TYPE_RESSOURCE> stock;
-    // Attention stock trop rempli
-    stock.push(TYPE_RESSOURCE::LingotFer);
-    stock.push(TYPE_RESSOURCE::MineraiFer);
-    stock.push(TYPE_RESSOURCE::Rien);
-    stock.push(TYPE_RESSOURCE::LingotFer);
-    stock.push(TYPE_RESSOURCE::Rien);
-    stock.push(TYPE_RESSOURCE::MineraiOr);
-    stock.push(TYPE_RESSOURCE::MineraiFer);
-    stock.push(TYPE_RESSOURCE::MineraiTitane);
-    stock.push(TYPE_RESSOURCE::MineraiGlace);
-    stock.push(TYPE_RESSOURCE::MineraiAluminium);
+    TYPE_RESSOURCE stock[NB_CONNEXIONS];
 
-    const size_t hash = typeid(Fonderie).hash_code();
+    stock[0] = TYPE_RESSOURCE::Rien;
+    stock[1] = TYPE_RESSOURCE::Rien;
+    stock[2] = TYPE_RESSOURCE::Rien;
+    stock[3] = TYPE_RESSOURCE::Rien;
+    stock[4] = TYPE_RESSOURCE::Rien;
+    stock[5] = TYPE_RESSOURCE::Rien;
+
+    const size_t hash = typeid(Mine).hash_code();
 
     auto list = craftPossible(hash, stock);
-    // cout << "Affichage ressources crafatables" << endl;
-    // for (auto x : list)
-    // {
-    //     cout << (short)x << " " << endl;
-    // }
+    cout << "Affichage ressources crafatables : " << list.size() << endl;
+    for (auto x : list)
+    {
+        cout << (short)x << " " << endl;
+    }
 
     deleteCraft();
 }

@@ -7,25 +7,41 @@ Pour calculer les crafts possibles à partir de différentes ressources dans un 
 
 ### Détail du calcul 
 
-Chaque ressources est une **enum class TYPE_RESSOURCE : short**. (2 octets)
-Par exemple, dans ce cas on a :
-> X Lingot de Fer             => 19 (valeur non réel)
-> X Matériaux de construction => 25 (valeur non réel)
-> X Puce                      => 35 (valeur non réel)
+Chaque ressources est une **enum class TYPE_RESSOURCE : short**. (2 octets)  
+Par exemple, dans ce cas on a :  
+> X Lingot de Fer             => 19 (valeur non réel)  
+> X Matériaux de construction => 25 (valeur non réel)  
+> X Puce                      => 35 (valeur non réel)  
 
 Pour calculer la ressource craftable avec les 3 ressources disponibles, on calcule le code associé.
-> 19 => 0b0001 0011
-> 25 => 0b0001 1001
-> 35 => 0b0010 0011
+> 19 => 0b0001 0011  
+> 25 => 0b0001 1001  
+> 35 => 0b0010 0011  
 
-On concatène ces 3 valeurs binaires par ordre croissant pour obtenir un long en fais un OU logique à avec un long = 0, en décalant de 16 bit (<< 16 = 2 octets) à chaque fois
-> val = 0000 0000 ... 0000 0000 
-> val |= 19 => 0000 0000 0001 0011
-> val << 16 => 0000 0000 0001 0011 0000 0000 0000 0000
-> val |= 25 => 0000 0000 0001 0011 0000 0000 0001 1001
-> val << 16 => 0000 0000 0001 0011 0000 0000 0001 1001 0000 0000 0000 0000
-> val |= 35 => 0000 0000 0001 0011 0000 0000 0001 1001 0000 0000 0010 0011
-> val => dec:81 606 017 059
+On concatène ces 3 valeurs binaires par ordre décroissant *+(les combinaisons données sont triées par ordre décroissant)* pour obtenir un long. Chaque nombre est concatèné grâce à un OU logique à avec le long, en décalant de 16 bit (<< 16 = 2 octets) à chaque fois
+> ICI FAUT CAR C'est par ordre croissant
+> val = 0000 0000 ... 0000 0000  
+> **val |= 19 => 0000 0000 0001 0011**  
+> *val << 16 => 0000 0000 0001 0011 0000 0000 0000 0000*  
+> **val |= 25 => 0000 0000 0001 0011 0000 0000 0001 1001**  
+> *val << 16 => 0000 0000 0001 0011 0000 0000 0001 1001 0000 0000 0000 0000*  
+> **val |= 35 => 0000 0000 0001 0011 0000 0000 0001 1001 0000 0000 0010 0011**  
+> val => dec:81 606 017 059  
+
+L'ordre décroissant nous évite d'avoir deux fois la même valeur pour les combinaisons : {5} et {0,5} par exemple.  
+> val = 0  
+> **val |= 0 => 0000 0000**  
+> *val << 16 => 0000 0000 0000 0000 0000 0000*   
+> **val |= 5 => 0000 0000 0000 0000 0000 0101 <=> 5**  
+> 
+> *Equivalent à (lorsque l'on compare les valeurs):*  
+> val = 0  
+> **val |= 5 => 0000 0101 <=> 5**  
+
+
+
+
+
 
 La valeur de val est unique par sa construction (concaténation binaire par ordre croissant) et est associé à une ressource spéciale.
 > val => dec:81 606 017 059 => 45 (valeur non réel) Puce
