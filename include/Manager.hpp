@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <queue>
 #include <typeinfo>
 
 #include <SFML/Graphics.hpp>
@@ -42,7 +43,7 @@ class Manager
 {
 private:
     Carte *_carte;
-    MasterBatiment *_masterBatiment;
+    queue<Structure *> _endpointStructure;
 
     Sprite *_spriteCaseOver;
     Sprite *_spriteCaseSelectionnee;

@@ -138,6 +138,35 @@ void Pipeline::update()
 
 void Pipeline::process()
 {
+    Structure::process();
+
+    DIRECTION dirInput = DIRECTION::NULLDIRECTION;
+    DIRECTION dirOutput = DIRECTION::NULLDIRECTION;
+
+    for (uint dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST;
+         ++dir)
+    {
+        if (_connexions->type == TypeConnexion::Input)
+        {
+            dirInput = (DIRECTION)dir;
+        }
+        else if (_connexions->type == TypeConnexion::Output)
+        {
+            dirOutput = (DIRECTION)dir;
+
+            if (_stockConnexion[dirOutput] == TYPE_RESSOURCE::Rien)
+            {
+                return;
+            }
+        }
+    }
+
+    if (dirInput != DIRECTION::NULLDIRECTION &&
+        dirOutput != DIRECTION::NULLDIRECTION)
+    {
+        _stockConnexion[dirOutput] = _stockConnexion[dirInput];
+    }
 }
 
 /*******************************************************/
@@ -181,14 +210,11 @@ bool Pipeline::checkConnexionPossible(Structure *s, bool commeSortie)
 {
     // CHECK ICI SI YA QUE UNE SORTIE SUR LE PIPELINE
     // SI JAMAIS SA MARCHE PAS
-    if (commeSortie && (getASortie() ||
-                        s->getNbEntrees() >= 1))
-        return false;
 
-    if (!commeSortie && (getNbEntrees() >= 1 ||
-                         s->getASortie()))
+    if (!commeSortie && getNbEntrees() >= 1)
+    {
         return false;
-
+    }
     return Structure::checkConnexionPossible(s, commeSortie);
 }
 
@@ -297,7 +323,7 @@ bool Pipeline::updateOrientation()
  * @brief Inverse la connexion du Pipeline
  *
  * @bug a revoir avec la nouvelle gestion des conenxions
- * 
+ *
  * @details Récuperer les extrémités du pipeline en parcours (tout en déconnectant les maillons du pipeline entre eux) :
  * - depuis les entrées tant qu'il s'agit d'un pipeline (pour obtenir le batiment en entrée)
  * - depuis les sortie tant qu'il s'agit d'un pipeline (pour obtenir le batiment en sortie)

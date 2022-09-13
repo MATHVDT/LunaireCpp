@@ -149,35 +149,14 @@ void Mine::update()
  * @brief Remplir les stocks d'entrée dans la mine avec
  * les minerais
  */
-// void Mine::remplirStock()
-// { // Verification s'il c'est la bonne ressouce
-// if (_typeRessourceProduite == typeSolToTypeRessource(_typeSol))
-// { // Remplissage tant que ya de la place
-//     while (!stockEntreePlein())
-//     {
-//         _stockEntree.push(_typeRessourceProduite);
-//     }
-// }
-// }
-
-void Mine::process()
+void Mine::remplirStock()
 {
-    Batiment::process();
-    // Remplissage de la sortie
-    // if (!_stockEntree.empty())
-    // {
-    //     if (!stockSortiePlein())
-    //     {
-    //         _stockSortie.push(_stockEntree.front());
-    //         _stockEntree.pop();
-    //     }
-    // }
-
-    // if (typeSolToTypeRessource(_typeSol) != _typeRessourceProduite)
-    //     return;
-
-    // if (stockEntreePlein())
-    //     return;
+    TYPE_RESSOURCE gisement = typeSolToTypeRessource(_typeSol);
+    for (auto &stock : _stockConnexion)
+    {
+        // cerr << "Récupération Mine : " << (short)gisement << endl;
+        stock = gisement;
+    }
 }
 
 /*******************************************************/

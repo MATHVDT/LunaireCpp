@@ -34,6 +34,7 @@ void MasterBatiment::process()
     // {
     //     _stockEntree.pop();
     // }
+    Batiment::process();
 }
 
 /**
@@ -56,14 +57,17 @@ bool MasterBatiment::updateOrientation()
  */
 bool MasterBatiment::checkConnexionPossible(Structure *s, bool commeSortie)
 {
+        cout << "commeSortie : " << commeSortie << endl;
     if (commeSortie)
+    {
+        cout << "dans le if : " << commeSortie << endl;
         return false;
+    }
     return Batiment::checkConnexionPossible(s, commeSortie);
 }
 
-/************************************************************************/
-/************************************************************************/
-
+/*******************************************************/
+/*******************************************************/
 void MasterBatiment::chargerMemoireMasterBatiment()
 {
     cerr << endl
@@ -77,6 +81,8 @@ void MasterBatiment::dechargerMemoireMasterBatiment()
          << "dechargerMemoireMasterBatiment" << endl;
     delete _textureMasterBatiment;
 }
+
+/*******************************************************/
 
 void MasterBatiment::chargerTextures(string fichierCheminsTexture)
 {
@@ -112,6 +118,5 @@ void MasterBatiment::chargerTextures(string fichierCheminsTexture)
         std::cerr << "/!\\ Erreur d'ouverture du fichier : " << fichierCheminsTexture << " /!\\" << endl;
     }
 }
-
-/************************************************************************/
-/************************************************************************/
+/*******************************************************/
+/*******************************************************/

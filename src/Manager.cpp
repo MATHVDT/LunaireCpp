@@ -9,7 +9,7 @@ Texture *Manager::_texturesManager[NB_TEXTURE_OVERLAY];
  * @brief Constructeur du Manager *singleton*
  */
 Manager::Manager() : _carte(Carte::getInstance()),
-                     _masterBatiment{nullptr},
+                     _endpointStructure{},
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite),
                      _menu{Menu::getInstance()}
@@ -18,7 +18,7 @@ Manager::Manager() : _carte(Carte::getInstance()),
 
 Manager::~Manager()
 {
-    delete _masterBatiment;
+    // delete _endpointStructure;
 
     delete _spriteCaseOver;
     delete _spriteCaseSelectionnee;
@@ -165,11 +165,11 @@ void Manager::dessinerOverlayMap()
 void Manager::updateStructure()
 {
 
-    queue<Structure *> queueStruct;
-    if (_masterBatiment != nullptr)
-        queueStruct.push(_masterBatiment);
+    queue<Structure *> queueStruct{_endpointStructure};
+    // queue<Structure *> queueStruct{};
 
     Structure *curseurStruct = nullptr;
+    connexion_t *c = nullptr;
 
     while (!queueStruct.empty())
     {
@@ -179,13 +179,17 @@ void Manager::updateStructure()
 
         // Récupération de toutes les structures connectées entrantes
         // Pour remonter les connexions jusqu'aux extremités
-        for (int dir = DIRECTION::NORD; dir < DIRECTION::NORDEST; ++dir)
+        for (int dir = DIRECTION::NORD;
+             dir <= DIRECTION::NORDEST;
+             ++dir)
         {
-            connexion_t &c =
-                curseurStruct->getConnexions()[dir];
-            if (c.structure != nullptr)
+            c = curseurStruct->getConnexions() + dir;
+            // if (c->structure != nullptr)
+            if (c->type == TypeConnexion::Input)
             {
-                queueStruct.push(c.structure);
+                if (c->structure == nullptr)
+                    cerr << "ERREUR connexion Input avec pas de structure" << endl;
+                queueStruct.push(c->structure);
             }
         }
 
@@ -197,7 +201,7 @@ void Manager::updateStructure()
 void Manager::update()
 {
     // Process les structures pour les actualiser
-    // updateStructure();
+    updateStructure();
 }
 
 /**
@@ -218,12 +222,12 @@ void Manager::run()
             contextGlobal->update();
             updateEvent();
         }
+        dessiner();
+        contextGlobal->afficherFenetre();
 
         if (contextGlobal->getUpdateTick())
         {
             update();
-            dessiner();
-            contextGlobal->afficherFenetre();
             contextGlobal->setUpdateTick(false);
         }
     }
@@ -253,6 +257,11 @@ bool Manager::placerStructure()
         structAPlacer = new Mine{
             (Vector2u)caseSelect->getPositionCarte(),
             caseSelect->getTypeSol()};
+        break;
+    case TYPE_STRUCTURE::MasterBatiment:
+        structAPlacer = new MasterBatiment{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
         break;
     default:
         break;
@@ -350,7 +359,7 @@ bool Manager::placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editio
     if (editionStruct == TYPE_STRUCTURE::MasterBatiment)
     {
         s = new MasterBatiment{(Vector2u)caseSelect->getPositionCarte()};
-        _masterBatiment = (MasterBatiment *)s;
+        _endpointStructure.push(s);
     }
 
     _carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
@@ -461,21 +470,18 @@ bool Manager::integrationStructureVoisinage()
     { // Pour chaque structure voisine
         if (structsVoisines[k] != nullptr)
         {
-            if (!structAjoutee->getASortie())
-            { // Essaye d'ajouter en sortie la structure
-                if (structAjoutee->connecterStructure(structsVoisines[k], true))
-                {
-                    // cerr << "Connexion Structure comme une sortie" << endl;
-                }
-            }
-            // Dans tous les cas essaye d'ajouter comme entrée
+            // On essaye de connecter dans les 2 sens
             if (structAjoutee->connecterStructure(structsVoisines[k], false))
             {
-                // cerr << "Connexion Structure comme une entrée" << endl;
+                cerr << "Connexion Structure comme une entrée " << structAjoutee->getIdStructure() << " <- " << structsVoisines[k]->getIdStructure() << endl;
+            }
+            else if (structAjoutee->connecterStructure(structsVoisines[k], true))
+            {
+                cerr << "Connexion Structure comme une sortie " << structAjoutee->getIdStructure() << " -> " << structsVoisines[k]->getIdStructure() << endl;
             }
             else
             {
-                // cerr << "Pas connectée comme une entrée" << endl;
+                cerr << "Pas connectée de : " << structAjoutee->getIdStructure() << " - " << structsVoisines[k]->getIdStructure() << endl;
             }
         }
     }

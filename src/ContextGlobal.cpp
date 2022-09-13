@@ -12,8 +12,8 @@
 #include "ContextGlobal.hpp"
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
-uint ContextGlobal::_nbTicksMax = 4;             // = 4
-Time ContextGlobal::_deltaTick = seconds(0.25f); // = 25ms
+uint ContextGlobal::_nbTicksMax = 4;            // = 4
+Time ContextGlobal::_deltaTick = seconds(.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -281,7 +281,8 @@ void ContextGlobal::checkClavierStructures()
         // cerr << "Pipeline selectionnée" << endl;
         break;
     case Keyboard::C:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        // _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        _gameEvent = GameEvent::PlacerMarchand;
         // cerr << "MasterBatiment selectionnée" << endl;
         break;
     case Keyboard::Space:
@@ -306,13 +307,14 @@ void ContextGlobal::processGameEvent()
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
         break;
     case PlacerMarchand:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
+        _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        // _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
         break;
     case PlacerMine:
         _editionStructureSelectionnee = TYPE_STRUCTURE::Mine;
         break;
     case PlacerFonderie:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Fonderie;
         break;
     case PlacerFabrique:
         _editionStructureSelectionnee = TYPE_STRUCTURE::Fabrique;

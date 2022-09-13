@@ -232,7 +232,7 @@ list<TYPE_RESSOURCE> craftPossible(const size_t hash,
 
     /***** Récupère différents types ressources ******/
     for (uint dir = DIRECTION::NORD;
-         dir < DIRECTION::NORDEST;
+         dir <= DIRECTION::NORDEST;
          ++dir)
     {
         vectorStock.push_back(stock[dir]);

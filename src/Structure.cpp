@@ -112,12 +112,14 @@ void Structure::update()
     // this->remplirStock();
 
     // // Traiter les ressources
-    this->process();
+    process();
+    // cout << "Process structure " << endl;
 }
 
 void Structure::process()
 {
-    this->remplirStock();
+    // cerr << "Process structure : " << _idStructure << endl;
+    remplirStock();
 }
 
 /*******************************************************/
@@ -153,7 +155,7 @@ void Structure::remplirStock()
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     // Pour toutes les connexions aux batiments
     for (uint dir = DIRECTION::NORD;
-         dir < DIRECTION::NORDEST;
+         dir <= DIRECTION::NORDEST;
          ++dir)
     {
         connexion_t &c = _connexions[dir];
@@ -202,6 +204,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     // Vérifie sortie est libre
     if (commeSortie && getASortie())
     { // Ya déjà une structure en sortie
+        cout << "ICI" << endl;
         return false;
     }
 
@@ -266,9 +269,10 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
         (!checkConnexionPossible(s, commeSortie) ||
          !s->checkConnexionPossible(this, !commeSortie)))
     { // Condition de co pas OK
-        // Si c'est l'autre sens
-        // Pas grave parce que les conditions
-        // ont déjà été vérifiés pour les 2 sens
+      // Si c'est l'autre sens
+      // Pas grave parce que les conditions
+      // ont déjà été vérifiés pour les 2 sens
+
         return false;
     }
 

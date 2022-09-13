@@ -78,9 +78,8 @@ public:
     virtual void dessiner(float scaleSprite) override;
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
     virtual void update();
-    virtual void process() override;
 
-    // virtual void remplirStock() override;
+    virtual void remplirStock() override;
     // virtual TYPE_RESSOURCE livrerStock() override;
 
     // Gestion des structures connectées

@@ -14,25 +14,25 @@ TYPE_RESSOURCE typeSolToTypeRessource(TYPE_SOL sol)
     switch (sol)
     {
     case TYPE_SOL::Vierge:
-        ress = TYPE_RESSOURCE::PoussiereRegolite;
+        ress = TYPE_RESSOURCE::Vierge;
         break;
     case TYPE_SOL::GisementGlace:
-        ress = TYPE_RESSOURCE::MineraiGlace;
+        ress = TYPE_RESSOURCE::GisementGlace;
         break;
     case TYPE_SOL::GisementTitane:
-        ress = TYPE_RESSOURCE::MineraiTitane;
+        ress = TYPE_RESSOURCE::GisementTitane;
         break;
     case TYPE_SOL::GisementSilicium:
-        ress = TYPE_RESSOURCE::MineraiSilicium;
+        ress = TYPE_RESSOURCE::GisementSilicium;
         break;
     case TYPE_SOL::GisementFer:
-        ress = TYPE_RESSOURCE::MineraiFer;
+        ress = TYPE_RESSOURCE::GisementFer;
         break;
     case TYPE_SOL::GisementOr:
-        ress = TYPE_RESSOURCE::MineraiOr;
+        ress = TYPE_RESSOURCE::GisementOr;
         break;
     case TYPE_SOL::GisementAluminium:
-        ress = TYPE_RESSOURCE::MineraiAluminium;
+        ress = TYPE_RESSOURCE::GisementAluminium;
         break;
     // case TYPE_SOL::GisementMagnesium:
     //     ress = TYPE_RESSOURCE::MineraiMagnesium;

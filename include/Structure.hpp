@@ -160,7 +160,7 @@ inline uint Structure::getNbConnexionsLibres() const
     uint compt = 0;
     for (auto c : _connexions)
     {
-        compt += c.type == TypeConnexion::Undefined;
+        compt += (c.type == TypeConnexion::Undefined);
     }
     return compt;
 }
