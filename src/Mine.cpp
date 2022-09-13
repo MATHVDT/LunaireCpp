@@ -42,6 +42,13 @@ Mine::Mine(const Vector2u &pos,
 
     setSpriteTexture(0);
     cerr << "Mine(), id : " << _idMine << endl;
+
+    _stockConnexion[0] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[1] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[2] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[3] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[4] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[5] = TYPE_RESSOURCE::GisementFer;
 }
 
 void Mine::init() {}

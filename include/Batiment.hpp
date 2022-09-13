@@ -22,6 +22,7 @@
 #include "Pipeline.hpp"
 #include "ContextGlobal.hpp"
 #include "Craft.hpp"
+#include <map>
 
 class ContextGlobal;
 class Structure;
@@ -37,6 +38,7 @@ private:
     bool _isFormuleCraftDefine;
     list<TYPE_RESSOURCE> _listRessCraftPossible;
     list<FormuleCraft_t *> *_formuleCraft;
+    map<TYPE_RESSOURCE, uint> _stockInterne;
 
 private: // Static
     static uint _nbBatiments;
@@ -74,9 +76,15 @@ public:
     bool getIsFormuleCraftDefine() const;
     const list<FormuleCraft_t *> *getFormuleCraft() const;
     const list<TYPE_RESSOURCE> *getListCraftPossible() const;
+    bool isQuantiteReactifsOk() const;
 
     // Setter
     void setFormuleCraft(TYPE_RESSOURCE ressCraft);
+    void resetFormuleCraft();
+    void videStockInterne();
+    void transfertStockConnexionToInterne();
+    bool ajouterStockInterne(TYPE_RESSOURCE ress);
+    bool crafter();
 
     list<TYPE_RESSOURCE> *checkCraftPossible();
 };

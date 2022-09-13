@@ -112,7 +112,12 @@ void Structure::update()
     // this->remplirStock();
 
     // // Traiter les ressources
-    // this->process();
+    this->process();
+}
+
+void Structure::process()
+{
+    this->remplirStock();
 }
 
 /*******************************************************/
@@ -126,17 +131,17 @@ void Structure::update()
 TYPE_RESSOURCE Structure::livrerStock()
 {
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
+    connexion_t *coSortie = getConnexionSortie();
 
-    for (uint dir = DIRECTION::NORD;
-         dir < DIRECTION::NORDEST;
-         ++dir)
+    if (coSortie == nullptr)
     {
-        if (_connexions[dir].type == TypeConnexion::Output)
-        {
-            ress = _stockConnexion[dir];
-            _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
-        }
+        cerr << "Erreur dans livraison stock" << endl;
     }
+
+    DIRECTION dir = coSortie->direction;
+    ress = _stockConnexion[dir];
+    _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
+
     return ress;
 }
 

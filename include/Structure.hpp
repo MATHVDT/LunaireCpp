@@ -108,6 +108,7 @@ public:
     connexion_t *getConnexions();
     Structure *getSortie() const;
     bool getIsStructureConnected(Structure *s) const;
+    connexion_t *getConnexionSortie();
 
     // Setter
     bool setSortie(Structure *structure);
@@ -186,5 +187,15 @@ inline bool Structure::getIsStructureConnected(Structure *s) const
 }
 
 inline uint Structure::getLevel() const { return _level; }
+
+inline connexion_t *Structure::getConnexionSortie()
+{
+    for (auto &c : _connexions)
+    {
+        if (c.type == TypeConnexion::Output)
+            return &c;
+    }
+    return nullptr;
+}
 
 #endif
