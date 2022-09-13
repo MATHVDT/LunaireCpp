@@ -32,12 +32,10 @@ uint Mine::_offsetTextureY = 100;
  * @param TYPE_RESSOURCE - *ressourceProduite* Minerai
  */
 Mine::Mine(const Vector2u &pos,
-           TYPE_SOL typeSol,
-           TYPE_RESSOURCE ressourceProduite)
+           TYPE_SOL typeSol)
     : Batiment{pos, _texturesMines[0]},
       _idMine(++_idMaxMines),
       _typeSol(typeSol),
-      _typeRessourceProduite(ressourceProduite),
       _zoomTexture{0, 0, 655, 655}
 {
     _nbMines++;

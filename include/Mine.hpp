@@ -41,7 +41,6 @@ class Mine : public Batiment
 private:
     uint _idMine;
     TYPE_SOL _typeSol;
-    TYPE_RESSOURCE _typeRessourceProduite;
     IntRect _zoomTexture;
 
 public: // Static
@@ -70,8 +69,7 @@ private: // Static
 
 public:
     Mine(const Vector2u &pos,
-         TYPE_SOL typeSol = TYPE_SOL::Vierge,
-         TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::PoussiereRegolite);
+         TYPE_SOL typeSol = TYPE_SOL::Vierge);
     virtual ~Mine() override;
 
     // Virtual
@@ -86,10 +84,9 @@ public:
     // virtual TYPE_RESSOURCE livrerStock() override;
 
     // Gestion des structures connectées
-    virtual bool checkConnexionPossible(Structure *s, bool commeSortie)override;
+    virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
     // Getter
-    TYPE_RESSOURCE getTypeRessource() const;
     TYPE_SOL getTypeSol() const;
 
     // Setter
@@ -113,6 +110,5 @@ inline uint Mine::getLevelMaxMines() { return _levelMax; }
 /*           Méthodes inline non static            */
 /***************************************************/
 inline TYPE_SOL Mine::getTypeSol() const { return _typeSol; }
-inline TYPE_RESSOURCE Mine::getTypeRessource() const { return _typeRessourceProduite; }
 
 #endif

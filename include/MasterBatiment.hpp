@@ -9,15 +9,10 @@ extern string cheminFichierMasterBatiment;
 class MasterBatiment : public Batiment
 {
 
-private:                            // Static
-    static uint _tailleStockEntree; // = 6
-    static uint _tailleStockSortie; // = 0
+private: // Static
     static Texture *_textureMasterBatiment;
 
 public: // Static
-    static uint getTailleStockEntreeMasterBatiment();
-    static uint getTailleStockSortieMasterBatiment();
-
     static void chargerMemoireMasterBatiment();
     static void dechargerMemoireMasterBatiment();
 
@@ -48,8 +43,6 @@ public:
 /***************************************************/
 /*              Méthodes inline static             */
 /***************************************************/
-inline uint MasterBatiment::getTailleStockEntreeMasterBatiment() { return _tailleStockEntree; }
-inline uint MasterBatiment::getTailleStockSortieMasterBatiment() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

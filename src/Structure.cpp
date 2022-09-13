@@ -19,30 +19,27 @@ Structure::Structure()
       _sprite{},
       _level{0},
       _connexions(),
-      _tailleStockEntree(1),
-      _tailleStockSortie(1),
-      _stockEntree{}, _stockSortie{}
+      _stockConnexion{}
 {
     _nbStructures++;
     // Définit les directions des connexionx
     for (int dir = NORD; dir <= NORDEST; ++dir)
     {
+        _connexions[dir].structure = nullptr;
         _connexions[dir].direction = (DIRECTION)dir;
+        _connexions[dir].type = TypeConnexion::Undefined;
+        _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
     }
 }
 
 Structure::Structure(const Vector2u &pos,
-                     Texture *text,
-                     uint tailleStockEntree,
-                     uint tailleStockSortie)
+                     Texture *text)
     : _idStructure(++_idMaxStructures),
       _position(pos),
       _sprite{new Sprite()},
       _level{0},
       _connexions(),
-      _tailleStockEntree(tailleStockEntree),
-      _tailleStockSortie(tailleStockSortie),
-      _stockEntree{}, _stockSortie{}
+      _stockConnexion{}
 {
     // cerr<< "Structure(), id : " << _idStructure << endl;
     _nbStructures++;
@@ -54,7 +51,10 @@ Structure::Structure(const Vector2u &pos,
     // Définit les directions des connexionx
     for (int dir = NORD; dir <= NORDEST; ++dir)
     {
+        _connexions[dir].structure = nullptr;
         _connexions[dir].direction = (DIRECTION)dir;
+        _connexions[dir].type = TypeConnexion::Undefined;
+        _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
     }
 }
 
@@ -118,43 +118,47 @@ void Structure::update()
 /*******************************************************/
 
 /**
- * @brief Donne la ressource du stock de sortie d'un batiment et la retire du stock de sortie
+ * @brief Donne la ressource du stock qui est sur la connexion de sortie *(ouput)*, ou rien s'il n'y a pas de sortie.
  * @warning N'ai jamais appelé directement, c'est la seulement méthode remplirStock qui l'appelle
  *
  * @return TYPE_RESSOURCE - *issue du stock de sortie*
  */
 TYPE_RESSOURCE Structure::livrerStock()
 {
-    if (_stockSortie.empty())
+    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
+
+    for (uint dir = DIRECTION::NORD;
+         dir < DIRECTION::NORDEST;
+         ++dir)
     {
-        return TYPE_RESSOURCE::Rien;
+        if (_connexions[dir].type == TypeConnexion::Output)
+        {
+            ress = _stockConnexion[dir];
+            _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
+        }
     }
-    else
-    { // Récupère la ressource du stock de sortie
-        TYPE_RESSOURCE r = _stockSortie.front();
-        _stockSortie.pop(); // Enleve du stock
-        return r;
-    }
+    return ress;
 }
 
 /**
- * @brief Récupère les ressources des stocks de sortie des structures connectées *(une seule ressource/structure)*
- *
+ * @brief Récupère les ressources des stocks de sortie des structures connectées *(une seule ressource/structure)* N'écrase pas la ressource déjà présente dans le stock
  */
 void Structure::remplirStock()
 {
     TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
     // Pour toutes les connexions aux batiments
-    for (auto c : _connexions)
+    for (uint dir = DIRECTION::NORD;
+         dir < DIRECTION::NORDEST;
+         ++dir)
     {
-        if (c.type == TypeConnexion::Input) // S'il s'agit d'une entrée
+        connexion_t &c = _connexions[dir];
+        // S'il s'agit d'une entrée
+        if (c.type == TypeConnexion::Input)
         {
-            ress = c.structure->livrerStock();
-            // Ajout au stock, même si c'est Rien
-            // Si ya encore de la place
-            if (!this->stockEntreePlein())
-            {
-                _stockEntree.push(ress);
+            if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
+            { // Il ya de la place
+                ress = c.structure->livrerStock();
+                _stockConnexion[dir] = ress;
             }
         }
     }
@@ -196,7 +200,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
         return false;
     }
 
-        // Test si la structure est déjà connectée ET
+    // Test si la structure est déjà connectée ET
     // Verifier que la Structure est bien adajacente
     DIRECTION dirAdjacence = DIRECTION::NULLDIRECTION;
     for (auto c : _connexions)

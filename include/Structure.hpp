@@ -48,15 +48,14 @@ protected:
 
     uint _level;
 
-    // list<Structure *> _listStructuresConnectees;
-    // Structure *_sortie;
-
     connexion_t _connexions[NB_CONNEXIONS];
 
-    uint _tailleStockEntree;
-    uint _tailleStockSortie;
-    queue<TYPE_RESSOURCE> _stockEntree;
-    queue<TYPE_RESSOURCE> _stockSortie;
+    // uint _tailleStockEntree;
+    // uint _tailleStockSortie;
+    // queue<TYPE_RESSOURCE> _stockEntree;
+    // queue<TYPE_RESSOURCE> _stockSortie;
+
+    TYPE_RESSOURCE _stockConnexion[NB_CONNEXIONS];
 
 private: // Static
     static uint _nbStructures;
@@ -72,9 +71,7 @@ public: // Static
 public:
     Structure();
     Structure(const Vector2u &pos,
-              Texture *,
-              uint tailleStockEntree,
-              uint tailleStockSortie);
+              Texture *);
     virtual ~Structure();
 
     // Virtual
@@ -103,8 +100,6 @@ public:
 
     uint getLevel() const;
 
-    bool stockEntreePlein() const;
-    bool stockSortiePlein() const;
     uint getNbEntrees() const;
     uint getNbConnexionsOccupees() const;
     uint getNbConnexionsLibres() const;
@@ -117,8 +112,6 @@ public:
     // Setter
     bool setSortie(Structure *structure);
     void setPositionCarte(const Vector2u &pos);
-    void setTailleStockEntree(uint newVal);
-    void setTailleStockSortie(uint newVal);
 
     bool checkConnexionCircuit(Structure *s, bool commeSortie);
 };
@@ -193,14 +186,5 @@ inline bool Structure::getIsStructureConnected(Structure *s) const
 }
 
 inline uint Structure::getLevel() const { return _level; }
-
-inline bool Structure::stockEntreePlein() const { return _stockEntree.size() == _tailleStockEntree; }
-inline bool Structure::stockSortiePlein() const { return _stockSortie.size() == _tailleStockSortie; }
-
-inline uint Structure::getTailleStockEntree() const { return _tailleStockEntree; }
-inline uint Structure::getTailleStockSortie() const { return _tailleStockSortie; }
-
-inline void Structure::setTailleStockEntree(uint newValue) { _tailleStockEntree = newValue; }
-inline void Structure::setTailleStockSortie(uint newValue) { _tailleStockSortie = newValue; }
 
 #endif

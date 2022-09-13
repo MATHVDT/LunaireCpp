@@ -13,9 +13,6 @@
 uint Batiment::_nbBatiments = 0;
 uint Batiment::_idMaxBatiments = 0;
 
-const uint Batiment::_tailleStockEntree = 6;
-const uint Batiment::_tailleStockSortie = 1;
-
 Batiment::Batiment()
     : _idBatiment(++_idMaxBatiments)
 {
@@ -29,12 +26,8 @@ Batiment::Batiment()
  * @param Vector2f - *pos*
  * @param Texture* - *texture*
  */
-Batiment::Batiment(const Vector2u &pos,
-                   Texture *text,
-                   uint tailleStockEntree,
-                   uint tailleStockSortie)
-    : Structure{pos, text,
-                tailleStockEntree, tailleStockSortie},
+Batiment::Batiment(const Vector2u &pos, Texture *text)
+    : Structure{pos, text},
       _idBatiment(++_idMaxBatiments),
       _isFormuleCraftDefine(false),
       _listRessCraftPossible(),
@@ -125,7 +118,7 @@ list<TYPE_RESSOURCE> *Batiment::checkCraftPossible()
     if (!_isFormuleCraftDefine)
     {
         // size_t hash = typeid(this).hash_code();
-        list<TYPE_RESSOURCE> list = craftPossible(this, _stockEntree);
+        list<TYPE_RESSOURCE> list = craftPossible(this, _stockConnexion);
         swap(list, _listRessCraftPossible);
     }
     // cerr << " nb _listRessCraftPossible : " << _listRessCraftPossible.size() << endl;

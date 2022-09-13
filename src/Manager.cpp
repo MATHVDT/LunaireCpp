@@ -372,22 +372,14 @@ bool Manager::placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
 {
     bool place = false;
 
-    TYPE_RESSOURCE ress = TYPE_RESSOURCE::Rien;
-
-    // Spécifier juste pour les Mines
-    ress = typeMineToTypeRessource(editionStruct);
-
     // Construit et ajoute la Mine
-    if (ress != TYPE_RESSOURCE::Rien)
-    {
-        Mine *m = new Mine{
-            (Vector2u)caseSelect->getPositionCarte(),
-            caseSelect->getTypeSol(), ress};
+    Mine *m = new Mine{
+        (Vector2u)caseSelect->getPositionCarte(),
+        caseSelect->getTypeSol()};
 
-        _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
+    _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
 
-        place = true;
-    }
+    place = true;
 
     return place;
 }

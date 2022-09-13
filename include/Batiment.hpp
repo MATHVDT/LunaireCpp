@@ -42,25 +42,16 @@ private: // Static
     static uint _nbBatiments;
     static uint _idMaxBatiments;
 
-protected:                                // Static
-    static const uint _tailleStockEntree; // = 6 defaut
-    static const uint _tailleStockSortie; // = 1
-
 public: // Static
     static uint getNbBatiments();
     static uint getIdMaxBatiments();
-    static uint getTailleStockEntreeBatiment();
-    static uint getTailleStockSortieBatiment();
 
     static void chargerMemoireBatiments();
     static void dechargerMemoireBatiments();
 
 public:
     Batiment();
-    Batiment(const Vector2u &pos,
-             Texture *text,
-             uint tailleStockEntree = _tailleStockEntree,
-             uint tailleStockSortie = _tailleStockSortie);
+    Batiment(const Vector2u &pos, Texture *text);
     virtual ~Batiment() override;
 
     // Virtual
@@ -71,14 +62,12 @@ public:
     virtual void update();
     virtual void process();
 
-    virtual void remplirStock() ;
-    virtual TYPE_RESSOURCE livrerStock() ;
+    virtual void remplirStock();
+    virtual TYPE_RESSOURCE livrerStock();
 
     // Gestion des structures connectées
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
     virtual bool updateOrientation() override;
-
-
 
     // Getter
     uint getIdBatiment() const;
@@ -101,9 +90,6 @@ public:
 /***************************************************/
 inline uint Batiment::getNbBatiments() { return _nbBatiments; }
 inline uint Batiment::getIdMaxBatiments() { return _idMaxBatiments; }
-
-inline uint Batiment::getTailleStockEntreeBatiment() { return _tailleStockEntree; }
-inline uint Batiment::getTailleStockSortieBatiment() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

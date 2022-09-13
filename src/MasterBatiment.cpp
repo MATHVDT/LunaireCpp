@@ -2,14 +2,10 @@
 
 string cheminFichierMasterBatiment = "ressource/cheminTextures/cheminTexturesMasterBatiment";
 
-uint MasterBatiment::_tailleStockEntree = 6;
-uint MasterBatiment::_tailleStockSortie = 0;
 Texture *MasterBatiment::_textureMasterBatiment = nullptr;
 
 MasterBatiment::MasterBatiment(const Vector2u &pos)
-    : Batiment{pos, _textureMasterBatiment,
-               _tailleStockEntree,
-               _tailleStockSortie}
+    : Batiment{pos, _textureMasterBatiment}
 {
 }
 
@@ -34,10 +30,10 @@ void MasterBatiment ::update()
 void MasterBatiment::process()
 {
     // Retire le stock (vente de ressource)
-    if (!_stockEntree.empty())
-    {
-        _stockEntree.pop();
-    }
+    // if (!_stockEntree.empty())
+    // {
+    //     _stockEntree.pop();
+    // }
 }
 
 /**
@@ -74,6 +70,7 @@ void MasterBatiment::chargerMemoireMasterBatiment()
          << "chargerMemoireMasterBatiment" << endl;
     chargerTextures(cheminFichierMasterBatiment);
 }
+
 void MasterBatiment::dechargerMemoireMasterBatiment()
 {
     cerr << endl

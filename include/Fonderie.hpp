@@ -27,7 +27,6 @@ class Fonderie : public Batiment
 {
 private:
     uint _idFonderie;
-    TYPE_RESSOURCE _typeRessourceProduite;
     IntRect _zoomTexture;
 
 public: // Static
@@ -55,8 +54,7 @@ private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Fonderie(const Vector2u &pos,
-             TYPE_RESSOURCE ressourceProduite = TYPE_RESSOURCE::Rien);
+    Fonderie(const Vector2u &pos);
     virtual ~Fonderie() override;
 
     // Virtual
@@ -66,7 +64,6 @@ public:
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;
 
     // Getter
-    TYPE_RESSOURCE getTypeRessource() const;
 
     // Setter
     void setSpriteTexture(uint tick);
@@ -88,6 +85,5 @@ inline uint Fonderie::getLevelMaxFonderies() { return _levelMax; }
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline TYPE_RESSOURCE Fonderie::getTypeRessource() const { return _typeRessourceProduite; }
 
 #endif

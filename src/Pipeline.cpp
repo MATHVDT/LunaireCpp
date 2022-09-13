@@ -16,9 +16,6 @@ string cheminFichierTexturesPipelines = "ressource/cheminTextures/cheminTextures
 uint Pipeline::_nbPipelines = 0;
 uint Pipeline::_idMaxPipelines = 0;
 
-const uint Pipeline::_tailleStockEntree = 1;
-const uint Pipeline::_tailleStockSortie = 1;
-
 uint Pipeline::_levelMax = 3;
 //  uint Pipeline:: _nbAnim;   // = 1
 
@@ -35,8 +32,7 @@ uint Pipeline::_offsetTextureY = 655; // Hauteur d'1 texture
  * @param Vector2u & - *pos*
  */
 Pipeline::Pipeline(const Vector2u &pos)
-    : Structure{pos, _texturesPipelines[NON_CONNECTE],
-                _tailleStockEntree, _tailleStockSortie},
+    : Structure{pos, _texturesPipelines[NON_CONNECTE]},
       _idPipeline(++_idMaxPipelines),
       _zoomTexture{0, 0,
                    (int)_offsetTextureX,
@@ -300,6 +296,8 @@ bool Pipeline::updateOrientation()
 /**
  * @brief Inverse la connexion du Pipeline
  *
+ * @bug a revoir avec la nouvelle gestion des conenxions
+ * 
  * @details Récuperer les extrémités du pipeline en parcours (tout en déconnectant les maillons du pipeline entre eux) :
  * - depuis les entrées tant qu'il s'agit d'un pipeline (pour obtenir le batiment en entrée)
  * - depuis les sortie tant qu'il s'agit d'un pipeline (pour obtenir le batiment en sortie)
@@ -447,7 +445,7 @@ bool Pipeline::inverserSens()
  */
 TYPE_RESSOURCE Pipeline::livrerStock()
 {
-    TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
+    // TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
 
     return Structure::livrerStock();
 }
@@ -459,5 +457,5 @@ TYPE_RESSOURCE Pipeline::livrerStock()
 void Pipeline::remplirStock()
 {
     Structure::remplirStock();
-    _contenuPipeline.remplirStock(_stockEntree);
+    // _contenuPipeline.remplirStock(_stockEntree);
 }

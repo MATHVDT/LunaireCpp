@@ -118,10 +118,6 @@ private:
     Orientation_t _orientation;
     ContenuPipeline _contenuPipeline;
 
-protected:                                // Static
-    static const uint _tailleStockEntree; // = 1
-    static const uint _tailleStockSortie; // = 1
-
 private: // Static
     static uint _nbPipelines;
     static uint _idMaxPipelines;
@@ -139,9 +135,6 @@ public: // Static
     static uint getIdMaxPipelines();
     static uint getLevelMaxPipelines();
 
-    static uint getTailleStockEntree();
-    static uint getTailleStockSortie();
-
     static void chargerMemoirePipelines();
     static void dechargerMemoirePipelines();
 
@@ -157,7 +150,7 @@ public:
 
     virtual void dessiner(float scaleSprite) override;
     virtual void update();
-    virtual void process() ;
+    virtual void process();
 
     virtual bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
@@ -197,9 +190,6 @@ public:
 inline uint Pipeline::getNbPipelines() { return _nbPipelines; }
 inline uint Pipeline::getIdMaxPipelines() { return _idMaxPipelines; }
 inline uint Pipeline::getLevelMaxPipelines() { return _levelMax; }
-
-inline uint Pipeline::getTailleStockEntree() { return _tailleStockEntree; }
-inline uint Pipeline::getTailleStockSortie() { return _tailleStockSortie; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

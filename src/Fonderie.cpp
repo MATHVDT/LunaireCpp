@@ -31,11 +31,9 @@ uint Fonderie::_offsetTextureY = 100;
  * @param TYPE_RESSOURCE - *ressourceSol* Fonderierai correspondant au type de sol
  * @param TYPE_RESSOURCE - *ressourceProduite* Fonderierai
  */
-Fonderie::Fonderie(const Vector2u &pos,
-                   TYPE_RESSOURCE ressourceProduite)
-    : Batiment{pos, _texturesFonderies[static_cast<int>(ressourceProduite)]},
+Fonderie::Fonderie(const Vector2u &pos)
+    : Batiment{pos, _texturesFonderies[0]},
       _idFonderie(++_idMaxFonderies),
-      _typeRessourceProduite(ressourceProduite),
       _zoomTexture{0, 0, 655, 655}
 {
     _nbFonderies++;
@@ -73,7 +71,6 @@ void Fonderie::dechargerMemoireFonderies()
         delete _texturesFonderies[i];
     }
 }
-
 
 /*******************************************************/
 
@@ -141,7 +138,6 @@ void Fonderie::setSpriteTexture(uint tick)
 
     _sprite->setTextureRect(_zoomTexture);
 }
-
 
 /**
  * @brief Définie la bonne texture en fonction de la ressource craftée.
