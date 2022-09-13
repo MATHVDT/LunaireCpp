@@ -105,7 +105,7 @@ bool Batiment::checkConnexionPossible(Structure *s, bool commeSortie)
     // Vérifier la compatibilité des structures connectées
     if (typeid(*s) != typeid(Pipeline))
     {
-        // cerr << "Pas un pipeline que l'on co a ce batiement" << endl;
+        cerr << "Pas un pipeline que l'on co a ce batiement" << endl;
         return false; // Co à autre chose que pipeline
     }
     return Structure::checkConnexionPossible(s, commeSortie);

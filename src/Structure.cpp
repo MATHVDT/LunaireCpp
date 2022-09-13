@@ -194,12 +194,16 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
 {
     // Verrifier que la struct existe bien
     if (s == nullptr)
+    {
+        cerr << "structure null" << endl;
         return false;
-
+    }
     // Verifie s'il ya de la place en connexion
     if (getNbConnexionsLibres() == 0)
+    {
+        cerr << "LA" << endl;
         return false; // Toutes les places prises
-
+    }
     // Test sur this
     // Vérifie sortie est libre
     if (commeSortie && getASortie())
@@ -215,6 +219,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     {
         if (c.structure == s)
         {
+            cerr << "deja co" << endl;
             return false;
         }
         if (c.type == TypeConnexion::Undefined &&
@@ -227,13 +232,13 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     // Si la Structure n'est pas adjacent alors false
     if (dirAdjacence == DIRECTION::NULLDIRECTION)
     {
-        // cerr<< "Structu pas adjacente" << endl;
+        cerr << "Structu pas adjacente ou type co pas undefined" << endl;
         return false;
     }
     // Check création d'un circuit avec la connexion
     if (!commeSortie && checkConnexionCircuit(s, commeSortie))
     {
-        // cerr<< "Crée un circuit" << endl;
+        cerr << "Crée un circuit" << endl;
         return false;
     }
 
@@ -256,7 +261,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
 {
     if (s == nullptr)
     { // S'il y a bien structure a connecter
-        // cerr<< "Connexion struct null" << endl;
+        cerr << "Connexion struct null" << endl;
         return false;
     }
 
@@ -272,7 +277,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
       // Si c'est l'autre sens
       // Pas grave parce que les conditions
       // ont déjà été vérifiés pour les 2 sens
-
+        cerr << "Un des deux coté pas checkConnexion possible" << endl;
         return false;
     }
 

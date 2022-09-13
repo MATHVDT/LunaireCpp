@@ -204,13 +204,16 @@ void Mine::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
  */
 bool Mine::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-    if (!commeSortie)
-    {
-        return false; // A garder par la suite
-        // return Batiment::checkConnexionPossible(s, commeSortie);
-    }
-    else
-    {
-        return Batiment::checkConnexionPossible(s, commeSortie);
-    }
+    // DESACTIVE TEMPORAIREMENT POUR LE DEV
+    // if (!commeSortie)
+    // {
+    //     return false; // A garder par la suite
+    //     // return Batiment::checkConnexionPossible(s, commeSortie);
+    // }
+    // else
+    // {
+    //     return Batiment::checkConnexionPossible(s, commeSortie);
+    // }
+
+    return Batiment::checkConnexionPossible(s, commeSortie);
 }
