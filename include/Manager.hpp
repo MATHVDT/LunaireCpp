@@ -74,7 +74,6 @@ public:
     void updateEvent();
 
     bool placerStructure();
-    bool placerStructureOld();
 
     void dessiner();
 
@@ -89,9 +88,6 @@ private:
 
     void inverserSensPipeline(Structure *structSelect);
 
-    bool placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
-    bool placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
-    bool placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct);
     bool integrationStructureVoisinage();
 
     void dessinerOverlay();

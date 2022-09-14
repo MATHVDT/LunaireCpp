@@ -86,7 +86,6 @@ void Manager::dechargerMemoireManager()
  */
 void Manager::chargerTextures(string fichierCheminsTexture)
 {
-    string nomFichierTexture[NB_RESSOURCES];
     string cheminTexture;
     sf::Texture *texture;
 
@@ -278,144 +277,9 @@ bool Manager::placerStructure()
     // A priori nn car on va avoir besoin de savoir
     // quelle case a été ajouté pour les calculs
     // de connexion et d'orientation
-    // contextGlobal->setCaseSelectionnee(true);
-
-    // Reset le choix d'edition de structure select
-    contextGlobal->resetGameEvent();
+    contextGlobal->setCaseSelectionnee(true);
 
     return true;
-}
-
-/**
- * @brief Place une Structure sur une case si toutes les conditions sont réunis
- * @deprecated changement du placement des structures
- * @details Conditions : une case est selectionnée, il n'y a pas de construction sur la case selectionnée, un type de structure est selectionné
- * Appelle les fonctions placerPipeline et placerMine
- *
- * @return true - *Si une structure à été placée*
- * @return false - *Aucune structure placée*
- */
-bool Manager::placerStructureOld()
-{
-    bool structPlacee = false;
-    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
-
-    TYPE_STRUCTURE editionStructSelect = contextGlobal->getEditionStructureSelectionnee();
-
-    if (editionStructSelect != TYPE_STRUCTURE::AucuneStructure)
-    { // Il y a un type de structure select
-        if (caseSelect != nullptr)
-        { // Case selectionnee
-            if (caseSelect->getConstruction() == nullptr)
-            { // Pas de structure sur la case choisie
-                structPlacee = placerPipeline(caseSelect, editionStructSelect);
-                if (!structPlacee)
-                {
-                    structPlacee = placerMine(caseSelect, editionStructSelect);
-                    if (!structPlacee)
-                    {
-                        structPlacee = placerStructureSpeciale(caseSelect, editionStructSelect);
-                        if (!structPlacee)
-                        {
-                            // cerr << "Pas de structure posée" << endl;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Structure placée -> intégration
-    if (structPlacee)
-        return integrationStructureVoisinage();
-
-    // Reset le choix de case select
-    // A choisir si on deselectionne la case
-    // après ajout d'une structure ???
-    // A priori nn car on va avoir besoin de savoir
-    // quelle case a été ajouté pour les calculs
-    // de connexion et d'orientation
-    // contextGlobal->setCaseSelectionnee(true);
-
-    // Reset le choix d'edition de structure select
-    contextGlobal->setEditionStructureSelectionnee(TYPE_STRUCTURE::AucuneStructure);
-
-    return structPlacee;
-}
-
-/**
- * @brief Place une Structure spéciale sur la carte
- * @deprecated	Plus de MasterBatiment => Marchand
- * @param CaseMap * - *caseSelect*
- * @return true - Structure placée (Batiment spécial)
- * @return false - Structure non placée (Pas Batiment spéciale)
- */
-bool Manager::placerStructureSpeciale(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
-{
-    bool place = false;
-
-    Structure *s;
-
-    if (editionStruct == TYPE_STRUCTURE::MasterBatiment)
-    {
-        s = new MasterBatiment{(Vector2u)caseSelect->getPositionCarte()};
-        _endpointStructure.push(s);
-    }
-
-    _carte->ajouterConstructionCaseCarte(s, s->getPositionCarte());
-
-    place = true;
-    return place;
-}
-
-/**
- * @brief Place une Mine sur la carte
- *
- * @todo  Spécifier juste pour les Mines : typeStructureToTypeRessource
- *
- * @param CaseMap * - *caseSelect*
- * @return true - Structure placée (Mine)
- * @return false - Structure non placée (Pas Mine)
- */
-bool Manager::placerMine(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
-{
-    bool place = false;
-
-    // Construit et ajoute la Mine
-    Mine *m = new Mine{
-        (Vector2u)caseSelect->getPositionCarte(),
-        caseSelect->getTypeSol()};
-
-    _carte->ajouterConstructionCaseCarte(m, m->getPositionCarte());
-
-    place = true;
-
-    return place;
-}
-
-/**
- * @brief Place un Pipeline sur la carte
- *
- * @warning Ne connecte pas le Pipeline aux structures voisines
- *
- * @param CaseMap * - *caseSelect*
- * @return true - Structure placée (Pipeline)
- * @return false - Structure non placée (Pas Pipeline)
- */
-bool Manager::placerPipeline(CaseMap *caseSelect, TYPE_STRUCTURE editionStruct)
-{
-    bool place = false;
-
-    if (editionStruct == TYPE_STRUCTURE::Pipeline)
-    {
-        Pipeline *p = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
-
-        _carte->ajouterConstructionCaseCarte(p, p->getPositionCarte());
-
-        place = true;
-    }
-
-    return place;
 }
 
 /**
@@ -519,10 +383,16 @@ void Manager::updateEvent()
     case GameEvent::InverserSensPipeline:
         inverserSensPipeline(structSelect);
         break;
+    case GameEvent::ValiderCraft:
+        ((Batiment *)structSelect)->setFormuleCraft(_menu->getRessourceCraftSelect());
+        _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
+        break;
 
     default:
         break;
     }
+
+    contextGlobal->resetGameEvent();
 
     // Essayer de trouver une game event pour ca
     if (structSelect != nullptr)
