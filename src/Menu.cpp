@@ -140,10 +140,21 @@ void Menu::dessinerBatimentSelectCraftUndefine()
     // {
     //     // Ressource
     // }
-    for (auto rectShape : _tabCraftPossible)
-    {
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
 
-        contextGlobal->dessinerFenetre(rectShape);
+
+    uint n = ((_listCraftPossible == nullptr) ? 0 : _listCraftPossible->size());
+    TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
+    cout << "nb craft possible : " << n << endl;
+
+    for (uint i = 0; i < n; ++i)
+    {
+        _tabCraftPossible[i].setFillColor(Color::Red);
+        _tabCraftPossible[i].setTexture(Ressource::getTextureRessource());
+        _tabCraftPossible[i]
+            .setTextureRect(Ressource::getZoomTexture(r));
+        contextGlobal->dessinerFenetre(_tabCraftPossible[i]);
     }
 }
 
@@ -249,6 +260,10 @@ void Menu::setBoutonsChoixStructures()
                    GameEvent::PlacerChantierSpatial};
 }
 
+/**
+ * @brief Definit les positions/tailles/action des boutons BatimentSelect
+ *
+ */
 void Menu::setBoutonsBatimentSelect()
 {
     Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
@@ -466,6 +481,11 @@ bool Menu::setBoutonsClick()
             _btnActive = false;
             changement = true;
         }
+    }
+
+    if (changement)
+    {
+        _listCraftPossible = nullptr;
     }
     return changement;
 }

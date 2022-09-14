@@ -83,6 +83,7 @@ public:
 
     virtual void remplirStock();
     virtual TYPE_RESSOURCE livrerStock();
+    virtual list<TYPE_RESSOURCE> *getListCraftPossible() ;
 
     // Gestion des structures connectées
     virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
@@ -175,7 +176,6 @@ inline uint Structure::getNbEntrees() const
     return compt;
 }
 inline connexion_t *Structure::getConnexions() { return _connexions; }
-
 inline bool Structure::getIsStructureConnected(Structure *s) const
 {
     for (auto c : _connexions)
@@ -185,9 +185,7 @@ inline bool Structure::getIsStructureConnected(Structure *s) const
     }
     return false;
 }
-
 inline uint Structure::getLevel() const { return _level; }
-
 inline connexion_t *Structure::getConnexionSortie()
 {
     for (auto &c : _connexions)
@@ -197,5 +195,7 @@ inline connexion_t *Structure::getConnexionSortie()
     }
     return nullptr;
 }
+
+inline list<TYPE_RESSOURCE> *Structure::getListCraftPossible()  { return nullptr; }
 
 #endif

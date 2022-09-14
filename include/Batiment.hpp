@@ -66,6 +66,7 @@ public:
 
     virtual void remplirStock();
     virtual TYPE_RESSOURCE livrerStock();
+    virtual list<TYPE_RESSOURCE> *getListCraftPossible();
 
     // Gestion des structures connectées
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
@@ -75,7 +76,6 @@ public:
     uint getIdBatiment() const;
     bool getIsFormuleCraftDefine() const;
     const list<FormuleCraft_t *> *getFormuleCraft() const;
-    const list<TYPE_RESSOURCE> *getListCraftPossible() const;
     bool isQuantiteReactifsOk() const;
 
     // Setter
@@ -107,6 +107,6 @@ inline uint Batiment::getIdBatiment() const { return _idBatiment; }
 inline bool Batiment::getIsFormuleCraftDefine() const { return _isFormuleCraftDefine; }
 inline const list<FormuleCraft_t *> *Batiment::getFormuleCraft() const { return _formuleCraft; }
 
-inline const list<TYPE_RESSOURCE> *Batiment::getListCraftPossible() const { return &_listRessCraftPossible; }
+inline list<TYPE_RESSOURCE> *Batiment::getListCraftPossible() { return &_listRessCraftPossible; }
 
 #endif

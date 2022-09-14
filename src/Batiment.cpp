@@ -120,6 +120,7 @@ bool Batiment::updateOrientation()
 /**
  * @brief Si le batiment n'est pas parametré pour craft, alors on récupère la liste des ce qui est craftable avec les ressources en _stockEntree.
  *
+ * @return list<TYPE_RESSOURCE> *
  */
 list<TYPE_RESSOURCE> *Batiment::checkCraftPossible()
 {

@@ -13,6 +13,7 @@
 string cheminFichierTexturesRessources = "ressource/cheminTextures/cheminTexturesTypeRessource.txt";
 
 uint Ressource::_nbRessources = NB_RESSOURCES;
+Texture *Ressource::_textureRessource = nullptr;
 Sprite *Ressource::_spriteRessources = nullptr;
 IntRect Ressource::_zoomTexture{};
 
@@ -28,7 +29,7 @@ void Ressource::chargerMemoireRessources()
          << "chargerMemoireRessources" << endl;
     chargerTextures(cheminFichierTexturesRessources);
 
-    Vector2u textureSize = _spriteRessources->getTexture()->getSize();
+    Vector2u textureSize = _textureRessource->getSize();
 
     // Pas besoin de ses variables
     // _largeurTextureRessource = (float)(textureSize.x / _nbRessources);
@@ -75,6 +76,7 @@ void Ressource::chargerTextures(string fichierCheminsTexture)
         texture = new Texture();
         texture->loadFromFile(cheminTexture);
 
+        _textureRessource = texture;
         _spriteRessources = new Sprite{*texture};
 
         monFlux.close();

@@ -536,9 +536,22 @@ void Manager::updateEvent()
             Batiment *bat = ((Batiment *)structSelect);
             if (!bat->getIsFormuleCraftDefine())
             {
-                _menu->setListCraftPossible(bat->checkCraftPossible());
+                bat->checkCraftPossible();
+                // Set menu bastselectUndefine
+                _menu->setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
+            }
+            else
+            {
+                _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
+                // Set Men bat select define
             }
         }
+        _menu->setListCraftPossible(structSelect->getListCraftPossible());
+    }
+    else
+    {
+        // _menu->setListCraftPossible(nullptr);
+        _menu->setSectionMenu(SectionMenu::ChoixStructures);
     }
 }
 

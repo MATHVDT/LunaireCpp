@@ -32,6 +32,7 @@ class Ressource // Static
 {
 private: // Static
     static uint _nbRessources;
+    static Texture *_textureRessource;
     static Sprite *_spriteRessources;
     static IntRect _zoomTexture;
 
@@ -40,6 +41,8 @@ private: // Static
 
 public: // Static
     static const uint getNbRessources();
+    static const Texture *getTextureRessource();
+    static IntRect &getZoomTexture(TYPE_RESSOURCE r);
 
     static void chargerMemoireRessources();
     static void dechargerMemoireRessources();
@@ -57,5 +60,11 @@ private:
 /*                 Méthodes inline                 */
 /***************************************************/
 inline const uint Ressource::getNbRessources() { return _nbRessources; }
+inline const Texture *Ressource::getTextureRessource() { return _textureRessource; }
+inline IntRect &Ressource::getZoomTexture(TYPE_RESSOURCE r)
+{
+    _zoomTexture.left = _zoomTexture.width * (short)r;
+    return _zoomTexture;
+}
 
 #endif
