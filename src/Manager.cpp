@@ -279,6 +279,8 @@ bool Manager::placerStructure()
     // de connexion et d'orientation
     contextGlobal->setCaseSelectionnee(true);
 
+    contextGlobal->resetGameEvent();
+
     return true;
 }
 
@@ -384,15 +386,15 @@ void Manager::updateEvent()
         inverserSensPipeline(structSelect);
         break;
     case GameEvent::ValiderCraft:
-        ((Batiment *)structSelect)->setFormuleCraft(_menu->getRessourceCraftSelect());
-        _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
+        validerCraft(structSelect);
+        break;
+    case GameEvent::ResetCraft:
+        cout << "EVENT RESET CRAFT" << endl;
         break;
 
     default:
         break;
     }
-
-    contextGlobal->resetGameEvent();
 
     // Essayer de trouver une game event pour ca
     if (structSelect != nullptr)
@@ -439,5 +441,28 @@ void Manager::inverserSensPipeline(Structure *structSelect)
         ((Pipeline *)structSelect)->inverserSens();
         // ((Pipeline *)structSelect)->updateOrientation();
         contextGlobal->resetGameEvent();
+    }
+}
+
+void Manager::validerCraft(Structure *s)
+{
+
+    if (typeid(*s).hash_code() ==
+            typeid(Mine).hash_code() ||
+        typeid(*s).hash_code() ==
+            typeid(Fonderie).hash_code())
+    { // Récup de la ressource select à craft
+        TYPE_RESSOURCE rCraft = _menu->getRessourceCraftSelect();
+
+        if (rCraft != TYPE_RESSOURCE::Rien)
+        {
+            cout << "Manager valider Craft ok" << endl;
+            // Set la formule
+            ((Batiment *)s)->setFormuleCraft(rCraft);
+
+            _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
+
+            contextGlobal->resetGameEvent();
+        }
     }
 }

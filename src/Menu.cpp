@@ -382,7 +382,6 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
 
 vector<Bouton *> &Menu::getBoutonsSection()
 {
-
     switch (_sectionMenu)
     {
     case SectionMenu::ChoixStructures:
@@ -394,6 +393,24 @@ vector<Bouton *> &Menu::getBoutonsSection()
         cerr << "Pas de boutons pour la section : " << _sectionMenu << endl;
         break;
     }
+}
+
+void Menu::setSectionMenu(SectionMenu section)
+{
+    switch (section)
+    {
+    case SectionMenu::BatimentSelectCraftDefine:
+        _boutonBatimentSelect[3]->setState(BoutonState::Disabled); // ValiderCraft
+        _boutonBatimentSelect[4]->setState(BoutonState::Normal);   // ResetCraft
+        break;
+    case SectionMenu::BatimentSelectCraftUndefine:
+        _boutonBatimentSelect[3]->setState(BoutonState::Normal);   // ValiderCraft
+        _boutonBatimentSelect[4]->setState(BoutonState::Disabled); // ResetCraft
+        break;
+    default:
+        break;
+    }
+    _sectionMenu = section;
 }
 
 /**
@@ -416,6 +433,7 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             if (btn->checkIn(posMouseEcran) &&
                 !Mouse::isButtonPressed(Mouse::Left))
             {
+                cout << "HELO 0000" << endl;
                 resetBoutonsActive();
                 btn->setState(BoutonState::Active);
                 contextGlobal->setGameEvent(btn->getAction());
@@ -511,7 +529,7 @@ bool Menu::setBoutonsClick()
 
             Vector2f posMouseEcran = contextGlobal->getMouseWorldPos();
 
-            cerr << "hover : " << _craftHover << " | select : " << _craftSelect << endl;
+            // cerr << "hover : " << _craftHover << " | select : " << _craftSelect << endl;
 
             if (box.contains(posMouseEcran))
             { // Selection / Deselection

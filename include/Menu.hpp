@@ -115,7 +115,6 @@ inline SectionMenu Menu::getSectionMenu() const { return _sectionMenu; }
 
 // Setter
 inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
-inline void Menu::setSectionMenu(SectionMenu section) { _sectionMenu = section; }
 
 inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
 {
@@ -128,6 +127,9 @@ inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
 
 inline TYPE_RESSOURCE Menu::getRessourceCraftSelect()
 {
+    if (_craftSelect == -1)
+        return TYPE_RESSOURCE::Rien;
+
     if (_listCraftPossible->size() < _craftSelect)
     {
         cerr << "Erreur d'indice dans la selection ressource craftables" << endl;

@@ -87,6 +87,7 @@ private:
     Manager();
 
     void inverserSensPipeline(Structure *structSelect);
+    void validerCraft(Structure* s);
 
     bool integrationStructureVoisinage();
 

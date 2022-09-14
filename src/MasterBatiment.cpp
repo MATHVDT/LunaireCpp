@@ -35,8 +35,8 @@ void MasterBatiment::process()
          ++dir)
     {
         r = _stockConnexion[dir];
-
-        cout << "Vente de " << ressString[r] << endl;
+        if (r != TYPE_RESSOURCE::Rien)
+            cout << "Vente de " << ressString[r] << endl;
     }
     Batiment::process();
 }

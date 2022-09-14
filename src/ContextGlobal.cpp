@@ -14,8 +14,8 @@
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 uint ContextGlobal::_nbTicksMax = 4; // = 4
 // Time ContextGlobal::_deltaTick = seconds(1.f);
-// Time ContextGlobal::_deltaTick = seconds(.25f); // = 25ms
-Time ContextGlobal::_deltaTick = seconds(.1f); // = 25ms
+Time ContextGlobal::_deltaTick = seconds(.25f); // = 25ms
+// Time ContextGlobal::_deltaTick = seconds(.1f); // = 25ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -255,7 +255,7 @@ void ContextGlobal::clickSouris()
             setCaseSelectionnee(true);
         }
     }
-    else
+    else // Souris sur Menu
     {
         // _caseHover = nullptr;
         _menu->setBoutonsClick();
