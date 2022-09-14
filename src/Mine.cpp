@@ -19,7 +19,7 @@ uint Mine::_levelMax = 3;
 uint _nbAnim = 4;
 
 uint Mine::_tailleTexture = 0;
-Texture *Mine::_texturesMines[NB_RESSOURCES];
+Texture *Mine::_texturesMines[NB_MINES];
 
 uint Mine::_offsetTextureX = 100;
 uint Mine::_offsetTextureY = 100;
@@ -49,6 +49,12 @@ Mine::Mine(const Vector2u &pos,
     _stockConnexion[3] = TYPE_RESSOURCE::GisementFer;
     _stockConnexion[4] = TYPE_RESSOURCE::GisementFer;
     _stockConnexion[5] = TYPE_RESSOURCE::GisementFer;
+
+    for (auto r : _stockConnexion)
+    {
+        cerr << " - " << ressString[r];
+    }
+    cerr << endl;
 }
 
 void Mine::init() {}
@@ -75,7 +81,7 @@ void Mine::dechargerMemoireMines()
 {
     cerr << endl
          << "dechargerMemoireMines" << endl;
-    for (int i = 0; i < NB_RESSOURCES; ++i)
+    for (int i = 0; i < NB_MINES; ++i)
     {
         delete _texturesMines[i];
     }
@@ -90,7 +96,6 @@ void Mine::dechargerMemoireMines()
  */
 void Mine::chargerTextures(string fichierCheminsTexture)
 {
-    string nomFichierTexture[NB_RESSOURCES];
     string cheminTexture;
     sf::Texture *texture;
 
@@ -101,7 +106,7 @@ void Mine::chargerTextures(string fichierCheminsTexture)
     {
         cerr << "Chargement des textures des Mines" << endl;
         // Récupération des chemins
-        for (int k = 0; k < NB_RESSOURCES; ++k)
+        for (int k = 0; k < NB_MINES; ++k)
         {
             // Chemin de l'image texture d'une mine
             monFlux >> cheminTexture;

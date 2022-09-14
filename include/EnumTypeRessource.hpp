@@ -14,8 +14,8 @@
 #include <sys/types.h>
 
 // #define NB_RESSOURCES 5;
-const uint NB_RESSOURCES = 5;
-const uint NB_RESSOURCES_MINERAIS = 5;
+const uint NB_RESSOURCES = 25;
+const uint NB_RESSOURCES_MINERAIS = 7;
 const uint NB_RESSOURCES_LINGOTS = 7;
 
 enum class TYPE_RESSOURCE : char

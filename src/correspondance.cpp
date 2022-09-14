@@ -186,7 +186,7 @@ TYPE_STRUCTURE typeRessourceToTypeMine(TYPE_RESSOURCE ressource)
     switch (ressource)
     {
     case TYPE_RESSOURCE::Rien: // Par defaut regolite
-    case TYPE_RESSOURCE::PoussiereRegolite:
+    case TYPE_RESSOURCE::Vierge:
         structure = TYPE_STRUCTURE::MinePoussiereRegolite;
         break;
     case TYPE_RESSOURCE::MineraiGlace:

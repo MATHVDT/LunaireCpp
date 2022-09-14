@@ -1,6 +1,9 @@
 #ifndef __ENUM_TYPE_STRUCTURE__HPP
 #define __ENUM_TYPE_STRUCTURE__HPP
 
+const int NB_MINES = 8;
+const int NB_FONDERIES = 8;
+
 enum class TYPE_STRUCTURE : int
 {
     AucuneStructure = -1,
@@ -23,9 +26,9 @@ enum class TYPE_STRUCTURE : int
     MineFer,
     MineOr,
     MineAluminium,
-    MineMagnesium,
-    MineCalcium,
-    MineSoduim
+    MineMagnesium
+    // MineCalcium,
+    // MineSoduim
 };
 
 #endif

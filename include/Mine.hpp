@@ -51,7 +51,7 @@ public: // Static
     static uint _nbAnim;
 
     static uint _tailleTexture;
-    static Texture *_texturesMines[NB_RESSOURCES_MINERAIS];
+    static Texture *_texturesMines[NB_MINES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 

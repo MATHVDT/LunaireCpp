@@ -134,27 +134,24 @@ void Menu::dessinerBatimentSelectCraftUndefine()
             btn->dessiner();
         }
     }
-    // Afficher les crafts possibles
-    // Vector2f posPremiereRessource{};
 
-    // uint nbCrafts = _listCraftPossible->size();
-    // for (int k = 0; k < nbCrafts; ++k)
-    // {
-    //     // Ressource
-    // }
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
     Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
 
     uint n = ((_listCraftPossible == nullptr) ? 0 : _listCraftPossible->size());
     TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
+    auto it = _listCraftPossible->begin();
 
+    // liste des ressources craftables
     for (uint i = 0; i < n; ++i)
     {
+        // Récupération de la ress craftable
+        r = *it;
+        ++it;
         _tabCraftPossible[i]
             .setTextureRect(Ressource::getZoomTexture(r));
 
-        cout << "select : " << _craftSelect << " i : " << i << endl;
-        cout << "hover : " << _craftHover << " i : " << i << endl;
+        // Contour ressources
         if (i == _craftSelect)
         {
             _tabCraftPossible[i].setOutlineThickness(5.f);
@@ -327,7 +324,7 @@ void Menu::setBoutonsBatimentSelect()
         new Bouton{Vector2f{0.2f * dimMenu.x,
                             0.645f * dimMenu.y},
                    BoutonType::boutonResetCraft,
-                   Vector2f{0.6f, 0.9f},
+                   Vector2f{0.6f, 0.8f},
                    BoutonState::Normal,
                    GameEvent::ResetCraft};
 }
@@ -437,7 +434,7 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             }
             else // Pas la souris dessus
             {
-                changement = btn->getState() != BoutonState::Normal;
+                changement = (btn->getState() != BoutonState::Normal);
                 btn->setState(BoutonState::Normal);
             }
         }
@@ -467,8 +464,6 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             }
         }
     }
-    // if (_listCraftPossible != nullptr)
-    //     cout << _listCraftPossible->size() << endl;
 
     return changement;
 }
@@ -494,7 +489,7 @@ bool Menu::setBoutonsClick()
             btn->setState(BoutonState::Pressed);
             changement = true;
         }
-        if (btn->getState() == BoutonState::Active)
+        else if (btn->getState() == BoutonState::Active)
         {
             btn->setState(BoutonState::Normal);
             contextGlobal->setGameEvent(GameEvent::AucunGameEvent);
@@ -516,11 +511,10 @@ bool Menu::setBoutonsClick()
 
             Vector2f posMouseEcran = contextGlobal->getMouseWorldPos();
 
+            cerr << "hover : " << _craftHover << " | select : " << _craftSelect << endl;
+
             if (box.contains(posMouseEcran))
             { // Selection / Deselection
-              // if (_craftSelect == _craftHover)
-              //     _craftSelect = -1;
-              // else
                 _craftSelect = _craftHover;
                 changement = true;
             }

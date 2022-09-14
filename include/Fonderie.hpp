@@ -37,7 +37,7 @@ public: // Static
     static uint _nbAnim;
 
     static uint _tailleTexture;
-    static Texture *_texturesFonderies[NB_RESSOURCES_LINGOTS];
+    static Texture *_texturesFonderies[NB_FONDERIES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 

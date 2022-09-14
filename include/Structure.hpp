@@ -22,6 +22,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "EnumTypeRessource.hpp"
+#include "EnumTypeStructure.hpp"
 #include "direction.hpp"
 #include "connexion_t.hpp"
 

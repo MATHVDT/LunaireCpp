@@ -74,6 +74,7 @@ public:
     bool getBoutonsActive() const;
     SectionMenu getSectionMenu() const;
     vector<Bouton *> &getBoutonsSection();
+    TYPE_RESSOURCE getRessourceCraftSelect();
 
     // Setter
     void setPositionEcran(const Vector2f &newPosEcran);
@@ -115,6 +116,7 @@ inline SectionMenu Menu::getSectionMenu() const { return _sectionMenu; }
 // Setter
 inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
 inline void Menu::setSectionMenu(SectionMenu section) { _sectionMenu = section; }
+
 inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
 {
     if (_listCraftPossible == nullptr)
@@ -122,6 +124,17 @@ inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
         _craftSelect = -1;
     }
     _listCraftPossible = listRessCraft;
+}
+
+inline TYPE_RESSOURCE Menu::getRessourceCraftSelect()
+{
+    if (_listCraftPossible->size() < _craftSelect)
+    {
+        cerr << "Erreur d'indice dans la selection ressource craftables" << endl;
+    }
+    list<TYPE_RESSOURCE>::iterator itRessource = _listCraftPossible->begin();
+    advance(itRessource, _craftSelect);
+    return *itRessource;
 }
 
 #endif

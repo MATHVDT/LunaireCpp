@@ -128,6 +128,7 @@ list<TYPE_RESSOURCE> *Batiment::checkCraftPossible()
     {
         // size_t hash = typeid(this).hash_code();
         list<TYPE_RESSOURCE> list = craftPossible(this, _stockConnexion);
+
         swap(list, _listRessCraftPossible);
     }
     // cerr << " nb _listRessCraftPossible : " << _listRessCraftPossible.size() << endl;
@@ -146,8 +147,11 @@ void Batiment::setFormuleCraft(TYPE_RESSOURCE ressCraft)
     if (!_isFormuleCraftDefine)
     {
         // Stockage formule
-        _formuleCraft = listFormulesCraft.at((short)ressCraft);
         _isFormuleCraftDefine = true;
+        _formuleCraft = listFormulesCraft.at((short)ressCraft);
+
+        // Supprime la liste des crafts possibles
+        _listRessCraftPossible.clear();
 
         // Vide le stock interne
         _stockInterne.clear();
@@ -162,6 +166,12 @@ void Batiment::setFormuleCraft(TYPE_RESSOURCE ressCraft)
 
         // Texture
         setTextureRessourceCraft(ressCraft);
+
+        cerr << "Ressoure crafter dans la mine : " << ressString[ressCraft] << endl;
+    }
+    else
+    {
+        cerr << "Erreur formule deja define" << endl;
     }
 }
 

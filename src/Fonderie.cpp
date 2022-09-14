@@ -19,7 +19,7 @@ uint Fonderie::_levelMax = 3;
 uint Fonderie::_nbAnim = 4;
 
 uint Fonderie::_tailleTexture = 0;
-Texture *Fonderie::_texturesFonderies[NB_RESSOURCES_LINGOTS];
+Texture *Fonderie::_texturesFonderies[NB_FONDERIES];
 
 uint Fonderie::_offsetTextureX = 100;
 uint Fonderie::_offsetTextureY = 100;
@@ -66,7 +66,7 @@ void Fonderie::dechargerMemoireFonderies()
 {
     cerr << endl
          << "dechargerMemoireFonderies" << endl;
-    for (int i = 0; i < NB_RESSOURCES_LINGOTS; ++i)
+    for (int i = 0; i < NB_FONDERIES; ++i)
     {
         delete _texturesFonderies[i];
     }
@@ -81,7 +81,7 @@ void Fonderie::dechargerMemoireFonderies()
  */
 void Fonderie::chargerTextures(string fichierCheminsTexture)
 {
-    string nomFichierTexture[NB_RESSOURCES_LINGOTS];
+    string nomFichierTexture[NB_FONDERIES];
     string cheminTexture;
     sf::Texture *texture;
 
@@ -92,7 +92,7 @@ void Fonderie::chargerTextures(string fichierCheminsTexture)
     {
         cerr << "Chargement des textures des Fonderies" << endl;
         // Récupération des chemins
-        for (int k = 0; k < NB_RESSOURCES_LINGOTS; ++k)
+        for (int k = 0; k < NB_FONDERIES; ++k)
         {
             // Chemin de l'image texture d'une Fonderie
             monFlux >> cheminTexture;

@@ -29,7 +29,8 @@ void Ressource::chargerMemoireRessources()
          << "chargerMemoireRessources" << endl;
     chargerTextures(cheminFichierTexturesRessources);
 
-    Vector2u textureSize = _textureRessource->getSize();
+    Vector2u textureSize = _spriteRessources->getTexture()->getSize();
+    // Vector2u textureSize = _textureRessource->getSize();
 
     // Pas besoin de ses variables
     // _largeurTextureRessource = (float)(textureSize.x / _nbRessources);

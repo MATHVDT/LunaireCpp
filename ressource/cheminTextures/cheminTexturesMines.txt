@@ -3,3 +3,6 @@
 ./ressource/mine0.png
 ./ressource/mine0.png
 ./ressource/mine0.png
+./ressource/mine0.png
+./ressource/mine0.png
+./ressource/mine0.png
