@@ -208,14 +208,14 @@ TYPE_STRUCTURE typeRessourceToTypeMine(TYPE_RESSOURCE ressource)
     case TYPE_RESSOURCE::MineraiAluminium:
         structure = TYPE_STRUCTURE::MineAluminium;
         break;
-    // case TYPE_RESSOURCE::MineraiMagnesium:
-    //     structure = TYPE_STRUCTURE::MineMagnesium;
-    //     break;
-    // case TYPE_RESSOURCE::MineraiCalcium:
-    //     structure = TYPE_STRUCTURE::MineCalcium;
-    //     break;
-    // case TYPE_RESSOURCE::MineraiSoduim:
-    //     structure = TYPE_STRUCTURE::MineSoduim;
+        // case TYPE_RESSOURCE::MineraiMagnesium:
+        //     structure = TYPE_STRUCTURE::MineMagnesium;
+        //     break;
+        // case TYPE_RESSOURCE::MineraiCalcium:
+        //     structure = TYPE_STRUCTURE::MineCalcium;
+        //     break;
+        // case TYPE_RESSOURCE::MineraiSoduim:
+        //     structure = TYPE_STRUCTURE::MineSoduim;
         ;
         break;
     default:
@@ -248,3 +248,32 @@ TYPE_STRUCTURE typeRessourceToTypeUsine(TYPE_RESSOURCE ressource)
 }
 
 /*******************************************************/ /*******************************************************/
+
+map<TYPE_RESSOURCE, string> ressString =
+    {
+        {TYPE_RESSOURCE::Rien, "Rien"},
+        {TYPE_RESSOURCE::Vierge, "Vierge"},
+        {TYPE_RESSOURCE::GisementGlace, "GisementGlace"},
+        {TYPE_RESSOURCE::GisementTitane, "GisementTitane"},
+        {TYPE_RESSOURCE::GisementSilicium, "GisementSilicium"},
+        {TYPE_RESSOURCE::GisementFer, "GisementFer"},
+        {TYPE_RESSOURCE::GisementOr, "GisementOr"},
+        {TYPE_RESSOURCE::GisementAluminium, "GisementAluminium"},
+
+        {TYPE_RESSOURCE::PoussiereRegolite, "PoussiereRegolite"},
+        {TYPE_RESSOURCE::MineraiGlace, "MineraiGlace"},
+        {TYPE_RESSOURCE::MineraiTitane, "MineraiTitane"},
+        {TYPE_RESSOURCE::MineraiSilicium, "MineraiSilicium"},
+        {TYPE_RESSOURCE::MineraiFer, "MineraiFer"},
+        {TYPE_RESSOURCE::MineraiOr, "MineraiOr"},
+        {TYPE_RESSOURCE::MineraiAluminium, "MineraiAluminium"},
+
+        {TYPE_RESSOURCE::LingotRegolite, "LingotRegolite"},
+        {TYPE_RESSOURCE::LingotGlace, "LingotGlace"},
+        {TYPE_RESSOURCE::LingotTitane, "LingotTitane"},
+        {TYPE_RESSOURCE::LingotSilicium, "LingotSilicium"},
+        {TYPE_RESSOURCE::LingotFer, "LingotFer"},
+        {TYPE_RESSOURCE::LingotOr, "LingotOr"},
+        {TYPE_RESSOURCE::LingotAluminium, "LingotAluminium"},
+
+};

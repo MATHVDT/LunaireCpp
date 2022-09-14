@@ -8,6 +8,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
+#include "correspondance.hpp"
 #include "EnumGameEvent.hpp"
 #include "EnumTypeSol.hpp"
 #include "EnumTypeStructure.hpp"

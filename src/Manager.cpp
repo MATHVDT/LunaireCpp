@@ -471,11 +471,11 @@ bool Manager::integrationStructureVoisinage()
         if (structsVoisines[k] != nullptr)
         {
             // On essaye de connecter dans les 2 sens
-            // if (structAjoutee->connecterStructure(structsVoisines[k], false))
-            // {
-            //     cerr << "Connexion Structure comme une entrée " << structAjoutee->getIdStructure() << " <- " << structsVoisines[k]->getIdStructure() << endl;
-            // }
-            if (structAjoutee->connecterStructure(structsVoisines[k], true))
+            if (structAjoutee->connecterStructure(structsVoisines[k], false))
+            {
+                cerr << "Connexion Structure comme une entrée " << structAjoutee->getIdStructure() << " <- " << structsVoisines[k]->getIdStructure() << endl;
+            }
+            else if (structAjoutee->connecterStructure(structsVoisines[k], true))
             {
                 cerr << "Connexion Structure comme une sortie " << structAjoutee->getIdStructure() << " -> " << structsVoisines[k]->getIdStructure() << endl;
             }

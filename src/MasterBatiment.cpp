@@ -29,11 +29,15 @@ void MasterBatiment ::update()
  */
 void MasterBatiment::process()
 {
-    // Retire le stock (vente de ressource)
-    // if (!_stockEntree.empty())
-    // {
-    //     _stockEntree.pop();
-    // }
+    TYPE_RESSOURCE r;
+    for (uint dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST;
+         ++dir)
+    {
+        r = _stockConnexion[dir];
+
+        cout << "Vente de " << ressString[r] << endl;
+    }
     Batiment::process();
 }
 
@@ -57,7 +61,7 @@ bool MasterBatiment::updateOrientation()
  */
 bool MasterBatiment::checkConnexionPossible(Structure *s, bool commeSortie)
 {
-        cout << "commeSortie : " << commeSortie << endl;
+    cout << "commeSortie : " << commeSortie << endl;
     if (commeSortie)
     {
         cout << "dans le if : " << commeSortie << endl;
