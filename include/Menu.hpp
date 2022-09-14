@@ -54,7 +54,7 @@ private:
     // Bouton *_boutonsModifTuyau;
     list<TYPE_RESSOURCE> *_listCraftPossible;
     vector<RectangleShape> _tabCraftPossible;
-    
+    int _craftHover, _craftSelect;
 
 public: // Static
     static Menu *_singleton;
@@ -83,7 +83,7 @@ public:
     bool resetBoutonsActive();
 
     void setSectionMenu(SectionMenu section);
-    void setListCraftPossible( list<TYPE_RESSOURCE> *listRessCraft);
+    void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft);
 
 private:
     void translaterBoutons(const Vector2f &dirVect);
@@ -115,6 +115,13 @@ inline SectionMenu Menu::getSectionMenu() const { return _sectionMenu; }
 // Setter
 inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
 inline void Menu::setSectionMenu(SectionMenu section) { _sectionMenu = section; }
-inline void Menu::setListCraftPossible( list<TYPE_RESSOURCE> *listRessCraft) { _listCraftPossible = listRessCraft; }
+inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
+{
+    if (_listCraftPossible == nullptr)
+    {
+        _craftSelect = -1;
+    }
+    _listCraftPossible = listRessCraft;
+}
 
 #endif

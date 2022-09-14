@@ -12,7 +12,8 @@
 #include "ContextGlobal.hpp"
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
-uint ContextGlobal::_nbTicksMax = 4;            // = 4
+uint ContextGlobal::_nbTicksMax = 4; // = 4
+// Time ContextGlobal::_deltaTick = seconds(1.f);
 Time ContextGlobal::_deltaTick = seconds(.25f); // = 25ms
 
 ContextGlobal::ContextGlobal()

@@ -35,7 +35,9 @@ Menu::Menu()
       _boutonsChoixStructures{8},
       _boutonBatimentSelect{5},
       _listCraftPossible(nullptr),
-      _tabCraftPossible{15}
+      _tabCraftPossible{15},
+      _craftHover(-1),
+      _craftSelect(-1)
 {
 }
 
@@ -143,17 +145,31 @@ void Menu::dessinerBatimentSelectCraftUndefine()
     CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
     Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
 
-
     uint n = ((_listCraftPossible == nullptr) ? 0 : _listCraftPossible->size());
     TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
-    cout << "nb craft possible : " << n << endl;
 
     for (uint i = 0; i < n; ++i)
     {
-        _tabCraftPossible[i].setFillColor(Color::Red);
-        _tabCraftPossible[i].setTexture(Ressource::getTextureRessource());
         _tabCraftPossible[i]
             .setTextureRect(Ressource::getZoomTexture(r));
+
+        cout << "select : " << _craftSelect << " i : " << i << endl;
+        cout << "hover : " << _craftHover << " i : " << i << endl;
+        if (i == _craftSelect)
+        {
+            _tabCraftPossible[i].setOutlineThickness(5.f);
+            _tabCraftPossible[i].setOutlineColor(Color::Yellow);
+        }
+        else if (i == _craftHover)
+        {
+            _tabCraftPossible[i].setOutlineThickness(5.f);
+            _tabCraftPossible[i].setOutlineColor(Color::Cyan);
+        }
+        else
+        {
+            _tabCraftPossible[i].setOutlineThickness(.0f);
+        }
+
         contextGlobal->dessinerFenetre(_tabCraftPossible[i]);
     }
 }
@@ -340,7 +356,8 @@ void Menu::setTabCraftPossible()
         _tabCraftPossible[k].setSize(Vector2f{tailleRess, tailleRess});
         _tabCraftPossible[k].setPosition(pos.x, pos.y);
 
-        _tabCraftPossible[k].setFillColor(Color::Blue);
+        _tabCraftPossible[k].setOutlineColor(Color::Yellow);
+        _tabCraftPossible[k].setTexture(Ressource::getTextureRessource());
     }
 }
 
@@ -430,20 +447,23 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
         SectionMenu::BatimentSelectCraftUndefine)
     {
         Rect<float> box;
-        for (auto &rectShape : _tabCraftPossible)
+        uint n = (_listCraftPossible == nullptr ? 0 : _listCraftPossible->size());
+
+        for (uint k = 0; k < n; ++k)
         {
-            box.width = rectShape.getSize().x;
-            box.height = rectShape.getSize().y;
-            box.left = rectShape.getPosition().x;
-            box.top = rectShape.getPosition().y;
+            box.width = _tabCraftPossible[k].getSize().x;
+            box.height = _tabCraftPossible[k].getSize().y;
+            box.left = _tabCraftPossible[k].getPosition().x;
+            box.top = _tabCraftPossible[k].getPosition().y;
 
             if (box.contains(posMouseEcran))
             {
-                rectShape.setFillColor(Color::Yellow);
+                _craftHover = k;
+                changement = true;
             }
-            else
+            else if (!changement)
             {
-                rectShape.setFillColor(Color::Blue);
+                _craftHover = -1;
             }
         }
     }
@@ -483,10 +503,30 @@ bool Menu::setBoutonsClick()
         }
     }
 
-    if (changement)
+    if (_sectionMenu ==
+        SectionMenu::BatimentSelectCraftUndefine)
     {
-        _listCraftPossible = nullptr;
+        Rect<float> box;
+        if (_craftHover != -1)
+        {
+            box.width = _tabCraftPossible[_craftHover].getSize().x;
+            box.height = _tabCraftPossible[_craftHover].getSize().y;
+            box.left = _tabCraftPossible[_craftHover].getPosition().x;
+            box.top = _tabCraftPossible[_craftHover].getPosition().y;
+
+            Vector2f posMouseEcran = contextGlobal->getMouseWorldPos();
+
+            if (box.contains(posMouseEcran))
+            { // Selection / Deselection
+              // if (_craftSelect == _craftHover)
+              //     _craftSelect = -1;
+              // else
+                _craftSelect = _craftHover;
+                changement = true;
+            }
+        }
     }
+
     return changement;
 }
 

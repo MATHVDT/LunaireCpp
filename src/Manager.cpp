@@ -222,11 +222,11 @@ void Manager::run()
             contextGlobal->update();
             updateEvent();
         }
-        dessiner();
-        contextGlobal->afficherFenetre();
 
         if (contextGlobal->getUpdateTick())
         {
+            dessiner();
+            contextGlobal->afficherFenetre();
             update();
             contextGlobal->setUpdateTick(false);
         }
