@@ -142,6 +142,7 @@ TYPE_RESSOURCE Structure::livrerStock()
 
     DIRECTION dir = coSortie->direction;
     ress = _stockConnexion[dir];
+    cerr << "livrer stock Structure : " << ressString[ress] << endl;
     _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
 
     return ress;
@@ -158,13 +159,15 @@ void Structure::remplirStock()
          dir <= DIRECTION::NORDEST;
          ++dir)
     {
-        connexion_t &c = _connexions[dir];
         // S'il s'agit d'une entrée
-        if (c.type == TypeConnexion::Input)
+        if (_connexions[dir].type == TypeConnexion::Input)
         {
             if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
             { // Il ya de la place
-                ress = c.structure->livrerStock();
+                ress = _connexions[dir].structure->livrerStock();
+
+                cerr << "Reception de livraison dans remplir stock struct : " << ressString[ress] << endl;
+
                 _stockConnexion[dir] = ress;
             }
         }
@@ -201,7 +204,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     // Verifie s'il ya de la place en connexion
     if (getNbConnexionsLibres() == 0)
     {
-        cerr << "LA" << endl;
+        // cerr << "LA" << endl;
         return false; // Toutes les places prises
     }
     // Test sur this
@@ -232,7 +235,7 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     // Si la Structure n'est pas adjacent alors false
     if (dirAdjacence == DIRECTION::NULLDIRECTION)
     {
-        cerr << "Structu pas adjacente ou type co pas undefined" << endl;
+        // cerr << "Structu pas adjacente ou type co pas undefined" << endl;
         return false;
     }
     // Check création d'un circuit avec la connexion
@@ -277,7 +280,7 @@ bool Structure::connecterStructure(Structure *s, bool commeSortie, bool connexio
       // Si c'est l'autre sens
       // Pas grave parce que les conditions
       // ont déjà été vérifiés pour les 2 sens
-        cerr << "Un des deux coté pas checkConnexion possible" << endl;
+        // cerr << "Un des deux coté pas checkConnexion possible" << endl;
         return false;
     }
 

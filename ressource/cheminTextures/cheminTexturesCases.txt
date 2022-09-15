@@ -2,4 +2,8 @@
 ./ressource/hexagone_regulier_contour.png
 ./ressource/hexagone_regulier_contour.png
 ./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_gisement_fer.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png
+./ressource/hexagone_regulier_contour.png
 ./ressource/hexagone_regulier_contour.png

@@ -10,24 +10,21 @@
 #ifndef __ENUM_TYPE_SOL_HPP__
 #define __ENUM_TYPE_SOL_HPP__
 
-#define NB_SOL 5;
+const int NB_SOL = 9;
 
 enum class TYPE_SOL
 {
     // Gisement
-    Vierge, // Gisement poussière régolite
-    GisementOr,
-    GisementFer,
-    GisementTitane,
-    GisementSilicium,
-    GisementGlace,
-    GisementAluminium,
-    GisementMagnesium,
-    GisementCalcium,
-    GisementSoduim,
+    Vierge = 0, // Gisement poussière régolite
+    GisementGlace = 1,
+    GisementTitane = 2,
+    GisementSilicium = 3,
+    GisementFer = 4,
+    GisementOr = 5,
+    GisementAluminium = 6,
 
-    Montage,
-    Trou
+    Trou = -1,
+    Montage = -2
 };
 
 #endif

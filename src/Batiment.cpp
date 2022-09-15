@@ -158,10 +158,8 @@ void Batiment::setFormuleCraft(TYPE_RESSOURCE ressCraft)
 
         for (auto c : *_formuleCraft)
         { // Reactifs
-            if (c->produit == false)
-            { // Definit le stock interne à 0
-                _stockInterne.emplace(c->composant, 0);
-            }
+          // Definit le stock interne à 0
+            _stockInterne.emplace(c->composant, 0);
         }
 
         // Texture
@@ -216,10 +214,14 @@ bool Batiment::isQuantiteReactifsOk() const
     uint ok = 0;
     for (auto c : *_formuleCraft)
     {
-        // cbIlEnFaut - cbYenA * (1 - estProduit)
-        ok += c->quantite - _stockInterne.at(c->composant) * (1 - c->produit);
+        if (c->produit == false)
+        { // cbIlEnFaut - cbYenA
+            cout << "cbIlEnFaut : " << c->quantite << " et cvYenA : " << _stockInterne.at(c->composant) << endl;
+            ok += c->quantite - _stockInterne.at(c->composant);
+        }
     }
-    return ok == 0;
+    cout << "Reactif calcul total qte : " << ok << endl;
+    return (ok == 0);
 }
 
 /**
@@ -228,11 +230,18 @@ bool Batiment::isQuantiteReactifsOk() const
  */
 void Batiment::transfertStockConnexionToInterne()
 { // Pour chaque stockConnexion
-    for (auto &r : _stockConnexion)
-    { // Si elle s'ajoute bien au stockInterne
-        if (ajouterStockInterne(r))
-        { // On l'enleve du stockConnexion
-            r = TYPE_RESSOURCE::Rien;
+    // cerr << "Test de transfer ressrouce Interne" << endl;
+
+    for (uint dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST;
+         ++dir)
+    {
+        if (_connexions[dir].type != TypeConnexion::Output)
+        { // Si elle s'ajoute bien au stockInterne
+            if (ajouterStockInterne(_stockConnexion[dir]))
+            { // On l'enleve du stockConnexion
+                _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
+            }
         }
     }
 }
@@ -246,7 +255,6 @@ void Batiment::transfertStockConnexionToInterne()
  */
 bool Batiment::ajouterStockInterne(TYPE_RESSOURCE ress)
 {
-
     auto searchStockInterne = _stockInterne.find(ress);
 
     if (searchStockInterne == _stockInterne.end())
@@ -265,6 +273,7 @@ bool Batiment::ajouterStockInterne(TYPE_RESSOURCE ress)
             if (qteStockInterne < qteNecessaire)
             {
                 qteStockInterne++;
+                cout << "Ajout qte Interne : " << (*searchStockInterne).second << endl;
                 return true;
             }
         }
@@ -282,31 +291,51 @@ bool Batiment::ajouterStockInterne(TYPE_RESSOURCE ress)
  */
 bool Batiment::crafter()
 {
+    // cout << "Test de craft" << endl;
+
     connexion_t *connexionSortie = getConnexionSortie();
     DIRECTION dirSortie;
 
     if (connexionSortie == nullptr)
+    {
+        cerr << "Pas de sortie pour le craft" << endl;
         return false; // Pas de sortie
+    }
     else
+    {
         dirSortie = connexionSortie->direction;
+    }
 
     if (_stockConnexion[(short)dirSortie] != TYPE_RESSOURCE::Rien)
     { // Pas de place en sortie
+        cerr << "pas de place en sortie pour le craft : " << ressString[_stockConnexion[(short)dirSortie]] << endl;
         return false;
     }
 
-    if (isQuantiteReactifsOk())
-    { // Qte ok pour craft
-        // Consomme les ressources
-        videStockInterne();
-        // Produit la ressource
-        _stockConnexion[(short)dirSortie] = (*_formuleCraft->begin())->composant;
+    if (_isFormuleCraftDefine)
+    {
+        if (isQuantiteReactifsOk())
+        { // Qte ok pour craft
+            // Consomme les ressources
+            videStockInterne();
+            // Produit la ressource
+            _stockConnexion[(short)dirSortie] = (*_formuleCraft->begin())->composant;
 
-        // Test de verif 1elt formule = produit
-        if (!(*_formuleCraft->begin())->produit)
-            cerr << "PB 1elt formule pas un produit" << endl;
+            // Test de verif 1elt formule = produit
+            if (!(*_formuleCraft->begin())->produit)
+                cerr << "PB 1elt formule pas un produit" << endl;
 
-        return true;
+            cerr << "stock sortie : " << ressString[_stockConnexion[dirSortie]] << endl;
+            return true;
+        }
+        else
+        {
+            cerr << "Pas assez de réactifs" << endl;
+        }
+    }
+    else
+    {
+        cerr << "Formule pas defini" << endl;
     }
     return false;
 }
@@ -314,8 +343,4 @@ bool Batiment::crafter()
 void Batiment::remplirStock()
 {
     return Structure::remplirStock();
-}
-TYPE_RESSOURCE Batiment::livrerStock()
-{
-    return Structure::livrerStock();
 }

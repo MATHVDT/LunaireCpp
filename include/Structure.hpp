@@ -84,7 +84,7 @@ public:
 
     virtual void remplirStock();
     virtual TYPE_RESSOURCE livrerStock();
-    virtual list<TYPE_RESSOURCE> *getListCraftPossible() ;
+    virtual list<TYPE_RESSOURCE> *getListCraftPossible();
 
     // Gestion des structures connectées
     virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
@@ -117,6 +117,8 @@ public:
     void setPositionCarte(const Vector2u &pos);
 
     bool checkConnexionCircuit(Structure *s, bool commeSortie);
+
+    void afficherStock() const;
 };
 
 /***************************************************/
@@ -197,6 +199,16 @@ inline connexion_t *Structure::getConnexionSortie()
     return nullptr;
 }
 
-inline list<TYPE_RESSOURCE> *Structure::getListCraftPossible()  { return nullptr; }
+inline list<TYPE_RESSOURCE> *Structure::getListCraftPossible() { return nullptr; }
+
+inline void Structure::afficherStock() const
+{ // Affichage stock
+    cout << "Sotck structu " << _idStructure << " : ";
+    for (auto r : _stockConnexion)
+    {
+        cerr << " - " << ressString[r];
+    }
+    cerr << endl;
+}
 
 #endif

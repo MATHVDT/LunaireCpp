@@ -43,12 +43,12 @@ Mine::Mine(const Vector2u &pos,
     setSpriteTexture(0);
     cerr << "Mine(), id : " << _idMine << endl;
 
-    _stockConnexion[0] = TYPE_RESSOURCE::GisementFer;
-    _stockConnexion[1] = TYPE_RESSOURCE::GisementFer;
-    _stockConnexion[2] = TYPE_RESSOURCE::GisementFer;
-    _stockConnexion[3] = TYPE_RESSOURCE::GisementFer;
-    _stockConnexion[4] = TYPE_RESSOURCE::GisementFer;
-    _stockConnexion[5] = TYPE_RESSOURCE::GisementFer;
+    _stockConnexion[0] = TYPE_RESSOURCE::Rien;
+    _stockConnexion[1] = TYPE_RESSOURCE::Rien;
+    _stockConnexion[2] = TYPE_RESSOURCE::Rien;
+    _stockConnexion[3] = TYPE_RESSOURCE::Rien;
+    _stockConnexion[4] = TYPE_RESSOURCE::Rien;
+    _stockConnexion[5] = TYPE_RESSOURCE::Rien;
 
     for (auto r : _stockConnexion)
     {
@@ -145,11 +145,6 @@ void Mine::dessiner(float scaleSprite)
 
 /*******************************************************/
 
-void Mine::update()
-{
-    Batiment::update();
-}
-
 /**
  * @brief Remplir les stocks d'entrée dans la mine avec
  * les minerais
@@ -157,11 +152,22 @@ void Mine::update()
 void Mine::remplirStock()
 {
     TYPE_RESSOURCE gisement = typeSolToTypeRessource(_typeSol);
-    for (auto &stock : _stockConnexion)
+    for (uint dir = DIRECTION::NORD;
+         dir <= DIRECTION::NORDEST;
+         ++dir)
     {
-        // cerr << "Récupération Mine : " << (short)gisement << endl;
-        stock = gisement;
+        if (_connexions[dir].type != TypeConnexion::Output)
+        {
+            _stockConnexion[dir] = gisement;
+        }
+        // cerr << "Stock connexion Mine : " << ressString[_stockConnexion[dir]] << endl;
     }
+    // Affichage stock
+    // for (auto r : _stockConnexion)
+    // {
+    //     cerr << " - " << ressString[r];
+    // }
+    cerr << endl;
 }
 
 /*******************************************************/

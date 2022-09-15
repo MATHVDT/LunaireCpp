@@ -23,7 +23,11 @@ Texture *CaseMap::_texturesSol[5];
  * @warning CaseMap vierge il faut faire setCase après pour définir ses paramètres
  * @param Vector2f - *posistion = défaut Vector2f{0, 0}*
  */
-CaseMap::CaseMap(Vector2u pos) : _id(_nb++), _position{pos}, _typeSol(TYPE_SOL::Vierge), _sprite(new Sprite), _construction(nullptr)
+CaseMap::CaseMap(Vector2u pos)
+    : _id(_nb++), _position{pos},
+      _typeSol(TYPE_SOL::Vierge),
+       _sprite(new Sprite),
+        _construction(nullptr)
 {
     // set du sol et donc du sprite aussi
     setCase(_position, _typeSol);
@@ -137,6 +141,7 @@ void CaseMap::setScaleCaseMap(uint nbLignesCarte,
 }
 
 /*******************************************************/
+/*******************************************************/
 void CaseMap::chargerMemoireCaseMap()
 {
     CaseMap::chargerSprites("ressource/cheminTextures/cheminTexturesCases.txt");
@@ -146,6 +151,8 @@ void CaseMap::dechargerMemoireCaseMap()
 {
     CaseMap::dechargerSprites();
 }
+
+/*******************************************************/
 
 /**
  * @brief Charge les différents sprites des cases
@@ -197,7 +204,7 @@ void CaseMap::dechargerSprites()
         delete _texturesSol[k];
     }
 }
-
+/*******************************************************/
 /*******************************************************/
 
 /**

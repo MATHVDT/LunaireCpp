@@ -62,6 +62,9 @@ Manager *Manager::getInstance()
     return _singleton;
 }
 
+/*****************************************/
+/*****************************************/
+
 void Manager::chargerMemoireManager()
 {
     cerr << endl
@@ -78,6 +81,8 @@ void Manager::dechargerMemoireManager()
         delete _texturesManager[i];
     }
 }
+
+/*****************************************/
 
 /**
  * @brief Charge les textures du Manager en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
@@ -118,7 +123,9 @@ void Manager::chargerTextures(string fichierCheminsTexture)
     }
 }
 
-/******************************************************/
+/*****************************************/
+/*****************************************/
+
 void Manager::dessiner()
 {
     _menu->dessiner();
@@ -224,6 +231,7 @@ void Manager::run()
 
         if (contextGlobal->getUpdateTick())
         {
+            cout << endl;
             dessiner();
             contextGlobal->afficherFenetre();
             update();
@@ -445,6 +453,11 @@ void Manager::inverserSensPipeline(Structure *structSelect)
     }
 }
 
+/**
+ * @brief Valide le craft d'un batiment s'il est bien selectionné.
+ *
+ * @param Structure * - *s*
+ */
 void Manager::validerCraft(Structure *s)
 {
     // Vérife que c'est bien en batiment mais normalement oui

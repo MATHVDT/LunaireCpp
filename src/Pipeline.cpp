@@ -131,11 +131,6 @@ void Pipeline::dessiner(float scaleSprite)
     _contenuPipeline.dessiner(scaleSprite);
 }
 
-void Pipeline::update()
-{
-    Structure::update();
-}
-
 void Pipeline::process()
 {
     Structure::process();
@@ -143,6 +138,7 @@ void Pipeline::process()
     DIRECTION dirInput = DIRECTION::NULLDIRECTION;
     DIRECTION dirOutput = DIRECTION::NULLDIRECTION;
 
+    // Récuperation des Entrée/Sortie
     for (uint dir = DIRECTION::NORD;
          dir <= DIRECTION::NORDEST;
          ++dir)
@@ -150,22 +146,27 @@ void Pipeline::process()
         if (_connexions->type == TypeConnexion::Input)
         {
             dirInput = (DIRECTION)dir;
+
+            if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
+            { // Rien en entree
+                return;
+            }
         }
         else if (_connexions->type == TypeConnexion::Output)
         {
             dirOutput = (DIRECTION)dir;
-
-            if (_stockConnexion[dirOutput] == TYPE_RESSOURCE::Rien)
-            {
-                return;
-            }
         }
     }
 
+    // Ya bien 1 entree et 1 sortie
     if (dirInput != DIRECTION::NULLDIRECTION &&
         dirOutput != DIRECTION::NULLDIRECTION)
-    {
-        _stockConnexion[dirOutput] = _stockConnexion[dirInput];
+    { // Ya de la place en sortie ?
+        if (_stockConnexion[dirOutput] == TYPE_RESSOURCE::Rien)
+        {
+            _stockConnexion[dirOutput] = _stockConnexion[dirInput];
+            _stockConnexion[dirInput] = TYPE_RESSOURCE::Rien;
+        }
     }
 }
 
@@ -236,7 +237,8 @@ bool Pipeline::connecterStructure(Structure *s, bool commeSortie, bool connexion
         { // Il y a déjà deux connexions
             for (auto &c : _connexions)
             {
-                if (c.type == TypeConnexion::Undefined)
+                if (c.type != TypeConnexion::Input &&
+                    c.type != TypeConnexion::Output)
                 {
                     c.type = TypeConnexion::SealOff;
                 }
@@ -472,8 +474,10 @@ bool Pipeline::inverserSens()
 TYPE_RESSOURCE Pipeline::livrerStock()
 {
     // TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
+    TYPE_RESSOURCE r = Structure::livrerStock();
 
-    return Structure::livrerStock();
+    cerr << "Livraison pipeline : " << ressString[r] << endl;
+    return r;
 }
 
 /**

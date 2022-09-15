@@ -65,7 +65,6 @@ public:
     virtual void process();
 
     virtual void remplirStock();
-    virtual TYPE_RESSOURCE livrerStock();
     virtual list<TYPE_RESSOURCE> *getListCraftPossible();
 
     // Gestion des structures connectées

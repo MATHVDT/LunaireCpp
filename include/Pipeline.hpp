@@ -149,7 +149,6 @@ public:
     virtual void init();
 
     virtual void dessiner(float scaleSprite) override;
-    virtual void update();
     virtual void process();
 
     virtual bool updateOrientation() override;
