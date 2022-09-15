@@ -6,7 +6,7 @@
 ./ressource/boutons/boutonAtelier.png
 ./ressource/boutons/boutonCuve.png
 ./ressource/boutons/boutonChantierSpatial.png
-./ressource/boutons/boutonValiderCraft.png
+./ressource/boutons/InkedboutonValiderCraft.jpg
 ./ressource/boutons/boutonResetCraft.png
 ./ressource/boutons/boutonUpgrade.png
 ./ressource/boutons/boutonDetruire.png

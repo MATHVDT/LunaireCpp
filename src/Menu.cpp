@@ -128,7 +128,7 @@ void Menu::dessiner(float scaleSprite)
 void Menu::dessinerBatimentSelectCraftUndefine()
 {
     for (auto &btn : _boutonBatimentSelect)
-    { // Dessine tous les btn sauf reset Action
+    { // Dessine tous les btn sauf reset craft
         if (btn->getBoutonType() != BoutonType::boutonResetCraft)
         {
             btn->dessiner();
@@ -401,10 +401,8 @@ void Menu::setSectionMenu(SectionMenu section)
     {
     case SectionMenu::BatimentSelectCraftDefine:
         _boutonBatimentSelect[3]->setState(BoutonState::Disabled); // ValiderCraft
-        _boutonBatimentSelect[4]->setState(BoutonState::Normal);   // ResetCraft
         break;
     case SectionMenu::BatimentSelectCraftUndefine:
-        _boutonBatimentSelect[3]->setState(BoutonState::Normal);   // ValiderCraft
         _boutonBatimentSelect[4]->setState(BoutonState::Disabled); // ResetCraft
         break;
     default:
@@ -433,7 +431,6 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             if (btn->checkIn(posMouseEcran) &&
                 !Mouse::isButtonPressed(Mouse::Left))
             {
-                cout << "HELO 0000" << endl;
                 resetBoutonsActive();
                 btn->setState(BoutonState::Active);
                 contextGlobal->setGameEvent(btn->getAction());
@@ -454,6 +451,7 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
             {
                 changement = (btn->getState() != BoutonState::Normal);
                 btn->setState(BoutonState::Normal);
+                changement = true;
             }
         }
     }
@@ -557,11 +555,8 @@ bool Menu::resetBoutonsActive()
 
     for (auto &btn : boutons)
     {
-        if (btn->getState() == BoutonState::Active)
-        {
-            btn->setState(BoutonState::Normal);
-            changement = true;
-        }
+        btn->setState(BoutonState::Normal);
+        changement = true;
     }
     return changement;
 }

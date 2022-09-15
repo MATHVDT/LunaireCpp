@@ -386,6 +386,7 @@ void Manager::updateEvent()
         inverserSensPipeline(structSelect);
         break;
     case GameEvent::ValiderCraft:
+        cout << "EVENT VALIDER CRAFT" << endl;
         validerCraft(structSelect);
         break;
     case GameEvent::ResetCraft:
@@ -446,7 +447,7 @@ void Manager::inverserSensPipeline(Structure *structSelect)
 
 void Manager::validerCraft(Structure *s)
 {
-
+    // Vérife que c'est bien en batiment mais normalement oui
     if (typeid(*s).hash_code() ==
             typeid(Mine).hash_code() ||
         typeid(*s).hash_code() ==
@@ -454,15 +455,18 @@ void Manager::validerCraft(Structure *s)
     { // Récup de la ressource select à craft
         TYPE_RESSOURCE rCraft = _menu->getRessourceCraftSelect();
 
+        cout << "Ress select : " << ressString[rCraft] << endl;
+
         if (rCraft != TYPE_RESSOURCE::Rien)
         {
             cout << "Manager valider Craft ok" << endl;
             // Set la formule
             ((Batiment *)s)->setFormuleCraft(rCraft);
 
-            _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
-
             contextGlobal->resetGameEvent();
+
+            _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
         }
     }
+    contextGlobal->resetGameEvent();
 }
