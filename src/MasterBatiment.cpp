@@ -29,7 +29,7 @@ void MasterBatiment ::update()
  */
 void MasterBatiment::process()
 {
-    cout << "Process MasterBatiment : " << endl;
+    // cout << "Process MasterBatiment : " << endl;
     afficherStock();
 
     Batiment::process();
@@ -41,7 +41,8 @@ void MasterBatiment::process()
     {
         r = _stockConnexion[dir];
         if (r != TYPE_RESSOURCE::Rien)
-            cout << "VENTE DE : " << ressString[r] << endl;
+            cout << "!!!!!!!!!! VENTE DE : " << ressString[r] << "!!!!!!!!!!!" << endl
+                 << endl<< endl;
     }
 }
 

@@ -401,8 +401,16 @@ void Menu::setSectionMenu(SectionMenu section)
     {
     case SectionMenu::BatimentSelectCraftDefine:
         _boutonBatimentSelect[3]->setState(BoutonState::Disabled); // ValiderCraft
+        if (_boutonBatimentSelect[4]->getState() == BoutonState::Disabled)
+        {
+            _boutonBatimentSelect[4]->setState(BoutonState::Normal); // ResetCraft
+        }
         break;
     case SectionMenu::BatimentSelectCraftUndefine:
+        if (_boutonBatimentSelect[3]->getState() == BoutonState::Disabled)
+        {
+            _boutonBatimentSelect[3]->setState(BoutonState::Normal); // ValiderCraft
+        }
         _boutonBatimentSelect[4]->setState(BoutonState::Disabled); // ResetCraft
         break;
     default:
@@ -555,8 +563,34 @@ bool Menu::resetBoutonsActive()
 
     for (auto &btn : boutons)
     {
-        btn->setState(BoutonState::Normal);
-        changement = true;
+        if (btn->getState() == BoutonState::Active)
+        {
+            btn->setState(BoutonState::Normal);
+            changement = true;
+        }
+    }
+    return changement;
+}
+/**
+ * @brief Remet en normal tous les boutons hover
+ *
+ * @return true
+ * @return false
+ */
+bool Menu::resetBoutonsHover()
+{
+    bool changement = false;
+    _btnActive = false;
+
+    auto boutons = getBoutonsSection();
+
+    for (auto &btn : boutons)
+    {
+        if (btn->getState() == BoutonState::Hover)
+        {
+            btn->setState(BoutonState::Normal);
+            changement = true;
+        }
     }
     return changement;
 }

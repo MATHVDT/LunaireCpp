@@ -154,8 +154,8 @@ public:
     virtual bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
 
-    TYPE_RESSOURCE livrerStock();
-    virtual void remplirStock();
+    // TYPE_RESSOURCE livrerStock();
+    // virtual void remplirStock();
 
     // Gestion des structures connectées
     virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false) override;

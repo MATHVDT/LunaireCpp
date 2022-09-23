@@ -13,9 +13,9 @@
 
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 uint ContextGlobal::_nbTicksMax = 4; // = 4
-Time ContextGlobal::_deltaTick = seconds(1.f);
-// Time ContextGlobal::_deltaTick = seconds(.25f); // = 25ms
-// Time ContextGlobal::_deltaTick = seconds(.1f); // = 25ms
+// Time ContextGlobal::_deltaTick = seconds(1.f);
+Time ContextGlobal::_deltaTick = seconds(.25f); // = 250ms
+// Time ContextGlobal::_deltaTick = seconds(.05f); // = 50ms
 
 ContextGlobal::ContextGlobal()
 {
@@ -74,7 +74,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
     _caseHover = nullptr;
     _caseSelectionnee = nullptr;
 
-    _gameEvent = GameEvent::PlacerMine;
+    _gameEvent = GameEvent::AucunGameEvent;
 
     _clock.restart();
     _timeSaveTick = _clock.getElapsedTime();
@@ -121,6 +121,7 @@ void ContextGlobal::update()
     {
         if (getMouseWorldPos().x < getLargeurMapEcran())
         {
+            _menu->resetBoutonsHover();
             calculCaseHover();
         }
         else
@@ -340,4 +341,5 @@ void ContextGlobal::resetGameEvent()
 {
     _gameEvent = GameEvent::AucunGameEvent;
     _menu->resetBoutonsActive();
+    _menu->resetBoutonsHover();
 }

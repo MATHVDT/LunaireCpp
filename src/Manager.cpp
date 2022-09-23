@@ -177,6 +177,9 @@ void Manager::updateStructure()
     Structure *curseurStruct = nullptr;
     connexion_t *c = nullptr;
 
+    cerr << "Nouveau tour d'update" << endl
+         << endl;
+
     while (!queueStruct.empty())
     {
         // Récuperation dans la file
@@ -190,18 +193,23 @@ void Manager::updateStructure()
              ++dir)
         {
             c = curseurStruct->getConnexions() + dir;
-            // if (c->structure != nullptr)
+
             if (c->type == TypeConnexion::Input)
             {
                 if (c->structure == nullptr)
+                {
                     cerr << "ERREUR connexion Input avec pas de structure" << endl;
+                }
                 queueStruct.push(c->structure);
             }
         }
 
         // Traitement de la structure
+        cerr << "Update struct id : " << curseurStruct->getIdStructure() << endl;
         curseurStruct->update();
+        cerr << endl;
     }
+    cerr << endl;
 }
 
 void Manager::update()
@@ -231,7 +239,7 @@ void Manager::run()
 
         if (contextGlobal->getUpdateTick())
         {
-            cout << endl;
+            // cout << endl;
             dessiner();
             contextGlobal->afficherFenetre();
             update();

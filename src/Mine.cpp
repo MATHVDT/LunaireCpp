@@ -163,10 +163,11 @@ void Mine::remplirStock()
         // cerr << "Stock connexion Mine : " << ressString[_stockConnexion[dir]] << endl;
     }
     // Affichage stock
-    // for (auto r : _stockConnexion)
-    // {
-    //     cerr << " - " << ressString[r];
-    // }
+    cerr << "Remplir mine : ";
+    for (auto r : _stockConnexion)
+    {
+        cerr << " - " << ressString[r];
+    }
     cerr << endl;
 }
 

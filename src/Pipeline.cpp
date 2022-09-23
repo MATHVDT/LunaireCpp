@@ -133,7 +133,7 @@ void Pipeline::dessiner(float scaleSprite)
 
 void Pipeline::process()
 {
-    Structure::process();
+    // cerr << "Process Pipeline : " << endl;
 
     DIRECTION dirInput = DIRECTION::NULLDIRECTION;
     DIRECTION dirOutput = DIRECTION::NULLDIRECTION;
@@ -143,30 +143,39 @@ void Pipeline::process()
          dir <= DIRECTION::NORDEST;
          ++dir)
     {
-        if (_connexions->type == TypeConnexion::Input)
+        if ((_connexions + dir)->type == TypeConnexion::Input)
         {
+            cerr << "dirInput trouvé : " << dir << endl;
             dirInput = (DIRECTION)dir;
 
-            if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
+            if (_stockConnexion[dirInput] == TYPE_RESSOURCE::Rien)
             { // Rien en entree
-                return;
+              return;
             }
         }
-        else if (_connexions->type == TypeConnexion::Output)
+        else if ((_connexions + dir)->type == TypeConnexion::Output)
         {
             dirOutput = (DIRECTION)dir;
+            cerr << "dirInput trouvé : " << dir << endl;
+
+            if (_stockConnexion[dirOutput] != TYPE_RESSOURCE::Rien)
+            { // Pas de place en sortie
+              return;
+            }
         }
     }
+
+    // cerr << "dirInput : " << dirInput << " et dirOutput : " << dirOutput << endl;
 
     // Ya bien 1 entree et 1 sortie
     if (dirInput != DIRECTION::NULLDIRECTION &&
         dirOutput != DIRECTION::NULLDIRECTION)
-    { // Ya de la place en sortie ?
-        if (_stockConnexion[dirOutput] == TYPE_RESSOURCE::Rien)
-        {
-            _stockConnexion[dirOutput] = _stockConnexion[dirInput];
-            _stockConnexion[dirInput] = TYPE_RESSOURCE::Rien;
-        }
+    { // Ya bien une entrée et une sortie
+
+        // cerr << "Déplacement dans le pipeline entree-sortie" << endl;
+
+        _stockConnexion[dirOutput] = _stockConnexion[dirInput];
+        _stockConnexion[dirInput] = TYPE_RESSOURCE::Rien;
     }
 }
 
@@ -471,21 +480,21 @@ bool Pipeline::inverserSens()
  *
  * @return TYPE_RESSOURCE - *issue du stock de sortie*
  */
-TYPE_RESSOURCE Pipeline::livrerStock()
-{
-    // TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
-    TYPE_RESSOURCE r = Structure::livrerStock();
+// TYPE_RESSOURCE Pipeline::livrerStock()
+// {
+//     // TYPE_RESSOURCE r = _contenuPipeline.livrerStock(_stockSortie);
+//     TYPE_RESSOURCE r = Structure::livrerStock();
 
-    cerr << "Livraison pipeline : " << ressString[r] << endl;
-    return r;
-}
+//     // cerr << "Livraison pipeline : " << ressString[r] << endl;
+//     return r;
+// }
 
 /**
  * @brief Récupère la ressource de la Structure connectée en entrée (son stock sortie), puis le place dans son stock sortie [Structure::remplirStock] et ensuite remplit ContenuePipeline
  *
  */
-void Pipeline::remplirStock()
-{
-    Structure::remplirStock();
-    // _contenuPipeline.remplirStock(_stockEntree);
-}
+// void Pipeline::remplirStock()
+// {
+//     Structure::remplirStock();
+//     // _contenuPipeline.remplirStock(_stockEntree);
+// }

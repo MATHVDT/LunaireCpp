@@ -110,6 +110,7 @@ void Structure::update()
 {
     // Récupérer les ressources des entrées
     // this->remplirStock();
+    remplirStock();
 
     // // Traiter les ressources
     process();
@@ -119,7 +120,6 @@ void Structure::update()
 void Structure::process()
 {
     // cerr << "Process structure : " << _idStructure << endl;
-    remplirStock();
 }
 
 /*******************************************************/
@@ -142,8 +142,10 @@ TYPE_RESSOURCE Structure::livrerStock()
 
     DIRECTION dir = coSortie->direction;
     ress = _stockConnexion[dir];
-    cerr << "livrer stock Structure : " << ressString[ress] << endl;
+
     _stockConnexion[dir] = TYPE_RESSOURCE::Rien;
+
+    // cerr << "livrer stock Structure " << _idStructure << " : " << ressString[ress] << endl;
 
     return ress;
 }
@@ -162,11 +164,13 @@ void Structure::remplirStock()
         // S'il s'agit d'une entrée
         if (_connexions[dir].type == TypeConnexion::Input)
         {
+            // cerr << "Check Input stock dir : " << dir  << " ressource : " << ressString[_stockConnexion[dir]] << endl;
+
             if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
             { // Il ya de la place
                 ress = _connexions[dir].structure->livrerStock();
 
-                cerr << "Reception de livraison dans remplir stock struct : " << ressString[ress] << endl;
+                cerr << "livraison de struct id : " << _connexions[dir].structure->getIdStructure() << " à struct id : " << _idStructure << " (dir : " << dir << ") : " << ressString[ress] << endl;
 
                 _stockConnexion[dir] = ress;
             }
@@ -211,7 +215,6 @@ bool Structure::checkConnexionPossible(Structure *s, bool commeSortie)
     // Vérifie sortie est libre
     if (commeSortie && getASortie())
     { // Ya déjà une structure en sortie
-        cout << "ICI" << endl;
         return false;
     }
 
@@ -451,3 +454,13 @@ Structure *Structure::getSortie() const
 }
 
 /*******************************************************/
+
+/**
+ * @brief Renvoie la liste des crafts possible. Par défault nullptr. Sauf si c'est Batiment (virtual)
+ *
+ * @return list<TYPE_RESSOURCE>*
+ */
+list<TYPE_RESSOURCE> *Structure::getListCraftPossible()
+{
+    return nullptr;
+}

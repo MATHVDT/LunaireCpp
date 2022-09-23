@@ -74,7 +74,6 @@ void Batiment::update()
 
 void Batiment::process()
 {
-    Structure::process();
 
     if (_isFormuleCraftDefine)
     {

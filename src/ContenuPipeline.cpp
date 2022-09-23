@@ -79,7 +79,6 @@ void ContenuPipeline::chargerTextures(string fichierCheminsTexture)
         texture = new Texture();
         texture->loadFromFile(cheminTexture);
 
-        // cout << "iciciciciciciciciciciciciici" << endl;
 
         _texturesTypeRessource = texture;
 

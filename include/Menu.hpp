@@ -82,6 +82,7 @@ public:
     bool setBoutonsClick();
     void setBoutonsActive(bool val = true);
     bool resetBoutonsActive();
+    bool resetBoutonsHover();
 
     void setSectionMenu(SectionMenu section);
     void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft);

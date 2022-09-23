@@ -199,8 +199,6 @@ inline connexion_t *Structure::getConnexionSortie()
     return nullptr;
 }
 
-inline list<TYPE_RESSOURCE> *Structure::getListCraftPossible() { return nullptr; }
-
 inline void Structure::afficherStock() const
 { // Affichage stock
     cout << "Sotck structu " << _idStructure << " : ";
