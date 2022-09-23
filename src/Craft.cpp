@@ -216,6 +216,8 @@ void afficherFormuleCraft(ostream &monFlux)
     }
 }
 
+list<TYPE_RESSOURCE> craftPossible(Structure *s, TYPE_RESSOURCE stock[NB_CONNEXIONS]) { return craftPossible(typeid(*s).hash_code(), stock); }
+
 /**
  * @brief Donne la liste des ressources craftables
  *

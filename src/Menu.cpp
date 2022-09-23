@@ -36,6 +36,8 @@ Menu::Menu()
       _boutonBatimentSelect{5},
       _listCraftPossible(nullptr),
       _tabCraftPossible{15},
+    //   _listFormuleCraft{nullptr},
+    //   _tabFormuleCraft{5},
       _craftHover(-1),
       _craftSelect(-1)
 {
@@ -183,7 +185,28 @@ void Menu::dessinerBatimentSelectCraftDefine()
             btn->dessiner();
         }
     }
+    
     // Afficher formule
+    // if (_listFormuleCraft == nullptr)
+    // {
+    //     cerr << "Pas de formule de craft à afficher" << endl;
+    //     return;
+    // }
+
+    // uint nbEltFormule = _listFormuleCraft->size();
+    // if (nbEltFormule == 0)
+    // {
+    //     cerr << "Formule vide, pas d'elt" << endl;
+    //     return;
+    // }
+
+    // FormuleCraft_t *eltFormule = nullptr;
+
+    // for (uint i = 0; i < nbEltFormule; ++i)
+    // { // Pour chaque elt de la formule
+    //     eltFormule = *(_listFormuleCraft.begin() + i);
+    //     _tabFormuleCraft[i].setTextureRect(Ressource::getZoomTexture(eltFormule);
+    // }
 }
 
 /*******************************************************/

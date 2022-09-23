@@ -16,6 +16,7 @@
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
 #include "Ressource.hpp"
+// #include "Craft.hpp"
 
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
@@ -54,6 +55,8 @@ private:
     // Bouton *_boutonsModifTuyau;
     list<TYPE_RESSOURCE> *_listCraftPossible;
     vector<RectangleShape> _tabCraftPossible;
+    // list<FormuleCraft_t *> _listFormuleCraft;
+    // vector<RectangleShape> _tabFormuleCraft;
     int _craftHover, _craftSelect;
 
 public: // Static
@@ -86,6 +89,7 @@ public:
 
     void setSectionMenu(SectionMenu section);
     void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft);
+    // void setListFormuleCraft(list<FormuleCraft_t *> listCraft);
 
 private:
     void translaterBoutons(const Vector2f &dirVect);
@@ -125,6 +129,8 @@ inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
     }
     _listCraftPossible = listRessCraft;
 }
+
+// inline void Menu::setListFormuleCraft(list<FormuleCraft_t *> listCraft) { _listFormuleCraft = listCraft; }
 
 inline TYPE_RESSOURCE Menu::getRessourceCraftSelect()
 {

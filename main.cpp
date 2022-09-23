@@ -71,6 +71,7 @@ void testPartie()
 
     CaseMap::chargerMemoireCaseMap();
     Mine::chargerMemoireMines();
+    Fonderie::chargerMemoireFonderies();
     Pipeline::chargerMemoirePipelines();
     Manager::chargerMemoireManager();
     ContenuPipeline::chargerMemoireTypeRessource();
@@ -85,6 +86,7 @@ void testPartie()
 
     CaseMap::dechargerMemoireCaseMap();
     Mine::dechargerMemoireMines();
+    Fonderie::dechargerMemoireFonderies();
     Pipeline::dechargerMemoirePipelines();
     Manager::dechargerMemoireManager();
     ContenuPipeline::dechargerMemoireTypeRessource();

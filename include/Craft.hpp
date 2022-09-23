@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "EnumTypeRessource.hpp"
+#include "EnumTypeStructure.hpp"
 #include "Structure.hpp"
 // #include "Mine.hpp"
 // #include "Fonderie.hpp"
@@ -64,9 +65,9 @@ void deleteCraft();
 void afficherFormuleCraft(ostream &monFlux = cout);
 
 list<TYPE_RESSOURCE> craftPossible(Structure *s,
-                                   TYPE_RESSOURCE stock[NB_CONNEXIONS]);
+                                   TYPE_RESSOURCE stock[6]);
 list<TYPE_RESSOURCE> craftPossible(const size_t hash,
-                                   TYPE_RESSOURCE stock[NB_CONNEXIONS]);
+                                   TYPE_RESSOURCE stock[6]);
 
 void combinate(vector<TYPE_RESSOURCE> e,
                int perm[], int index, int n, int k,
@@ -79,6 +80,5 @@ ulong concatBinListRessource(const list<TYPE_RESSOURCE> &combiRessources);
 /*                 Fonctions inline                */
 /***************************************************/
 
-inline list<TYPE_RESSOURCE> craftPossible(Structure *s, TYPE_RESSOURCE stock[NB_CONNEXIONS]) { return craftPossible(typeid(*s).hash_code(), stock); }
 
 #endif

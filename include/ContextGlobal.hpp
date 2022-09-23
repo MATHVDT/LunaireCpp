@@ -14,6 +14,7 @@
 #include "EnumTypeStructure.hpp"
 #include "EnumTypeRessource.hpp"
 
+#include "Craft.hpp"
 #include "Carte.hpp"
 #include "Menu.hpp"
 

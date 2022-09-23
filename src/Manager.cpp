@@ -263,18 +263,42 @@ bool Manager::placerStructure()
 
     Structure *structAPlacer = nullptr;
 
-    switch (editionStructSelect)
+    // switch (editionStructSelect)
+    // {
+    // case TYPE_STRUCTURE::Pipeline:
+    //     structAPlacer = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
+    //     break;
+    // case TYPE_STRUCTURE::Mine:
+    //     structAPlacer = new Mine{
+    //         (Vector2u)caseSelect->getPositionCarte(),
+    //         caseSelect->getTypeSol()};
+    //     break;
+    // case TYPE_STRUCTURE::MasterBatiment:
+    //     structAPlacer = new MasterBatiment{
+    //         (Vector2u)caseSelect->getPositionCarte()};
+    //     _endpointStructure.push(structAPlacer);
+    //     break;
+    // default:
+    //     break;
+    // }
+
+    switch (contextGlobal->getGameEvent())
     {
-    case TYPE_STRUCTURE::Pipeline:
+    case GameEvent::PlacerPipeline:
         structAPlacer = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
         break;
-    case TYPE_STRUCTURE::Mine:
+    case GameEvent::PlacerMine:
         structAPlacer = new Mine{
             (Vector2u)caseSelect->getPositionCarte(),
             caseSelect->getTypeSol()};
         break;
-    case TYPE_STRUCTURE::MasterBatiment:
+    case GameEvent::PlacerMarchand:
         structAPlacer = new MasterBatiment{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
+        break;
+    case GameEvent::PlacerFonderie:
+        structAPlacer = new Fonderie{
             (Vector2u)caseSelect->getPositionCarte()};
         _endpointStructure.push(structAPlacer);
         break;
@@ -417,10 +441,7 @@ void Manager::updateEvent()
     // Essayer de trouver une game event pour ca
     if (structSelect != nullptr)
     {
-        if (typeid(*structSelect).hash_code() ==
-                typeid(Mine).hash_code() ||
-            typeid(*structSelect).hash_code() ==
-                typeid(Fonderie).hash_code())
+        if (isBatimentCraft(structSelect))
         {
 
             Batiment *bat = ((Batiment *)structSelect);
@@ -432,6 +453,7 @@ void Manager::updateEvent()
             }
             else
             {
+                // _menu->setListFormuleCraft(bat->getFormuleCraft());
                 _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
                 // Set Men bat select define
             }

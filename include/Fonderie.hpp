@@ -18,7 +18,7 @@
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierTexturesBoutons;
+extern string cheminFichierTexturesFonderies;
 
 using namespace std;
 using namespace sf;
