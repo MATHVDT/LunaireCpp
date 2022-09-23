@@ -402,11 +402,12 @@ void Manager::updateEvent()
         inverserSensPipeline(structSelect);
         break;
     case GameEvent::ValiderCraft:
-        cout << "EVENT VALIDER CRAFT" << endl;
+        cerr << "EVENT VALIDER CRAFT" << endl;
         validerCraft(structSelect);
         break;
     case GameEvent::ResetCraft:
-        cout << "EVENT RESET CRAFT" << endl;
+        cerr << "EVENT RESET CRAFT" << endl;
+        resetCraft(structSelect);
         break;
 
     default:
@@ -462,6 +463,25 @@ void Manager::inverserSensPipeline(Structure *structSelect)
 }
 
 /**
+ * @brief Test si la structure est bien un Batiment et à des crafts.
+ *
+ * @details Test si c'est un des Batiments suivant :
+ * - Mine
+ * - Fonderie
+ *
+ * @param Structure * - *s*
+ * @return true - *Bien un Batiment avec des crafts*
+ * @return false - *Pas un Batiment avec des crafts*
+ */
+bool Manager::isBatimentCraft(Structure *s)
+{
+    return (typeid(*s).hash_code() ==
+                typeid(Mine).hash_code() ||
+            typeid(*s).hash_code() ==
+                typeid(Fonderie).hash_code());
+}
+
+/**
  * @brief Valide le craft d'un batiment s'il est bien selectionné.
  *
  * @param Structure * - *s*
@@ -469,10 +489,7 @@ void Manager::inverserSensPipeline(Structure *structSelect)
 void Manager::validerCraft(Structure *s)
 {
     // Vérife que c'est bien en batiment mais normalement oui
-    if (typeid(*s).hash_code() ==
-            typeid(Mine).hash_code() ||
-        typeid(*s).hash_code() ==
-            typeid(Fonderie).hash_code())
+    if (isBatimentCraft(s))
     { // Récup de la ressource select à craft
         TYPE_RESSOURCE rCraft = _menu->getRessourceCraftSelect();
 
@@ -484,10 +501,26 @@ void Manager::validerCraft(Structure *s)
             // Set la formule
             ((Batiment *)s)->setFormuleCraft(rCraft);
 
-            contextGlobal->resetGameEvent();
-
             _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
         }
+    }
+    contextGlobal->resetGameEvent();
+}
+
+/**
+ * @brief Reset le craft d'un batiment s'il est bien selectionné.
+ *
+ * @param Structure * - *s*
+ */
+void Manager::resetCraft(Structure *s)
+{
+    if (isBatimentCraft(s))
+    {
+        ((Batiment *)s)->resetFormuleCraft();
+    }
+    else
+    {
+        cerr << "Pas Un batiment avec des crafts, peut être un pb car pas censé arriver" << endl;
     }
     contextGlobal->resetGameEvent();
 }

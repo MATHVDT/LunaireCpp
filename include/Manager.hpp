@@ -87,7 +87,10 @@ private:
     Manager();
 
     void inverserSensPipeline(Structure *structSelect);
-    void validerCraft(Structure* s);
+    void validerCraft(Structure *s);
+    void resetCraft(Structure *s);
+
+    bool isBatimentCraft(Structure *s);
 
     bool integrationStructureVoisinage();
 
