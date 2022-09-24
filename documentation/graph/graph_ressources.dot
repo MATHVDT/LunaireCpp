@@ -1,25 +1,30 @@
 digraph {
     randir=TP;
+    // splines=ortho
+    splines=curve	
+    splines=true	
+    ratio=1
     // Sol
-    subgraph SOL{
+    subgraph cluster_SOL{
+        labelloc="c"
+        fontsize=30
+        label="Type de Sol"
         rank=same; 
         node [style="filled,solid", color="", shape="plaintext"]
         Vierge [style="solid", color="", label="Vierge"];
+        GisementGlace [label="Gisement Glace"];
         GisementOr [label="Gisement Or"];
         GisementFer [label="Gisement Fer"];
         GisementTitane [label="Gisement Titane"];
         GisementSilicium [label="Gisement Silicium"];
-        GisementGlace [label="Gisement Glace"];
         GisementAluminium [label="Gisement Aluminium"];
-        // GisementMagnesium [label="Gisement Magnesium"];
-        // GisementCalcium [label="Gisement Calcium"];
-        // GisementSoduim [label="Gisement Soduim"];
+
         Montage [label="Montage"];
         Trou [label="Trou"];
     }
 
     // Matière Première
-    subgraph MATIERE_PREMIERE{
+    subgraph cluster_MATIERE_PREMIERE{
         rank=same; 
         node [style="filled,solid", color="", shape="egg"]
         PoussiereRegolite [label="Poussiere Regolite"];
@@ -29,54 +34,52 @@ digraph {
         MineraiFer [label="Minerai Fer"];
         MineraiOr [label="Minerai Or"];
         MineraiAluminium [label="Minerai Aluminium"];
-        // MineraiMagnesium [label="Minerai Magnesium"];
-        // MineraiCalcium [label="Minerai Calcium"];
-        // MineraiSoduim [label="Minerai Soduim"];
     }
 
     // Lingot
-    subgraph LINGOT{
+    subgraph cluster_LINGOT{
         rank=same; 
         node [style="filled,solid", color="", shape="rectangle"]
         LingotRegolite  [label="Lingot Regolite"];
+        Eau [label="Eau"];     
         LingotTitane  [label="Lingot Titane"];
         LingotSilicium  [label="Lingot Silicium"];
         LingotFer  [label="Lingot Fer"];
         LingotOr  [label="Lingot Or"];
         LingotAluminium  [label="Lingot Aluminium"];
-        // LingotMagnesium  [label="Lingot Magnesium"];
-        // LingotCalcium  [label="Lingot Calcium"];
-        // LingotSoduim  [label="Lingot Soduim"];
     }
 
     Helium3 [style="filled,solid", color="", label="Helium3",shape="Mcircle"];
     MateriauxConstruction  [style="filled,solid", color="", label="Materiaux Construction",shape="rectangle"];
 
-    // Gaz
-    subgraph GAZ{
-        rank=same; 
-        node [style="filled,solid", color="", shape="egg"]
-        GazOxygene [label="Gaz Oxygene"];
-        GazHydrogene [label="Gaz Hydrogene"];
-    }
 
-    // Liquide
-    subgraph LIQUIDE{
-        // rank=same; 
-        Eau [label="Eau"];     
-        node [style="filled,solid", color="", shape="egg"]
-        LiquideHydrogene [label="Liquide Hydrogene"];
-        LiquideOxygene [label="Liquide Oxygene"];
-        PeroxydeHydrogene [label="Peroxyde Hydrogene"];
-    }
+    subgraph CUVE_CRAFT
+    {
+        ratio="compress"
+        // Gaz
+        subgraph GAZ{
+            rank=same; 
+            node [style="filled,solid", color="", shape="egg"]
+            GazOxygene [label="Gaz Oxygene"];
+            GazHydrogene [label="Gaz Hydrogene"];
+        }
 
-    // Carburant
-    subgraph CARBURANT{
-        // rank=same; 
-        node [style="filled,solid", color="", shape="cylinder"]
-        Carburant  [label="Carburant"];
-        Carburant1  [label="Carburant1"];
-        Carburant2  [label="Carburant2"];
+        // Liquide
+        subgraph LIQUIDE{
+            // rank=same; 
+            node [style="filled,solid", color="", shape="egg"]
+            LiquideHydrogene [label="Liquide Hydrogene"];
+            LiquideOxygene [label="Liquide Oxygene"];
+            PeroxydeHydrogene [label="Peroxyde Hydrogene"];
+        }
+
+        // Carburant
+        subgraph CARBURANT{
+            // rank=same; 
+            node [style="filled,solid", color="", shape="cylinder"]
+            Carburant1  [label="Carburant1"];
+            Carburant2  [label="Carburant2"];
+        }
     }
 
     // Craft
@@ -115,74 +118,190 @@ digraph {
         VaisseauLuxe [label="Vaisseau Luxe"];
     }
 
+    subgraph VAISSEAU_SATELLITE
+    {
+        fontsize="25"
+
+       subgraph cluster_VAISSEAU{
+            labelloc="b";
+            label="Vaisseau";
+            
+            // VaisseauFragile
+            subgraph cluster_VaisseauFragile{
+                labelloc="b";
+                label="VaisseauFragile";
+                VaisseauFragile1; 
+                VaisseauFragile2; 
+                VaisseauFragile3;
+            }
+    
+            // VaisseauRobuste
+            subgraph cluster_VaisseauRobuste{
+                labelloc="b";
+                label="VaisseauRobuste";
+                VaisseauRobuste1; 
+                VaisseauRobuste2; 
+                VaisseauRobuste3;
+            }
+        }
+        
+        subgraph cluster_SATELLITE
+        {
+            labelloc="b";
+            label="Satellite";
+
+            // SatelliteFragile
+            subgraph cluster_SatelliteFragile{
+                labelloc="b";
+                label="SatelliteFragile";
+                SatelliteFragile1; 
+                SatelliteFragile2; 
+                SatelliteFragile3;
+            }
+
+            // SatelliteRobuste
+            subgraph cluster_SatelliteRobuste{
+                labelloc="b";
+                label="SatelliteRobuste";
+                SatelliteRobuste1; 
+                SatelliteRobuste2; 
+                SatelliteRobuste3;
+            }
+        }
+    }
 
 /**********************************************************************************/
 
 /*********************************Connexion****************************************/
     Vierge -> PoussiereRegolite
-    GisementOr -> MineraiOr [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementFer -> MineraiFer [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementTitane -> MineraiTitane [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementSilicium -> MineraiSilicium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementAluminium -> MineraiAluminium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    // GisementMagnesium -> MineraiMagnesium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    // GisementCalcium -> MineraiCalcium [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    // GisementSoduim -> MineraiSoduim [label="Mine", fontcolor="grey", color="grey", style="dotted"]
-    GisementGlace -> MineraiGlace [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+    GisementGlace -> MineraiGlace [headtooltip="1 GisementGlace", fontcolorr="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementOr -> MineraiOr [headtooltip="1 GisementOr", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementFer -> MineraiFer [headtooltip="1 GisementFer", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementTitane -> MineraiTitane [headtooltip="1 GisementTitane", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementSilicium -> MineraiSilicium [headtooltip="1 GisementSilicium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementAluminium -> MineraiAluminium [headtooltip="1 GisementAluminium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    PoussiereRegolite -> LingotRegolite [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    PoussiereRegolite -> Helium3
-    MineraiTitane -> LingotTitane [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiSilicium -> LingotSilicium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiFer -> LingotFer [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiOr -> LingotOr [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    MineraiAluminium -> LingotAluminium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    // MineraiMagnesium -> LingotMagnesium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    // MineraiCalcium -> LingotCalcium [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
-    // MineraiSoduim -> LingotSoduim [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+    PoussiereRegolite -> LingotRegolite [headtooltip="2 PoussiereRegolite", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    MineraiGlace -> Eau [headtooltip="1 MineraiGlace", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PoussiereRegolite -> Helium3;
+    MineraiTitane -> LingotTitane [headtooltip="1 MineraiTitane", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiSilicium -> LingotSilicium [headtooltip="1 MineraiSilicium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiFer -> LingotFer [headtooltip="1 MineraiFer", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiOr -> LingotOr [headtooltip="1 MineraiOr", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiAluminium -> LingotAluminium [headtooltip="1 MineraiAluminium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    MineraiGlace -> Eau
-    Eau -> GazHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
-    Eau -> GazOxygene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
-    GazHydrogene -> LiquideHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
-    GazOxygene -> LiquideOxygene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    Eau -> GazHydrogene [headtooltip="1 Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Eau -> GazOxygene [headtooltip="1 Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GazHydrogene -> LiquideHydrogene [headtooltip="1 GazHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GazOxygene -> LiquideOxygene [headtooltip="1 GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    GazHydrogene, GazOxygene -> PeroxydeHydrogene [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    GazHydrogene, GazOxygene -> PeroxydeHydrogene [headtooltip="1 GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    LiquideHydrogene, LiquideOxygene -> Carburant1 [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
-    PeroxydeHydrogene -> Carburant2 [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    LiquideHydrogene, LiquideOxygene -> Carburant1 [headtooltip="1 LiquideOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PeroxydeHydrogene -> Carburant2 [headtooltip="1 PeroxydeHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    Carburant1 -> Carburant [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
-    Carburant2 -> Carburant [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    // Carburant1 -> Carburant [fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+    // Carburant2 -> Carburant [fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
 
     // pour aligner les suites de craft
-    Puce -> PuceLuxe [style="invis", constraint=false]
     SatelliteFragile1 -> SatelliteFragile2 -> SatelliteFragile3 [style="invis"]
     SatelliteRobuste1 -> SatelliteRobuste2 -> SatelliteRobuste3 [style="invis"]
     VaisseauRobuste1 -> VaisseauRobuste2 -> VaisseauRobuste3 [style="invis"]
     VaisseauFragile1 -> VaisseauFragile2 -> VaisseauFragile3 [style="invis"]
 
-    LingotRegolite -> MateriauxConstruction [label="Fabrique", fontcolor="green", color="green", style="solid"]
-    LingotSilicium -> Puce [label="Fabrique", fontcolor="green", color="green", style="solid"]
-    Puce, LingotTitane, LingotOr -> PuceLuxe [label="Fabrique", fontcolor="green", color="green", style="solid"]
 
-    MateriauxConstruction, LingotFer, Puce -> SatelliteFragile1 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
-    SatelliteFragile1, LingotAluminium -> SatelliteFragile2 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
-    SatelliteFragile2, LingotOr -> SatelliteFragile3 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    LingotRegolite -> MateriauxConstruction [headtooltip="2 LingotRegolite", fontcolor="green", color="green", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    LingotSilicium -> Puce [headtooltip="1 LingotSilicium", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    
+    // PuceLuxe
+    Puce -> PuceLuxe [headtooltip="1 Puce",  labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotTitane -> PuceLuxe [headtooltip="1 LingotTitane", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> PuceLuxe [headtooltip="1 LingotOr", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
+    // SatelliteFragile1
+    MateriauxConstruction -> SatelliteFragile1 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotFer -> SatelliteFragile1 [headtooltip="2 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    Puce -> SatelliteFragile1 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    MateriauxConstruction, LingotTitane, Puce -> SatelliteRobuste1 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
-    SatelliteRobuste1, LingotAluminium -> SatelliteRobuste2 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
-    SatelliteRobuste2, LingotOr -> SatelliteRobuste3 [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+    // SatelliteFragile2
+    SatelliteFragile1 -> SatelliteFragile2 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> SatelliteFragile2 [headtooltip="1 LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    Carburant, MateriauxConstruction, LingotFer, Puce -> VaisseauFragile1 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
-    VaisseauFragile1, LingotAluminium -> VaisseauFragile2 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
-    VaisseauFragile2, LingotOr -> VaisseauFragile3 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    // SatelliteFragile3
+    SatelliteFragile2 -> SatelliteFragile3 [headtooltip="1 SatelliteFragile2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> SatelliteFragile3 [headtooltip="1 LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    Carburant, MateriauxConstruction, LingotTitane, Puce -> VaisseauRobuste1 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
-    VaisseauRobuste1, LingotAluminium -> VaisseauRobuste2 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
-    VaisseauRobuste2, LingotOr -> VaisseauRobuste3 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    // SatelliteRobuste1
+    MateriauxConstruction -> SatelliteRobuste1 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotTitane -> SatelliteRobuste1 [headtooltip="2 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    Puce -> SatelliteRobuste1 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    VaisseauRobuste3, SatelliteRobuste3, PuceLuxe -> VaisseauLuxe [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    // SatelliteRobuste2
+    SatelliteRobuste1 -> SatelliteRobuste2 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> SatelliteRobuste2 [headtooltip="1 LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
+    // SatelliteRobuste3
+    SatelliteRobuste2 -> SatelliteRobuste3 [headtooltip="1 SatelliteRobuste2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> SatelliteRobuste3 [headtooltip="1 LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauFragile1
+    Carburant1 -> VaisseauFragile1 [headtooltip="1 VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> VaisseauFragile1 [headtooltip="1 MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotFer -> VaisseauFragile1 [headtooltip="1 LingotFer", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Puce -> VaisseauFragile1 [headtooltip="1 Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauFragile2
+    VaisseauFragile1 -> VaisseauFragile2 [headtooltip="1 VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> VaisseauFragile2 [headtooltip="1 LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauFragile3
+    VaisseauFragile2 -> VaisseauFragile3 [headtooltip="1 VaisseauFragile2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> VaisseauFragile3 [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauRobuste1
+    Carburant2 -> VaisseauRobuste1 [headtooltip="1 VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> VaisseauRobuste1 [headtooltip="1 MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotTitane -> VaisseauRobuste1 [headtooltip="1 LingotTitane", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Puce -> VaisseauRobuste1 [headtooltip="1 Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauRobuste2
+    VaisseauRobuste1 -> VaisseauRobuste2 [headtooltip="1 VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> VaisseauRobuste2 [headtooltip="1 LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauRobuste3
+    VaisseauRobuste2 -> VaisseauRobuste3 [headtooltip="1 VaisseauRobuste2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> VaisseauRobuste3 [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    // VaisseauLuxe
+    VaisseauRobuste3 -> VaisseauLuxe [headtooltip="1 VaisseauRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteRobuste3 -> VaisseauLuxe [headtooltip="1 SatelliteRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> VaisseauLuxe [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PuceLuxe -> VaisseauLuxe [headtooltip="1 PuceLuxe", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+
+    subgraph cluster_LEGEND {
+        fontsize=30
+        label = "Legend";
+        node [shape=point]
+        {
+            rank=same
+            mine0 [style = invis];
+            mine1 [style = invis];
+            fonderie0 [style = invis];
+            fonderie1 [style = invis];
+            fabrique0 [style = invis];
+            fabrique1 [style = invis];
+            atelier0 [style = invis];
+            atelier1 [style = invis];
+            cuve0 [style = invis];
+            cuve1 [style = invis];
+            chantier0 [style = invis];
+            chantier1 [style = invis];
+        }
+        mine0     -> mine1     [label="Mine", fontcolor="grey", color="grey", style="dotted"]
+        fonderie0 -> fonderie1 [label="Fonderie", fontcolor="blue", color="blue", style="dashed"]
+        fabrique0 -> fabrique1 [label="Fabrique", fontcolor="green", color="green", style="solid"]
+        atelier0  -> atelier1  [label="Atelier", fontcolor="orange", color="orange:yellow:orange", style="solid"]
+        cuve0     -> cuve1     [label="Cuve", fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
+        chantier0 -> chantier1 [label="Chantier spatial", fontcolor="red", color="red:orange:red", style="solid"]
+    }
 }
