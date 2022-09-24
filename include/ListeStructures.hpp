@@ -3,14 +3,32 @@
 
 #include "Structure.hpp"
 #include "Batiment.hpp"
-#include "Mine.hpp"
+
 #include "Pipeline.hpp"
+#include "MasterBatiment.hpp"
+
+#include "Mine.hpp"
+#include "Fonderie.hpp"
+
+#include "Fabrique.hpp"
+#include "Atelier.hpp"
+
+#include "Cuve.hpp"
+#include "ChantierSpatial.hpp"
 
 class Structure;
-
 class Batiment;
-class Mine;
 
 class Pipeline;
+class MasterBatiment;
+
+class Mine;
+class Fonderie;
+
+class Fabrique;
+class Atelier;
+
+class Cuve;
+class ChantierSpatial;
 
 #endif

@@ -70,12 +70,21 @@ void testPartie()
     contextGlobal->init(Vector2u(1600, 900));
 
     CaseMap::chargerMemoireCaseMap();
+    ContenuPipeline::chargerMemoireTypeRessource();
+
+    Pipeline::chargerMemoirePipelines();
+    MasterBatiment::chargerMemoireMasterBatiment();
+
     Mine::chargerMemoireMines();
     Fonderie::chargerMemoireFonderies();
-    Pipeline::chargerMemoirePipelines();
+
+    Fabrique::chargerMemoireFabriques();
+    Atelier::chargerMemoireAteliers();
+
+    Cuve::chargerMemoireCuves();
+    ChantierSpatial::chargerMemoireChantierSpatials();
+
     Manager::chargerMemoireManager();
-    ContenuPipeline::chargerMemoireTypeRessource();
-    MasterBatiment::chargerMemoireMasterBatiment();
     Bouton::chargerMemoireBoutons();
     Ressource::chargerMemoireRessources();
 
@@ -85,12 +94,21 @@ void testPartie()
     m->run();
 
     CaseMap::dechargerMemoireCaseMap();
+    ContenuPipeline::dechargerMemoireTypeRessource();
+
+    Pipeline::dechargerMemoirePipelines();
+    MasterBatiment::dechargerMemoireMasterBatiment();
+
     Mine::dechargerMemoireMines();
     Fonderie::dechargerMemoireFonderies();
-    Pipeline::dechargerMemoirePipelines();
+
+    Fabrique::dechargerMemoireFabriques();
+    Atelier::dechargerMemoireAteliers();
+
+    Cuve::dechargerMemoireCuves();
+    ChantierSpatial::dechargerMemoireChantierSpatials();
+
     Manager::dechargerMemoireManager();
-    ContenuPipeline::dechargerMemoireTypeRessource();
-    MasterBatiment::dechargerMemoireMasterBatiment();
     Bouton::dechargerMemoireBoutons();
     Ressource::dechargerMemoireRessources();
 

@@ -14,9 +14,13 @@
 #include <sys/types.h>
 
 // #define NB_RESSOURCES 5;
-const uint NB_RESSOURCES = 25;
-const uint NB_RESSOURCES_MINERAIS = 7;
-const uint NB_RESSOURCES_LINGOTS = 7;
+const int NB_RESSOURCES = 25;                 // Total
+const int NB_RESSOURCES_MINERAIS = 7;         // Mine
+const int NB_RESSOURCES_LINGOTS = 7;          // Fonderie
+const int NB_RESSOURCES_FABRIQUES = 0;        // Fabrique
+const int NB_RESSOURCES_ATELIER = 6;          // Atelier
+const int NB_RESSOURCES_CUVES = 0;            // Cuve
+const int NB_RESSOURCES_CHANTIER_SPATIAL = 0; // ChantierSpatial
 
 enum class TYPE_RESSOURCE : char
 {
@@ -39,41 +43,47 @@ enum class TYPE_RESSOURCE : char
     MineraiOr,
     MineraiAluminium,
 
-    // MineraiMagnesium,
-    // MineraiCalcium,
-    // MineraiSoduim,
-
-    // Apres raffinerie
+    // Apres raffinerie/Fonderie
     LingotRegolite,
-    LingotGlace,
+    Eau, // LingotGlace
     LingotTitane,
     LingotSilicium,
     LingotFer,
     LingotOr,
     LingotAluminium,
 
-    // LingotMagnesium,
-    // LingotCalcium,
-    // LingotSoduim,
+    // Ressources issues de la Fabrique
+    MateriauxConstruction,
+    Puce,
+    PuceLuxe,
 
-    Helium3, // PoussiereRegolite
+    // Ressources issues de l'Atelier
+    SatelliteFragile1,
+    SatelliteFragile2,
+    SatelliteFragile3,
+    SatelliteRobuste1,
+    SatelliteRobuste2,
+    SatelliteRobuste3,
 
-    // A partir de la glace
-    HydrogeneGaz,
-    OxygeneGaz,
+    // Ressources issues de Cuve
+    GazHydrogene,
+    GazOxygene,
+    PeroxydeHydrogene,
+    LiquideHydrogene,
+    LiquideOxygene,
+    Carburant1,
+    Carburant2,
 
-    HydrogeneLiquide,
-    OxygeneLiquide,
-    PeroxydeHydrogene, // HydrogeneGaz + OxygeneGaz,
+    // Ressources issues de ChantierSpatial
+    VaisseauFragile1,
+    VaisseauFragile2,
+    VaisseauFragile3,
+    VaisseauRobuste1,
+    VaisseauRobuste2,
+    VaisseauRobuste3,
+    VaisseauLuxe,
 
-    Caburant1,  // HydrogeneLiquide + OxygeneLiquide
-    Carburant2, // PeroxydeHydrogene
-
-    MateriauxConstruction, // LingotRegolite
-    Puce,                  // LingotSilicium
-
-    Satellite, // MateriauxConstruction + LingotSilicium
-    Vaisseau,  // MateriauxConstruction + LingotSilicium
+    Helium3 // PoussiereRegolite
 
 };
 

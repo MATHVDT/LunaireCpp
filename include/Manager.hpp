@@ -18,9 +18,13 @@
 
 #include "Menu.hpp"
 
+#include "MasterBatiment.hpp"
 #include "Mine.hpp"
 #include "Fonderie.hpp"
-#include "MasterBatiment.hpp"
+#include "Fabrique.hpp"
+#include "Atelier.hpp"
+#include "Cuve.hpp"
+#include "ChantierSpatial.hpp"
 
 class ContextGlobal;
 class Carte;

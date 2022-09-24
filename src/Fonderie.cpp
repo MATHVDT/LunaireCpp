@@ -18,6 +18,8 @@ uint Fonderie::_idMaxFonderies = 0;
 uint Fonderie::_levelMax = 3;
 uint Fonderie::_nbAnim = 4;
 
+TYPE_RESSOURCE Fonderie::_premiereRessourceFonderie = TYPE_RESSOURCE::LingotRegolite; // Ici lingot
+
 uint Fonderie::_tailleTexture = 0;
 Texture *Fonderie::_texturesFonderies[NB_FONDERIES];
 
@@ -148,8 +150,7 @@ void Fonderie::setSpriteTexture(uint tick)
  */
 void Fonderie::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
 {
-    TYPE_RESSOURCE premiereRessource = TYPE_RESSOURCE::LingotRegolite; // Ici lingot
-    short indice = (short)ressCraft - (short)premiereRessource + 1;
+    short indice = (short)ressCraft - (short)_premiereRessourceFonderie + 1;
 
     _sprite->setTexture(*_texturesFonderies[indice]);
 }

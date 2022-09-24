@@ -1,15 +1,15 @@
 /**
- * @file Fonderie.hpp
+ * @file ChantierSpatial.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
- * @brief Prototype des méthodes de la classe Fonderie
+ * @brief Prototype des méthodes de la classe ChantierSpatial
  *
  * @version 0.1
  * @date 2022-09-05
  *
  * @copyright Copyright (c) 2022
  */
-#ifndef __FONDERIE_HPP__
-#define __FONDERIE_HPP__
+#ifndef __CHANTIER_SPATIAL_HPP__
+#define __CHANTIER_SPATIAL_HPP__
 
 #include "ContextGlobal.hpp"
 #include "Batiment.hpp"
@@ -18,46 +18,46 @@
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierTexturesFonderies;
+extern string cheminFichierTexturesChantierSpatials;
 
 using namespace std;
 using namespace sf;
 
-class Fonderie : public Batiment
+class ChantierSpatial : public Batiment
 {
 private:
-    uint _idFonderie;
+    uint _idChantierSpatial;
     IntRect _zoomTexture;
 
 public: // Static
-    static uint _nbFonderies;
-    static uint _idMaxFonderies;
+    static uint _nbChantierSpatials;
+    static uint _idMaxChantierSpatials;
 
     static uint _levelMax;
     static uint _nbAnim;
 
-    static TYPE_RESSOURCE _premiereRessourceFonderie;
+    static TYPE_RESSOURCE _premiereRessourceChantierSpatial;
     static uint _tailleTexture;
-    static Texture *_texturesFonderies[NB_FONDERIES];
+    static Texture *_texturesChantierSpatials[NB_CHANTIER_SPATIALS];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 
 public: // Static
-    static uint getNbFonderies();
-    static uint getIdMaxFonderies();
-    static uint getNbAnimFonderies();
-    static uint getLevelMaxFonderies();
-    static TYPE_RESSOURCE getPremiereRessourceFonderies();
+    static uint getNbChantierSpatials();
+    static uint getIdMaxChantierSpatials();
+    static uint getNbAnimChantierSpatials();
+    static uint getLevelMaxChantierSpatials();
+    static TYPE_RESSOURCE getPremiereRessourceChantierSpatials();
 
-    static void chargerMemoireFonderies();
-    static void dechargerMemoireFonderies();
+    static void chargerMemoireChantierSpatials();
+    static void dechargerMemoireChantierSpatials();
 
 private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Fonderie(const Vector2u &pos);
-    virtual ~Fonderie() override;
+    ChantierSpatial(const Vector2u &pos);
+    virtual ~ChantierSpatial() override;
 
     // Virtual
     virtual void init();
@@ -78,12 +78,12 @@ public:
 /***************************************************/
 /*              Méthodes inline static             */
 /***************************************************/
-inline uint Fonderie::getNbFonderies() { return _nbFonderies; }
-inline uint Fonderie::getIdMaxFonderies() { return _idMaxFonderies; }
+inline uint ChantierSpatial::getNbChantierSpatials() { return _nbChantierSpatials; }
+inline uint ChantierSpatial::getIdMaxChantierSpatials() { return _idMaxChantierSpatials; }
 
-inline uint Fonderie::getNbAnimFonderies() { return _nbAnim; }
-inline uint Fonderie::getLevelMaxFonderies() { return _levelMax; }
-inline TYPE_RESSOURCE Fonderie::getPremiereRessourceFonderies() { return _premiereRessourceFonderie; }
+inline uint ChantierSpatial::getNbAnimChantierSpatials() { return _nbAnim; }
+inline uint ChantierSpatial::getLevelMaxChantierSpatials() { return _levelMax; }
+inline TYPE_RESSOURCE ChantierSpatial::getPremiereRessourceChantierSpatials() { return _premiereRessourceChantierSpatial; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

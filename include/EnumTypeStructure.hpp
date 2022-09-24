@@ -3,6 +3,10 @@
 
 const int NB_MINES = 8;
 const int NB_FONDERIES = 8;
+const int NB_FABRIQUES = 3;
+const int NB_ATELIERS = 6;
+const int NB_CUVES =7;
+const int NB_CHANTIER_SPATIALS = 7;
 
 enum class TYPE_STRUCTURE : int
 {
@@ -26,9 +30,26 @@ enum class TYPE_STRUCTURE : int
     MineFer,
     MineOr,
     MineAluminium,
-    MineMagnesium
-    // MineCalcium,
-    // MineSoduim
+    MineMagnesium,
+
+    // Fonderie
+    FonderieRegolite,
+    FonderieGlace,
+    FonderieTitane,
+    FonderieSilicium,
+    FonderieFer,
+    FonderieOr,
+    FonderieAluminium,
+    FonderieMagnesium,
+
+    // Fabrique
+
+    // Atelier
+
+    // Cuve
+
+    // ChantierSpatial
+
 };
 
 #endif

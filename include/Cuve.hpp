@@ -1,15 +1,15 @@
 /**
- * @file Fonderie.hpp
+ * @file Cuve.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
- * @brief Prototype des méthodes de la classe Fonderie
+ * @brief Prototype des méthodes de la classe Cuve
  *
  * @version 0.1
  * @date 2022-09-05
  *
  * @copyright Copyright (c) 2022
  */
-#ifndef __FONDERIE_HPP__
-#define __FONDERIE_HPP__
+#ifndef __CUVE_HPP__
+#define __CUVE_HPP__
 
 #include "ContextGlobal.hpp"
 #include "Batiment.hpp"
@@ -18,46 +18,46 @@
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierTexturesFonderies;
+extern string cheminFichierTexturesCuves;
 
 using namespace std;
 using namespace sf;
 
-class Fonderie : public Batiment
+class Cuve : public Batiment
 {
 private:
-    uint _idFonderie;
+    uint _idCuve;
     IntRect _zoomTexture;
 
 public: // Static
-    static uint _nbFonderies;
-    static uint _idMaxFonderies;
+    static uint _nbCuves;
+    static uint _idMaxCuves;
 
     static uint _levelMax;
     static uint _nbAnim;
 
-    static TYPE_RESSOURCE _premiereRessourceFonderie;
+    static TYPE_RESSOURCE _premiereRessourceCuve;
     static uint _tailleTexture;
-    static Texture *_texturesFonderies[NB_FONDERIES];
+    static Texture *_texturesCuves[NB_CUVES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 
 public: // Static
-    static uint getNbFonderies();
-    static uint getIdMaxFonderies();
-    static uint getNbAnimFonderies();
-    static uint getLevelMaxFonderies();
-    static TYPE_RESSOURCE getPremiereRessourceFonderies();
+    static uint getNbCuves();
+    static uint getIdMaxCuves();
+    static uint getNbAnimCuves();
+    static uint getLevelMaxCuves();
+    static TYPE_RESSOURCE getPremiereRessourceCuves();
 
-    static void chargerMemoireFonderies();
-    static void dechargerMemoireFonderies();
+    static void chargerMemoireCuves();
+    static void dechargerMemoireCuves();
 
 private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Fonderie(const Vector2u &pos);
-    virtual ~Fonderie() override;
+    Cuve(const Vector2u &pos);
+    virtual ~Cuve() override;
 
     // Virtual
     virtual void init();
@@ -78,12 +78,12 @@ public:
 /***************************************************/
 /*              Méthodes inline static             */
 /***************************************************/
-inline uint Fonderie::getNbFonderies() { return _nbFonderies; }
-inline uint Fonderie::getIdMaxFonderies() { return _idMaxFonderies; }
+inline uint Cuve::getNbCuves() { return _nbCuves; }
+inline uint Cuve::getIdMaxCuves() { return _idMaxCuves; }
 
-inline uint Fonderie::getNbAnimFonderies() { return _nbAnim; }
-inline uint Fonderie::getLevelMaxFonderies() { return _levelMax; }
-inline TYPE_RESSOURCE Fonderie::getPremiereRessourceFonderies() { return _premiereRessourceFonderie; }
+inline uint Cuve::getNbAnimCuves() { return _nbAnim; }
+inline uint Cuve::getLevelMaxCuves() { return _levelMax; }
+inline TYPE_RESSOURCE Cuve::getPremiereRessourceCuves() { return _premiereRessourceCuve; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

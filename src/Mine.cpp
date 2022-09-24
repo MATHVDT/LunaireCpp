@@ -18,6 +18,8 @@ uint Mine::_idMaxMines = 0;
 uint Mine::_levelMax = 3;
 uint _nbAnim = 4;
 
+TYPE_RESSOURCE Mine::_premiereRessourceMine = TYPE_RESSOURCE::PoussiereRegolite; // Ici minerai
+
 uint Mine::_tailleTexture = 0;
 Texture *Mine::_texturesMines[NB_MINES];
 
@@ -199,8 +201,7 @@ void Mine::setSpriteTexture(uint tick)
  */
 void Mine::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft)
 {
-    TYPE_RESSOURCE premiereRessource = TYPE_RESSOURCE::PoussiereRegolite; // Ici minerai
-    short indice = (short)ressCraft - (short)premiereRessource + 1;
+    short indice = (short)ressCraft - (short)_premiereRessourceMine + 1;
 
     _sprite->setTexture(*_texturesMines[indice]);
     _sprite->setTextureRect(_zoomTexture);

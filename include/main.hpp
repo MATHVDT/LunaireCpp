@@ -14,21 +14,13 @@
 #include "Carte.hpp"
 #include "CaseMap.hpp"
 
-#include "Structure.hpp"
-#include "Batiment.hpp"
-
-#include "Pipeline.hpp"
-#include "Mine.hpp"
-#include "MasterBatiment.hpp"
+#include "ListeStructures.hpp"
 
 #include "Craft.hpp"
 #include "Ressource.hpp"
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
-
-class Fonderie;
-class Mine;
 
 using namespace std;
 using namespace sf;

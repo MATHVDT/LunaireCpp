@@ -32,6 +32,7 @@ class ContextGlobal;
 class Batiment;
 
 extern ContextGlobal *contextGlobal;
+// extern void Batiment::chargerMemoireBatiments();
 
 using namespace std;
 using namespace sf;

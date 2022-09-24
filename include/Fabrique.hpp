@@ -1,15 +1,15 @@
 /**
- * @file Fonderie.hpp
+ * @file Fabrique.hpp
  * @author Mathieu VDT (mathieu.detorcy@gmail.com)
- * @brief Prototype des méthodes de la classe Fonderie
+ * @brief Prototype des méthodes de la classe Fabrique
  *
  * @version 0.1
  * @date 2022-09-05
  *
  * @copyright Copyright (c) 2022
  */
-#ifndef __FONDERIE_HPP__
-#define __FONDERIE_HPP__
+#ifndef __FABRIQUE_HPP__
+#define __FABRIQUE_HPP__
 
 #include "ContextGlobal.hpp"
 #include "Batiment.hpp"
@@ -18,46 +18,46 @@
 class ContextGlobal;
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierTexturesFonderies;
+extern string cheminFichierTexturesFabriques;
 
 using namespace std;
 using namespace sf;
 
-class Fonderie : public Batiment
+class Fabrique : public Batiment
 {
 private:
-    uint _idFonderie;
+    uint _idFabrique;
     IntRect _zoomTexture;
 
 public: // Static
-    static uint _nbFonderies;
-    static uint _idMaxFonderies;
+    static uint _nbFabriques;
+    static uint _idMaxFabriques;
 
     static uint _levelMax;
     static uint _nbAnim;
 
-    static TYPE_RESSOURCE _premiereRessourceFonderie;
+    static TYPE_RESSOURCE _premiereRessourceFabrique;
     static uint _tailleTexture;
-    static Texture *_texturesFonderies[NB_FONDERIES];
+    static Texture *_texturesFabriques[NB_FABRIQUES];
     static uint _offsetTextureX; // Largeur d'1 Texture
     static uint _offsetTextureY; // Hauteur
 
 public: // Static
-    static uint getNbFonderies();
-    static uint getIdMaxFonderies();
-    static uint getNbAnimFonderies();
-    static uint getLevelMaxFonderies();
-    static TYPE_RESSOURCE getPremiereRessourceFonderies();
+    static uint getNbFabriques();
+    static uint getIdMaxFabriques();
+    static uint getNbAnimFabriques();
+    static uint getLevelMaxFabriques();
+    static TYPE_RESSOURCE getPremiereRessourceFabriques();
 
-    static void chargerMemoireFonderies();
-    static void dechargerMemoireFonderies();
+    static void chargerMemoireFabriques();
+    static void dechargerMemoireFabriques();
 
 private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    Fonderie(const Vector2u &pos);
-    virtual ~Fonderie() override;
+    Fabrique(const Vector2u &pos);
+    virtual ~Fabrique() override;
 
     // Virtual
     virtual void init();
@@ -78,12 +78,12 @@ public:
 /***************************************************/
 /*              Méthodes inline static             */
 /***************************************************/
-inline uint Fonderie::getNbFonderies() { return _nbFonderies; }
-inline uint Fonderie::getIdMaxFonderies() { return _idMaxFonderies; }
+inline uint Fabrique::getNbFabriques() { return _nbFabriques; }
+inline uint Fabrique::getIdMaxFabriques() { return _idMaxFabriques; }
 
-inline uint Fonderie::getNbAnimFonderies() { return _nbAnim; }
-inline uint Fonderie::getLevelMaxFonderies() { return _levelMax; }
-inline TYPE_RESSOURCE Fonderie::getPremiereRessourceFonderies() { return _premiereRessourceFonderie; }
+inline uint Fabrique::getNbAnimFabriques() { return _nbAnim; }
+inline uint Fabrique::getLevelMaxFabriques() { return _levelMax; }
+inline TYPE_RESSOURCE Fabrique::getPremiereRessourceFabriques() { return _premiereRessourceFabrique; }
 
 /***************************************************/
 /*           Méthodes inline non static            */

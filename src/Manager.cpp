@@ -287,18 +287,41 @@ bool Manager::placerStructure()
     case GameEvent::PlacerPipeline:
         structAPlacer = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
         break;
-    case GameEvent::PlacerMine:
-        structAPlacer = new Mine{
-            (Vector2u)caseSelect->getPositionCarte(),
-            caseSelect->getTypeSol()};
-        break;
     case GameEvent::PlacerMarchand:
         structAPlacer = new MasterBatiment{
             (Vector2u)caseSelect->getPositionCarte()};
         _endpointStructure.push(structAPlacer);
         break;
+
+    case GameEvent::PlacerMine:
+        structAPlacer = new Mine{
+            (Vector2u)caseSelect->getPositionCarte(),
+            caseSelect->getTypeSol()};
+        break;
     case GameEvent::PlacerFonderie:
         structAPlacer = new Fonderie{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
+        break;
+
+    case GameEvent::PlacerFabrique:
+        structAPlacer = new Fabrique{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
+        break;
+    case GameEvent::PlacerAtelier:
+        structAPlacer = new Atelier{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
+        break;
+
+    case GameEvent::PlacerCuve:
+        structAPlacer = new Cuve{
+            (Vector2u)caseSelect->getPositionCarte()};
+        _endpointStructure.push(structAPlacer);
+        break;
+    case GameEvent::PlacerChantierSpatial:
+        structAPlacer = new ChantierSpatial{
             (Vector2u)caseSelect->getPositionCarte()};
         _endpointStructure.push(structAPlacer);
         break;

@@ -31,6 +31,7 @@ class Mine;
 class Fonderie;
 extern ContextGlobal *contextGlobal;
 
+
 class Batiment : public Structure
 {
 private:
