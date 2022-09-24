@@ -1,24 +1,24 @@
-#include "MasterBatiment.hpp"
+#include "Marchand.hpp"
 
-string cheminFichierMasterBatiment = "ressource/cheminTextures/cheminTexturesMasterBatiment";
+string cheminFichierMarchand = "ressource/cheminTextures/cheminTexturesMarchand";
 
-Texture *MasterBatiment::_textureMasterBatiment = nullptr;
+Texture *Marchand::_textureMarchand = nullptr;
 
-MasterBatiment::MasterBatiment(const Vector2u &pos)
-    : Batiment{pos, _textureMasterBatiment}
+Marchand::Marchand(const Vector2u &pos)
+    : Batiment{pos, _textureMarchand}
 {
 }
 
-MasterBatiment::~MasterBatiment() {}
+Marchand::~Marchand() {}
 
-void MasterBatiment::init() {}
+void Marchand::init() {}
 
-void MasterBatiment::dessiner(float scaleSprite)
+void Marchand::dessiner(float scaleSprite)
 {
     Batiment::dessiner(scaleSprite);
 }
 
-void MasterBatiment ::update()
+void Marchand ::update()
 {
     Batiment::update();
 }
@@ -27,9 +27,9 @@ void MasterBatiment ::update()
  * @brief Process les ressources, ie les vend
  *
  */
-void MasterBatiment::process()
+void Marchand::process()
 {
-    // cout << "Process MasterBatiment : " << endl;
+    // cout << "Process Marchand : " << endl;
     afficherStock();
 
     Batiment::process();
@@ -47,24 +47,24 @@ void MasterBatiment::process()
 }
 
 /**
- * @brief Pas d'update d'orientation pour le MasterBatiment.
+ * @brief Pas d'update d'orientation pour le Marchand.
  *
  * @return false - *Toujours False*
  */
-bool MasterBatiment::updateOrientation()
+bool Marchand::updateOrientation()
 {
     return false;
 }
 
 /**
- * @brief Check si la connexion est possible, pour le MasterBatiment pas de sortie possible.
+ * @brief Check si la connexion est possible, pour le Marchand pas de sortie possible.
  *
  * @param Structure * - *s*
  * @param bool - *commeSortie*
  * @return true - *Connexion possible*
  * @return false - *Connexion IMPOSSIBLE*
  */
-bool MasterBatiment::checkConnexionPossible(Structure *s, bool commeSortie)
+bool Marchand::checkConnexionPossible(Structure *s, bool commeSortie)
 {
     if (commeSortie)
     {
@@ -75,23 +75,23 @@ bool MasterBatiment::checkConnexionPossible(Structure *s, bool commeSortie)
 
 /*******************************************************/
 /*******************************************************/
-void MasterBatiment::chargerMemoireMasterBatiment()
+void Marchand::chargerMemoireMarchand()
 {
     cerr << endl
-         << "chargerMemoireMasterBatiment" << endl;
-    chargerTextures(cheminFichierMasterBatiment);
+         << "chargerMemoireMarchand" << endl;
+    chargerTextures(cheminFichierMarchand);
 }
 
-void MasterBatiment::dechargerMemoireMasterBatiment()
+void Marchand::dechargerMemoireMarchand()
 {
     cerr << endl
-         << "dechargerMemoireMasterBatiment" << endl;
-    delete _textureMasterBatiment;
+         << "dechargerMemoireMarchand" << endl;
+    delete _textureMarchand;
 }
 
 /*******************************************************/
 
-void MasterBatiment::chargerTextures(string fichierCheminsTexture)
+void Marchand::chargerTextures(string fichierCheminsTexture)
 {
     string cheminTexture;
     sf::Texture *texture;
@@ -102,7 +102,7 @@ void MasterBatiment::chargerTextures(string fichierCheminsTexture)
     if (monFlux)
     {
         cerr << endl
-             << "Chargement de la texture du MasterBatiment" << endl
+             << "Chargement de la texture du Marchand" << endl
              << endl;
         // Chemin de l'image texture d'une Pipeline
         monFlux >> cheminTexture;
@@ -112,7 +112,7 @@ void MasterBatiment::chargerTextures(string fichierCheminsTexture)
         texture = new Texture();
         texture->loadFromFile(cheminTexture);
 
-        _textureMasterBatiment = texture;
+        _textureMarchand = texture;
 
         // Récupère la taille d'une case texture
         // On suppose que le batiment à exactement le meme format/taille que les autres batiments, taille calée sur tailleReference

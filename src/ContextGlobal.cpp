@@ -284,9 +284,9 @@ void ContextGlobal::checkClavierStructures()
         // cerr << "Pipeline selectionnée" << endl;
         break;
     case Keyboard::C:
-        // _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        // _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
         _gameEvent = GameEvent::PlacerMarchand;
-        // cerr << "MasterBatiment selectionnée" << endl;
+        // cerr << "Marchand selectionnée" << endl;
         break;
     case Keyboard::Space:
         _editionStructureSelectionnee = TYPE_STRUCTURE::AucuneStructure;
@@ -310,7 +310,7 @@ void ContextGlobal::processGameEvent()
         _editionStructureSelectionnee = TYPE_STRUCTURE::Pipeline;
         break;
     case PlacerMarchand:
-        _editionStructureSelectionnee = TYPE_STRUCTURE::MasterBatiment;
+        _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
         // _editionStructureSelectionnee = TYPE_STRUCTURE::Marchand;
         break;
     case PlacerMine:

@@ -5,7 +5,7 @@ const int NB_MINES = 8;
 const int NB_FONDERIES = 8;
 const int NB_FABRIQUES = 3;
 const int NB_ATELIERS = 6;
-const int NB_CUVES =7;
+const int NB_CUVES = 7;
 const int NB_CHANTIER_SPATIALS = 7;
 
 enum class TYPE_STRUCTURE : int
@@ -19,8 +19,6 @@ enum class TYPE_STRUCTURE : int
     Atelier = 5,
     Cuve = 6,
     ChantierSpatial = 7,
-
-    MasterBatiment,
 
     // Mines
     MinePoussiereRegolite,

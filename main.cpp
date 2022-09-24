@@ -73,7 +73,7 @@ void testPartie()
     ContenuPipeline::chargerMemoireTypeRessource();
 
     Pipeline::chargerMemoirePipelines();
-    MasterBatiment::chargerMemoireMasterBatiment();
+    Marchand::chargerMemoireMarchand();
 
     Mine::chargerMemoireMines();
     Fonderie::chargerMemoireFonderies();
@@ -97,7 +97,7 @@ void testPartie()
     ContenuPipeline::dechargerMemoireTypeRessource();
 
     Pipeline::dechargerMemoirePipelines();
-    MasterBatiment::dechargerMemoireMasterBatiment();
+    Marchand::dechargerMemoireMarchand();
 
     Mine::dechargerMemoireMines();
     Fonderie::dechargerMemoireFonderies();

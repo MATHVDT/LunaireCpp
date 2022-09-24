@@ -5,7 +5,7 @@
 #include "Batiment.hpp"
 
 #include "Pipeline.hpp"
-#include "MasterBatiment.hpp"
+#include "Marchand.hpp"
 
 #include "Mine.hpp"
 #include "Fonderie.hpp"
@@ -20,7 +20,7 @@ class Structure;
 class Batiment;
 
 class Pipeline;
-class MasterBatiment;
+class Marchand;
 
 class Mine;
 class Fonderie;

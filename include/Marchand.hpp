@@ -1,28 +1,28 @@
-#ifndef __MASTER_BATIMENT_HPP__
-#define __MASTER_BATIMENT_HPP__
+#ifndef __MARCHAND_HPP__
+#define __MARCHAND_HPP__
 
 #include "Batiment.hpp"
 extern ContextGlobal *contextGlobal;
 
-extern string cheminFichierMasterBatiment;
+extern string cheminFichierMarchand;
 
-class MasterBatiment : public Batiment
+class Marchand : public Batiment
 {
 
 private: // Static
-    static Texture *_textureMasterBatiment;
+    static Texture *_textureMarchand;
 
 public: // Static
-    static void chargerMemoireMasterBatiment();
-    static void dechargerMemoireMasterBatiment();
+    static void chargerMemoireMarchand();
+    static void dechargerMemoireMarchand();
 
 private: // Static
     static void chargerTextures(string fichierCheminsTexture);
 
 public:
-    MasterBatiment(const Vector2u &pos);
+    Marchand(const Vector2u &pos);
 
-    virtual ~MasterBatiment();
+    virtual ~Marchand();
 
     virtual void init() override;
 
@@ -47,6 +47,6 @@ public:
 /***************************************************/
 /*           Méthodes inline non static            */
 /***************************************************/
-inline void MasterBatiment::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) { return; }
+inline void Marchand::setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) { return; }
 
 #endif

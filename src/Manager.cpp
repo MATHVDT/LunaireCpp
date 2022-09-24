@@ -164,8 +164,8 @@ void Manager::dessinerOverlayMap()
 }
 
 /**
- * @brief Process les Structures pour les actualiser, en partant du MasterBatiment
- * @warning Si des structures ne sont pas connexe au MasterBatiment, alors elle ne sont pas process
+ * @brief Process les Structures pour les actualiser, en partant du Marchand
+ * @warning Si des structures ne sont pas connexe au Marchand, alors elle ne sont pas process
  *
  */
 void Manager::updateStructure()
@@ -273,8 +273,8 @@ bool Manager::placerStructure()
     //         (Vector2u)caseSelect->getPositionCarte(),
     //         caseSelect->getTypeSol()};
     //     break;
-    // case TYPE_STRUCTURE::MasterBatiment:
-    //     structAPlacer = new MasterBatiment{
+    // case TYPE_STRUCTURE::Marchand:
+    //     structAPlacer = new Marchand{
     //         (Vector2u)caseSelect->getPositionCarte()};
     //     _endpointStructure.push(structAPlacer);
     //     break;
@@ -288,7 +288,7 @@ bool Manager::placerStructure()
         structAPlacer = new Pipeline{(Vector2u)caseSelect->getPositionCarte()};
         break;
     case GameEvent::PlacerMarchand:
-        structAPlacer = new MasterBatiment{
+        structAPlacer = new Marchand{
             (Vector2u)caseSelect->getPositionCarte()};
         _endpointStructure.push(structAPlacer);
         break;
