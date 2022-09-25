@@ -51,6 +51,7 @@ enum class TYPE_RESSOURCE : char
     LingotFer,
     LingotOr,
     LingotAluminium,
+    Helium3, // PoussiereRegolite
 
     // Ressources issues de la Fabrique
     MateriauxConstruction,
@@ -81,9 +82,8 @@ enum class TYPE_RESSOURCE : char
     VaisseauRobuste1,
     VaisseauRobuste2,
     VaisseauRobuste3,
-    VaisseauLuxe,
+    VaisseauLuxe
 
-    Helium3 // PoussiereRegolite
 
 };
 

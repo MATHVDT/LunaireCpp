@@ -85,23 +85,26 @@ typedef struct FormuleCraft
 
 Un fichier *ressource/crafts/cheminFichierCrafts.txt* contient les chemins des fichiers.
 
-> chemin_fichier_**formuleCraft**.txt *(par encore sur)*  
+> chemin_fichier_**formuleCraft**.txt   
 > chemin_fichier_**craftMine**.txt  
 > chemin_fichier_**craftFonderie**.txt  
 > chemin_fichier_**craftFabrique**.txt  
 > chemin_fichier_**craftAtelier**.txt  
 > chemin_fichier_**craftCuve**.txt  
 > chemin_fichier_**craftChantierSpatial**.txt  
+  
+* Le premier fichier concerne les recettes des crafts.  
+* Les autres fichiers concernent les ressources craftables dans les batiements
 
 ### Possiblités de craft sur les batiments
 
-Un fichier par batiment, organisé comme ci-dessous : 
-> *craftBatiment.txt*  
+Un fichier par batiment, organisé comme ci-dessous : *craftBatiment.txt*  
 >nombre_de_ressources_craftables  
 > valeur_conténer_binaire1 ressource_associée1  
 > valeur_conténer_binaire2 ressource_associée2  
 > valeur_conténer_binaire3 ressource_associée3  
----
+  
+*Exemple :*  
 >2   
 >81606017059 45  
 >45454541332 50  
@@ -109,18 +112,23 @@ Un fichier par batiment, organisé comme ci-dessous :
 
 ### Formule craft
 
-Un fichier avec une formule par ligne :
+Le fichier comportant toutes les formules des crafts commences par le **NB_RESSOURCES**.
+Ensuite sur cahque ligne il y a une formule de craft décrite de la façon suivante :
 * nb elt dans la formule
 * suite de 3-uplets
     * ressource (nombre : short)
     * quantité  (nombre : 0 - 5)
     * produit   (1 -> true, 0 -> false)
 
-> nb_ressources_dispo(nb de lignes)  
-> nb_3-uplets 3-uplets  
-> nb_3-uplets 3-uplets  
-> nb_3-uplets 3-uplets  
-> nb_3-uplets 3-uplets  
+*Exemple :* 
+> 5   
+> 1  0 0 0    
+> 1  1 0 0  
+> 1  2 0 0  
+> 2  3 1 1  1 1 0  
+> 2  4 1 1  3 2 0  
+> 3  5 1 1  1 3 0  2 1 0  4 1 0    
 
-Format un 3-uplets :
-> Ressource quantité produit(bool)  
+*Les ressources 0, 1 et 2 ne sont pas craftables*s
+
+  

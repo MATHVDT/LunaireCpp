@@ -53,12 +53,15 @@ digraph {
     MateriauxConstruction  [style="filled,solid", color="", label="Materiaux Construction",shape="rectangle"];
 
 
-    subgraph CUVE_CRAFT
+    subgraph cluster_CUVE_CRAFT
     {
-        ratio="compress"
+        fontsize="25"
+        labelloc="c";
+        label="Cuve";
+        // ratio="compress"
         // Gaz
         subgraph GAZ{
-            rank=same; 
+            // rank=same; 
             node [style="filled,solid", color="", shape="egg"]
             GazOxygene [label="Gaz Oxygene"];
             GazHydrogene [label="Gaz Hydrogene"];
@@ -170,35 +173,40 @@ digraph {
         }
     }
 
+
+
+
+        GazHydrogene -> MateriauxConstruction [style="invis", minlen=0];
+        GazOxygene -> Puce [style="invis", minlen=0]; 
 /**********************************************************************************/
 
 /*********************************Connexion****************************************/
     Vierge -> PoussiereRegolite
-    GisementGlace -> MineraiGlace [headtooltip="1 GisementGlace", fontcolorr="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GisementOr -> MineraiOr [headtooltip="1 GisementOr", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GisementFer -> MineraiFer [headtooltip="1 GisementFer", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GisementTitane -> MineraiTitane [headtooltip="1 GisementTitane", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GisementSilicium -> MineraiSilicium [headtooltip="1 GisementSilicium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GisementAluminium -> MineraiAluminium [headtooltip="1 GisementAluminium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementGlace -> MineraiGlace [headtooltip="GisementGlace", fontcolorr="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementOr -> MineraiOr [headtooltip="GisementOr", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementFer -> MineraiFer [headtooltip="GisementFer", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementTitane -> MineraiTitane [headtooltip="GisementTitane", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementSilicium -> MineraiSilicium [headtooltip="GisementSilicium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GisementAluminium -> MineraiAluminium [headtooltip="GisementAluminium", fontcolor="grey", color="grey", style="dotted", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    PoussiereRegolite -> LingotRegolite [headtooltip="2 PoussiereRegolite", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
-    MineraiGlace -> Eau [headtooltip="1 MineraiGlace", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    PoussiereRegolite -> Helium3;
-    MineraiTitane -> LingotTitane [headtooltip="1 MineraiTitane", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MineraiSilicium -> LingotSilicium [headtooltip="1 MineraiSilicium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MineraiFer -> LingotFer [headtooltip="1 MineraiFer", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MineraiOr -> LingotOr [headtooltip="1 MineraiOr", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MineraiAluminium -> LingotAluminium [headtooltip="1 MineraiAluminium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PoussiereRegolite -> LingotRegolite [headtooltip="PoussiereRegolite", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    MineraiGlace -> Eau [headtooltip="MineraiGlace", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PoussiereRegolite -> Helium3 [headtooltip="PoussiereRegolite", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=5, weight=5];
+    MineraiTitane -> LingotTitane [headtooltip="MineraiTitane", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiSilicium -> LingotSilicium [headtooltip="MineraiSilicium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiFer -> LingotFer [headtooltip="MineraiFer", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiOr -> LingotOr [headtooltip="MineraiOr", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MineraiAluminium -> LingotAluminium [headtooltip="MineraiAluminium", fontcolor="blue", color="blue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    Eau -> GazHydrogene [headtooltip="1 Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    Eau -> GazOxygene [headtooltip="1 Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GazHydrogene -> LiquideHydrogene [headtooltip="1 GazHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    GazOxygene -> LiquideOxygene [headtooltip="1 GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Eau -> GazHydrogene [headtooltip="Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1, constraint=false];
+    Eau -> GazOxygene [headtooltip="Eau", fontcolor="lightskyblue", color="lightskyblue", style="dashed", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1, constraint=false];
+    GazHydrogene -> LiquideHydrogene [headtooltip="GazHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GazOxygene -> LiquideOxygene [headtooltip="GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
-    GazHydrogene, GazOxygene -> PeroxydeHydrogene [headtooltip="1 GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    GazHydrogene, GazOxygene -> PeroxydeHydrogene [headtooltip="GazOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
-    LiquideHydrogene, LiquideOxygene -> Carburant1 [headtooltip="1 LiquideOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    PeroxydeHydrogene -> Carburant2 [headtooltip="1 PeroxydeHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LiquideHydrogene, LiquideOxygene -> Carburant1 [headtooltip="LiquideOxygene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    PeroxydeHydrogene -> Carburant2 [headtooltip="PeroxydeHydrogene", fontcolor="lightskyblue", color="lightskyblue", style="dashed", minlen=1, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // Carburant1 -> Carburant [fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
     // Carburant2 -> Carburant [fontcolor="lightskyblue", color="lightskyblue", style="dashed"]
@@ -210,73 +218,73 @@ digraph {
     VaisseauFragile1 -> VaisseauFragile2 -> VaisseauFragile3 [style="invis"]
 
 
-    LingotRegolite -> MateriauxConstruction [headtooltip="2 LingotRegolite", fontcolor="green", color="green", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
-    LingotSilicium -> Puce [headtooltip="1 LingotSilicium", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotRegolite -> MateriauxConstruction [headtooltip="LingotRegolite", fontcolor="green", color="green", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    LingotSilicium -> Puce [headtooltip="LingotSilicium", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
     
     // PuceLuxe
-    Puce -> PuceLuxe [headtooltip="1 Puce",  labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotTitane -> PuceLuxe [headtooltip="1 LingotTitane", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> PuceLuxe [headtooltip="1 LingotOr", fontcolor="green", color="green", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Puce -> PuceLuxe [label="Puce", fontcolor="green", color="green", style="solid",  labelfontcolor=black, labelangle=25,  labeldistance=2, fontsize=25, headlabel=1, weight=1]
+    LingotTitane -> PuceLuxe [headtooltip="LingotTitane", fontcolor="green", color="green", style="solid", labelfontcolor=black, labelangle=5, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> PuceLuxe [headtooltip="LingotOr", fontcolor="green", color="green", style="solid", labelfontcolor=black,  labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteFragile1
-    MateriauxConstruction -> SatelliteFragile1 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotFer -> SatelliteFragile1 [headtooltip="2 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
-    Puce -> SatelliteFragile1 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> SatelliteFragile1 [headtooltip="SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotFer -> SatelliteFragile1 [headtooltip="SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    Puce -> SatelliteFragile1 [headtooltip="SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labelangle=25,  labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteFragile2
-    SatelliteFragile1 -> SatelliteFragile2 [headtooltip="1 SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotAluminium -> SatelliteFragile2 [headtooltip="1 LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteFragile1 -> SatelliteFragile2 [headtooltip="SatelliteFragile1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> SatelliteFragile2 [headtooltip="LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteFragile3
-    SatelliteFragile2 -> SatelliteFragile3 [headtooltip="1 SatelliteFragile2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> SatelliteFragile3 [headtooltip="1 LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteFragile2 -> SatelliteFragile3 [headtooltip="SatelliteFragile2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> SatelliteFragile3 [headtooltip="LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteRobuste1
-    MateriauxConstruction -> SatelliteRobuste1 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotTitane -> SatelliteRobuste1 [headtooltip="2 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=2, weight=2];
-    Puce -> SatelliteRobuste1 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> SatelliteRobuste1 [headtooltip="SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotTitane -> SatelliteRobuste1 [headtooltip="SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black, labelangle=-20, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    Puce -> SatelliteRobuste1 [headtooltip="SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", minlen=3, labelfontcolor=black,  labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteRobuste2
-    SatelliteRobuste1 -> SatelliteRobuste2 [headtooltip="1 SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotAluminium -> SatelliteRobuste2 [headtooltip="1 LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteRobuste1 -> SatelliteRobuste2 [headtooltip="SatelliteRobuste1", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> SatelliteRobuste2 [headtooltip="LingotAluminium", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // SatelliteRobuste3
-    SatelliteRobuste2 -> SatelliteRobuste3 [headtooltip="1 SatelliteRobuste2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> SatelliteRobuste3 [headtooltip="1 LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteRobuste2 -> SatelliteRobuste3 [headtooltip="SatelliteRobuste2", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> SatelliteRobuste3 [headtooltip="LingotOr", fontcolor="orange", color="orange:yellow:orange", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
 
     // VaisseauFragile1
-    Carburant1 -> VaisseauFragile1 [headtooltip="1 VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MateriauxConstruction -> VaisseauFragile1 [headtooltip="1 MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotFer -> VaisseauFragile1 [headtooltip="1 LingotFer", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    Puce -> VaisseauFragile1 [headtooltip="1 Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Carburant1 -> VaisseauFragile1 [headtooltip="VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> VaisseauFragile1 [headtooltip="MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    LingotFer -> VaisseauFragile1 [headtooltip="LingotFer", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=25,  labeldistance=2, fontsize=25, headlabel=3, weight=3];
+    Puce -> VaisseauFragile1 [headtooltip="Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
     // VaisseauFragile2
-    VaisseauFragile1 -> VaisseauFragile2 [headtooltip="1 VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotAluminium -> VaisseauFragile2 [headtooltip="1 LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    VaisseauFragile1 -> VaisseauFragile2 [headtooltip="VaisseauFragile1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> VaisseauFragile2 [headtooltip="LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
     // VaisseauFragile3
-    VaisseauFragile2 -> VaisseauFragile3 [headtooltip="1 VaisseauFragile2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> VaisseauFragile3 [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    VaisseauFragile2 -> VaisseauFragile3 [headtooltip="VaisseauFragile2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> VaisseauFragile3 [headtooltip="LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
     // VaisseauRobuste1
-    Carburant2 -> VaisseauRobuste1 [headtooltip="1 VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    MateriauxConstruction -> VaisseauRobuste1 [headtooltip="1 MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotTitane -> VaisseauRobuste1 [headtooltip="1 LingotTitane", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    Puce -> VaisseauRobuste1 [headtooltip="1 Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    Carburant2 -> VaisseauRobuste1 [headtooltip="VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    MateriauxConstruction -> VaisseauRobuste1 [headtooltip="MateriauxConstruction", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=25,  labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    LingotTitane -> VaisseauRobuste1 [headtooltip="LingotTitane", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=3, weight=3];
+    Puce -> VaisseauRobuste1 [headtooltip="Puce", fontcolor="red", color="red:orange:red", style="solid", minlen=2, labelfontcolor=black, labelangle=-10, labeldistance=2, fontsize=25, headlabel=2, weight=2, minlen=3];
 
     // VaisseauRobuste2
-    VaisseauRobuste1 -> VaisseauRobuste2 [headtooltip="1 VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotAluminium -> VaisseauRobuste2 [headtooltip="1 LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    VaisseauRobuste1 -> VaisseauRobuste2 [headtooltip="VaisseauRobuste1", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotAluminium -> VaisseauRobuste2 [headtooltip="LingotAluminium", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
     // VaisseauRobuste3
-    VaisseauRobuste2 -> VaisseauRobuste3 [headtooltip="1 VaisseauRobuste2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> VaisseauRobuste3 [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    VaisseauRobuste2 -> VaisseauRobuste3 [headtooltip="VaisseauRobuste2", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    LingotOr -> VaisseauRobuste3 [headtooltip="LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labelangle=25, labeldistance=2, fontsize=25, headlabel=2, weight=2];
 
     // VaisseauLuxe
-    VaisseauRobuste3 -> VaisseauLuxe [headtooltip="1 VaisseauRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    SatelliteRobuste3 -> VaisseauLuxe [headtooltip="1 SatelliteRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    LingotOr -> VaisseauLuxe [headtooltip="1 LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
-    PuceLuxe -> VaisseauLuxe [headtooltip="1 PuceLuxe", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    VaisseauRobuste3 -> VaisseauLuxe [headtooltip="VaisseauRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=1, weight=1];
+    SatelliteRobuste3 -> VaisseauLuxe [headtooltip="SatelliteRobuste3", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=2, weight=2];
+    LingotOr -> VaisseauLuxe [headtooltip="LingotOr", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=3, weight=3];
+    PuceLuxe -> VaisseauLuxe [headtooltip="PuceLuxe", fontcolor="red", color="red:orange:red", style="solid", labelfontcolor=black, labeldistance=2, fontsize=25, headlabel=3, weight=3];
 
     subgraph cluster_LEGEND {
         fontsize=30
