@@ -18,8 +18,8 @@ Pour calculer la ressource craftable avec les 3 ressources disponibles, on calcu
 > 25 => 0b0001 1001  
 > 35 => 0b0010 0011  
 
-On concatène ces 3 valeurs binaires par ordre décroissant *+(les combinaisons données sont triées par ordre décroissant)* pour obtenir un long. Chaque nombre est concatèné grâce à un OU logique à avec le long, en décalant de 16 bit (<< 16 = 2 octets) à chaque fois
-> ICI FAUT CAR C'est par ordre croissant
+On concatène ces 3 valeurs binaires par **ORDRE DECROISSANT** *(les combinaisons données sont triées par ordre décroissant)* pour obtenir un long. Chaque nombre est concatèné grâce à un OU logique à avec le long, en décalant de 16 bit (<< 16 = 2 octets) à chaque fois
+> ***ICI FAUT CAR C'est par ordre croissant***  
 > val = 0000 0000 ... 0000 0000  
 > **val |= 19 => 0000 0000 0001 0011**  
 > *val << 16 => 0000 0000 0001 0011 0000 0000 0000 0000*  
@@ -113,7 +113,7 @@ Un fichier par batiment, organisé comme ci-dessous : *craftBatiment.txt*
 ### Formule craft
 
 Le fichier comportant toutes les formules des crafts commences par le **NB_RESSOURCES**.
-Ensuite sur cahque ligne il y a une formule de craft décrite de la façon suivante :
+Ensuite sur chaque ligne il y a une formule de craft décrite de la façon suivante :
 * nb elt dans la formule
 * suite de 3-uplets
     * ressource (nombre : short)

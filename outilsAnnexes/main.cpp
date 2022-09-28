@@ -1,59 +1,151 @@
 #include <iostream>
+#include <typeinfo>
 #include <string>
 #include <fstream>
 #include <list>
+#include <vector>
+#include <map>
 
 /*
-g++ main.cpp -o prog -g && ./prog
+clear && g++ main.cpp -o prog.exe -g && ./prog.exe
 */
 
 using namespace std;
 
-typedef struct trouple
+typedef struct eltReaction
 {
     int ress;
     int qte;
     bool produit;
-} trouple_t;
+} eltReaction_t;
+
+typedef struct envReaction
+{
+    int batiment;
+    int ress;
+    ulong hashRecette;
+} envReaction_t;
+
+void lectureDonnees(string cheminFichierLecture,
+                    int &nbRessource, map<string, int> &nomsRessource,
+                    int &nbTypeBatiment, map<string, int> &nomsTypeBatiment,
+                    list<list<eltReaction_t>> &livreCuisine,
+                    list<envReaction_t> &listEnvReaction);
+
+void ecritureDonnees(string cheminFichierEcritureFormule,
+                     int &nbRessource, map<string, int> &nomsRessource,
+                     int &nbTypeBatiment, map<string, int> &nomsTypeBatiment,
+                     list<list<eltReaction_t>> &livreCuisine,
+                     list<envReaction_t> &listEnvReaction);
+
+void affichageMap(const map<string, int> &map, string nom, bool withEndl = false);
+void affichageRecette(const list<eltReaction_t> listRecette);
+void affichageEnv(const list<envReaction_t> &listEnvReaction, bool withEndl = false);
+
+ulong concatBinListRessource(const list<int> &combiRessources);
 
 int main()
 {
 
     string cheminFichierLecture = "./Crafts.txt";
-    string cheminFichierEcriture = "./formuleCraft.txt";
-
-    ifstream monFluxLecture;
-    ofstream monFluxEcriture;
-    monFluxLecture.open(cheminFichierLecture);
-    monFluxEcriture.open(cheminFichierEcriture);
+    string cheminFichierEcritureFormule = "./formuleCraft.txt";
 
     int nbRessource;
-    string val;
+    int nbTypeRessource;
+
+    map<string, int> nomsRessource;
+    map<string, int> nomsTypeBatiment;
+
+    list<list<eltReaction_t>> livreCuisine; // 📔
+    list<envReaction_t> listEnvReaction;
+
+    lectureDonnees(cheminFichierLecture,
+                   nbRessource, nomsRessource,
+                   nbTypeRessource, nomsTypeBatiment,
+                   livreCuisine,
+                   listEnvReaction);
+
+    ecritureDonnees(cheminFichierEcritureFormule,
+                    nbRessource, nomsRessource,
+                    nbTypeRessource, nomsTypeBatiment,
+                    livreCuisine,
+                    listEnvReaction);
+
+    return 0;
+}
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+
+void lectureDonnees(string cheminFichierLecture,
+                    int &nbRessource, map<string, int> &nomsRessource,
+                    int &nbTypeBatiment, map<string, int> &nomsTypeBatiment,
+                    list<list<eltReaction_t>> &livreCuisine,
+                    list<envReaction_t> &listEnvReaction)
+{
+
+    ifstream monFluxLecture;
+    monFluxLecture.open(cheminFichierLecture);
+
+    string val, nomBatiment;
+    int indiceBatiment;
     int produit, reactif, qte;
-    trouple_t troupleTmp;
+    eltReaction_t troupleTmp;
+    envReaction_t envReact;
+    list<int> listReactifRecette;
 
-    list<trouple_t> listRecette;        // 📜
-    list<list<trouple_t>> livreCuisine; // 📔
+    list<eltReaction_t> listRecette; // 📜
 
-    if (monFluxLecture && monFluxEcriture)
+    if (monFluxLecture)
     {
-        // Lecture du nombre de ressource
-        monFluxLecture >> nbRessource;
+        cout << "LECTURE du fichier des crafts : " << cheminFichierLecture << endl;
 
-        // Skip de la 2eme ligne (noms ressources)
-        for (int i = 0; i < nbRessource + 1; ++i)
+        /************ Lecture 1ere ligne ************/
+        // Lecture case "NB_RESSOURCES" (A1)
+        monFluxLecture >> val;
+        // Lecture du nombre de ressource (A2)
+        monFluxLecture >> nbRessource;
+        // Lit chaque nom de Ressource (C1:AV)
+        for (int i = 0; i < nbRessource; ++i)
         {
             monFluxLecture >> val;
-            // cout << val << endl;
+            nomsRessource.insert(pair<string, int>(val, i));
+        }
+        // affichageMap(nomsRessource, "nomsRessource", true);
+
+        /************ Lecture 2eme ligne ************/
+        // Lecture case "TYPE_BATIMENT" (A2)
+        monFluxLecture >> val;
+        // Lecture du nombre de ressource (A2)
+        monFluxLecture >> nbTypeBatiment;
+        // Lit chaque nom de Ressource (C2:K)
+        // Commence à -1 car premiere structure est : AucunStructure = -1
+        for (int i = -1; i < nbTypeBatiment - 1; ++i)
+        {
+            monFluxLecture >> val;
+            nomsTypeBatiment.insert(pair<string, int>(val, i));
+        }
+        // affichageMap(nomsTypeBatiment, "nomsTypeBatiment", true);
+
+        /************ Lecture 3eme ligne ************/
+        // SKIP première ligne du tableau des crafts
+        // Batiment de craft (A3) + RESSOURCE (B3) + nbRessource
+        for (int i = 0; i < nbRessource + 2; ++i)
+        {
+            monFluxLecture >> val;
         }
 
         /************** Lecture de toutes les recettes *******************/
-        cout << "LECTURE des Recettes de craft dans le fichier : " << cheminFichierLecture << endl;
-
         // Pour chaque Ressource
         for (int i = 0; i < nbRessource; ++i)
         {
-            listRecette.clear();   // Netoyage de la recette precedente
+            // Nettoyage de la recette et reactifs precedents
+            listRecette.clear();
+            listReactifRecette.clear();
+
+            // Récupère le nom du batiment de craft
+            monFluxLecture >> nomBatiment;
+
             monFluxLecture >> val; // Skip du nom du produit
             produit = i;           // Récupération du numéro du produit
 
@@ -65,7 +157,8 @@ int main()
                     troupleTmp.ress = k;
                     troupleTmp.qte = qte;
                     troupleTmp.produit = false;
-                    listRecette.push_back(troupleTmp); // Ajout à la recette
+                    listRecette.push_back(troupleTmp);              // Ajout à la recette
+                    listReactifRecette.push_front(troupleTmp.ress); // Ajout à la liste des reactifs
                 }
             }
 
@@ -75,29 +168,57 @@ int main()
             {
                 troupleTmp.qte = 1; // Est craftable
                 troupleTmp.produit = true;
+
+                // Ajout de l'env de craft
+                // Batiment ou la ressource peut etre crafté avec le hash associé
+                envReact.batiment = nomsTypeBatiment[nomBatiment];
+                envReact.ress = produit;
+                // Calcul du hash associé au produit avec la liste des reactifs
+                envReact.hashRecette = concatBinListRessource(listReactifRecette);
+                listEnvReaction.push_back(envReact);
             }
             else
             {
+                // cout << "Pas craftable et bat = " << nomBatiment << " pour ressource : " << produit << endl;
                 troupleTmp.qte = 0;         // N'est PAS craftable
                 troupleTmp.produit = false; // N'est PAS craftable
             }
+            // Ajout du produit en tête de recette
             listRecette.push_front(troupleTmp);
+
+            // affichageRecette(listRecette);
 
             // Ajout de la recette au livre de Cuisine
             livreCuisine.push_back(listRecette);
-
-            // Affichage recette
-            // cout << "Recette : " << val << " (indice " << produit << ") : ";
-            // for (auto &c : listRecette)
-            // {
-            //     cout << "(" << c.ress << ", " << c.qte << ", " << c.produit << ") ";
-            // }
-            // cout << endl;
         }
-        monFluxLecture.close();
 
+        affichageEnv(listEnvReaction, true);
+        affichageMap(nomsRessource,"ress", true);
+
+        monFluxLecture.close();
+    }
+    else
+    {
+        std::cerr << "/!\\ Erreur d'ouverture du fichier : " << cheminFichierLecture << "/!\\" << endl;
+    }
+}
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+
+void ecritureDonnees(string cheminFichierEcritureFormule,
+                     int &nbRessource, map<string, int> &nomsRessource,
+                     int &nbTypeBatiment, map<string, int> &nomsTypeBatiment,
+                     list<list<eltReaction_t>> &livreCuisine,
+                     list<envReaction_t> &listEnvReaction)
+{
+    ofstream monFluxEcriture;
+    monFluxEcriture.open(cheminFichierEcritureFormule);
+
+    if (monFluxEcriture)
+    {
         /********* Ecriture de toutes les recettes dans le bon format **************/
-        cout << "ECRITURE des Recettes de craft dans le fichier : " << cheminFichierEcriture << endl;
+        cout << "ECRITURE des Recettes de craft dans le fichier : " << cheminFichierEcritureFormule << endl;
 
         // Ecrit le nb de ressources et donc de lignes dans le fichier
         monFluxEcriture << nbRessource << endl;
@@ -118,8 +239,63 @@ int main()
     }
     else
     {
-        std::cerr << "/!\\ Erreur d'ouverture du fichier : " << cheminFichierLecture << " ou du fichier : " << cheminFichierEcriture << "/!\\" << endl;
+        std::cerr << "/!\\ Erreur d'écriture du fichier : " << cheminFichierEcritureFormule << "/!\\" << endl;
+    }
+}
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+
+void affichageMap(const map<string, int> &map, string nom, bool withEndl)
+{
+    cout << "Affichage d'un map " << nom << " : " << endl;
+    for (auto &c : map)
+    {
+        cout << "(" << c.second << ", " << c.first << ") ";
+        if (withEndl)
+            cout << endl;
+    }
+    cout << endl;
+}
+
+void affichageRecette(const list<eltReaction_t> listRecette)
+{
+    // Affichage recette
+    cout << "Recette : ";
+    for (auto &c : listRecette)
+    {
+        cout << "(" << c.ress << ", " << c.qte << ", " << c.produit << ") ";
+    }
+    cout << endl;
+}
+
+void affichageEnv(const list<envReaction_t> &listEnvReaction, bool withEndl)
+{
+    for (auto &e : listEnvReaction)
+    {
+        cout << "(" << e.batiment << ", " << e.ress << ", " << e.hashRecette << ") ";
+        if (withEndl)
+            cout << endl;
+    }
+    cout << endl;
+}
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+
+ulong concatBinListRessource(const list<int> &combiRessources)
+{
+    const short RIEN = 0;
+    ulong valConcatBin = 0;
+    uint nbRessources = 0;
+
+    for (auto r : combiRessources)
+    {
+        // Décalage de 2 octets (short)
+        valConcatBin = valConcatBin << 16;
+        // Concaténation avec un OU logiques
+        valConcatBin = valConcatBin | (ulong)r;
     }
 
-    return 0;
+    return valConcatBin;
 }
