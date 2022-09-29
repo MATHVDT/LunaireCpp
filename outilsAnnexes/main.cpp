@@ -22,6 +22,7 @@ typedef struct eltReaction
 typedef struct envReaction
 {
     int batiment;
+    string nomBatiment;
     int ress;
     ulong hashRecette;
 } envReaction_t;
@@ -43,6 +44,8 @@ void affichageRecette(const list<eltReaction_t> listRecette);
 void affichageEnv(const list<envReaction_t> &listEnvReaction, bool withEndl = false);
 
 ulong concatBinListRessource(const list<int> &combiRessources);
+
+string dossierRessultat = "./crafts";
 
 int main()
 {
@@ -172,6 +175,7 @@ void lectureDonnees(string cheminFichierLecture,
                 // Ajout de l'env de craft
                 // Batiment ou la ressource peut etre crafté avec le hash associé
                 envReact.batiment = nomsTypeBatiment[nomBatiment];
+                envReact.nomBatiment = nomBatiment;
                 envReact.ress = produit;
                 // Calcul du hash associé au produit avec la liste des reactifs
                 envReact.hashRecette = concatBinListRessource(listReactifRecette);
@@ -192,8 +196,8 @@ void lectureDonnees(string cheminFichierLecture,
             livreCuisine.push_back(listRecette);
         }
 
-        affichageEnv(listEnvReaction, true);
-        affichageMap(nomsRessource,"ress", true);
+        // affichageEnv(listEnvReaction, true);
+        // affichageMap(nomsRessource,"ress", true);
 
         monFluxLecture.close();
     }
@@ -215,10 +219,30 @@ void ecritureDonnees(string cheminFichierEcritureFormule,
     ofstream monFluxEcriture;
     monFluxEcriture.open(cheminFichierEcritureFormule);
 
-    if (monFluxEcriture)
+    // Tableau des flux/fichier des crafts possibles dans les batiments
+    ofstream *fluxFichierCraftBat = new ofstream[nbTypeBatiment];
+    string nomFichier;
+    bool allOpen = true;
+    // Récupération des noms des batiments et overture des flux
+    for (auto &p : nomsTypeBatiment)
     {
-        /********* Ecriture de toutes les recettes dans le bon format **************/
+        if (!fluxFichierCraftBat[p.second])
+        {
+            allOpen = false;
+        }
+        nomFichier = dossierRessultat + "/craft" + p.first + ".txt";
+        fluxFichierCraftBat[p.second].open(nomFichier);
+    }
+
+    if (monFluxEcriture && allOpen)
+    {
+        /********* Ecriture de toutes les recettes des crafts **************/
         cout << "ECRITURE des Recettes de craft dans le fichier : " << cheminFichierEcritureFormule << endl;
+        cout << "ECRITURE craft / BAT dans les fichiers : " << endl;
+        for (auto &s : nomsTypeBatiment)
+        {
+            cout << dossierRessultat << "/craft" << s.first << ".txt" << endl;
+        }
 
         // Ecrit le nb de ressources et donc de lignes dans le fichier
         monFluxEcriture << nbRessource << endl;
@@ -234,8 +258,38 @@ void ecritureDonnees(string cheminFichierEcritureFormule,
             }
             monFluxEcriture << endl;
         }
-
         monFluxEcriture.close();
+
+        /********* Ecriture des crafts dispo dans les Batiment **************/
+        int *nbCraftBatiment = new int[nbTypeBatiment]{0};
+        // Comptage du nombre de crafts par batiment
+        for (auto &env : listEnvReaction)
+        {
+            nbCraftBatiment[env.batiment]++;
+        }
+
+        // Ecriture du nb de Crafts par batiment dans les fichiers
+        for (int k = 0; k < nbTypeBatiment; ++k)
+        {
+            fluxFichierCraftBat[k] << nbCraftBatiment[k] << endl;
+        }
+
+        // Ecriture des correspondance ress / hash
+        for (auto &env : listEnvReaction)
+        {
+            fluxFichierCraftBat[env.batiment] << env.ress << " ";
+            fluxFichierCraftBat[env.batiment] << env.hashRecette;
+            fluxFichierCraftBat[env.batiment] << endl;
+        }
+
+        // Fermeture des flux
+        for (int k = 0; k < nbTypeBatiment; ++k)
+        {
+            fluxFichierCraftBat[k].close();
+        }
+        // Libération des new
+        delete[] fluxFichierCraftBat;
+        delete[] nbCraftBatiment;
     }
     else
     {
