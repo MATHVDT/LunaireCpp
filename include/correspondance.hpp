@@ -3,6 +3,7 @@
 
 #include <map>
 #include <cstring>
+#include <string>
 
 #include "EnumTypeRessource.hpp"
 #include "EnumTypeStructure.hpp"
