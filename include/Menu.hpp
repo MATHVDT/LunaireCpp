@@ -16,6 +16,7 @@
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
 #include "Ressource.hpp"
+#include "Stat.hpp"
 // #include "Craft.hpp"
 
 class ContextGlobal;
@@ -46,6 +47,11 @@ private:
     RectangleShape _lineSeparatorMapMenu;
     RectangleShape _lineCoteDroitMenu;
 
+    // Section stat
+    Font _font;
+    Stat _stat;
+
+    // Section boutons
     bool _btnActive;
     SectionMenu _sectionMenu;
     vector<Bouton *> _boutonsChoixStructures;

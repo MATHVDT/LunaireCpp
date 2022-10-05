@@ -12,6 +12,8 @@
 #ifndef __STAT_H__
 #define __STAT_H__
 
+#include <string>
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -31,15 +33,22 @@ extern ContextGlobal *contextGlobal;
 class Stat
 {
 private:
-    // Vector2f _pos;
+    Vector2f _pos;
     Rect<float> _boxStat;
     RectangleShape _boxStatShape; // ??_pos??
 
+    Font& _font; // Peut etre pas besoin de stocker
+
     int _score;
+    Text _scoreText;
 
 public:
-    Stat(const Vector2f &pos, float width, float height);
+    Stat();
     ~Stat();
+
+    void init(const Vector2f &pos, 
+    float width, float height,
+    Font & font);
 
     void dessiner(float scale = 1.f);
 };

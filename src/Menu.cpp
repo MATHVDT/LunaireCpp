@@ -27,9 +27,14 @@ Menu *Menu::getInstance()
 
 Menu::Menu()
     : _posEcran(Vector2f{0.f, 0.f}),
+
       _lineSeparatorStatBoutons(),
       _lineSeparatorMapMenu(),
       _lineCoteDroitMenu(),
+
+        _font(),
+        _stat(),
+
       _btnActive(false),
       _sectionMenu(),
       _boutonsChoixStructures{8},

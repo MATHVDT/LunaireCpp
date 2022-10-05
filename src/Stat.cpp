@@ -11,10 +11,12 @@
 
 #include "Stat.hpp"
 
-Stat::Stat(const Vector2f &pos, float width, float height)
-    : // _pos{},
-      _boxStat{pos.x, pos.y, width, height},
-      _score(0)
+Stat::Stat()
+    :  _pos{0.f,0.f},
+      _boxStat{0.f, 0.f, 0.f, 0.f},
+      _font(),
+      _score(0), 
+      _scoreText{}
 {
 }
 
@@ -22,7 +24,22 @@ Stat::~Stat()
 {
 }
 
+void Stat::init(const Vector2f &pos,
+        float width, float height,
+        Font & font)
+{
+    _pos = pos;
+    _boxStat.left = _pos.x;
+    _boxStat.top=_pos.y;
+    _boxStat.height=height;
+    _boxStat.width = width;
+
+    _font = font;// Peut etre pas besoin
+    _scoreText.setFont(_font);
+
+}
+
 void Stat::dessiner(float scale )
 {
-    //constext
+    contextGlobal->dessinerFenetre(_scoreText);
 }
