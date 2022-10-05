@@ -22,7 +22,7 @@ Stat::~Stat()
 {
 }
 
-void Stat::    dessiner(float scale = 1.f)
+void Stat::dessiner(float scale )
 {
-    constext
+    //constext
 }

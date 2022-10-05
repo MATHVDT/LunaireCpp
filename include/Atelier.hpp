@@ -57,7 +57,7 @@ private: // Static
 
 public:
     Atelier(const Vector2u &pos);
-    virtual ~Atelier() override;
+    virtual ~Atelier() ;
 
     // Virtual
     virtual void init();

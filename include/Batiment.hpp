@@ -23,6 +23,7 @@
 #include "ContextGlobal.hpp"
 #include "Craft.hpp"
 #include <map>
+//#include "Mine.hpp"
 
 class ContextGlobal;
 class Structure;
@@ -55,7 +56,7 @@ public: // Static
 public:
     Batiment();
     Batiment(const Vector2u &pos, Texture *text);
-    virtual ~Batiment() override;
+    virtual ~Batiment();
 
     // Virtual
     virtual void init();

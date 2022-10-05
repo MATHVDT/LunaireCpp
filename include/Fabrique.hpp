@@ -57,7 +57,7 @@ private: // Static
 
 public:
     Fabrique(const Vector2u &pos);
-    virtual ~Fabrique() override;
+    virtual ~Fabrique() ;
 
     // Virtual
     virtual void init();

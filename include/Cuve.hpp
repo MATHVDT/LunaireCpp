@@ -57,7 +57,7 @@ private: // Static
 
 public:
     Cuve(const Vector2u &pos);
-    virtual ~Cuve() override;
+    virtual ~Cuve() ;
 
     // Virtual
     virtual void init();

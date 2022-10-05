@@ -57,7 +57,7 @@ private: // Static
 
 public:
     Fonderie(const Vector2u &pos);
-    virtual ~Fonderie() override;
+    virtual ~Fonderie();
 
     // Virtual
     virtual void init();

@@ -72,7 +72,7 @@ private: // Static
 public:
     Mine(const Vector2u &pos,
          TYPE_SOL typeSol = TYPE_SOL::Vierge);
-    virtual ~Mine() override;
+    virtual ~Mine();
 
     // Virtual
     virtual void init();

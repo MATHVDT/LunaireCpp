@@ -57,7 +57,7 @@ private: // Static
 
 public:
     ChantierSpatial(const Vector2u &pos);
-    virtual ~ChantierSpatial() override;
+    virtual ~ChantierSpatial() ;
 
     // Virtual
     virtual void init();
