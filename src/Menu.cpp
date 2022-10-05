@@ -10,6 +10,8 @@
  */
 #include "Menu.hpp"
 
+string cheminFont = "./ressource/fonts/nasalization-rg.otf";
+
 Menu *Menu::_singleton = nullptr;
 
 /**
@@ -32,8 +34,8 @@ Menu::Menu()
       _lineSeparatorMapMenu(),
       _lineCoteDroitMenu(),
 
-        _font(),
-        _stat(),
+    //   _stat(),
+      _font(),
 
       _btnActive(false),
       _sectionMenu(),
@@ -41,19 +43,30 @@ Menu::Menu()
       _boutonBatimentSelect{5},
       _listCraftPossible(nullptr),
       _tabCraftPossible{15},
-    //   _listFormuleCraft{nullptr},
-    //   _tabFormuleCraft{5},
+      //   _listFormuleCraft{nullptr},
+      //   _tabFormuleCraft{5},
       _craftHover(-1),
       _craftSelect(-1)
 {
 }
 
-void Menu::init(const Vector2f &posEcran)
+void Menu::init(const Vector2f &posEcran,
+                string cheminFont)
 {
     Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
     Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
 
     float largeurMap = contextGlobal->getLargeurMapEcran();
+
+    if (!_font.loadFromFile(cheminFont))
+    {
+        cerr << "Erreur chargement font : " << cheminFont << endl;
+    }
+
+    // // Stat
+    // _stat.init(_posEcran,
+    //            dimMenu.x, dimMenu.y,
+    //            _font);
 
     // Séparation Stat bouton
     _lineSeparatorStatBoutons.setFillColor(Color::White);
@@ -190,7 +203,7 @@ void Menu::dessinerBatimentSelectCraftDefine()
             btn->dessiner();
         }
     }
-    
+
     // Afficher formule
     // if (_listFormuleCraft == nullptr)
     // {

@@ -11,12 +11,15 @@
 #ifndef __MENU_HPP__
 #define __MENU_HPP__
 
-#include "vector"
+#include <vector>
+#include <string>
 
+#include <SFML/Graphics.hpp>
+
+#include "Stat.hpp"
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
 #include "Ressource.hpp"
-#include "Stat.hpp"
 // #include "Craft.hpp"
 
 class ContextGlobal;
@@ -24,12 +27,17 @@ extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesBoutons;
 
-using namespace std;
+// using namespace std;
+using std::cout;
+using std::endl;
 using namespace sf;
 
 class Structure;
 class Batiment;
 class Bouton;
+// class Stat;
+
+extern string cheminFont;
 
 enum SectionMenu
 {
@@ -48,8 +56,8 @@ private:
     RectangleShape _lineCoteDroitMenu;
 
     // Section stat
+    // Stat _stat;
     Font _font;
-    Stat _stat;
 
     // Section boutons
     bool _btnActive;
@@ -75,7 +83,8 @@ public:
     Menu();
     ~Menu();
 
-    void init(const Vector2f &posEcran = Vector2f{0.f, 0.f});
+    void init(const Vector2f &posEcran = Vector2f{0.f, 0.f},
+              string cheminFont = cheminFont);
     void dessiner(float scaleSprite = 1.f);
 
     // Getter

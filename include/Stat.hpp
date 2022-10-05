@@ -25,7 +25,9 @@
 
 class ContextGlobal;
 
-using namespace std;
+// using namespace std;
+using std::cout;
+using std::endl;
 using namespace sf;
 
 extern ContextGlobal *contextGlobal;
@@ -37,8 +39,6 @@ private:
     Rect<float> _boxStat;
     RectangleShape _boxStatShape; // ??_pos??
 
-    Font& _font; // Peut etre pas besoin de stocker
-
     int _score;
     Text _scoreText;
 
@@ -46,9 +46,9 @@ public:
     Stat();
     ~Stat();
 
-    void init(const Vector2f &pos, 
-    float width, float height,
-    Font & font);
+    void init(const Vector2f &pos,
+              float width, float height,
+              Font &font);
 
     void dessiner(float scale = 1.f);
 };

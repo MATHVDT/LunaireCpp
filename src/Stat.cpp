@@ -14,7 +14,6 @@
 Stat::Stat()
     :  _pos{0.f,0.f},
       _boxStat{0.f, 0.f, 0.f, 0.f},
-      _font(),
       _score(0), 
       _scoreText{}
 {
@@ -34,8 +33,7 @@ void Stat::init(const Vector2f &pos,
     _boxStat.height=height;
     _boxStat.width = width;
 
-    _font = font;// Peut etre pas besoin
-    _scoreText.setFont(_font);
+    _scoreText.setFont(font);
 
 }
 
