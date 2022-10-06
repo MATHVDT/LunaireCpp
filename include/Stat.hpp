@@ -13,6 +13,7 @@
 #define __STAT_H__
 
 #include <string>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -42,8 +43,13 @@ private:
     int _score;
     Text _scoreText;
 
+public: // Static
+    static Stat *_singleton;
+
+public: // Static
+    static Stat *getInstance();
+
 public:
-    Stat();
     ~Stat();
 
     void init(const Vector2f &pos,
@@ -51,6 +57,50 @@ public:
               Font &font);
 
     void dessiner(float scale = 1.f);
+
+    // Getter
+    int getScore() const;
+    string getScoreText() const;
+    const Vector2f &getPosition() const;
+
+    // Setter
+    void setScore(int val);
+    void incScore(int valInc = 1);
+    void translater(const Vector2f &translation);
+
+private:
+    Stat();
 };
 
-#endif // __STAT_H__
+/***************************************************/
+/*                 Méthodes inline                 */
+/***************************************************/
+
+/***************************************************/
+/*              Méthodes inline static             */
+/***************************************************/
+
+/***************************************************/
+/*           Méthodes inline non static            */
+/***************************************************/
+// Getter
+inline int Stat::getScore() const { return _score; }
+inline string Stat::getScoreText() const { return to_string(_score); }
+inline const Vector2f &Stat::getPosition() const { return _pos; }
+
+// Setter
+inline void Stat::setScore(int val) { _score = val; }
+inline void Stat::incScore(int valInc) { _score += valInc; }
+
+inline void Stat::translater(const Vector2f &translation)
+{
+    _pos.x += translation.x;
+    _pos.y += translation.y;
+    _boxStat.left = _pos.x;
+    _boxStat.top = _pos.y;
+    // _scoreText.setPosition(_scoreText.getPosition() + translation);
+    _scoreText.move(translation);
+
+}
+
+#endif

@@ -34,7 +34,7 @@ Menu::Menu()
       _lineSeparatorMapMenu(),
       _lineCoteDroitMenu(),
 
-    //   _stat(),
+      _stat(Stat::getInstance()),
       _font(),
 
       _btnActive(false),
@@ -63,10 +63,10 @@ void Menu::init(const Vector2f &posEcran,
         cerr << "Erreur chargement font : " << cheminFont << endl;
     }
 
-    // // Stat
-    // _stat.init(_posEcran,
-    //            dimMenu.x, dimMenu.y,
-    //            _font);
+    // Stat
+    _stat->init(_posEcran,
+                dimMenu.x, 0.35f * dimMenu.y,
+                _font);
 
     // Séparation Stat bouton
     _lineSeparatorStatBoutons.setFillColor(Color::White);
@@ -96,12 +96,14 @@ void Menu::init(const Vector2f &posEcran,
     translaterBoutons(_posEcran);
 
     // setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
-    setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
     // setSectionMenu(SectionMenu::ChoixStructures);
+    setSectionMenu(SectionMenu::BatimentSelectCraftUndefine);
 }
 
 Menu::~Menu()
 {
+    delete _stat;
+
     for (auto &btn : _boutonsChoixStructures)
         delete btn;
 }
@@ -116,7 +118,9 @@ Menu::~Menu()
 void Menu::dessiner(float scaleSprite)
 {
     float scale = contextGlobal->getScaleReference();
+
     // dessiner Stat
+    _stat->dessiner();
 
     contextGlobal->dessinerFenetre(_lineSeparatorStatBoutons);
     contextGlobal->dessinerFenetre(_lineSeparatorMapMenu);
@@ -233,6 +237,8 @@ void Menu::setPositionEcran(const Vector2f &newPosEcran)
 {
     Vector2f translation = newPosEcran - _posEcran;
     _posEcran = newPosEcran;
+
+    _stat->translater(translation);
 
     // Pour tout les boutons Position += translation
     // btn.deplacerPositionEcran(translation);

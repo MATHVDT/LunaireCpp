@@ -177,8 +177,7 @@ void Manager::updateStructure()
     Structure *curseurStruct = nullptr;
     connexion_t *c = nullptr;
 
-    cerr << "Nouveau tour d'update" << endl
-         << endl;
+    // cerr << "Nouveau tour d'update" << endl;
 
     while (!queueStruct.empty())
     {
@@ -207,9 +206,9 @@ void Manager::updateStructure()
         // Traitement de la structure
         cerr << "Update struct id : " << curseurStruct->getIdStructure() << endl;
         curseurStruct->update();
-        cerr << endl;
+        // cerr << endl;
     }
-    cerr << endl;
+    // cerr << endl;
 }
 
 void Manager::update()

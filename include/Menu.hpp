@@ -35,7 +35,7 @@ using namespace sf;
 class Structure;
 class Batiment;
 class Bouton;
-// class Stat;
+class Stat;
 
 extern string cheminFont;
 
@@ -56,7 +56,7 @@ private:
     RectangleShape _lineCoteDroitMenu;
 
     // Section stat
-    // Stat _stat;
+    Stat *_stat;
     Font _font;
 
     // Section boutons
@@ -72,6 +72,8 @@ private:
     // list<FormuleCraft_t *> _listFormuleCraft;
     // vector<RectangleShape> _tabFormuleCraft;
     int _craftHover, _craftSelect;
+
+
 
 public: // Static
     static Menu *_singleton;
