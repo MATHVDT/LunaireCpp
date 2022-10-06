@@ -73,8 +73,6 @@ private:
     // vector<RectangleShape> _tabFormuleCraft;
     int _craftHover, _craftSelect;
 
-
-
 public: // Static
     static Menu *_singleton;
 

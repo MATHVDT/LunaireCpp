@@ -12,7 +12,8 @@ Manager::Manager() : _carte(Carte::getInstance()),
                      _endpointStructure{},
                      _spriteCaseOver(new Sprite),
                      _spriteCaseSelectionnee(new Sprite),
-                     _menu{Menu::getInstance()}
+                     _menu{Menu::getInstance()},
+                     _stat{Stat::getInstance()}
 {
 }
 

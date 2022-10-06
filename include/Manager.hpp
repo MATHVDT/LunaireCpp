@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "Stat.hpp"
 #include "Craft.hpp"
 #include "ContextGlobal.hpp"
 #include "Carte.hpp"
@@ -47,6 +48,7 @@ private:
     Sprite *_spriteCaseSelectionnee;
 
     Menu *_menu;
+    Stat * _stat;
 
 private: // Static
     static Manager *_singleton;

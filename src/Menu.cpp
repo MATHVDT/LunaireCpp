@@ -102,8 +102,6 @@ void Menu::init(const Vector2f &posEcran,
 
 Menu::~Menu()
 {
-    delete _stat;
-
     for (auto &btn : _boutonsChoixStructures)
         delete btn;
 }

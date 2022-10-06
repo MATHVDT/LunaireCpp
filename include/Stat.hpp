@@ -65,7 +65,7 @@ public:
 
     // Setter
     void setScore(int val);
-    void incScore(int valInc = 1);
+    void incrScore(int valInc = 1);
     void translater(const Vector2f &translation);
 
 private:
@@ -90,7 +90,7 @@ inline const Vector2f &Stat::getPosition() const { return _pos; }
 
 // Setter
 inline void Stat::setScore(int val) { _score = val; }
-inline void Stat::incScore(int valInc) { _score += valInc; }
+inline void Stat::incrScore(int valInc) { _score += valInc; }
 
 inline void Stat::translater(const Vector2f &translation)
 {

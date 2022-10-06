@@ -24,6 +24,7 @@ using namespace sf;
 class Carte;
 class CaseMap;
 class Menu;
+class Stat;
 
 class ContextGlobal
 {
@@ -46,6 +47,7 @@ private:
 
     Carte *_carte;
     Menu *_menu;
+    Stat *_stat;
     CaseMap *_caseHover;
     CaseMap *_caseSelectionnee;
 

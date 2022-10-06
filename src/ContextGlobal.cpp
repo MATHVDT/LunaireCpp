@@ -29,9 +29,11 @@ ContextGlobal::ContextGlobal()
 
 ContextGlobal::~ContextGlobal()
 {
-    _window.close();
     delete _carte;
     delete _menu;
+    delete _stat;
+
+    _window.close();
     std::cout << "Destruction contextGlobal" << std::endl;
 }
 
@@ -71,6 +73,7 @@ void ContextGlobal::init(const Vector2u &dimFenetre)
 
     _carte = Carte::getInstance();
     _menu = Menu::getInstance();
+    _stat = Stat::getInstance();
     _caseHover = nullptr;
     _caseSelectionnee = nullptr;
 
