@@ -37,7 +37,7 @@ class Batiment;
 class Bouton;
 class Stat;
 
-extern string cheminFont;
+extern string cheminFontBase;
 
 enum SectionMenu
 {
@@ -84,7 +84,7 @@ public:
     ~Menu();
 
     void init(const Vector2f &posEcran = Vector2f{0.f, 0.f},
-              string cheminFont = cheminFont);
+              string cheminFont = cheminFontBase);
     void dessiner(float scaleSprite = 1.f);
 
     // Getter

@@ -10,7 +10,7 @@
  */
 #include "Menu.hpp"
 
-string cheminFont = "./ressource/fonts/nasalization-rg.otf";
+string cheminFontBase = "./ressource/fonts/nasalization-rg.otf";
 
 Menu *Menu::_singleton = nullptr;
 
