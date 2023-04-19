@@ -20,6 +20,7 @@
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
 #include "Ressource.hpp"
+#include "Batiment.hpp"
 // #include "Craft.hpp"
 
 class ContextGlobal;
@@ -27,7 +28,6 @@ extern ContextGlobal *contextGlobal;
 
 extern string cheminFichierTexturesBoutons;
 
-// using namespace std;
 using std::cout;
 using std::endl;
 using namespace sf;
@@ -67,9 +67,11 @@ private:
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
     // Bouton *_boutonsModifTuyau;
-    list<TYPE_RESSOURCE> *_listCraftPossible;
-    vector<RectangleShape> _tabCraftPossible;
-    // list<FormuleCraft_t *> _listFormuleCraft;
+
+    Batiment *_batimentSelect;
+    // list<TYPE_RESSOURCE> *_listCraftPossible; // @deprecated ?
+    vector<RectangleShape> _tabCraftPossible; // @deprecated ?
+    // list<FormuleCraft_t *> _listFormuleCraft; // @deprecated ?
     // vector<RectangleShape> _tabFormuleCraft;
     int _craftHover, _craftSelect;
 
@@ -103,8 +105,9 @@ public:
     bool resetBoutonsHover();
 
     void setSectionMenu(SectionMenu section);
-    void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft);
+    // void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft); // @deprecated ?
     // void setListFormuleCraft(list<FormuleCraft_t *> listCraft);
+    void setBatimentSelect(Batiment *batiment);
 
 private:
     void translaterBoutons(const Vector2f &dirVect);
@@ -115,6 +118,9 @@ private:
 
     void dessinerBatimentSelectCraftUndefine();
     void dessinerBatimentSelectCraftDefine();
+
+    Structure *getStructureSelect();
+    Batiment *getBatimentSelect();
 };
 
 /***************************************************/
@@ -135,30 +141,16 @@ inline SectionMenu Menu::getSectionMenu() const { return _sectionMenu; }
 
 // Setter
 inline void Menu::setBoutonsActive(bool val) { _btnActive = true; }
-
-inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
-{
-    if (_listCraftPossible == nullptr)
-    {
-        _craftSelect = -1;
-    }
-    _listCraftPossible = listRessCraft;
-}
+// inline void Menu::setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft)
+// {
+//     if (_listCraftPossible == nullptr)
+//     {
+//         _craftSelect = -1;
+//     }
+//     _listCraftPossible = listRessCraft;
+// }
+inline void Menu::setBatimentSelect(Batiment *batiment) { _batimentSelect = batiment; }
 
 // inline void Menu::setListFormuleCraft(list<FormuleCraft_t *> listCraft) { _listFormuleCraft = listCraft; }
-
-inline TYPE_RESSOURCE Menu::getRessourceCraftSelect()
-{
-    if (_craftSelect == -1)
-        return TYPE_RESSOURCE::Rien;
-
-    if (_listCraftPossible->size() < _craftSelect)
-    {
-        cerr << "Erreur d'indice dans la selection ressource craftables" << endl;
-    }
-    list<TYPE_RESSOURCE>::iterator itRessource = _listCraftPossible->begin();
-    advance(itRessource, _craftSelect);
-    return *itRessource;
-}
 
 #endif

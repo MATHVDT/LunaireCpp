@@ -16,7 +16,7 @@
 
 #include "Craft.hpp"
 #include "Carte.hpp"
-#include "Menu.hpp"
+// #include "Menu.hpp"
 
 using namespace std;
 using namespace sf;

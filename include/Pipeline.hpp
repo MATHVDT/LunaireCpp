@@ -23,14 +23,13 @@
 
 #include "Structure.hpp"
 #include "ContextGlobal.hpp"
-#include "Structure.hpp"
 #include "ContenuPipeline.hpp"
 
 using namespace std;
 using namespace sf;
 
 class ContextGlobal;
-// class Structure;
+class Structure;
 class Batiment;
 
 extern ContextGlobal *contextGlobal;
@@ -151,8 +150,8 @@ public:
     virtual void dessiner(float scaleSprite) override;
     virtual void process();
 
-    virtual bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
+    virtual bool updateOrientation() override;
 
     // TYPE_RESSOURCE livrerStock();
     // virtual void remplirStock();

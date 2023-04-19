@@ -62,6 +62,21 @@ void Batiment::dechargerMemoireBatiments()
 
 /*******************************************************/
 
+/**
+ * @brief Test si la structure est bien un Batiment.
+ *
+ * @param Structure * - *s*
+ * @return true - *Est un Batiment*
+ * @return false - *N'est PAS un Batiment*
+ */
+bool Batiment::isBatiment(Structure *s)
+{
+    Batiment *isTypeBatiment = dynamic_cast<Batiment *>(s);
+    return isTypeBatiment != nullptr;
+}
+
+/*******************************************************/
+
 void Batiment::dessiner(float scaleSprite)
 {
     Structure::dessiner(scaleSprite);

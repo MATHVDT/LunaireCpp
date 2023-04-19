@@ -41,7 +41,7 @@ Menu::Menu()
       _sectionMenu(),
       _boutonsChoixStructures{8},
       _boutonBatimentSelect{5},
-      _listCraftPossible(nullptr),
+      //   _listCraftPossible(nullptr),
       _tabCraftPossible{15},
       //   _listFormuleCraft{nullptr},
       //   _tabFormuleCraft{5},
@@ -157,12 +157,16 @@ void Menu::dessinerBatimentSelectCraftUndefine()
         }
     }
 
-    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
-    Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
+    // Récupération de la structure selectionnée
+    Structure *structSelect = getStructureSelect();
+    if (structSelect == nullptr)
+        return;
 
-    uint n = ((_listCraftPossible == nullptr) ? 0 : _listCraftPossible->size());
+    std::list<TYPE_RESSOURCE> *listCraftPossible = structSelect->getListCraftPossible();
+
+    uint n = ((listCraftPossible == nullptr) ? 0 : listCraftPossible->size());
     TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
-    auto it = _listCraftPossible->begin();
+    auto it = listCraftPossible->begin();
 
     // liste des ressources craftables
     for (uint i = 0; i < n; ++i)
@@ -513,7 +517,13 @@ bool Menu::setBoutonsHover(const Vector2f &posMouseEcran)
         SectionMenu::BatimentSelectCraftUndefine)
     {
         Rect<float> box;
-        uint n = (_listCraftPossible == nullptr ? 0 : _listCraftPossible->size());
+        // Récupération de la structure selectionnée
+        Structure *structSelect = getStructureSelect();
+        if (structSelect == nullptr)
+            return changement;
+
+        std::list<TYPE_RESSOURCE> *listCraftPossible = structSelect->getListCraftPossible();
+        uint n = (listCraftPossible == nullptr ? 0 : listCraftPossible->size());
 
         for (uint k = 0; k < n; ++k)
         {
@@ -582,6 +592,7 @@ bool Menu::setBoutonsClick()
 
             // cerr << "hover : " << _craftHover << " | select : " << _craftSelect << endl;
 
+            // Clic sur une resource
             if (box.contains(posMouseEcran))
             { // Selection / Deselection
                 _craftSelect = _craftHover;
@@ -638,4 +649,37 @@ bool Menu::resetBoutonsHover()
         }
     }
     return changement;
+}
+
+TYPE_RESSOURCE Menu::getRessourceCraftSelect()
+{
+    if (_craftSelect == -1)
+        return TYPE_RESSOURCE::Rien;
+
+    // Récupération de la structure selectionnée
+    Structure *structSelect = getStructureSelect();
+    if (structSelect == nullptr)
+        return TYPE_RESSOURCE::Rien;
+
+    if (structSelect->getListCraftPossible()->size() < _craftSelect)
+    {
+        cerr << "Erreur d'indice dans la selection ressource craftables" << endl;
+    }
+    list<TYPE_RESSOURCE>::iterator itRessource = structSelect->getListCraftPossible()->begin();
+    advance(itRessource, _craftSelect);
+    return *itRessource;
+}
+
+Structure *Menu::getStructureSelect()
+{
+    CaseMap *caseSelect = contextGlobal->getCaseSelectionnee();
+    Structure *structSelect = (caseSelect == nullptr ? nullptr : caseSelect->getConstruction());
+
+    return structSelect;
+}
+
+Batiment *Menu::getBatimentSelect()
+{
+    Structure *s = getStructureSelect();
+    // Test si c'est un bat craft ?? Manager::isBatimentCraft() ?
 }

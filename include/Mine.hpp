@@ -50,7 +50,7 @@ public: // Static
     static uint _levelMax;
     static uint _nbAnim;
 
-   static  TYPE_RESSOURCE _premiereRessourceMine;
+    static TYPE_RESSOURCE _premiereRessourceMine;
     static uint _tailleTexture;
     static Texture *_texturesMines[NB_MINES];
     static uint _offsetTextureX; // Largeur d'1 Texture
@@ -85,6 +85,7 @@ public:
 
     // Gestion des structures connectées
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
+    virtual bool updateOrientation() override { return Batiment::updateOrientation(); }
 
     // Getter
     TYPE_SOL getTypeSol() const;

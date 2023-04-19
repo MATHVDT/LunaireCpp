@@ -24,9 +24,10 @@
 
 #include "EnumTypeRessource.hpp"
 #include "EnumTypeStructure.hpp"
-#include "Structure.hpp"
 // #include "Mine.hpp"
 // #include "Fonderie.hpp"
+
+class Structure;
 
 using namespace std;
 

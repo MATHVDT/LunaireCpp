@@ -48,7 +48,7 @@ private:
     Sprite *_spriteCaseSelectionnee;
 
     Menu *_menu;
-    Stat * _stat;
+    Stat *_stat;
 
 private: // Static
     static Manager *_singleton;
@@ -64,6 +64,9 @@ public: // Static
 
 private: // Static
     static void chargerTextures(string fichierCheminsTexture);
+    // static void dechargerTextures(); // @todo
+
+    static bool isBatimentCraft(Structure *s);
 
 public:
     ~Manager();
@@ -89,8 +92,6 @@ private:
     void inverserSensPipeline(Structure *structSelect);
     void validerCraft(Structure *s);
     void resetCraft(Structure *s);
-
-    bool isBatimentCraft(Structure *s);
 
     bool integrationStructureVoisinage();
 

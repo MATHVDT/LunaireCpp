@@ -32,8 +32,8 @@ public:
 
     virtual void process() override;
 
-    virtual bool updateOrientation() override;
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie) override;
+    virtual bool updateOrientation() override ;
 };
 
 /***************************************************/

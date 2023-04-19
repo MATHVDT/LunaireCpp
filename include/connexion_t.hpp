@@ -14,6 +14,7 @@
 #define __CONNEXION_T_HPP__
 
 #include "direction.hpp"
+#include "Structure.hpp"
 
 class Structure;
 

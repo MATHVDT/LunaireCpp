@@ -464,10 +464,10 @@ void Manager::updateEvent()
     // Essayer de trouver une game event pour ca
     if (structSelect != nullptr)
     {
-        if (isBatimentCraft(structSelect))
+        if (Batiment::isBatiment(structSelect))
         {
-
-            Batiment *bat = ((Batiment *)structSelect);
+            Batiment *bat = dynamic_cast<Batiment *>(structSelect);
+            // Batiment *bat = ((Batiment *)structSelect);
             if (!bat->getIsFormuleCraftDefine())
             {
                 bat->checkCraftPossible();
@@ -481,7 +481,7 @@ void Manager::updateEvent()
                 // Set Men bat select define
             }
         }
-        _menu->setListCraftPossible(structSelect->getListCraftPossible());
+        // _menu->setListCraftPossible(structSelect->getListCraftPossible()); // TODO @deprecated ? a degager ?
     }
     else
     {
@@ -507,6 +507,7 @@ void Manager::inverserSensPipeline(Structure *structSelect)
     }
 }
 
+/********************************************************************/
 /**
  * @brief Test si la structure est bien un Batiment et à des crafts.
  *
@@ -515,8 +516,8 @@ void Manager::inverserSensPipeline(Structure *structSelect)
  * - Fonderie
  *
  * @param Structure * - *s*
- * @return true - *Bien un Batiment avec des crafts*
- * @return false - *Pas un Batiment avec des crafts*
+ * @return true - *Est un Batiment avec des crafts*
+ * @return false - *N'est PAS un Batiment avec des crafts*
  */
 bool Manager::isBatimentCraft(Structure *s)
 {
@@ -525,6 +526,8 @@ bool Manager::isBatimentCraft(Structure *s)
             typeid(*s).hash_code() ==
                 typeid(Fonderie).hash_code());
 }
+
+/********************************************************************/
 
 /**
  * @brief Valide le craft d'un batiment s'il est bien selectionné.
@@ -537,7 +540,6 @@ void Manager::validerCraft(Structure *s)
     if (isBatimentCraft(s))
     { // Récup de la ressource select à craft
         TYPE_RESSOURCE rCraft = _menu->getRessourceCraftSelect();
-
         cout << "Ress select : " << ressString[rCraft] << endl;
 
         if (rCraft != TYPE_RESSOURCE::Rien)
@@ -546,6 +548,7 @@ void Manager::validerCraft(Structure *s)
             // Set la formule
             ((Batiment *)s)->setFormuleCraft(rCraft);
 
+            // Actualise le Menu
             _menu->setSectionMenu(SectionMenu::BatimentSelectCraftDefine);
         }
     }

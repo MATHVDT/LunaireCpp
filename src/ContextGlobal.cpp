@@ -11,6 +11,8 @@
  */
 #include "ContextGlobal.hpp"
 
+#include "Menu.hpp"
+
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 uint ContextGlobal::_nbTicksMax = 4; // = 4
 // Time ContextGlobal::_deltaTick = seconds(1.f);

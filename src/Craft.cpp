@@ -9,6 +9,7 @@
  * @copyright Copyright (c) 2022
  */
 #include "Craft.hpp"
+#include "Structure.hpp"
 
 string cheminFichierCrafts = "ressource/crafts/cheminFichierCrafts.txt";
 

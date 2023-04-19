@@ -61,6 +61,7 @@ public:
 
     // Virtual
     virtual void init();
+    virtual bool updateOrientation() override { return Batiment::updateOrientation(); }
 
     virtual void dessiner(float scaleSprite) override;
     virtual void setTextureRessourceCraft(TYPE_RESSOURCE ressCraft) override;

@@ -23,7 +23,7 @@
 #include "ContextGlobal.hpp"
 #include "Craft.hpp"
 #include <map>
-//#include "Mine.hpp"
+// #include "Mine.hpp"
 
 class ContextGlobal;
 class Structure;
@@ -31,7 +31,7 @@ class Pipeline;
 class Mine;
 class Fonderie;
 extern ContextGlobal *contextGlobal;
-
+typedef struct FormuleCraft FormuleCraft_t;
 
 class Batiment : public Structure
 {
@@ -52,6 +52,8 @@ public: // Static
 
     static void chargerMemoireBatiments();
     static void dechargerMemoireBatiments();
+
+    static bool isBatiment(Structure *s);
 
 public:
     Batiment();
