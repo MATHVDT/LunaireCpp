@@ -16,7 +16,10 @@
 
 #include "Craft.hpp"
 #include "Carte.hpp"
+#include "CaseMap.hpp"
 // #include "Menu.hpp"
+
+#include "Structure.hpp"
 
 using namespace std;
 using namespace sf;
@@ -25,6 +28,9 @@ class Carte;
 class CaseMap;
 class Menu;
 class Stat;
+class Structure;
+class Batiment;
+class Pipeline;
 
 class ContextGlobal
 {
@@ -90,8 +96,13 @@ public:
     Event::EventType getEventType() const;
     const float getTailleReference() const;
     const float getScaleReference() const;
+
     CaseMap *getCaseOver() const;
     CaseMap *getCaseSelectionnee() const;
+    Structure *getStructureSelect() const;
+    Batiment *getBatimentSelect() const;
+    Pipeline *getPipelineSelect() const;
+
     TYPE_STRUCTURE getEditionStructureSelectionnee() const;
     GameEvent getGameEvent() const;
     uint getCurrentTick() const;
@@ -151,6 +162,7 @@ inline const float ContextGlobal::getScaleReference() const { return _scaleRefer
 
 inline CaseMap *ContextGlobal::getCaseOver() const { return _caseHover; }
 inline CaseMap *ContextGlobal::getCaseSelectionnee() const { return _caseSelectionnee; }
+
 inline TYPE_STRUCTURE ContextGlobal::getEditionStructureSelectionnee() const { return _editionStructureSelectionnee; }
 inline GameEvent ContextGlobal::getGameEvent() const { return _gameEvent; }
 inline uint ContextGlobal::getCurrentTick() const { return _tick; }

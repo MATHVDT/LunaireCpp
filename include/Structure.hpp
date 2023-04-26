@@ -205,9 +205,9 @@ inline void Structure::afficherStock() const
     cout << "Sotck structu " << _idStructure << " : ";
     for (auto r : _stockConnexion)
     {
-        cerr << " - " << ressString[r];
+        // cerr << " - " << ressString[r];
     }
-    cerr << endl;
+    // cerr << endl;
 }
 
 #endif

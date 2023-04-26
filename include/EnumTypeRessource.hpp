@@ -13,8 +13,8 @@
 
 #include <sys/types.h>
 
-// #define NB_RESSOURCES 5;
-const int NB_RESSOURCES = 25;                 // Total
+const int NB_RESSOURCES_AUTRES = 6;
+
 const int NB_RESSOURCES_MINERAIS = 7;         // Mine
 const int NB_RESSOURCES_LINGOTS = 7;          // Fonderie
 const int NB_RESSOURCES_FABRIQUES = 0;        // Fabrique
@@ -22,9 +22,18 @@ const int NB_RESSOURCES_ATELIER = 6;          // Atelier
 const int NB_RESSOURCES_CUVES = 0;            // Cuve
 const int NB_RESSOURCES_CHANTIER_SPATIAL = 0; // ChantierSpatial
 
+const int NB_RESSOURCES = 30; // Total (Faire la somme de toutes les contantes)
+
 enum class TYPE_RESSOURCE : char
 {
+    // NB_RESSOURCES_AUTRES
     Rien = 0,
+    FlecheGauche,
+    FlecheDoite,
+    FlecheHaut,
+    FlecheBas,
+    Egale,
+
     // Gisement
     Vierge, // Gisement poussière régolite
     GisementGlace,
@@ -83,7 +92,6 @@ enum class TYPE_RESSOURCE : char
     VaisseauRobuste2,
     VaisseauRobuste3,
     VaisseauLuxe
-
 
 };
 

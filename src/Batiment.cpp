@@ -312,7 +312,7 @@ bool Batiment::crafter()
 
     if (connexionSortie == nullptr)
     {
-        cerr << "Pas de sortie pour le craft" << endl;
+        // cerr << "Pas de sortie pour le craft" << endl;
         return false; // Pas de sortie
     }
     else
@@ -322,7 +322,7 @@ bool Batiment::crafter()
 
     if (_stockConnexion[(short)dirSortie] != TYPE_RESSOURCE::Rien)
     { // Pas de place en sortie
-        cerr << "pas de place en sortie pour le craft : " << ressString[_stockConnexion[(short)dirSortie]] << endl;
+        // cerr << "pas de place en sortie pour le craft : " << ressString[_stockConnexion[(short)dirSortie]] << endl;
         return false;
     }
 

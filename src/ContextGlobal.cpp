@@ -348,3 +348,23 @@ void ContextGlobal::resetGameEvent()
     _menu->resetBoutonsActive();
     _menu->resetBoutonsHover();
 }
+
+
+/******************************************************/
+
+Structure *ContextGlobal::getStructureSelect() const
+{
+    return (_caseSelectionnee == nullptr ? nullptr : _caseSelectionnee->getConstruction());
+}
+
+Batiment *ContextGlobal::getBatimentSelect() const
+{
+    return dynamic_cast<Batiment *>(_caseSelectionnee == nullptr ? nullptr : _caseSelectionnee->getConstruction());
+}
+
+Pipeline *ContextGlobal::getPipelineSelect() const
+{
+    return dynamic_cast<Pipeline *>(_caseSelectionnee == nullptr ? nullptr : _caseSelectionnee->getConstruction());
+}
+
+/******************************************************/

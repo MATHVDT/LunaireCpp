@@ -145,7 +145,7 @@ void Pipeline::process()
     {
         if ((_connexions + dir)->type == TypeConnexion::Input)
         {
-            cerr << "dirInput trouvé : " << dir << endl;
+            // cout << "dirInput trouvé : " << dir << endl;
             dirInput = (DIRECTION)dir;
 
             if (_stockConnexion[dirInput] == TYPE_RESSOURCE::Rien)
@@ -156,7 +156,7 @@ void Pipeline::process()
         else if ((_connexions + dir)->type == TypeConnexion::Output)
         {
             dirOutput = (DIRECTION)dir;
-            cerr << "dirInput trouvé : " << dir << endl;
+            // cout << "dirInput trouvé : " << dir << endl;
 
             if (_stockConnexion[dirOutput] != TYPE_RESSOURCE::Rien)
             { // Pas de place en sortie
@@ -165,14 +165,14 @@ void Pipeline::process()
         }
     }
 
-    // cerr << "dirInput : " << dirInput << " et dirOutput : " << dirOutput << endl;
+    // cout << "dirInput : " << dirInput << " et dirOutput : " << dirOutput << endl;
 
     // Ya bien 1 entree et 1 sortie
     if (dirInput != DIRECTION::NULLDIRECTION &&
         dirOutput != DIRECTION::NULLDIRECTION)
     { // Ya bien une entrée et une sortie
 
-        // cerr << "Déplacement dans le pipeline entree-sortie" << endl;
+        // cout << "Déplacement dans le pipeline entree-sortie" << endl;
 
         _stockConnexion[dirOutput] = _stockConnexion[dirInput];
         _stockConnexion[dirInput] = TYPE_RESSOURCE::Rien;
@@ -198,8 +198,8 @@ void Pipeline::setSpriteTexture(uint tick)
 
     _sprite->setTextureRect(_zoomTexture);
 
-    // cerr << "type : " << _orientation.type << endl;
-    // cerr << "variant : " << _orientation.variant << endl;
+    // cout << "type : " << _orientation.type << endl;
+    // cout << "variant : " << _orientation.variant << endl;
 }
 
 /*******************************************************/

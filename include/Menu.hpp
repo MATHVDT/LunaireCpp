@@ -12,6 +12,7 @@
 #define __MENU_HPP__
 
 #include <vector>
+#include <list>
 #include <string>
 
 #include <SFML/Graphics.hpp>
@@ -38,6 +39,13 @@ class Bouton;
 class Stat;
 
 extern string cheminFontBase;
+
+#define NB_LIGNE_TAB_CRAFT_POSSIBLE 3
+#define NB_COLONNE_TAB_CRAFT_POSSIBLE 5
+
+#define NB_LIGNE_TAB_FORMULE_CRAFT 1
+#define NB_COLONNE_TAB_FORMULE_CRAFT 6 // 5 elt + 1 flèches
+
 
 enum SectionMenu
 {
@@ -70,9 +78,9 @@ private:
 
     Batiment *_batimentSelect;
     // list<TYPE_RESSOURCE> *_listCraftPossible; // @deprecated ?
-    vector<RectangleShape> _tabCraftPossible; // @deprecated ?
+    vector<RectangleShape> _tabCraftPossible; // Sert de base d'emplacement @deprecated ?
     // list<FormuleCraft_t *> _listFormuleCraft; // @deprecated ?
-    // vector<RectangleShape> _tabFormuleCraft;
+    vector<RectangleShape> _tabFormuleCraft; // Sert de base d'emplacement
     int _craftHover, _craftSelect;
 
 public: // Static
@@ -106,7 +114,7 @@ public:
 
     void setSectionMenu(SectionMenu section);
     // void setListCraftPossible(list<TYPE_RESSOURCE> *listRessCraft); // @deprecated ?
-    // void setListFormuleCraft(list<FormuleCraft_t *> listCraft);
+    // void setListFormuleCraft(list<FormuleCraft_t *> listCraft); @deprecated
     void setBatimentSelect(Batiment *batiment);
 
 private:
@@ -115,6 +123,7 @@ private:
     void setBoutonsChoixStructures();
     void setBoutonsBatimentSelect();
     void setTabCraftPossible();
+    void setTabFormuleCraft();
 
     void dessinerBatimentSelectCraftUndefine();
     void dessinerBatimentSelectCraftDefine();

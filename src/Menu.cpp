@@ -42,9 +42,9 @@ Menu::Menu()
       _boutonsChoixStructures{8},
       _boutonBatimentSelect{5},
       //   _listCraftPossible(nullptr),
-      _tabCraftPossible{15},
-      //   _listFormuleCraft{nullptr},
-      //   _tabFormuleCraft{5},
+      _tabCraftPossible{NB_LIGNE_TAB_CRAFT_POSSIBLE * NB_COLONNE_TAB_CRAFT_POSSIBLE},
+      //   formuleCraft{nullptr},
+      _tabFormuleCraft{NB_COLONNE_TAB_FORMULE_CRAFT},
       _craftHover(-1),
       _craftSelect(-1)
 {
@@ -92,6 +92,7 @@ void Menu::init(const Vector2f &posEcran,
     setBoutonsBatimentSelect();
     // set les autres btn
     setTabCraftPossible();
+    setTabFormuleCraft();
 
     translaterBoutons(_posEcran);
 
@@ -164,7 +165,10 @@ void Menu::dessinerBatimentSelectCraftUndefine()
 
     std::list<TYPE_RESSOURCE> *listCraftPossible = structSelect->getListCraftPossible();
 
-    uint n = ((listCraftPossible == nullptr) ? 0 : listCraftPossible->size());
+    if (listCraftPossible == nullptr)
+        return;
+
+    uint n = listCraftPossible->size();
     TYPE_RESSOURCE r = TYPE_RESSOURCE::Rien;
     auto it = listCraftPossible->begin();
 
@@ -202,6 +206,7 @@ void Menu::dessinerBatimentSelectCraftUndefine()
  */
 void Menu::dessinerBatimentSelectCraftDefine()
 {
+    // Affichage boutons
     for (auto &btn : _boutonBatimentSelect)
     { // Dessine tous les btn sauf reset Action
         if (btn->getBoutonType() != BoutonType::boutonValiderCraft)
@@ -210,27 +215,35 @@ void Menu::dessinerBatimentSelectCraftDefine()
         }
     }
 
-    // Afficher formule
-    // if (_listFormuleCraft == nullptr)
-    // {
-    //     cerr << "Pas de formule de craft à afficher" << endl;
-    //     return;
-    // }
+    // Récupère la formule de craft
+    if (contextGlobal->getBatimentSelect() == nullptr)
+        return;
 
-    // uint nbEltFormule = _listFormuleCraft->size();
-    // if (nbEltFormule == 0)
-    // {
-    //     cerr << "Formule vide, pas d'elt" << endl;
-    //     return;
-    // }
+    const std::list<FormuleCraft_t *> *formuleCraft = contextGlobal->getBatimentSelect()->getFormuleCraft();
+    if (formuleCraft == nullptr)
+    {
+        cerr << "Pas de formule de craft à afficher" << endl;
+        return;
+    }
 
-    // FormuleCraft_t *eltFormule = nullptr;
+    // Affichage de la formule de craft
+    uint nbEltFormule = formuleCraft->size();
 
-    // for (uint i = 0; i < nbEltFormule; ++i)
-    // { // Pour chaque elt de la formule
-    //     eltFormule = *(_listFormuleCraft.begin() + i);
-    //     _tabFormuleCraft[i].setTextureRect(Ressource::getZoomTexture(eltFormule);
-    // }
+    if (nbEltFormule == 0)
+    {
+        cerr << "Formule vide, pas d'elt" << endl;
+        return;
+    }
+
+    const FormuleCraft_t *eltFormule = nullptr;
+    std::list<FormuleCraft *>::const_iterator it = formuleCraft->begin();
+
+    for (uint i = 0; i < nbEltFormule; ++i)
+    { // Pour chaque elt de la formule
+        eltFormule = *it++;
+        _tabFormuleCraft[i].setTextureRect(Ressource::getZoomTexture(eltFormule->composant));
+        contextGlobal->dessinerFenetre(_tabFormuleCraft[i]);
+    }
 }
 
 /*******************************************************/
@@ -385,12 +398,12 @@ void Menu::setTabCraftPossible()
     float largeurMap = contextGlobal->getLargeurMapEcran();
 
     const Vector2f scaleRessource{0.48f, 0.93f};
-    const uint nbLignes = 3;
-    const uint nbColonnes = 5;
+    const uint nbLignes = NB_LIGNE_TAB_CRAFT_POSSIBLE;
+    const uint nbColonnes = NB_COLONNE_TAB_CRAFT_POSSIBLE;
     const float tailleRess = 0.08f * dimFenetre.y;
     Vector2f pos;
 
-    for (int k = 0; k < 15; ++k)
+    for (int k = 0; k < NB_LIGNE_TAB_CRAFT_POSSIBLE * NB_COLONNE_TAB_CRAFT_POSSIBLE; ++k)
     {
         pos.x =
             0.1f * dimMenu.x +
@@ -407,6 +420,40 @@ void Menu::setTabCraftPossible()
     }
 }
 
+void Menu::setTabFormuleCraft()
+{
+    Vector2f dimFenetre = (Vector2f)contextGlobal->getDimensionFenetre();
+    Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
+    float largeurMap = contextGlobal->getLargeurMapEcran();
+
+    const Vector2f scaleRessource{0.48f, 0.93f};
+    const uint nbColonnes = NB_COLONNE_TAB_FORMULE_CRAFT;
+    const float tailleRess = 0.08f * dimFenetre.y;
+    Vector2f pos;
+
+    for (int k = 0; k < NB_COLONNE_TAB_FORMULE_CRAFT; ++k)
+    {
+        pos.x =
+            0.1f * dimMenu.x +
+            0.1f * (k % nbColonnes) * dimMenu.y;
+        pos.y =
+            0.365f * dimMenu.y +
+            0.09f * (uint)(k / nbColonnes + 1) * dimMenu.y;
+
+        _tabFormuleCraft[k].setSize(Vector2f{tailleRess, tailleRess});
+        _tabFormuleCraft[k].setPosition(pos.x, pos.y);
+
+        _tabFormuleCraft[k].setOutlineColor(Color::Yellow);
+        _tabFormuleCraft[k].setTexture(Ressource::getTextureRessource());
+    }
+    // // Set une case du tableau pour la flèche dans la formule
+    // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setTextureRect(Ressource::getZoomTexture(TYPE_RESSOURCE::FlecheDoite));
+    // // Swap les 2 dernières cases pour que la dernière dans le tableau soit la flèche
+    // auto tmpPosition = _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].getPosition();
+    // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setPosition(_tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].getPosition());
+    // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setPosition(tmpPosition);
+}
+
 void Menu::translaterBoutons(const Vector2f &dirVect)
 {
     for (auto &btn : _boutonsChoixStructures)
@@ -420,7 +467,17 @@ void Menu::translaterBoutons(const Vector2f &dirVect)
         btn->deplacerPositionEcran(dirVect);
     }
 
+    // Translate les tab qui servent au placement des ressources
+    // tab des crafts possible
     for (auto &rectShape : _tabCraftPossible)
+    {
+        Vector2f pos = rectShape.getPosition();
+        pos.x += dirVect.x;
+        pos.y += dirVect.y;
+        rectShape.setPosition(pos);
+    }
+    // tab de la formule
+    for (auto &rectShape : _tabFormuleCraft)
     {
         Vector2f pos = rectShape.getPosition();
         pos.x += dirVect.x;
@@ -680,6 +737,7 @@ Structure *Menu::getStructureSelect()
 
 Batiment *Menu::getBatimentSelect()
 {
+    // @deprecated ? sert a rien du coup ?
     Structure *s = getStructureSelect();
     // Test si c'est un bat craft ?? Manager::isBatimentCraft() ?
 }

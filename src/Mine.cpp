@@ -54,9 +54,9 @@ Mine::Mine(const Vector2u &pos,
 
     for (auto r : _stockConnexion)
     {
-        cerr << " - " << ressString[r];
+        // cerr << " - " << ressString[r];
     }
-    cerr << endl;
+    // cerr << endl;
 }
 
 void Mine::init() {}
@@ -165,12 +165,12 @@ void Mine::remplirStock()
         // cerr << "Stock connexion Mine : " << ressString[_stockConnexion[dir]] << endl;
     }
     // Affichage stock
-    cerr << "Remplir mine : ";
+    // cerr << "Remplir mine : ";
     for (auto r : _stockConnexion)
     {
-        cerr << " - " << ressString[r];
+        // cerr << " - " << ressString[r];
     }
-    cerr << endl;
+    // cerr << endl;
 }
 
 /*******************************************************/

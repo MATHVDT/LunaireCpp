@@ -169,10 +169,9 @@ void Structure::remplirStock()
             if (_stockConnexion[dir] == TYPE_RESSOURCE::Rien)
             { // Il ya de la place
                 ress = _connexions[dir].structure->livrerStock();
-
-                cerr << "livraison de struct id : " << _connexions[dir].structure->getIdStructure() << " à struct id : " << _idStructure << " (dir : " << dir << ") : " << ressString[ress] << endl;
-
                 _stockConnexion[dir] = ress;
+
+                // cerr << "livraison de struct id : " << _connexions[dir].structure->getIdStructure() << " à struct id : " << _idStructure << " (dir : " << dir << ") : " << ressString[ress] << endl;
             }
         }
     }

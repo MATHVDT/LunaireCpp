@@ -205,7 +205,7 @@ void Manager::updateStructure()
         }
 
         // Traitement de la structure
-        cerr << "Update struct id : " << curseurStruct->getIdStructure() << endl;
+        // cerr << "Update struct id : " << curseurStruct->getIdStructure() << endl;
         curseurStruct->update();
         // cerr << endl;
     }
