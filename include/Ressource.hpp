@@ -20,6 +20,7 @@
 
 #include "ContextGlobal.hpp"
 #include "EnumTypeRessource.hpp"
+#include "EnumSymbole.hpp"
 
 using namespace std;
 using namespace sf;

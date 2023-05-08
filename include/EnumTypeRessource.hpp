@@ -13,7 +13,7 @@
 
 #include <sys/types.h>
 
-const int NB_RESSOURCES_AUTRES = 6;
+const int NB_RESSOURCES_AUTRES =1;
 
 const int NB_RESSOURCES_MINERAIS = 7;         // Mine
 const int NB_RESSOURCES_LINGOTS = 7;          // Fonderie
@@ -28,11 +28,7 @@ enum class TYPE_RESSOURCE : char
 {
     // NB_RESSOURCES_AUTRES
     Rien = 0,
-    FlecheGauche,
-    FlecheDoite,
-    FlecheHaut,
-    FlecheBas,
-    Egale,
+  
 
     // Gisement
     Vierge, // Gisement poussière régolite
