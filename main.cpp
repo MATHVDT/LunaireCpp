@@ -86,7 +86,7 @@ void testPartie()
 
     Manager::chargerMemoireManager();
     Bouton::chargerMemoireBoutons();
-    Ressource::chargerMemoireRessources();
+    IconeManager::chargerMemoireIcones();
 
     Manager *m = Manager::getInstance();
     m->init();
@@ -110,7 +110,7 @@ void testPartie()
 
     Manager::dechargerMemoireManager();
     Bouton::dechargerMemoireBoutons();
-    Ressource::dechargerMemoireRessources();
+    IconeManager::dechargerMemoireIcones();
 
     delete m;
 }

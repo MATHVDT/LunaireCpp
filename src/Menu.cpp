@@ -179,7 +179,7 @@ void Menu::dessinerBatimentSelectCraftUndefine()
         r = *it;
         ++it;
         _tabCraftPossible[i]
-            .setTextureRect(Ressource::getZoomTexture(r));
+            .setTextureRect(IconeManager::getZoomTextureRessource(r));
 
         // Contour ressources
         if (i == _craftSelect)
@@ -235,14 +235,22 @@ void Menu::dessinerBatimentSelectCraftDefine()
         return;
     }
 
-    const FormuleCraft_t *eltFormule = nullptr;
     std::list<FormuleCraft *>::const_iterator it = formuleCraft->begin();
+    uint positionFormule = 0;
+    uint index = 0;
 
-    for (uint i = 0; i < nbEltFormule; ++i)
+    for (auto elt : *formuleCraft)
     { // Pour chaque elt de la formule
-        eltFormule = *it++;
-        _tabFormuleCraft[i].setTextureRect(Ressource::getZoomTexture(eltFormule->composant));
-        contextGlobal->dessinerFenetre(_tabFormuleCraft[i]);
+        if (elt->produit)
+        {
+            index = positionFormule++;
+        }
+        else
+        {
+            index = nbEltFormule - 1;
+        }
+        _tabFormuleCraft[index].setTextureRect(IconeManager::getZoomTextureRessource(elt->composant));
+        contextGlobal->dessinerFenetre(_tabFormuleCraft[index]);
     }
 }
 
@@ -416,7 +424,7 @@ void Menu::setTabCraftPossible()
         _tabCraftPossible[k].setPosition(pos.x, pos.y);
 
         _tabCraftPossible[k].setOutlineColor(Color::Yellow);
-        _tabCraftPossible[k].setTexture(Ressource::getTextureRessource());
+        _tabCraftPossible[k].setTexture(IconeManager::getTexturesRessource());
     }
 }
 
@@ -444,10 +452,11 @@ void Menu::setTabFormuleCraft()
         _tabFormuleCraft[k].setPosition(pos.x, pos.y);
 
         _tabFormuleCraft[k].setOutlineColor(Color::Yellow);
-        _tabFormuleCraft[k].setTexture(Ressource::getTextureRessource());
+        // _tabFormuleCraft[k].setTexture(IconeManager::getTexturesRessource());
+        _tabFormuleCraft[k].setTexture(IconeManager::getTexturesSymbole());
     }
     // // Set une case du tableau pour la flèche dans la formule
-    // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setTextureRect(Ressource::getZoomTexture(TYPE_RESSOURCE::FlecheDoite));
+    // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setTextureRect(IconeManager::getZoomTexture(TYPE_RESSOURCE::FlecheDoite));
     // // Swap les 2 dernières cases pour que la dernière dans le tableau soit la flèche
     // auto tmpPosition = _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].getPosition();
     // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setPosition(_tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].getPosition());

@@ -1,2 +1,2 @@
 5
-./ressource/typesRessources/type_ressource_copy.png
+./ressource/icones/type_ressource_copy.png

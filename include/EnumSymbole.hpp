@@ -13,7 +13,7 @@
 
 #include <sys/types.h>
 
-const int NB_SYMBOLE = 5;
+const int NB_SYMBOLES = 7;
 
 enum class SYMBOLE : char
 {
@@ -21,7 +21,9 @@ enum class SYMBOLE : char
     FlecheDoit,
     FlecheHaut,
     FlecheBas,
-    Egale,
+    Plus,
+    Moins,
+    Egale
 };
 
 #endif

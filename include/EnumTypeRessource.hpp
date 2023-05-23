@@ -29,7 +29,6 @@ enum class TYPE_RESSOURCE : char
     // NB_RESSOURCES_AUTRES
     Rien = 0,
   
-
     // Gisement
     Vierge, // Gisement poussière régolite
     GisementGlace,

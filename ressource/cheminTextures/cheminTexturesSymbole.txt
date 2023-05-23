@@ -1,0 +1,2 @@
+7
+./ressource/icones/symboles.png

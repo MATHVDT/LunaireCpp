@@ -20,7 +20,7 @@
 #include "Stat.hpp"
 #include "ContextGlobal.hpp"
 #include "Bouton.hpp"
-#include "Ressource.hpp"
+#include "IconeManager.hpp"
 #include "Batiment.hpp"
 // #include "Craft.hpp"
 

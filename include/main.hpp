@@ -17,7 +17,7 @@
 #include "ListeStructures.hpp"
 
 #include "Craft.hpp"
-#include "Ressource.hpp"
+#include "IconeManager.hpp"
 #include "Manager.hpp"
 
 extern ContextGlobal *contextGlobal;
