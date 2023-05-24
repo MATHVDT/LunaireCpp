@@ -247,11 +247,13 @@ void Menu::dessinerBatimentSelectCraftDefine()
         }
         else
         {
-            index = nbEltFormule - 1;
+            index = NB_COLONNE_TAB_FORMULE_CRAFT - 1;
         }
         _tabFormuleCraft[index].setTextureRect(IconeManager::getZoomTextureRessource(elt->composant));
         contextGlobal->dessinerFenetre(_tabFormuleCraft[index]);
     }
+    _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setTextureRect(IconeManager::getZoomTextureSymbole(SYMBOLE::FlecheDroite));
+    contextGlobal->dessinerFenetre(_tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2]);
 }
 
 /*******************************************************/
@@ -408,7 +410,7 @@ void Menu::setTabCraftPossible()
     const Vector2f scaleRessource{0.48f, 0.93f};
     const uint nbLignes = NB_LIGNE_TAB_CRAFT_POSSIBLE;
     const uint nbColonnes = NB_COLONNE_TAB_CRAFT_POSSIBLE;
-    const float tailleRess = 0.08f * dimFenetre.y;
+    const float tailleIcone = 0.08f * dimFenetre.y;
     Vector2f pos;
 
     for (int k = 0; k < NB_LIGNE_TAB_CRAFT_POSSIBLE * NB_COLONNE_TAB_CRAFT_POSSIBLE; ++k)
@@ -420,7 +422,7 @@ void Menu::setTabCraftPossible()
             0.365f * dimMenu.y +
             0.09f * (uint)(k / nbColonnes) * dimMenu.y;
 
-        _tabCraftPossible[k].setSize(Vector2f{tailleRess, tailleRess});
+        _tabCraftPossible[k].setSize(Vector2f{tailleIcone, tailleIcone});
         _tabCraftPossible[k].setPosition(pos.x, pos.y);
 
         _tabCraftPossible[k].setOutlineColor(Color::Yellow);
@@ -434,27 +436,25 @@ void Menu::setTabFormuleCraft()
     Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
     float largeurMap = contextGlobal->getLargeurMapEcran();
 
-    const Vector2f scaleRessource{0.48f, 0.93f};
     const uint nbColonnes = NB_COLONNE_TAB_FORMULE_CRAFT;
-    const float tailleRess = 0.08f * dimFenetre.y;
-    Vector2f pos;
+    const float tailleIcone = 0.08f * dimFenetre.y;
+
+    float ecartBordMenu = 0.05 * dimMenu.x;
+    float ecartEntreIcone =
+        (dimMenu.x - 2 * ecartBordMenu -
+         NB_COLONNE_TAB_FORMULE_CRAFT * IconeManager::getLargeurTextureIcone() * tailleIcone) /
+        (NB_COLONNE_TAB_FORMULE_CRAFT);
+
+    Vector2f pos{ecartBordMenu, 0.45f * dimMenu.y};
 
     for (int k = 0; k < NB_COLONNE_TAB_FORMULE_CRAFT; ++k)
     {
-        pos.x =
-            0.1f * dimMenu.x +
-            0.1f * (k % nbColonnes) * dimMenu.y;
-        pos.y =
-            0.365f * dimMenu.y +
-            0.09f * (uint)(k / nbColonnes + 1) * dimMenu.y;
-
-        _tabFormuleCraft[k].setSize(Vector2f{tailleRess, tailleRess});
+        _tabFormuleCraft[k].setSize(Vector2f{tailleIcone, tailleIcone});
         _tabFormuleCraft[k].setPosition(pos.x, pos.y);
-
-        _tabFormuleCraft[k].setOutlineColor(Color::Yellow);
-        // _tabFormuleCraft[k].setTexture(IconeManager::getTexturesRessource());
-        _tabFormuleCraft[k].setTexture(IconeManager::getTexturesSymbole());
+        _tabFormuleCraft[k].setTexture(IconeManager::getTexturesRessource());
+        pos.x += ecartEntreIcone;
     }
+    _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setTexture(IconeManager::getTexturesSymbole());
     // // Set une case du tableau pour la flèche dans la formule
     // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setTextureRect(IconeManager::getZoomTexture(TYPE_RESSOURCE::FlecheDoite));
     // // Swap les 2 dernières cases pour que la dernière dans le tableau soit la flèche

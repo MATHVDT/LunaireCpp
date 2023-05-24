@@ -51,6 +51,9 @@ public: // Static
     static void chargerMemoireIcones();
     static void dechargerMemoireIcones();
 
+    static float getLargeurTextureIcone();
+    static float getHauteurTextureIcone();
+
     // Ressource
     static const uint getNbRessources();
     static const Texture *getTexturesRessource();
@@ -81,8 +84,15 @@ private:
 /***************************************************/
 /*                 Méthodes inline                 */
 /***************************************************/
+inline float IconeManager::getLargeurTextureIcone() { return _largeurTextureIcone; }
+inline float IconeManager::getHauteurTextureIcone() { return _hauteurTextureIcone; }
+
 // Ressource
-inline const uint IconeManager::getNbRessources() { return _nbRessources; }
+inline const uint
+IconeManager::getNbRessources()
+{
+    return _nbRessources;
+}
 inline const Texture *IconeManager::getTexturesRessource() { return _texturesRessource; }
 inline IntRect &IconeManager::getZoomTextureRessource(TYPE_RESSOURCE r)
 {

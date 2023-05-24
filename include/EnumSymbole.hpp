@@ -18,7 +18,7 @@ const int NB_SYMBOLES = 7;
 enum class SYMBOLE : char
 {
     FlecheGauche,
-    FlecheDoit,
+    FlecheDroite,
     FlecheHaut,
     FlecheBas,
     Plus,
