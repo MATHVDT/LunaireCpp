@@ -436,25 +436,29 @@ void Menu::setTabFormuleCraft()
     Vector2f dimMenu = Vector2f{dimFenetre.x / 3, dimFenetre.y};
     float largeurMap = contextGlobal->getLargeurMapEcran();
 
+    // const uint nbColonnes = NB_COLONNE_TAB_FORMULE_CRAFT;
     const uint nbColonnes = NB_COLONNE_TAB_FORMULE_CRAFT;
     const float tailleIcone = 0.08f * dimFenetre.y;
 
     float ecartBordMenu = 0.05 * dimMenu.x;
     float ecartEntreIcone =
         (dimMenu.x - 2 * ecartBordMenu -
-         NB_COLONNE_TAB_FORMULE_CRAFT * IconeManager::getLargeurTextureIcone() * tailleIcone) /
-        (NB_COLONNE_TAB_FORMULE_CRAFT);
+         nbColonnes * IconeManager::getLargeurTextureIcone() * tailleIcone) /
+        (nbColonnes);
 
     Vector2f pos{ecartBordMenu, 0.45f * dimMenu.y};
 
-    for (int k = 0; k < NB_COLONNE_TAB_FORMULE_CRAFT; ++k)
+    for (int k = 0; k < nbColonnes; ++k)
     {
         _tabFormuleCraft[k].setSize(Vector2f{tailleIcone, tailleIcone});
         _tabFormuleCraft[k].setPosition(pos.x, pos.y);
         _tabFormuleCraft[k].setTexture(IconeManager::getTexturesRessource());
         pos.x += ecartEntreIcone;
     }
-    _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setTexture(IconeManager::getTexturesSymbole());
+    if (nbColonnes < 2)
+        std::cerr << "Problème formule de craft inférieur a 2 elements";
+
+    _tabFormuleCraft[nbColonnes - 2].setTexture(IconeManager::getTexturesSymbole());
     // // Set une case du tableau pour la flèche dans la formule
     // _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 1].setTextureRect(IconeManager::getZoomTexture(TYPE_RESSOURCE::FlecheDoite));
     // // Swap les 2 dernières cases pour que la dernière dans le tableau soit la flèche

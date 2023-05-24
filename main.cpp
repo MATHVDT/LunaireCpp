@@ -70,7 +70,6 @@ void testPartie()
     contextGlobal->init(Vector2u(1600, 900));
 
     CaseMap::chargerMemoireCaseMap();
-    ContenuPipeline::chargerMemoireTypeRessource();
 
     Pipeline::chargerMemoirePipelines();
     Marchand::chargerMemoireMarchand();
@@ -94,7 +93,6 @@ void testPartie()
     m->run();
 
     CaseMap::dechargerMemoireCaseMap();
-    ContenuPipeline::dechargerMemoireTypeRessource();
 
     Pipeline::dechargerMemoirePipelines();
     Marchand::dechargerMemoireMarchand();

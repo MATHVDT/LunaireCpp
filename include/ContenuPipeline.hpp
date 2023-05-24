@@ -18,6 +18,7 @@
 #include "EnumTypeRessource.hpp"
 #include "direction.hpp"
 #include "ContextGlobal.hpp"
+#include "IconeManager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -25,7 +26,6 @@ using namespace sf;
 class ContextGlobal;
 
 extern ContextGlobal *contextGlobal;
-extern string cheminFichierTexturesTypeRessource;
 
 class ContenuPipeline
 {
@@ -35,17 +35,11 @@ private:
     DIRECTION &_dirSortie;
 
     Sprite *_sprite;
-    IntRect _zoomTexture;
 
     queue<TYPE_RESSOURCE> _contenu;
 
 private:                   // Static
     static uint _capacite; // = 5 (entrée + 3 +sortie)
-
-    static uint _tailleTexture;
-    static Texture *_texturesTypeRessource;
-    static uint _offsetTextureX; // Largeur d'1 texture
-    static uint _offsetTextureY; // Hauteur d'1 texture
 
 public: // Static
     static uint getCapaciteContenu();

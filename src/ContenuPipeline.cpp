@@ -1,13 +1,6 @@
 #include "ContenuPipeline.hpp"
 
-string cheminFichierTexturesTypeRessource = "ressource/cheminTextures/cheminTexturesTypeRessource.txt";
-
 uint ContenuPipeline::_capacite = 5; // = 5 (entrée + 3 +sortie)
-
-uint ContenuPipeline::_tailleTexture = 0; // = 75
-Texture *ContenuPipeline::_texturesTypeRessource = nullptr;
-uint ContenuPipeline::_offsetTextureX = 75; // Largeur d'1 texture
-uint ContenuPipeline::_offsetTextureY = 75; // Hauteur d'1 texture
 
 /**
  * @brief Construct a new Contenu Pipeline:: Contenu Pipeline object
@@ -19,8 +12,7 @@ ContenuPipeline::ContenuPipeline(const Vector2u &pos,
     : _positionCarte{pos},
       _dirEntree(dirEntree),
       _dirSortie(dirSortie),
-      _sprite(new Sprite{*_texturesTypeRessource}),
-      _zoomTexture{0, 0, (int)_offsetTextureX, (int)_offsetTextureY},
+      _sprite(new Sprite{*IconeManager::getTexturesRessource()}),
       _contenu{}
 {
     // Remplir le contenu de Vide
@@ -28,72 +20,10 @@ ContenuPipeline::ContenuPipeline(const Vector2u &pos,
     {
         _contenu.push(TYPE_RESSOURCE::Rien);
     }
-    _sprite->setOrigin(_tailleTexture / 2, _tailleTexture / 2);
-}
-
-/***********************************************************************/
-/***********************************************************************/
-
-void ContenuPipeline::chargerMemoireTypeRessource()
-{
-    // A deplacer
-    srand(48);
-
-    // cerr << endl << "chargerMemoireTypeRessource" << endl;
-    chargerTextures(cheminFichierTexturesTypeRessource);
-    _offsetTextureX = _tailleTexture; // Largeur d'une case
-    _offsetTextureY = _tailleTexture; // Largeur d'une case
-}
-
-void ContenuPipeline::dechargerMemoireTypeRessource()
-{
-    // cerr << "dechargerMemoireTypeRessource" << endl;
-    delete _texturesTypeRessource;
 }
 
 /***********************************************************************/
 
-/**
- * @brief Charge les textures des types de Ressource en mémoire dans une variable static *(à partir d'un fichier indiquant les chemins)*
- *
- * @param string - *fichierCheminsTexture*
- */
-void ContenuPipeline::chargerTextures(string fichierCheminsTexture)
-{
-    string cheminTexture;
-    sf::Texture *texture;
-
-    ifstream monFlux;
-    monFlux.open(fichierCheminsTexture);
-
-    if (monFlux)
-    {
-        cerr << endl
-             << "Chargement de la texture des types de ressources ContenuPipeline" << endl
-             << endl;
-        // Chemin de l'image texture d'une Pipeline
-        monFlux >> cheminTexture;
-        cerr << cheminTexture << endl;
-
-        // Create de la nouvelle texture
-        texture = new Texture();
-        texture->loadFromFile(cheminTexture);
-
-
-        _texturesTypeRessource = texture;
-
-        // Récupère la taille d'une case texture
-        _tailleTexture = texture->getSize().y;
-
-        monFlux.close();
-    }
-    else
-    {
-        std::cerr << "/!\\ Erreur d'ouverture du fichier : " << fichierCheminsTexture << " /!\\" << endl;
-    }
-}
-
-/***********************************************************************/
 /***********************************************************************/
 
 void ContenuPipeline::dessiner(float scaleSprite)
@@ -134,10 +64,6 @@ void ContenuPipeline::dessiner(float scaleSprite)
         _contenu.pop();
         _contenu.push(r); // Remise dans le contenu de la ressource
 
-        _zoomTexture.left = static_cast<float>(r) * _offsetTextureX;
-        _zoomTexture.width = _tailleTexture;
-        _zoomTexture.height = _tailleTexture;
-
         // cerr << "Ressource float : " << static_cast<float>(r) << endl;
         // cerr << "Ressource int   : " << static_cast<int>(r) << endl;
         // cerr << "Ressource       : " << (int)r << endl;
@@ -160,7 +86,7 @@ void ContenuPipeline::dessiner(float scaleSprite)
         _sprite->setScale(scaleSprite * scaleRand,
                           scaleSprite * scaleRand);
 
-        _sprite->setTextureRect(_zoomTexture);
+        _sprite->setTextureRect(IconeManager::getZoomTextureRessource(r));
         _sprite->setPosition(posDessin);
 
         contextGlobal->dessinerFenetre(_sprite);
