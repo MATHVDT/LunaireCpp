@@ -36,7 +36,7 @@ Menu::Menu()
 
       _stat(Stat::getInstance()),
       _font(),
-
+      _texte(),
       _btnActive(false),
       _sectionMenu(),
       _boutonsChoixStructures{8},
@@ -61,6 +61,15 @@ void Menu::init(const Vector2f &posEcran,
     if (!_font.loadFromFile(cheminFont))
     {
         cerr << "Erreur chargement font : " << cheminFont << endl;
+    }
+    else
+    { // Définie la varaiable de texte
+        _texte.setFont(_font);
+        _texte.setCharacterSize(48);
+        _texte.setString("0");
+        _texte.setFillColor(sf::Color::White);
+        // _texte.setOrigin(_texte.getL)
+        // _texte.setPosition(100, 100);
     }
 
     // Stat
@@ -239,6 +248,9 @@ void Menu::dessinerBatimentSelectCraftDefine()
     uint positionFormule = 0;
     uint index = 0;
 
+    Vector2f decalageTexteQuantite{IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).width *0.65f,
+                                   IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).height *0.3f};
+
     for (auto elt : *formuleCraft)
     { // Pour chaque elt de la formule
         if (elt->produit)
@@ -249,9 +261,17 @@ void Menu::dessinerBatimentSelectCraftDefine()
         {
             index = NB_COLONNE_TAB_FORMULE_CRAFT - 1;
         }
+        // Affichage de l'icone
         _tabFormuleCraft[index].setTextureRect(IconeManager::getZoomTextureRessource(elt->composant));
         contextGlobal->dessinerFenetre(_tabFormuleCraft[index]);
+        // Affichage du la quantité de la ressource dans la formule
+        _texte.setString(to_string(elt->produit));
+        _texte.setPosition(_tabFormuleCraft[index].getPosition());
+        _texte.move(decalageTexteQuantite - Vector2f{_texte.getGlobalBounds().width / 2, 0});
+        // _texte.setScale(0.5f, 0.5f);
+        contextGlobal->dessinerFenetre(_texte);
     }
+    // Affichage de la flèche qui sépare réactifs et produits
     _tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2].setTextureRect(IconeManager::getZoomTextureSymbole(SYMBOLE::FlecheDroite));
     contextGlobal->dessinerFenetre(_tabFormuleCraft[NB_COLONNE_TAB_FORMULE_CRAFT - 2]);
 }

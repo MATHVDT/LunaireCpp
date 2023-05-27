@@ -66,6 +66,7 @@ private:
     // Section stat
     Stat *_stat;
     Font _font;
+    Text  _texte;
 
     // Section boutons
     bool _btnActive;
