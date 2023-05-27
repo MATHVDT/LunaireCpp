@@ -16,8 +16,8 @@
 ContextGlobal *ContextGlobal::_singleton = ContextGlobal::getInstance();
 uint ContextGlobal::_nbTicksMax = 4; // = 4
 // Time ContextGlobal::_deltaTick = seconds(1.f);
-Time ContextGlobal::_deltaTick = seconds(.25f); // = 250ms
-// Time ContextGlobal::_deltaTick = seconds(.05f); // = 50ms
+// Time ContextGlobal::_deltaTick = seconds(.25f); // = 250ms
+Time ContextGlobal::_deltaTick = seconds(.05f); // = 50ms
 
 ContextGlobal::ContextGlobal()
 {

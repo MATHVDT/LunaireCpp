@@ -93,6 +93,8 @@ private:
     void validerCraft(Structure *s);
     void resetCraft(Structure *s);
 
+    void detruireStructure(Structure *s);
+
     bool integrationStructureVoisinage();
 
     void dessinerOverlay();

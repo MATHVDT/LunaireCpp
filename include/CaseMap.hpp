@@ -92,6 +92,7 @@ public:
                  TYPE_SOL typeSol = TYPE_SOL::Vierge);
 
     void ajouterConstruction(Structure *s);
+    void retirerConstruction();
 };
 
 /***************************************************/

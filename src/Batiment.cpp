@@ -71,6 +71,8 @@ void Batiment::dechargerMemoireBatiments()
  */
 bool Batiment::isBatiment(Structure *s)
 {
+    if (s == nullptr)
+        return false;
     Batiment *isTypeBatiment = dynamic_cast<Batiment *>(s);
     return isTypeBatiment != nullptr;
 }

@@ -63,13 +63,13 @@ Structure::~Structure()
     _nbStructures--;
     delete _sprite;
     // Deconnecte tous les structures
-    // Plus besoin vu que c'est un tableau
+    deconnecterToutesLesStructures();
+    // Plus besoin vu que c'est un tableau ?
     // cerr<< "~Structure(), id : " << _idStructure << endl;
 }
 
 void Structure::init()
 {
-    
 }
 
 /*******************************************************/
@@ -394,7 +394,7 @@ bool Structure::setSortie(Structure *s)
  * @brief Deconnecte une structure
  *
  * @param Structure - *s*
- * @return true - *Si LES structureS ont bien été déconnectées correctement*
+ * @return true - *Si la structure a bien été déconnectée correctement*
  * @return false - *S'il y a eu un soucis dans la déconnexion*
  */
 bool Structure::deconnecterStructure(Structure *structADeconnectee)
@@ -409,7 +409,7 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
         if (c.structure == structADeconnectee)
         {
             c.structure = nullptr;
-            c.direction = DIRECTION::NULLDIRECTION;
+            // c.direction = DIRECTION::NULLDIRECTION;
             c.type = TypeConnexion::Undefined;
             deco = true;
         }
@@ -433,6 +433,46 @@ bool Structure::deconnecterStructure(Structure *structADeconnectee)
     return deco;
 }
 
+/**
+ * @brief Deconnecte TOOUTES les structures connectées
+ *
+//  * @return true - *Si LES structureS ont bien été déconnectées correctement*
+//  * @return false - *S'il y a eu un soucis dans les déconnexions*
+ */
+bool Structure::deconnecterToutesLesStructures()
+{
+
+    bool deco = true;
+    std::list<Structure *> structDeco;
+    // Déco dans le sens principale
+    for (auto &c : _connexions)
+    {
+        if (c.structure != nullptr)
+        {
+            structDeco.push_back(c.structure);
+            c.structure = nullptr;
+            // c.direction = DIRECTION::NULLDIRECTION;
+            c.type = TypeConnexion::Undefined;
+        }
+    }
+    //  Déco dans l'autre sens
+    for (auto &s : structDeco)
+    {
+        for (auto &c : s->_connexions)
+        {
+            if (c.structure == this)
+            {
+                c.structure = nullptr;
+                c.direction = DIRECTION::NULLDIRECTION;
+                c.type = TypeConnexion::Undefined;
+                deco = true;
+            }
+        }
+    }
+
+    // Deconnexion ok dans les deux sens
+    return deco;
+}
 /*******************************************************/
 
 /*******************************************************/

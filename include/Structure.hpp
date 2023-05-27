@@ -90,6 +90,7 @@ public:
     // Gestion des structures connectées
     virtual bool connecterStructure(Structure *s, bool commeSortie = true, bool connexionAutreSens = false);
     virtual bool deconnecterStructure(Structure *s);
+    bool deconnecterToutesLesStructures();
 
     virtual bool checkConnexionPossible(Structure *s, bool commeSortie);
     virtual bool updateOrientation() = 0;

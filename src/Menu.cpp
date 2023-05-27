@@ -248,8 +248,8 @@ void Menu::dessinerBatimentSelectCraftDefine()
     uint positionFormule = 0;
     uint index = 0;
 
-    Vector2f decalageTexteQuantite{IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).width *0.65f,
-                                   IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).height *0.3f};
+    Vector2f decalageTexteQuantite{IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).width * 0.65f,
+                                   IconeManager::getZoomTextureRessource(TYPE_RESSOURCE::Rien).height * 0.3f};
 
     for (auto elt : *formuleCraft)
     { // Pour chaque elt de la formule
@@ -657,6 +657,8 @@ bool Menu::setBoutonsClick()
         {
             btn->setState(BoutonState::Pressed);
             changement = true;
+            cerr << btn->getAction() << std::endl;
+            contextGlobal->setGameEvent(btn->getAction());
         }
         else if (btn->getState() == BoutonState::Active)
         {
@@ -691,6 +693,9 @@ bool Menu::setBoutonsClick()
         }
     }
 
+    // if (_sectionMenu == SectionMenu::BatimentSelectCraftDefine)
+    // {
+    // }
     return changement;
 }
 

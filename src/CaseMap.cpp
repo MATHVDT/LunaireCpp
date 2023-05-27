@@ -218,3 +218,13 @@ void CaseMap::ajouterConstruction(Structure *s)
         return;
     _construction = s;
 }
+
+/**
+ * @brief Retire une structure de la case.
+ *
+ * @param Structure * - *s*
+ */
+void CaseMap::retirerConstruction()
+{
+    _construction = nullptr;
+}

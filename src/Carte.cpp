@@ -255,6 +255,22 @@ void Carte::ajouterConstructionCaseCarte(Structure *s, const Vector2u &posCarte)
     // Si c'est pipeline gerer connexion
 }
 
+bool Carte::supprimerConstructionCaseCarte(Structure *s)
+{
+    for (uint y = 0; y < _nbLignesGrille; ++y)
+    {
+        for (uint x = 0; x < _nbColonnesGrille; ++x)
+        {
+            if (_grille[y][x].getConstruction() == s)
+            {
+                _grille[y][x].retirerConstruction();
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 /*******************************************************/
 
 /**

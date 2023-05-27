@@ -456,6 +456,10 @@ void Manager::updateEvent()
         cerr << "EVENT RESET CRAFT" << endl;
         resetCraft(structSelect);
         break;
+    case GameEvent::Detruire:
+        cerr << "EVENT DETRUIRE STRUCUTRE" << endl;
+        detruireStructure(structSelect);
+        break;
 
     default:
         break;
@@ -571,4 +575,17 @@ void Manager::resetCraft(Structure *s)
         cerr << "Pas Un batiment avec des crafts, peut être un pb car pas censé arriver" << endl;
     }
     contextGlobal->resetGameEvent();
+}
+
+/**
+ * @brief Detruite la structure construite.
+ *
+ * @param Structure * - *s*
+ */
+void Manager::detruireStructure(Structure *s)
+{
+    s->deconnecterToutesLesStructures();
+    contextGlobal->setCaseSelectionnee(true);
+    contextGlobal->resetGameEvent();
+    _carte->supprimerConstructionCaseCarte(s);
 }
